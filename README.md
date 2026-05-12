@@ -173,17 +173,15 @@ Then invoke it with:
 
 The skill will:
 
-1. 先**成组提问**（目标、页数、内容准备情况、样式偏好、编辑范围、**是否有图片素材**）——除非用户已经提供了完整 brief，或显式调用本可编辑 skill 且信息已经足够，否则不应直接生成整稿；详见 `SKILL.md` 的 **Discovery gate**。
-2. 根据你的样式偏好、受众和内容，先推荐一组更匹配的风格预设。
-3. 分析你提供的文本和图片（若 Question 6 为无图则跳过图片评估）。
-4. 让你直接选推荐预设，或基于推荐方向生成风格预览。
-5. 产出带编辑运行时的单文件 HTML 演示，并在浏览器中打开。
+1. **Phase 1（内容发现）— 先集中问齐**：除非用户**同一条消息里**已给齐 **目的、篇幅（页数量级或精确页数）、内容或大纲（非仅主题）、风格偏好方向、是否确认完整可编辑运行时、图片资源意向**，以及需要时的**语言/双语**，否则**一次成组提问**；缺啥就只补问缺失项。**仅调用 `/frontend-slides-editable` 不算答完**。有素材后再做配图评估，并与大纲一起敲定（非「先瞎写页再插图」）。详见 `SKILL.md` 的 **Discovery gate**。
+2. **Phase 2（风格发现）— Show, don’t tell**：结合 `STYLE_PRESETS.md` 与仓库内样例（如 `examples/generated/presets/`）缩小范围；推荐 2–4 个预设后，让用户**直选**或**生成预览**再定稿，然后进入生成。
+3. 若 Phase 1 确认有图：评估素材并与幻灯片结构共同设计；若无图则跳过图片评估。
+4. 产出带编辑运行时的单文件 HTML，并在浏览器中打开。
 
-1. **Ask in one grouped turn** (purpose, deck length, content readiness, style preference, runtime scope, **image assets or not**) — do not generate the full deck until discovery is satisfied unless the user supplied a complete brief, or explicitly invoked this editable skill with enough detail to skip discovery; see **Discovery gate** in `SKILL.md`.
-2. Recommend a shortlist of presets based on style preference, audience, and content.
-3. Review provided text and images (skip image evaluation if Phase 1 says no images).
-4. Let the user pick from those recommendations directly or generate previews from that direction.
-5. Build a single-file HTML deck with editable runtime and open it in the browser.
+1. **Phase 1 (content discovery) — batch first:** Unless the user supplies **in one message** **purpose, length band (or exact count), content or outline (not topic-only), style direction, confirmation of full editable runtime vs read-only parent skill, image intent**, and **language/locale** when relevant, send **one grouped Phase 1**; next turn asks **only** missing items. Invoking the skill **does not** satisfy discovery. After assets exist, run image evaluation and **co-design outline ↔ images**. See **Discovery gate** in `SKILL.md`.
+2. **Phase 2 (style discovery) — show, don’t tell:** Narrow choices using [STYLE_PRESETS.md](STYLE_PRESETS.md) and repo examples (e.g. `examples/generated/presets/`); recommend presets, then **direct pick** or **HTML previews**, then generate.
+3. If Phase 1 says images: evaluate assets and align outline; otherwise skip image evaluation.
+4. Build a single-file editable HTML deck and open it in the browser.
 
 ### 增强现有 HTML / Enhance an existing HTML deck
 
@@ -220,14 +218,16 @@ The skill will:
 The skill will:
 
 1. 提取 PPT 文字、图片和备注。
-2. 与你确认结构。
-3. 先询问样式偏好，并给出对应的视觉风格推荐。
-4. 生成可编辑 HTML deck 并保留内容与资源。
+2. 与你确认提取结果（标题、要点、图片数量等）。
+3. **Phase 1 补全**：提取结果≠完整 brief；仍需一次性确认或补问 **风格方向、可编辑 vs 只读、语言/地区、是否重组页数目标、提取图片的使用方式** 等缺失项。
+4. **Phase 2**：用预设/预览缩小风格（Show, don’t tell），再定预设或混合方向。
+5. 生成可编辑 HTML deck 并保留内容与资源。
 
 1. Extract text, images, and notes from PPT.
-2. Confirm the extracted structure.
-3. Ask for style preference first and recommend matching visual directions.
-4. Generate an editable HTML deck with preserved assets.
+2. Confirm the extraction (titles, content, image counts).
+3. **Phase 1 gap-fill:** extraction is **not** the full brief; batch any missing **style direction, editable vs read-only, locale, restructuring goals, how to use extracted images**, etc.
+4. **Phase 2:** narrow style with presets/previews (show, don’t tell), then lock preset or mix.
+5. Generate an editable HTML deck with preserved assets.
 
 ## 编辑体验 / Editing Experience
 

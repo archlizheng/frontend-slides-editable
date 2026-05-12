@@ -29,16 +29,40 @@ If runtime constraints ever conflict with a signature element, **adapt the eleme
 <discovery_gate>
 Discovery gate (do not skip)
 
-Models often jump straight to generating HTML. **For Mode A (new deck) and Mode B (PPT) after extraction, you must run discovery before Phase 3** — unless the user explicitly opts out with a **complete brief** in one message (purpose, length, content or full outline, style direction, image situation, and either explicit confirmation they want the editable runtime or direct invocation of this skill).
+Models often jump straight to generating HTML. **For Mode A (new deck) and Mode B (PPT) after extraction, you must finish Phase 1 before Phase 2, and Phase 2 before Phase 3** — unless a narrow exception below applies.
 
-**Default behavior:**
+**Hard rule:** Unless the user provides **in one turn** (or one clearly scoped batch) **every** item in the **Phase 1 checklist**, you **must** run **Phase 1 first** as **one grouped message** (or a structured question UI). If the batch is incomplete, send **only** the **missing** checklist items in the next message — **do not** guess slide count, outline depth, preset, or language. **Invoking `/frontend-slides-editable` or attaching this skill does *not* waive discovery.** A one-liner (e.g. “用 skill 介绍它自己”, “做一份某某主题的演示”) is **topic / intent only**, not a brief.
 
-1. **Stop and ask** — Send the Phase 1 questions (and Phase 2 path / mood / previews as the flow requires) in **one grouped message**; use a structured question UI when the host supports it.
-2. **Never infer silence as approval** — If the user only said "make slides about X", treat that as topic-only and still ask Phase 1 (and Phase 2 before codegen).
-3. **Partial answers** — If they answered some fields but not others, ask **only the missing items** in one follow-up, then continue.
-4. **Mode C** — If they gave a precise change list ("add one bullet", "fix overflow on slide 3"), you may apply it without re-running Phase 1–2; if the request is vague ("make it better"), ask 1–2 clarifying questions first.
+**Phase 1 checklist (complete brief — all required without model inference):**
 
-Skipping discovery to "save turns" is a failure mode for this skill.
+| # | Dimension | What “done” means |
+|---|-------------|-------------------|
+| 1 | **Purpose** | Pitch / teaching / conference / internal / meta-role (e.g. skill onboarding), etc. |
+| 2 | **Length** | **Slide-count band** (e.g. short 5–10 / medium 10–20 / long 20+) **or** exact count — never inferred from topic alone |
+| 3 | **Content** | Pasted outline, bullets, draft copy, **or** named source + extract scope (e.g. “README §X–Y only”); not “a theme” alone |
+| 4 | **Style direction** | Phase 1 style preference cluster **or** a **named** preset from [STYLE_PRESETS.md](STYLE_PRESETS.md) **or** explicit delegation (“you choose”) — if only “you choose”, **Phase 2** still runs to narrow via recommendations/previews unless the user also explicitly skips previews |
+| 5 | **Editing** | Confirm **full editable runtime** (this skill’s default) **or** explicit switch to parent **read-only** `frontend-slides` |
+| 6 | **Images** | No / yes / unsure; if **yes**, files may arrive later, but intent is explicit |
+| — | **Language / locale** | When prose is audience-facing and not already stated: monolingual / bilingual / per-locale files — **ask in Phase 1** |
+
+**Images vs outline:** **Co-design outline ↔ images** (Step 1.2) only **after** the user has real assets or links to evaluate. Do **not** skip Phase 1 dimensions just because images are pending; capture “yes, will provide” in Phase 1, then run image evaluation when files exist.
+
+**Mode B (PPT):** After `extract-pptx.py`, present titles/summaries/asset counts and **still run Phase 1** for anything extraction does **not** decide: **length goals** if restructuring, **style direction**, **editing** scope, **locale**, and **image** handling notes on extracted assets. **Do not** jump from “here’s the extract” straight to **only** style picking — close Phase 1 gaps first, **then** Phase 2, **then** codegen.
+
+**When Phase 1 and/or Phase 2 may be shortened (narrow exceptions only):**
+
+1. **Explicit opt-out** — User clearly skips discovery and/or previews (e.g. “跳过发现，你全部决定”, “no discovery — just generate”).
+2. **Complete written brief** — Same batch already satisfies **every** Phase 1 checklist row **without you guessing**, **and** either (a) a **named preset** is chosen so Phase 2 can be a direct handoff to Phase 3, or (b) the user explicitly allows **no previews** and accepts your single recommended preset.
+
+**Default order:** **Phase 1 (grouped) → Phase 2 (show, don’t tell) → Phase 3.** Never start Phase 3 to “save turns.”
+
+**Partial answers:** Next message = **only** missing Phase 1 items, then resume Phase 2.
+
+**Never infer silence as approval.** **Mode C** (enhance existing HTML): precise change list may skip full Phase 1–2; vague “make it better” → 1–2 clarifying questions first.
+
+**Anti-pattern:** Generating HTML because the skill was attached or because you “already know” a good length or preset — **failure mode**.
+
+Skipping discovery to “save turns” is a failure mode for this skill.
 </discovery_gate>
 
 <core_principles>
@@ -125,9 +149,13 @@ When enhancing existing presentations, viewport fitting is the biggest risk:
 </mode_c_modification_rules>
 
 <phase_1_content_discovery>
-Phase 1: Content Discovery (New Presentations)
+Phase 1: Content Discovery (New deck & PPT path)
 
-**Ask ALL discovery questions (1–6 below) in one grouped interaction** so the user can answer them together. Use a structured question tool when available; otherwise ask them in one concise message instead of splitting them across many turns:
+**Centralize Phase 1:** For Mode A and for Mode B **after** extraction, deliver the checklist in **one grouped interaction** (see **Discovery gate** above) — not dribbled across many turns. If the user’s first message is incomplete, **only** ask missing items next.
+
+**Do not** jump to style previews or HTML until Phase 1 is satisfied (exceptions: **Discovery gate**).
+
+**Ask ALL discovery questions (1–6 below) in that grouped interaction** when starting from scratch. Use a structured question tool when available; otherwise one concise message:
 
 **Question 1 — Purpose** (header: "Purpose"):
 What is this presentation for? Options: Pitch deck / Teaching-Tutorial / Conference talk / Internal presentation
@@ -153,14 +181,16 @@ Confirm the user wants the **full editable runtime** (default for this skill): o
 **Question 6 — Assets / images** (header: "Images"):
 Will this deck use image files you will provide (folder, uploads, or links)? Options: **No images** (CSS/graphics only) / **Yes — I will provide images** / **Unsure — recommend**
 
+**Language / locale (include in the same grouped message when relevant):** If the deliverable must be monolingual, bilingual, or localized (e.g. CN/EN on the same slides vs two files), ask once here when the user has not already stated it.
+
 If the user has draft content (bullets, doc, outline), ask them to **paste or attach** it in the same turn or immediately after Phase 1.
 
 <image_evaluation>
 Step 1.2: Image Evaluation (if images provided)
 
-If **Question 6** was **No images** or the user has not supplied any image files yet → skip to Phase 2 (you may still ask them to add images later before Phase 3 if they change their mind).
+If **Question 6** was **No images** or the user has not supplied any image files yet → proceed to **Phase 2** after Phase 1 is otherwise complete (you may still ask them to add images later before Phase 3 if they change their mind).
 
-If user provides an image folder:
+If user provides an image folder (or links) **after** Phase 1 marked images as yes:
 1. **Scan** — List all image files (.png, .jpg, .svg, .webp, etc.)
 2. **Inspect each image** — Use the host's available image/file viewing capability
 3. **Evaluate** — For each: what it shows, USABLE or NOT USABLE (with reason), what concept it represents, dominant colors
@@ -172,14 +202,18 @@ If user provides an image folder:
 </phase_1_content_discovery>
 
 <phase_2_style_discovery>
-Phase 2: Style Discovery
+Phase 2: Style Discovery (Show, don’t tell)
 
-**This is the "show, don't tell" phase.** Most people can't articulate design preferences in words.
+**Start only after Phase 1 is complete** (see **Discovery gate**).
+
+**Purpose:** Narrow the aesthetic **visually** — most people can’t name what they want. Use **HTML previews** (and concrete anchors from [STYLE_PRESETS.md](STYLE_PRESETS.md) + repo examples: [examples/generated/presets/](examples/generated/presets/) smoke decks, [examples/editable-deck-reference.html](examples/editable-deck-reference.html) for runtime chrome) so the user picks **direction**, then **preset** or **mix**.
+
+**This is the "show, don't tell" phase.**
 
 <style_preference_first>
 Step 2.0: Style Preference First
 
-Start from the **style preference captured in Phase 1**. Before asking the user how they want to choose, give a short recommendation list of **2-4 presets** that best match their preference, audience, and content.
+Start from the **style preference captured in Phase 1**. Before asking the user how they want to choose, give a short recommendation list of **2-4 presets** that best match their preference, audience, and content. Tie names to **STYLE_PRESETS** rows (and, when helpful, “see generated sample `*.html` for slug X”) so choices are grounded, not abstract.
 
 Use this mapping as the starting point:
 
@@ -201,11 +235,11 @@ If the user already chose **"I already know the preset"** in Phase 1, skip Step 
 Step 2.1: Style Path
 
 Ask how they want to choose (header: "Style"):
-- "Pick from recommendations" (recommended) — Choose directly from the suggested presets
-- "Show me options" — Generate 3 previews based on the recommended direction
-- "I know what I want" — Pick from the full preset list directly
+- "Pick from recommendations" (recommended) — Choose directly from the suggested presets (still **show** thumbnails or one-liner visual cues from presets when possible)
+- "Show me options" — Generate **3** single-slide HTML previews (Step 2.3) to **shrink** the search space before locking a preset
+- "I know what I want" — Pick from the full preset list in [STYLE_PRESETS.md](STYLE_PRESETS.md)
 
-**If direct selection:** Show preset picker and skip to Phase 3. Available presets are defined in [STYLE_PRESETS.md](STYLE_PRESETS.md).
+**If direct preset name:** Confirm against STYLE_PRESETS, then Phase 3. **If "you choose" from Phase 1:** Default path = recommendations + offer previews before generating.
 </style_path>
 
 <mood_selection>
@@ -284,8 +318,9 @@ When converting PowerPoint files:
 
 1. **Extract content** — Run `python3 scripts/extract-pptx.py &lt;input.pptx&gt; &lt;output_dir&gt;` (install python-pptx if needed: `pip install python-pptx`)
 2. **Confirm with user** — Present extracted slide titles, content summaries, and image counts
-3. **Style selection** — Proceed to Phase 2 for style discovery
-4. **Generate HTML** — Convert to chosen style, preserving all text, images (from assets/), slide order, and speaker notes (as HTML comments)
+3. **Phase 1 (close gaps)** — Extraction supplies **content**, but you still need explicit answers for anything not fixed by the file: **style direction** (or preset/delegate), **full editable vs read-only**, **locale**, **length** intent if merging/splitting slides, and **image** handling on extracted assets. **One grouped follow-up** for missing items only.
+4. **Phase 2** — Style discovery (previews / preset pick); see **Phase 2: Style Discovery** in this skill file
+5. **Generate HTML** — Convert to chosen style, preserving all text, images (from assets/), slide order, and speaker notes (as HTML comments)
 </phase_4_ppt_conversion>
 </quick_start>
 
