@@ -345,13 +345,6 @@
       border-top: 4px solid var(--accent);
       background: var(--surface);
     }
-    .hero-graphic .slide-object-graphic {
-      width: 100%;
-      height: 100%;
-      border-radius: clamp(12px, 1.6vw, 24px);
-      position: relative;
-      overflow: hidden;
-    }
     @media (max-width: 820px) {
       .metric-grid {
         grid-template-columns: 1fr;
@@ -372,12 +365,20 @@
       );
       z-index: 0;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 58%;
+      top: 18%;
+      width: 28%;
+      height: 54%;
       background:
         linear-gradient(180deg, rgba(57,211,83,0.12), rgba(57,211,83,0.04)),
         linear-gradient(180deg, #101a12 0%, #0d1117 100%);
       border: 1px solid rgba(57, 211, 83, 0.3);
       box-shadow: inset 0 0 0 1px rgba(57, 211, 83, 0.08);
+      z-index: 0;
+      pointer-events: none;
     }
     .label,
     .section-number .slide-object-text,
@@ -944,12 +945,6 @@
       <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
       <button type="button" class="slide-object-resize" aria-label="Resize"></button>
       <div class="slide-object-text" contenteditable="false"><div class="metric-grid"><div class="metric"><span class="metric-value">Preset</span><span class="metric-note">每套版式都保留自己的布局和签名元素</span></div><div class="metric"><span class="metric-value">Edit</span><span class="metric-note">拖拽 缩放 多选 Pages Undo / Redo</span></div><div class="metric"><span class="metric-value">Ship</span><span class="metric-note">Ctrl+S 保存结构，Export HTML 清理导出</span></div></div></div>
-    </div>
-    <div class="slide-object reveal hero-graphic" data-slide-object data-oid="s0-o4" data-object-type="graphic" style="left:58%;top:18%;width:28%;height:54%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-graphic"></div>
     </div>
   </div>
 </section>

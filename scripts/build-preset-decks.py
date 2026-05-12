@@ -256,13 +256,6 @@ COMMON_COMPONENT_CSS = """
       border-top: 4px solid var(--accent);
       background: var(--surface);
     }
-    .hero-graphic .slide-object-graphic {
-      width: 100%;
-      height: 100%;
-      border-radius: clamp(12px, 1.6vw, 24px);
-      position: relative;
-      overflow: hidden;
-    }
     @media (max-width: 820px) {
       .metric-grid {
         grid-template-columns: 1fr;
@@ -306,18 +299,6 @@ class SlideBuilder:
       <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
       <button type="button" class="slide-object-resize" aria-label="Resize"></button>
       <div class="slide-object-text" contenteditable="false">{html}</div>
-    </div>'''
-        )
-
-    def graphic(self, cls: str, style: str, inner: str = "") -> None:
-        oid = f"s{self.slide_index}-o{self._count}"
-        self._count += 1
-        self.objects.append(
-            f'''    <div class="slide-object reveal {cls}" data-slide-object data-oid="{oid}" data-object-type="graphic" style="{style}">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-graphic">{inner}</div>
     </div>'''
         )
 
@@ -376,7 +357,6 @@ LAYOUTS = {
             "title": box("8%", "18%", "38%"),
             "subtitle": box("8%", "53%", "30%"),
             "metrics": box("8%", "71%", "46%", "16%"),
-            "graphic": box("60%", "20%", "24%", "34%"),
         },
         "value": {
             "number": box("8%", "10%", "18%"),
@@ -418,7 +398,6 @@ LAYOUTS = {
             "title": box("8%", "17%", "34%"),
             "subtitle": box("8%", "52%", "28%"),
             "metrics": box("8%", "71%", "42%", "16%"),
-            "graphic": box("57%", "14%", "31%", "62%"),
         },
         "value": {
             "number": box("8%", "10%", "20%"),
@@ -460,7 +439,6 @@ LAYOUTS = {
             "title": box("12%", "18%", "34%"),
             "subtitle": box("12%", "52%", "24%"),
             "metrics": box("12%", "72%", "42%", "15%"),
-            "graphic": box("62%", "18%", "18%", "56%"),
         },
         "value": {
             "number": box("12%", "11%", "22%"),
@@ -502,7 +480,6 @@ LAYOUTS = {
             "title": box("16%", "20%", "30%"),
             "subtitle": box("16%", "54%", "22%"),
             "metrics": box("16%", "73%", "40%", "14%"),
-            "graphic": box("69%", "18%", "10%", "56%"),
         },
         "value": {
             "number": box("16%", "13%", "20%"),
@@ -544,7 +521,6 @@ LAYOUTS = {
             "title": box("12%", "19%", "32%"),
             "subtitle": box("12%", "53%", "24%"),
             "metrics": box("12%", "73%", "40%", "14%"),
-            "graphic": box("70%", "18%", "10%", "56%"),
         },
         "value": {
             "number": box("12%", "12%", "20%"),
@@ -586,7 +562,6 @@ LAYOUTS = {
             "title": box("8%", "18%", "36%"),
             "subtitle": box("8%", "55%", "30%"),
             "metrics": box("8%", "74%", "44%", "14%"),
-            "graphic": box("58%", "18%", "28%", "54%"),
         },
         "value": {
             "number": box("8%", "10%", "22%"),
@@ -628,7 +603,6 @@ LAYOUTS = {
             "title": box("11%", "18%", "30%"),
             "subtitle": box("11%", "54%", "22%"),
             "metrics": box("11%", "73%", "38%", "14%"),
-            "graphic": box("63%", "18%", "14%", "52%"),
         },
         "value": {
             "number": box("11%", "11%", "18%"),
@@ -677,7 +651,6 @@ def cover_slide(slide_index: int, preset_title: str, layout: dict[str, str]) -> 
         "中文为主，英文做轻量标签。可编辑 runtime 保留在单文件 HTML 里。",
     )
     builder.text("metric-box", layout["metrics"], metric_html())
-    builder.graphic("hero-graphic", layout["graphic"])
     return builder.render()
 
 
@@ -782,12 +755,21 @@ PRESETS = [
       z-index: 1;
       opacity: 0.95;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 60%;
+      top: 20%;
+      width: 24%;
+      height: 34%;
+      border-radius: clamp(12px, 1.6vw, 24px);
       border: 1px solid rgba(0, 0, 0, 0.08);
       background:
         linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0.04)),
         repeating-linear-gradient(90deg, rgba(0,0,0,0.24), rgba(0,0,0,0.24) 16%, transparent 16%, transparent 31%);
       box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+      z-index: 0;
+      pointer-events: none;
     }
     .panel-card .slide-object-text,
     .workflow-card .slide-object-text,
@@ -841,10 +823,18 @@ PRESETS = [
       border: 3px solid rgba(10, 10, 10, 0.12);
       z-index: 1;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 57%;
+      top: 14%;
+      width: 31%;
+      height: 62%;
       background: linear-gradient(180deg, #0a0a0a 0%, #0a0a0a 58%, #4361ee 58%, #4361ee 100%);
       border-radius: 0;
       box-shadow: 0 20px 50px rgba(10, 10, 10, 0.12);
+      z-index: 0;
+      pointer-events: none;
     }
     .panel-card .slide-object-text,
     .workflow-card .slide-object-text,
@@ -885,12 +875,20 @@ PRESETS = [
       opacity: 0.35;
       z-index: 0;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 57%;
+      top: 14%;
+      width: 31%;
+      height: 62%;
       background:
         linear-gradient(135deg, rgba(212,255,0,0.8), rgba(212,255,0,0.22)),
         linear-gradient(180deg, rgba(255,255,255,0.06), transparent);
       border: 1px solid rgba(212,255,0,0.45);
       box-shadow: 0 0 0 1px rgba(212,255,0,0.16), 0 18px 36px rgba(0,0,0,0.22);
+      z-index: 0;
+      pointer-events: none;
     }
     .panel-card .slide-object-text,
     .workflow-card .slide-object-text,
@@ -955,9 +953,17 @@ PRESETS = [
     .arch-card .slide-object-text {
       border-left: 1px solid var(--accent);
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 62%;
+      top: 18%;
+      width: 18%;
+      height: 56%;
       background: linear-gradient(135deg, rgba(212,165,116,0.16), rgba(232,180,184,0.12));
       border: 1px solid rgba(255,255,255,0.12);
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@300;400&display=swap",
@@ -1009,9 +1015,17 @@ PRESETS = [
       background: linear-gradient(180deg, #98d4bb, #c7b8ea, #f4b8c5, #a8d8ea, #ffe6a7);
       z-index: 1;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 69%;
+      top: 18%;
+      width: 10%;
+      height: 56%;
       background: linear-gradient(180deg, rgba(90,124,106,0.12), rgba(90,124,106,0.02));
       border: 1px dashed rgba(26,26,26,0.2);
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&family=DM+Sans:wght@400;500&display=swap",
@@ -1064,10 +1078,18 @@ PRESETS = [
         linear-gradient(180deg, #f0b4d4 0%, #f0b4d4 16%, transparent 16%, transparent 22%, #a8d4c4 22%, #a8d4c4 46%, transparent 46%, transparent 54%, #7c6aad 54%, #7c6aad 100%);
       z-index: 1;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 70%;
+      top: 18%;
+      width: 10%;
+      height: 56%;
       background: linear-gradient(180deg, rgba(124,106,173,0.16), rgba(168,212,196,0.12));
       border: 1px solid rgba(26,26,26,0.08);
       border-radius: 28px;
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap",
@@ -1107,10 +1129,18 @@ PRESETS = [
       background-size: 18px 18px;
       z-index: 0;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 57%;
+      top: 14%;
+      width: 31%;
+      height: 62%;
       background: linear-gradient(135deg, rgba(200,240,216,0.84), rgba(240,212,224,0.6));
       border: 1px solid rgba(26,26,26,0.08);
       box-shadow: 0 16px 30px rgba(68, 61, 74, 0.1);
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&display=swap",
@@ -1158,10 +1188,18 @@ PRESETS = [
       background: rgba(26, 26, 26, 0.28);
       z-index: 0;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 62%;
+      top: 18%;
+      width: 18%;
+      height: 56%;
       background: linear-gradient(180deg, rgba(232,212,192,0.62), rgba(255,255,255,0.0));
       border: 2px solid rgba(26, 26, 26, 0.18);
       border-radius: 999px;
+      z-index: 0;
+      pointer-events: none;
     }
     .panel-card .slide-object-text,
     .workflow-card .slide-object-text,
@@ -1205,12 +1243,20 @@ PRESETS = [
       z-index: 0;
       opacity: 0.44;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 58%;
+      top: 18%;
+      width: 28%;
+      height: 54%;
       background:
         radial-gradient(circle at 30% 30%, rgba(0,255,204,0.34), transparent 46%),
         linear-gradient(135deg, rgba(255,0,170,0.18), rgba(0,255,204,0.08));
       border: 1px solid rgba(0,255,204,0.35);
       box-shadow: 0 0 30px rgba(0,255,204,0.12);
+      z-index: 0;
+      pointer-events: none;
     }
     .panel-card .slide-object-text,
     .workflow-card .slide-object-text,
@@ -1257,12 +1303,20 @@ PRESETS = [
       );
       z-index: 0;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 58%;
+      top: 18%;
+      width: 28%;
+      height: 54%;
       background:
         linear-gradient(180deg, rgba(57,211,83,0.12), rgba(57,211,83,0.04)),
         linear-gradient(180deg, #101a12 0%, #0d1117 100%);
       border: 1px solid rgba(57, 211, 83, 0.3);
       box-shadow: inset 0 0 0 1px rgba(57, 211, 83, 0.08);
+      z-index: 0;
+      pointer-events: none;
     }
     .label,
     .section-number .slide-object-text,
@@ -1325,12 +1379,20 @@ PRESETS = [
       box-shadow: none;
       border-radius: 0;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 63%;
+      top: 18%;
+      width: 14%;
+      height: 52%;
       background:
         linear-gradient(90deg, rgba(255,51,0,0.94) 0 14%, transparent 14% 100%),
         linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.01));
       border-radius: 0;
       border: 1px solid rgba(0, 0, 0, 0.08);
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Nunito:wght@400;500&display=swap",
@@ -1380,9 +1442,17 @@ PRESETS = [
     .hero-title .slide-object-text {
       font-style: italic;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 62%;
+      top: 18%;
+      width: 18%;
+      height: 56%;
       background: linear-gradient(180deg, rgba(196,30,58,0.08), transparent);
       border: 1px solid rgba(26,26,26,0.08);
+      z-index: 0;
+      pointer-events: none;
     }
     .panel-card .slide-object-text,
     .workflow-card .slide-object-text,
@@ -1436,9 +1506,17 @@ PRESETS = [
       background: linear-gradient(90deg, var(--accent), rgba(237, 220, 140, 0.9));
       z-index: 0;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 70%;
+      top: 18%;
+      width: 10%;
+      height: 56%;
       background: linear-gradient(135deg, rgba(125,155,118,0.22), rgba(237,220,140,0.16));
       border: 1px solid rgba(45, 40, 34, 0.08);
+      z-index: 0;
+      pointer-events: none;
     }
     .hero-title .slide-object-text { font-style: italic; }
 """,
@@ -1477,11 +1555,20 @@ PRESETS = [
       z-index: 1;
       opacity: 0.85;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 60%;
+      top: 20%;
+      width: 24%;
+      height: 34%;
+      border-radius: clamp(12px, 1.6vw, 24px);
       background:
         radial-gradient(circle at 40% 35%, rgba(201,162,39,0.2), transparent 55%),
         linear-gradient(135deg, rgba(15,23,42,0.9), rgba(11,18,32,0.95));
       border: 1px solid rgba(201, 162, 39, 0.25);
+      z-index: 0;
+      pointer-events: none;
     }
     .section-number .slide-object-text { color: var(--accent); }
 """,
@@ -1518,10 +1605,18 @@ PRESETS = [
       z-index: 0;
       pointer-events: none;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 58%;
+      top: 18%;
+      width: 28%;
+      height: 54%;
       background: linear-gradient(135deg, rgba(245,224,0,0.95), rgba(245,224,0,0.15));
       border: 2px solid rgba(245, 224, 0, 0.5);
       box-shadow: 0 0 30px rgba(245, 224, 0, 0.15);
+      z-index: 0;
+      pointer-events: none;
     }
     .hero-title .slide-object-text { letter-spacing: 0.02em; }
 """,
@@ -1560,7 +1655,13 @@ PRESETS = [
       z-index: 0;
       opacity: 0.5;
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 63%;
+      top: 18%;
+      width: 14%;
+      height: 52%;
       background: repeating-linear-gradient(
         -45deg,
         #111,
@@ -1569,6 +1670,8 @@ PRESETS = [
         #f5f3eb 6px
       );
       border: 2px solid #111;
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Lora:wght@500;700&display=swap",
@@ -1614,10 +1717,18 @@ PRESETS = [
       border-radius: 0;
       box-shadow: 6px 6px 0 rgba(15, 15, 15, 0.1);
     }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 63%;
+      top: 18%;
+      width: 14%;
+      height: 52%;
       background: linear-gradient(135deg, var(--accent), rgba(212,232,23,0.35));
       border: 3px solid #0f0f0f;
       border-radius: 0;
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500&display=swap",
@@ -1655,11 +1766,19 @@ PRESETS = [
       z-index: 0;
     }
     .hero-title .slide-object-text { font-style: italic; color: #f0ead8; }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 62%;
+      top: 18%;
+      width: 18%;
+      height: 56%;
       background:
         radial-gradient(ellipse at 30% 40%, rgba(91,143,150,0.25), transparent 60%),
         linear-gradient(145deg, rgba(12,21,38,0.95), rgba(15,28,46,0.85));
       border: 1px solid rgba(91, 143, 150, 0.35);
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400&family=Literata:wght@400;600&display=swap",
@@ -1697,7 +1816,13 @@ PRESETS = [
       z-index: 0;
     }
     .hero-title .slide-object-text { font-style: italic; color: #1e3a8a; }
-    .hero-graphic .slide-object-graphic {
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 58%;
+      top: 18%;
+      width: 28%;
+      height: 54%;
       background:
         linear-gradient(135deg, rgba(37,99,235,0.12), rgba(59,130,246,0.06)),
         repeating-linear-gradient(
@@ -1708,6 +1833,8 @@ PRESETS = [
           rgba(37,99,235,0.06) 9px
         );
       border: 1px solid rgba(37, 99, 235, 0.25);
+      z-index: 0;
+      pointer-events: none;
     }
 """,
         google_url="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;600&display=swap",

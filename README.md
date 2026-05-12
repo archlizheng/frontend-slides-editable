@@ -238,7 +238,7 @@ Generated decks include:
 - **编辑模式 / Edit mode**：按 `E` 或从左上角呼出控件
 - **Pages 侧栏 / Pages sidebar**：缩略图导航、重排、删除（短英文确认 `Delete slide?`）
 - **对象编辑 / Object editing**：用 **⠿** 拖动，角点缩放，吸附线对齐；悬停或选中时 **×** 可删除单个对象
-- **添加元素 / Add element**：编辑模式下左上角 **Add element** → Text / Image（URL 或占位）/ Video（URL）
+- **添加元素 / Add element**：编辑模式下左上角 **Add element** → Text / Image（本地文件、粘贴或占位）/ Video（本地文件）
 - **富文本工具栏 / Rich text toolbar**：首行仅 **B / I** 与 **Font / Scale / Px** 抽屉按钮；点击展开对应卡片（字体族、相对字号、像素字号与其他）；支持光标折叠与选区；点击空白处或 **Esc**（非输入时）收起抽屉
 - **历史记录 / History**：`Ctrl+Z`、`Ctrl+Y`、`Ctrl+Shift+Z` 及 macOS 等价键
 - **持久化 / Persistence**：`Ctrl+S` 保存完整 `.slides-offset` 到 `localStorage`
@@ -291,6 +291,70 @@ Generated decks include:
 | Vellum | `vellum-navy.html` |
 | Cobalt Grid | `cobalt-grid.html` |
 
+## 样式预览图库 · Style preview gallery
+
+下列 PNG 为各预设 **自检用 deck 的首页（第 1 页）** 静态截图，存放在 **`docs/preset-previews/`**，思路与 [beautiful-html-templates](https://github.com/zarazhangrui/beautiful-html-templates) 仓库中的 [`screenshots/`](https://github.com/zarazhangrui/beautiful-html-templates/tree/main/screenshots) 一致：便于在 README 里快速扫一眼风格，再点开 HTML 细玩或按 `E` 编辑。
+
+These PNGs are **first-slide screenshots** of each preset smoke deck, kept under **`docs/preset-previews/`** — same role as [`screenshots/`](https://github.com/zarazhangrui/beautiful-html-templates/tree/main/screenshots) upstream: skim the gallery here, then open the linked HTML for the full interactive file (press **`E`** for edit mode).
+
+**重新生成截图 / Regenerate captures**（需本机 **Chrome** 或 **Chromium** 无头模式）:
+
+```bash
+python3 scripts/build-preset-decks.py
+python3 scripts/capture-preset-previews.py
+```
+
+详见 [`docs/preset-previews/README.md`](docs/preset-previews/README.md)。维护说明与 `CHROME_PATH`、`PREVIEW_VIEWPORT` 见该文件。
+
+### 深色主题 · Dark themes
+
+<p>
+  <a title="Bold Signal" href="examples/generated/presets/bold-signal.html"><img src="docs/preset-previews/bold-signal-cover.png" width="32%" alt="Bold Signal — first slide" /></a>
+  <a title="Electric Studio" href="examples/generated/presets/electric-studio.html"><img src="docs/preset-previews/electric-studio-cover.png" width="32%" alt="Electric Studio — first slide" /></a>
+  <a title="Creative Voltage" href="examples/generated/presets/creative-voltage.html"><img src="docs/preset-previews/creative-voltage-cover.png" width="32%" alt="Creative Voltage — first slide" /></a>
+</p>
+<p>
+  <a title="Dark Botanical" href="examples/generated/presets/dark-botanical.html"><img src="docs/preset-previews/dark-botanical-cover.png" width="32%" alt="Dark Botanical — first slide" /></a>
+</p>
+
+### 浅色主题 · Light themes
+
+<p>
+  <a title="Notebook Tabs" href="examples/generated/presets/notebook-tabs.html"><img src="docs/preset-previews/notebook-tabs-cover.png" width="32%" alt="Notebook Tabs — first slide" /></a>
+  <a title="Pastel Geometry" href="examples/generated/presets/pastel-geometry.html"><img src="docs/preset-previews/pastel-geometry-cover.png" width="32%" alt="Pastel Geometry — first slide" /></a>
+  <a title="Split Pastel" href="examples/generated/presets/split-pastel.html"><img src="docs/preset-previews/split-pastel-cover.png" width="32%" alt="Split Pastel — first slide" /></a>
+</p>
+<p>
+  <a title="Vintage Editorial" href="examples/generated/presets/vintage-editorial.html"><img src="docs/preset-previews/vintage-editorial-cover.png" width="32%" alt="Vintage Editorial — first slide" /></a>
+</p>
+
+### 特殊风格 · Specialty
+
+<p>
+  <a title="Neon Cyber" href="examples/generated/presets/neon-cyber.html"><img src="docs/preset-previews/neon-cyber-cover.png" width="32%" alt="Neon Cyber — first slide" /></a>
+  <a title="Terminal Green" href="examples/generated/presets/terminal-green.html"><img src="docs/preset-previews/terminal-green-cover.png" width="32%" alt="Terminal Green — first slide" /></a>
+  <a title="Swiss Modern" href="examples/generated/presets/swiss-modern.html"><img src="docs/preset-previews/swiss-modern-cover.png" width="32%" alt="Swiss Modern — first slide" /></a>
+</p>
+<p>
+  <a title="Paper &amp; Ink" href="examples/generated/presets/paper-ink.html"><img src="docs/preset-previews/paper-ink-cover.png" width="32%" alt="Paper and Ink — first slide" /></a>
+</p>
+
+### 扩展画廊（beautiful-html-templates 对齐）· Extended gallery
+
+<p>
+  <a title="Soft Editorial" href="examples/generated/presets/soft-editorial.html"><img src="docs/preset-previews/soft-editorial-cover.png" width="32%" alt="Soft Editorial — first slide" /></a>
+  <a title="Signal" href="examples/generated/presets/signal-gold.html"><img src="docs/preset-previews/signal-gold-cover.png" width="32%" alt="Signal — first slide" /></a>
+  <a title="Studio" href="examples/generated/presets/studio-volt.html"><img src="docs/preset-previews/studio-volt-cover.png" width="32%" alt="Studio — first slide" /></a>
+</p>
+<p>
+  <a title="Monochrome" href="examples/generated/presets/monochrome-ledger.html"><img src="docs/preset-previews/monochrome-ledger-cover.png" width="32%" alt="Monochrome — first slide" /></a>
+  <a title="Neo-Grid Bold" href="examples/generated/presets/neo-grid-yellow.html"><img src="docs/preset-previews/neo-grid-yellow-cover.png" width="32%" alt="Neo-Grid Bold — first slide" /></a>
+  <a title="Vellum" href="examples/generated/presets/vellum-navy.html"><img src="docs/preset-previews/vellum-navy-cover.png" width="32%" alt="Vellum — first slide" /></a>
+</p>
+<p>
+  <a title="Cobalt Grid" href="examples/generated/presets/cobalt-grid.html"><img src="docs/preset-previews/cobalt-grid-cover.png" width="32%" alt="Cobalt Grid — first slide" /></a>
+</p>
+
 ## 文档结构 / Documentation Map
 
 | 文件 File | 作用 Purpose |
@@ -304,7 +368,9 @@ Generated decks include:
 | `animation-patterns.md` | 动画参考 / CSS/JS animation reference |
 | `scripts/extract-pptx.py` | PPT 内容提取脚本 / PPT extraction script |
 | `examples/generated/presets/*.html` | 19 个单风格可编辑样例（与 STYLE_PRESETS 一一对应） / One editable deck per preset |
+| `docs/preset-previews/*.png` | 各预设首页截图（README 图库）/ First-slide PNGs for README gallery |
 | `scripts/build-preset-decks.py` | 从参考实现批量生成上述样例 / Build all preset sample files |
+| `scripts/capture-preset-previews.py` | 用无头 Chrome 生成 `docs/preset-previews/*-cover.png` / Headless Chrome capture for preview PNGs |
 
 ## 架构说明 / Architecture
 
@@ -391,13 +457,17 @@ examples/generated/presets/vellum-navy.html
 examples/generated/presets/cobalt-grid.html
 ```
 
-重新生成上述文件：
+重新生成上述 HTML 与 README 中的预览图：
 
-Regenerate all preset samples:
+Regenerate preset HTML **and** README gallery PNGs:
 
 ```bash
 python3 scripts/build-preset-decks.py
+python3 scripts/capture-preset-previews.py
 ```
+
+（仅截图、不改 deck 时只跑第二行；需本机 Chrome/Chromium。）  
+(Re-run only the second line to refresh screenshots; requires local Chrome/Chromium.)
 
 然后试试：
 

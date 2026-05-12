@@ -95,7 +95,7 @@ The snippet uses fixed `px` for brevity; when **generating** new decks, prefer *
 Controls are grouped in a **fixed top-left** container. **Opacity / pointer-events:** **Edit**, **Pages**, and (in edit mode) **#deckEditChrome** (Undo / Redo / Done) use the same **hover-reveal** pattern: moving the pointer into `#deckLeftHover` adds a `.show` class; `mouseleave` + ~400ms delay removes it (including while edit mode is on), matching the original “corner to reveal” behavior.
 
 - **Edit** — enters edit mode only (label stays **Edit**; do not duplicate **Done** on this button).
-- **Add element** — `#btnAddElement` (same hover-reveal row as **Save** in edit mode). Opens `#deckAddElementMenu` to insert **Text**, **Image** (URL prompt or empty placeholder), or **Video** (URL + `controls`) on the **current** slide with undo support.
+- **Add element** — `#btnAddElement` (same hover-reveal row as **Save** in edit mode). Opens `#deckAddElementMenu` to insert **Text**, **Image** (local file, paste, or placeholder), or **Video** (local file) on the **current** slide with undo support.
 - **Done** — only on `#deckEditChrome`; exits edit mode.
 - **Undo** / **Redo** — icon buttons, `disabled` when stack empty; `HistoryStack` notifies via `onChange` callback.
 
