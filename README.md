@@ -48,9 +48,9 @@ The reference contract remains the single file **`examples/editable-deck-referen
 <a id="toc-what"></a>
 ## 这个 Skill 是做什么的 / What This Does
 
-**Frontend Slides - Editable** 是 **frontend-slides** 的可编辑分支。它保留了原始 skill 的风格探索流程、视口适配规则和 PPT 转换能力，并在此基础上加入完整的浏览器内编辑运行时。**交付用的幻灯片仍应按 `STYLE_PRESETS.md` 实现各预设的布局与签名元素**；可编辑只是增加运行时，不是把多套风格压成同一套版式原型。`examples/generated/presets/` 仅为运行时自检样例。
+**Frontend Slides - Editable** 是 **frontend-slides** 的可编辑分支。它保留了原始 skill 的风格探索流程、视口适配规则和 **PPT / PDF** 转换能力，并在此基础上加入完整的浏览器内编辑运行时。**交付用的幻灯片仍应按 `STYLE_PRESETS.md` 实现各预设的布局与签名元素**；可编辑只是增加运行时，不是把多套风格压成同一套版式原型。`examples/generated/presets/` 仅为运行时自检样例。
 
-**Frontend Slides - Editable** is the editable fork of **frontend-slides**. It preserves style discovery, viewport discipline, and PPT conversion from the original skill, then adds a full in-browser editing runtime. **Real decks should still implement each preset’s layout and signature elements from `STYLE_PRESETS.md`** — edit mode is an add-on, not permission to reuse one generic slide prototype for every aesthetic. `examples/generated/presets/` is for runtime smoke tests only.
+**Frontend Slides - Editable** is the editable fork of **frontend-slides**. It preserves style discovery, viewport discipline, and **PPT / PDF** conversion from the original skill, then adds a full in-browser editing runtime. **Real decks should still implement each preset’s layout and signature elements from `STYLE_PRESETS.md`** — edit mode is an add-on, not permission to reuse one generic slide prototype for every aesthetic. `examples/generated/presets/` is for runtime smoke tests only.
 
 ### 操作演示（1.0 录屏） · Demo screencast (1.0 era)
 
@@ -108,7 +108,7 @@ If you only need the smallest read-only output, use the parent [**frontend-slide
 - **零依赖**：单个 HTML 文件，CSS/JS 内联，无需 npm、构建工具或框架
 - **可视化风格探索**：通过预览选风格，而不是抽象描述
 - **完整可编辑运行时**：拖拽、多选、边角/边缘缩放、对象删除、**添加**图/文/视频、缩略图侧栏与历史记录
-- **PPT 转换**：将 `.pptx` 转为可编辑网页幻灯片并保留资源
+- **PPT / PDF 转换**：将 `.pptx` 或 `.pdf` 抽成与 PPT 相同的中间 JSON（`extracted-slides.json` + `assets/`），再生成可编辑网页幻灯片
 - **视口安全**：每一页都要求适配视口，不允许内部滚动
 - **持久化与导出**：`Ctrl+S` 保存结构化状态；导出时剥离临时编辑态
 - **反模板感**：通过精选风格预设，避免千篇一律
@@ -116,7 +116,7 @@ If you only need the smallest read-only output, use the parent [**frontend-slide
 - **Zero dependencies**: Single-file HTML with inline CSS/JS, no npm/build/framework
 - **Visual style discovery**: pick by preview, not design jargon
 - **Full editable runtime**: drag, multi-select, corner/edge resize, object delete, **add** text/image/video, filmstrip, history
-- **PPT conversion**: convert `.pptx` into editable web slides with preserved assets
+- **PPT / PDF conversion**: extract `.pptx` or `.pdf` to the same intermediate JSON (`extracted-slides.json` + `assets/`), then build editable web slides
 - **Viewport-safe output**: every slide must fit the viewport without internal scrolling
 - **Persistence + export**: `Ctrl+S` saves structure; export removes transient edit state
 - **Anti-generic aesthetics**: curated presets over bland default templates
@@ -130,12 +130,12 @@ Use **frontend-slides-editable** when you want:
 - 生成后仍可在浏览器继续微调
 - 支持客户/团队评审后的布局修订
 - 单文件、零构建的可交付结果
-- PowerPoint 转网页后继续编辑
+- PowerPoint / PDF 转网页后继续编辑（PDF 为抽取层 + 再设计版式，非像素级还原）
 
 - a generated deck you can continue refining in browser
 - post-generation layout iteration during reviews
 - a single-file deliverable with no build step
-- PowerPoint-to-web conversion with continued editing
+- PowerPoint- or PDF-to-web conversion with continued editing (PDF: extract-then-redesign, not pixel-perfect layout)
 
 适合 **frontend-slides**：
 
@@ -175,7 +175,7 @@ Paste the block below to **Claude Code / Cursor / any AI agent with shell access
 - 执行：git clone https://github.com/archlizheng/frontend-slides-editable.git ~/.codex/skills/frontend-slides-editable
 - 验证：ls ~/.codex/skills/frontend-slides-editable/ 应至少能看到 SKILL.md、examples/、STYLE_PRESETS.md
 
-只帮我装我实际用的那一套（Claude Code 或 Codex），装好后告诉我已完成；之后我说「做单文件可编辑 HTML 演示」「把 pptx 转成可继续在浏览器里改的幻灯片」等需求应能触发这个 skill。
+只帮我装我实际用的那一套（Claude Code 或 Codex），装好后告诉我已完成；之后我说「做单文件可编辑 HTML 演示」「把 pptx / pdf 转成可继续在浏览器里改的幻灯片」等需求应能触发这个 skill。
 ```
 
 ### 方式二：手动命令行 / Option B: manual shell
@@ -279,17 +279,43 @@ The skill will:
 
 The skill will:
 
-1. 提取 PPT 文字、图片和备注。
+1. 运行 `scripts/extract-pptx.py`：提取文字、图片和演讲者备注。
 2. 与你确认提取结果（标题、要点、图片数量等）。
 3. **Phase 1 补全**：提取结果≠完整 brief；仍需一次性确认或补问 **风格方向、可编辑 vs 只读、语言/地区、是否重组页数目标、提取图片的使用方式** 等缺失项。
 4. **Phase 2**：用预设/预览缩小风格（Show, don’t tell），再定预设或混合方向。
 5. 生成可编辑 HTML deck 并保留内容与资源。
 
-1. Extract text, images, and notes from PPT.
+1. Run `scripts/extract-pptx.py`: extract text, images, and speaker notes.
 2. Confirm the extraction (titles, content, image counts).
 3. **Phase 1 gap-fill:** extraction is **not** the full brief; batch any missing **style direction, editable vs read-only, locale, restructuring goals, how to use extracted images**, etc.
 4. **Phase 2:** narrow style with presets/previews (show, don’t tell), then lock preset or mix.
 5. Generate an editable HTML deck with preserved assets.
+
+### 转换 PDF / Convert a PDF
+
+```text
+/frontend-slides-editable
+
+> "Convert deck.pdf into an editable web slideshow"
+```
+
+**依赖：** Python + **PyMuPDF**（`pip install pymupdf`）。抽取命令：
+
+**Dependency:** Python + **PyMuPDF** (`pip install pymupdf`). Extraction command:
+
+```bash
+python3 scripts/extract-pdf.py path/to/file.pdf path/to/output_dir
+# 可选：无文字且无内嵌图的页面整页渲染为 PNG / Optional: rasterize empty pages
+python3 scripts/extract-pdf.py path/to/file.pdf path/to/output_dir --raster-if-empty
+```
+
+与 PPT 相同，输出 **`extracted-slides.json`** 与 **`assets/`**；**每一 PDF 页对应一页「幻灯片」**；PDF 无演讲者备注字段。纯扫描件默认抽不出可选文字，需 `--raster-if-empty` 或外部 OCR。
+
+Same as PPT: writes **`extracted-slides.json`** + **`assets/`**; **one PDF page = one slide**; PDFs have no speaker-notes field. Scanned PDFs need **`--raster-if-empty`** or external OCR for usable text.
+
+然后同样走 Phase 1 补全 → Phase 2 风格 → Phase 3 生成可编辑 HTML（与 pptx 流程一致，并非「单步机械编译」）。
+
+Then follow the same Phase 1 → 2 → 3 pipeline as PPTX (not a one-step mechanical compile).
 
 ## 编辑体验 / Editing Experience
 
@@ -434,6 +460,7 @@ python3 scripts/capture-preset-previews.py
 | `html-template.md` | HTML 基础结构说明 / Base HTML integration notes |
 | `animation-patterns.md` | 动画参考 / CSS/JS animation reference |
 | `scripts/extract-pptx.py` | PPT 内容提取脚本 / PPT extraction script |
+| `scripts/extract-pdf.py` | PDF 按页抽取（与 PPT 相同 JSON 形状）/ PDF per-page extraction (same JSON shape as PPT) |
 | `examples/generated/presets/*.html` | 19 个单风格可编辑样例（与 STYLE_PRESETS 一一对应） / One editable deck per preset |
 | `docs/preset-previews/*.png` | 各预设首页截图（README 图库）/ First-slide PNGs for README gallery |
 | `scripts/build-preset-decks.py` | 从参考实现批量生成上述样例 / Build all preset sample files |
@@ -483,10 +510,12 @@ The runtime depends on non-negotiable contracts:
 
 - [Claude Code](https://claude.ai/claude-code) 或任意将 skill 安装到 **`~/.claude/skills/`** 的兼容客户端；**OpenAI Codex** 使用 **`~/.codex/skills/`**；**Cursor** 等请按各产品文档中的 skills 目录或技能加载方式配置
 - 如需 PPT 转换：Python + `python-pptx`
+- 如需 PDF 抽取（转 HTML 前的中间层）：Python + **PyMuPDF**（`pip install pymupdf`）；扫描件/纯图 PDF 默认无可靠文本，见上文「转换 PDF」
 - 如需浏览器编辑/导出：现代 Chromium、Safari 或 Firefox
 
 - [Claude Code](https://claude.ai/claude-code) or any runner that loads skills from **`~/.claude/skills/`**; **OpenAI Codex** uses **`~/.codex/skills/`**; **Cursor** and others: follow that product’s documented skills directory or skill-loading flow
 - For PPT conversion: Python + `python-pptx`
+- For PDF extraction (intermediate step before HTML): Python + **PyMuPDF** (`pip install pymupdf`); scanned/image-only PDFs need raster/OCR — see **Convert a PDF** above
 - For editing/export: modern Chromium, Safari, or Firefox-class browser
 
 <a id="toc-try"></a>

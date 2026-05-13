@@ -1,6 +1,6 @@
 ---
 name: frontend-slides-editable
-description: Use when the user wants a single-file HTML presentation that stays editable in the browser after generation, or needs object-level layout editing, slide reordering, local save/export, or PPT-to-web conversion with continued editing.
+description: Use when the user wants a single-file HTML presentation that stays editable in the browser after generation, or needs object-level layout editing, slide reordering, local save/export, or PPT/PDF-to-web conversion with continued editing.
 ---
 
 <objective>
@@ -29,7 +29,7 @@ If runtime constraints ever conflict with a signature element, **adapt the eleme
 <discovery_gate>
 Discovery gate (do not skip)
 
-Models often jump straight to generating HTML. **For Mode A (new deck) and Mode B (PPT) after extraction, you must finish Phase 1 before Phase 2, and Phase 2 before Phase 3** — unless a narrow exception below applies.
+Models often jump straight to generating HTML. **For Mode A (new deck) and Mode B (PPT or PDF) after extraction, you must finish Phase 1 before Phase 2, and Phase 2 before Phase 3** — unless a narrow exception below applies.
 
 **Hard rule:** Unless the user provides **in one turn** (or one clearly scoped batch) **every** item in the **Phase 1 checklist**, you **must** run **Phase 1 first** as **one grouped message** (or a structured question UI). If the batch is incomplete, send **only** the **missing** checklist items in the next message — **do not** guess slide count, outline depth, preset, or language. **Invoking `/frontend-slides-editable` or attaching this skill does *not* waive discovery.** A one-liner (e.g. “用 skill 介绍它自己”, “做一份某某主题的演示”) is **topic / intent only**, not a brief.
 
@@ -47,7 +47,7 @@ Models often jump straight to generating HTML. **For Mode A (new deck) and Mode 
 
 **Images vs outline:** **Co-design outline ↔ images** (Step 1.2) only **after** the user has real assets or links to evaluate. Do **not** skip Phase 1 dimensions just because images are pending; capture “yes, will provide” in Phase 1, then run image evaluation when files exist.
 
-**Mode B (PPT):** After `extract-pptx.py`, present titles/summaries/asset counts and **still run Phase 1** for anything extraction does **not** decide: **length goals** if restructuring, **style direction**, **editing** scope, **locale**, and **image** handling notes on extracted assets. **Do not** jump from “here’s the extract” straight to **only** style picking — close Phase 1 gaps first, **then** Phase 2, **then** codegen.
+**Mode B (PPT / PDF):** After `extract-pptx.py` (`.pptx`) or `extract-pdf.py` (`.pdf`), present titles/summaries/asset counts and **still run Phase 1** for anything extraction does **not** decide: **length goals** if restructuring, **style direction**, **editing** scope, **locale**, and **image** handling notes on extracted assets. **Do not** jump from “here’s the extract” straight to **only** style picking — close Phase 1 gaps first, **then** Phase 2, **then** codegen.
 
 **When Phase 1 and/or Phase 2 may be shortened (narrow exceptions only):**
 
@@ -130,7 +130,7 @@ Phase 0: Detect Mode
 Determine what the user wants:
 
 - **Mode A: New Presentation** — Create from scratch. Go to Phase 1.
-- **Mode B: PPT Conversion** — Convert a .pptx file. Go to Phase 4.
+- **Mode B: PPT / PDF conversion** — Convert a `.pptx` or `.pdf` file. Go to Phase 4.
 - **Mode C: Enhancement** — Improve an existing HTML presentation. Read it, understand it, enhance. **Follow Mode C modification rules below.**
 </mode_detection>
 
@@ -149,7 +149,7 @@ When enhancing existing presentations, viewport fitting is the biggest risk:
 </mode_c_modification_rules>
 
 <phase_1_content_discovery>
-Phase 1: Content Discovery (New deck & PPT path)
+Phase 1: Content Discovery (New deck & PPT/PDF path)
 
 **Centralize Phase 1:** For Mode A and for Mode B **after** extraction, deliver the checklist in **one grouped interaction** (see **Discovery gate** above) — not dribbled across many turns. If the user’s first message is incomplete, **only** ask missing items next.
 
@@ -312,15 +312,20 @@ If images were provided, the slide outline already incorporates them from Step 1
 </phase_3_generate_presentation>
 
 <phase_4_ppt_conversion>
-Phase 4: PPT Conversion
+Phase 4: PPT / PDF conversion
 
-When converting PowerPoint files:
+When converting **PowerPoint** (`.pptx`) or **PDF** (`.pdf`) files:
 
-1. **Extract content** — Run `python3 scripts/extract-pptx.py &lt;input.pptx&gt; &lt;output_dir&gt;` (install python-pptx if needed: `pip install python-pptx`)
-2. **Confirm with user** — Present extracted slide titles, content summaries, and image counts
+1. **Extract content**
+   - **PPTX:** `python3 scripts/extract-pptx.py &lt;input.pptx&gt; &lt;output_dir&gt;` (install **python-pptx** if needed: `pip install python-pptx`)
+   - **PDF:** `python3 scripts/extract-pdf.py &lt;input.pdf&gt; &lt;output_dir&gt;` (install **PyMuPDF** if needed: `pip install pymupdf`). Optional: `--raster-if-empty` renders a page to PNG when that page has no extractable text and no embedded images (e.g. scanned-like pages still need separate OCR; this flag only captures a bitmap of the page).
+   - Both writers emit the same intermediate: **`extracted-slides.json`** + **`assets/`** (one record per slide/page; PDF has no speaker notes — use `notes: ""`).
+2. **Confirm with user** — Present extracted slide/page titles, content summaries, and image counts
 3. **Phase 1 (close gaps)** — Extraction supplies **content**, but you still need explicit answers for anything not fixed by the file: **style direction** (or preset/delegate), **full editable vs read-only**, **locale**, **length** intent if merging/splitting slides, and **image** handling on extracted assets. **One grouped follow-up** for missing items only.
 4. **Phase 2** — Style discovery (previews / preset pick); see **Phase 2: Style Discovery** in this skill file
-5. **Generate HTML** — Convert to chosen style, preserving all text, images (from assets/), slide order, and speaker notes (as HTML comments)
+5. **Generate HTML** — Convert to chosen style, preserving all text, images (from assets/), slide order; **PPTX:** speaker notes as HTML comments. **PDF:** no notes in source — omit or leave comment placeholders only if the user supplies them separately.
+
+**PDF caveats:** Text reading order and “title vs body” are heuristic; layout is not object-level like PPTX. Image-only PDFs need `--raster-if-empty` or external OCR for usable text.
 </phase_4_ppt_conversion>
 </quick_start>
 
@@ -354,6 +359,7 @@ Supporting Files
 | [viewport-base.css](viewport-base.css) | Mandatory responsive CSS — copy into every presentation | Phase 3 (generation) |
 | [html-template.md](html-template.md) | HTML structure, integration with editable runtime | Phase 3 (generation) |
 | [animation-patterns.md](animation-patterns.md) | CSS/JS animation snippets and effect-to-feeling guide | Phase 3 (generation) |
-| [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction | Phase 4 (conversion) |
+| [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction | Phase 4 (PPTX) |
+| [scripts/extract-pdf.py](scripts/extract-pdf.py) | Python script for PDF page extraction (same JSON shape as PPTX) | Phase 4 (PDF) |
 | [README.md](README.md) | Bilingual extended overview, comparison table, troubleshooting | Optional (users / maintainers) |
 </supporting_files>
