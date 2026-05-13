@@ -373,19 +373,24 @@
       background: linear-gradient(90deg, var(--accent), rgba(237, 220, 140, 0.9));
       z-index: 0;
     }
+    .hero-title .slide-object-text { font-style: italic; }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 70%;
-      top: 18%;
-      width: 10%;
-      height: 56%;
-      background: linear-gradient(135deg, rgba(125,155,118,0.22), rgba(237,220,140,0.16));
-      border: 1px solid rgba(45, 40, 34, 0.08);
+      right: -18%;
+      top: -12%;
+      width: min(62vw, 720px);
+      height: min(62vw, 720px);
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 35% 35%,
+        color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+        transparent 58%
+      );
       z-index: 0;
       pointer-events: none;
     }
-    .hero-title .slide-object-text { font-style: italic; }
 
     body {
       margin: 0;

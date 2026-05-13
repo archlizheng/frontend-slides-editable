@@ -363,25 +363,34 @@
       z-index: 0;
     }
     .hero-title .slide-object-text { font-style: italic; color: #1e3a8a; }
+
+    .slide-cover {
+      --cover-decor-right: 7%;
+      --cover-decor-top: 11%;
+      --cover-decor-width: clamp(76px, 8vw, 112px);
+      --cover-decor-height: clamp(76px, 8vw, 112px);
+      --cover-decor-opacity: 0.66;
+      --cover-decor-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 24%, transparent);
+    }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 58%;
-      top: 18%;
-      width: 28%;
-      height: 54%;
-      background:
-        linear-gradient(135deg, rgba(37,99,235,0.12), rgba(59,130,246,0.06)),
-        repeating-linear-gradient(
-          -12deg,
-          transparent,
-          transparent 8px,
-          rgba(37,99,235,0.06) 8px,
-          rgba(37,99,235,0.06) 9px
-        );
-      border: 1px solid rgba(37, 99, 235, 0.25);
+      right: var(--cover-decor-right, 6%);
+      top: var(--cover-decor-top, 9%);
+      bottom: var(--cover-decor-bottom, auto);
+      width: var(--cover-decor-width, clamp(56px, 7vw, 92px));
+      height: var(--cover-decor-height, clamp(56px, 7vw, 92px));
+      border: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      border-top: var(--cover-decor-border-top, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
+      border-right: var(--cover-decor-border-right, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
+      border-bottom: var(--cover-decor-border-bottom, none);
+      border-left: var(--cover-decor-border-left, none);
+      border-radius: var(--cover-decor-radius, 0 clamp(10px, 1vw, 14px) 0 0);
+      opacity: var(--cover-decor-opacity, 0.9);
       z-index: 0;
       pointer-events: none;
+      box-shadow: var(--cover-decor-shadow, 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent));
     }
 
     body {

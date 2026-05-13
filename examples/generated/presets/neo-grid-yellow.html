@@ -371,16 +371,22 @@
       border-radius: 0;
       box-shadow: 6px 6px 0 rgba(15, 15, 15, 0.1);
     }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 63%;
-      top: 18%;
-      width: 14%;
-      height: 52%;
-      background: linear-gradient(135deg, var(--accent), rgba(212,232,23,0.35));
-      border: 3px solid #0f0f0f;
-      border-radius: 0;
+      left: 0;
+      top: 11%;
+      bottom: 13%;
+      width: 4px;
+      border-radius: 0 4px 4px 0;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        var(--accent) 45%,
+        transparent
+      );
+      opacity: 0.85;
       z-index: 0;
       pointer-events: none;
     }

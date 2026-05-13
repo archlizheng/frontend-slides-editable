@@ -365,16 +365,26 @@
       background-size: 18px 18px;
       z-index: 0;
     }
+
+    .slide-cover {
+      --cover-decor-left: 46%;
+      --cover-decor-right: 11%;
+      --cover-decor-bottom: 8%;
+      --cover-decor-height: 3px;
+      --cover-decor-opacity: 0.68;
+      --cover-decor-background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 65%, #f0b4d4), transparent);
+    }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 57%;
-      top: 14%;
-      width: 31%;
-      height: 62%;
-      background: linear-gradient(135deg, rgba(200,240,216,0.84), rgba(240,212,224,0.6));
-      border: 1px solid rgba(26,26,26,0.08);
-      box-shadow: 0 16px 30px rgba(68, 61, 74, 0.1);
+      left: var(--cover-decor-left, 10%);
+      right: var(--cover-decor-right, 10%);
+      bottom: var(--cover-decor-bottom, 7%);
+      height: var(--cover-decor-height, 3px);
+      border-radius: 999px;
+      background: var(--cover-decor-background, linear-gradient(90deg, transparent, var(--accent), transparent));
+      opacity: var(--cover-decor-opacity, 0.88);
       z-index: 0;
       pointer-events: none;
     }
@@ -919,7 +929,7 @@
       <button type="button" class="slide-object-resize" aria-label="Resize"></button>
       <div class="slide-object-text" contenteditable="false">Split Pastel / README deck</div>
     </div>
-    <div class="slide-object reveal hero-title" data-slide-object data-oid="s0-o1" data-object-type="text" style="left:8%;top:17%;width:34%;">
+    <div class="slide-object reveal hero-title" data-slide-object data-oid="s0-o1" data-object-type="text" style="left:8%;top:17%;width:44%;">
       <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
       <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
       <button type="button" class="slide-object-resize" aria-label="Resize"></button>

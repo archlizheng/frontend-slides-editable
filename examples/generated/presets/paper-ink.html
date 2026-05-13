@@ -375,23 +375,42 @@
     .hero-title .slide-object-text {
       font-style: italic;
     }
-    .slide-cover > .slide-bg::after {
-      content: "";
-      position: absolute;
-      left: 62%;
-      top: 18%;
-      width: 18%;
-      height: 56%;
-      background: linear-gradient(180deg, rgba(196,30,58,0.08), transparent);
-      border: 1px solid rgba(26,26,26,0.08);
-      z-index: 0;
-      pointer-events: none;
-    }
     .panel-card .slide-object-text,
     .workflow-card .slide-object-text,
     .arch-card .slide-object-text,
     .closing-note .slide-object-text {
       border-top: 3px solid rgba(196, 30, 58, 0.72);
+    }
+
+    .slide-cover {
+      --cover-decor-left: 10%;
+      --cover-decor-top: 18%;
+      --cover-decor-bottom: 20%;
+      --cover-decor-width: 3px;
+      --cover-decor-shadow-x: 14px;
+      --cover-decor-opacity: 0.72;
+    }
+
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: var(--cover-decor-left, 7%);
+      top: var(--cover-decor-top, 14%);
+      bottom: var(--cover-decor-bottom, 16%);
+      width: var(--cover-decor-width, 2px);
+      border-radius: 2px;
+      background: var(--cover-decor-background, linear-gradient(
+        180deg,
+        transparent,
+        color-mix(in srgb, var(--accent) 55%, transparent) 35%,
+        color-mix(in srgb, var(--accent) 85%, transparent) 50%,
+        color-mix(in srgb, var(--accent) 55%, transparent) 65%,
+        transparent
+      ));
+      opacity: var(--cover-decor-opacity, 0.95);
+      z-index: 0;
+      pointer-events: none;
+      box-shadow: var(--cover-decor-shadow-x, 18px) 0 0 0 color-mix(in srgb, var(--accent) 35%, transparent);
     }
 
     body {

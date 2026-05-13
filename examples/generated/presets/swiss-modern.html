@@ -381,18 +381,22 @@
       box-shadow: none;
       border-radius: 0;
     }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 63%;
-      top: 18%;
-      width: 14%;
-      height: 52%;
-      background:
-        linear-gradient(90deg, rgba(255,51,0,0.94) 0 14%, transparent 14% 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.01));
-      border-radius: 0;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      left: 0;
+      top: 11%;
+      bottom: 13%;
+      width: 4px;
+      border-radius: 0 4px 4px 0;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        var(--accent) 45%,
+        transparent
+      );
+      opacity: 0.85;
       z-index: 0;
       pointer-events: none;
     }

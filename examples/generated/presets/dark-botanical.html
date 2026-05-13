@@ -384,17 +384,34 @@
     .arch-card .slide-object-text {
       border-left: 1px solid var(--accent);
     }
+
+    .slide-cover {
+      --cover-decor-left: 7%;
+      --cover-decor-top: 16%;
+      --cover-decor-bottom: 18%;
+      --cover-decor-opacity: 0.8;
+    }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 62%;
-      top: 18%;
-      width: 18%;
-      height: 56%;
-      background: linear-gradient(135deg, rgba(212,165,116,0.16), rgba(232,180,184,0.12));
-      border: 1px solid rgba(255,255,255,0.12);
+      left: var(--cover-decor-left, 7%);
+      top: var(--cover-decor-top, 14%);
+      bottom: var(--cover-decor-bottom, 16%);
+      width: var(--cover-decor-width, 2px);
+      border-radius: 2px;
+      background: var(--cover-decor-background, linear-gradient(
+        180deg,
+        transparent,
+        color-mix(in srgb, var(--accent) 55%, transparent) 35%,
+        color-mix(in srgb, var(--accent) 85%, transparent) 50%,
+        color-mix(in srgb, var(--accent) 55%, transparent) 65%,
+        transparent
+      ));
+      opacity: var(--cover-decor-opacity, 0.95);
       z-index: 0;
       pointer-events: none;
+      box-shadow: var(--cover-decor-shadow-x, 18px) 0 0 0 color-mix(in srgb, var(--accent) 35%, transparent);
     }
 
     body {

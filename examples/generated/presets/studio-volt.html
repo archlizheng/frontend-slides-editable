@@ -361,20 +361,38 @@
       z-index: 0;
       pointer-events: none;
     }
+    .hero-title .slide-object-text { letter-spacing: 0.02em; }
+
+    .slide-cover {
+      --cover-decor-right: 5%;
+      --cover-decor-top: 62%;
+      --cover-decor-width: clamp(84px, 10vw, 140px);
+      --cover-decor-height: clamp(42px, 5vw, 66px);
+      --cover-decor-border-left: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      --cover-decor-border-bottom: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      --cover-decor-radius: 0 clamp(10px, 1vw, 14px) 0 clamp(10px, 1vw, 14px);
+      --cover-decor-opacity: 0.76;
+    }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 58%;
-      top: 18%;
-      width: 28%;
-      height: 54%;
-      background: linear-gradient(135deg, rgba(245,224,0,0.95), rgba(245,224,0,0.15));
-      border: 2px solid rgba(245, 224, 0, 0.5);
-      box-shadow: 0 0 30px rgba(245, 224, 0, 0.15);
+      right: var(--cover-decor-right, 6%);
+      top: var(--cover-decor-top, 9%);
+      bottom: var(--cover-decor-bottom, auto);
+      width: var(--cover-decor-width, clamp(56px, 7vw, 92px));
+      height: var(--cover-decor-height, clamp(56px, 7vw, 92px));
+      border: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      border-top: var(--cover-decor-border-top, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
+      border-right: var(--cover-decor-border-right, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
+      border-bottom: var(--cover-decor-border-bottom, none);
+      border-left: var(--cover-decor-border-left, none);
+      border-radius: var(--cover-decor-radius, 0 clamp(10px, 1vw, 14px) 0 0);
+      opacity: var(--cover-decor-opacity, 0.9);
       z-index: 0;
       pointer-events: none;
+      box-shadow: var(--cover-decor-shadow, 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent));
     }
-    .hero-title .slide-object-text { letter-spacing: 0.02em; }
 
     body {
       margin: 0;

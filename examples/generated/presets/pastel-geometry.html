@@ -378,16 +378,20 @@
         linear-gradient(180deg, #f0b4d4 0%, #f0b4d4 16%, transparent 16%, transparent 22%, #a8d4c4 22%, #a8d4c4 46%, transparent 46%, transparent 54%, #7c6aad 54%, #7c6aad 100%);
       z-index: 1;
     }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 70%;
-      top: 18%;
-      width: 10%;
-      height: 56%;
-      background: linear-gradient(180deg, rgba(124,106,173,0.16), rgba(168,212,196,0.12));
-      border: 1px solid rgba(26,26,26,0.08);
-      border-radius: 28px;
+      right: -18%;
+      top: -12%;
+      width: min(62vw, 720px);
+      height: min(62vw, 720px);
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 35% 35%,
+        color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+        transparent 58%
+      );
       z-index: 0;
       pointer-events: none;
     }

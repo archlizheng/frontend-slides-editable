@@ -7,6 +7,7 @@ Chinese-first voice while preserving preset-specific layout identity.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -350,6 +351,246 @@ def arch_note_html(preset_title: str) -> str:
     )
 
 
+def strip_preset_cover_decor(css: str) -> str:
+    """Remove legacy cover pseudo-elements so family-specific decor can be injected once."""
+    patterns = (
+        r"\n    \.slide-cover::after \{.*?\n    \}",
+        r"\n    \.slide-cover > \.slide-bg::after \{.*?\n    \}",
+    )
+    for pat in patterns:
+        css = re.sub(pat, "", css, flags=re.DOTALL)
+    return css
+
+
+COVER_DECOR_CSS_BY_FAMILY: dict[str, str] = {
+    "bold": """
+    .slide-cover::after {
+      content: "";
+      position: absolute;
+      right: 6%;
+      top: 12%;
+      width: min(26vw, 300px);
+      height: min(48vh, 380px);
+      background: var(--accent);
+      border-radius: clamp(14px, 1.4vw, 22px);
+      transform: rotate(-2.5deg);
+      opacity: 0.9;
+      z-index: 0;
+      pointer-events: none;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.22);
+    }
+""",
+    "split": """
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: var(--cover-decor-left, 10%);
+      right: var(--cover-decor-right, 10%);
+      bottom: var(--cover-decor-bottom, 7%);
+      height: var(--cover-decor-height, 3px);
+      border-radius: 999px;
+      background: var(--cover-decor-background, linear-gradient(90deg, transparent, var(--accent), transparent));
+      opacity: var(--cover-decor-opacity, 0.88);
+      z-index: 0;
+      pointer-events: none;
+    }
+""",
+    "editorial": """
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: var(--cover-decor-left, 7%);
+      top: var(--cover-decor-top, 14%);
+      bottom: var(--cover-decor-bottom, 16%);
+      width: var(--cover-decor-width, 2px);
+      border-radius: 2px;
+      background: var(--cover-decor-background, linear-gradient(
+        180deg,
+        transparent,
+        color-mix(in srgb, var(--accent) 55%, transparent) 35%,
+        color-mix(in srgb, var(--accent) 85%, transparent) 50%,
+        color-mix(in srgb, var(--accent) 55%, transparent) 65%,
+        transparent
+      ));
+      opacity: var(--cover-decor-opacity, 0.95);
+      z-index: 0;
+      pointer-events: none;
+      box-shadow: var(--cover-decor-shadow-x, 18px) 0 0 0 color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+""",
+    "notebook": """
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 18%;
+      width: clamp(8px, 1vw, 12px);
+      height: 52%;
+      border-radius: 10px 0 0 10px;
+      background: linear-gradient(180deg, #98d4bb 0%, #c7b8ea 34%, #f4b8c5 66%, #a8d8ea 100%);
+      opacity: 0.92;
+      z-index: 0;
+      pointer-events: none;
+      box-shadow: -6px 0 18px rgba(0, 0, 0, 0.12);
+    }
+""",
+    "soft": """
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      right: -18%;
+      top: -12%;
+      width: min(62vw, 720px);
+      height: min(62vw, 720px);
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 35% 35%,
+        color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+        transparent 58%
+      );
+      z-index: 0;
+      pointer-events: none;
+    }
+""",
+    "cyber": """
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      right: var(--cover-decor-right, 6%);
+      top: var(--cover-decor-top, 9%);
+      bottom: var(--cover-decor-bottom, auto);
+      width: var(--cover-decor-width, clamp(56px, 7vw, 92px));
+      height: var(--cover-decor-height, clamp(56px, 7vw, 92px));
+      border: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      border-top: var(--cover-decor-border-top, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
+      border-right: var(--cover-decor-border-right, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
+      border-bottom: var(--cover-decor-border-bottom, none);
+      border-left: var(--cover-decor-border-left, none);
+      border-radius: var(--cover-decor-radius, 0 clamp(10px, 1vw, 14px) 0 0);
+      opacity: var(--cover-decor-opacity, 0.9);
+      z-index: 0;
+      pointer-events: none;
+      box-shadow: var(--cover-decor-shadow, 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent));
+    }
+""",
+    "minimal": """
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 11%;
+      bottom: 13%;
+      width: 4px;
+      border-radius: 0 4px 4px 0;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        var(--accent) 45%,
+        transparent
+      );
+      opacity: 0.85;
+      z-index: 0;
+      pointer-events: none;
+    }
+""",
+}
+
+
+COVER_DECOR_VARIABLES_BY_SLUG: dict[str, str] = {
+    "electric-studio": """
+    .slide-cover {
+      --cover-decor-left: 12%;
+      --cover-decor-right: 55%;
+      --cover-decor-bottom: 9%;
+      --cover-decor-height: 4px;
+      --cover-decor-opacity: 0.72;
+    }
+""",
+    "split-pastel": """
+    .slide-cover {
+      --cover-decor-left: 46%;
+      --cover-decor-right: 11%;
+      --cover-decor-bottom: 8%;
+      --cover-decor-height: 3px;
+      --cover-decor-opacity: 0.68;
+      --cover-decor-background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 65%, #f0b4d4), transparent);
+    }
+""",
+    "dark-botanical": """
+    .slide-cover {
+      --cover-decor-left: 7%;
+      --cover-decor-top: 16%;
+      --cover-decor-bottom: 18%;
+      --cover-decor-opacity: 0.8;
+    }
+""",
+    "vintage-editorial": """
+    .slide-cover {
+      --cover-decor-left: 86%;
+      --cover-decor-top: 17%;
+      --cover-decor-bottom: 20%;
+      --cover-decor-shadow-x: -18px;
+      --cover-decor-opacity: 0.58;
+    }
+""",
+    "paper-ink": """
+    .slide-cover {
+      --cover-decor-left: 10%;
+      --cover-decor-top: 18%;
+      --cover-decor-bottom: 20%;
+      --cover-decor-width: 3px;
+      --cover-decor-shadow-x: 14px;
+      --cover-decor-opacity: 0.72;
+    }
+""",
+    "vellum-navy": """
+    .slide-cover {
+      --cover-decor-left: 82%;
+      --cover-decor-top: 13%;
+      --cover-decor-bottom: 17%;
+      --cover-decor-width: 3px;
+      --cover-decor-opacity: 0.7;
+    }
+""",
+    "terminal-green": """
+    .slide-cover {
+      --cover-decor-right: 8%;
+      --cover-decor-top: auto;
+      --cover-decor-bottom: 12%;
+      --cover-decor-width: clamp(72px, 9vw, 128px);
+      --cover-decor-height: clamp(34px, 4vw, 56px);
+      --cover-decor-border-top: none;
+      --cover-decor-border-left: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      --cover-decor-border-bottom: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      --cover-decor-radius: 0 0 0 clamp(10px, 1vw, 14px);
+      --cover-decor-opacity: 0.74;
+    }
+""",
+    "studio-volt": """
+    .slide-cover {
+      --cover-decor-right: 5%;
+      --cover-decor-top: 62%;
+      --cover-decor-width: clamp(84px, 10vw, 140px);
+      --cover-decor-height: clamp(42px, 5vw, 66px);
+      --cover-decor-border-left: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      --cover-decor-border-bottom: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      --cover-decor-radius: 0 clamp(10px, 1vw, 14px) 0 clamp(10px, 1vw, 14px);
+      --cover-decor-opacity: 0.76;
+    }
+""",
+    "cobalt-grid": """
+    .slide-cover {
+      --cover-decor-right: 7%;
+      --cover-decor-top: 11%;
+      --cover-decor-width: clamp(76px, 8vw, 112px);
+      --cover-decor-height: clamp(76px, 8vw, 112px);
+      --cover-decor-opacity: 0.66;
+      --cover-decor-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 24%, transparent);
+    }
+""",
+}
+
+
 LAYOUTS = {
     "bold": {
         "cover": {
@@ -395,7 +636,7 @@ LAYOUTS = {
     "split": {
         "cover": {
             "eyebrow": box("8%", "10%", "28%"),
-            "title": box("8%", "17%", "34%"),
+            "title": box("8%", "17%", "44%"),
             "subtitle": box("8%", "52%", "28%"),
             "metrics": box("8%", "71%", "42%", "16%"),
         },
@@ -1868,10 +2109,16 @@ def patch_head_fonts(text: str, google_url: Optional[str]) -> str:
 
 
 def patch_theme_section(text: str, preset: Preset) -> str:
+    theme_core = strip_preset_cover_decor(preset.theme_css)
+    cover_decor = (
+        COVER_DECOR_VARIABLES_BY_SLUG.get(preset.slug, "")
+        + COVER_DECOR_CSS_BY_FAMILY.get(preset.family, "")
+    )
     theme = (
         f"    /* === theme ({preset.title}) === */\n"
         + COMMON_COMPONENT_CSS
-        + preset.theme_css
+        + theme_core
+        + cover_decor
         + """
     body {
       margin: 0;

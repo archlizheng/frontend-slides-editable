@@ -363,21 +363,22 @@
       z-index: 0;
       opacity: 0.5;
     }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 63%;
-      top: 18%;
-      width: 14%;
-      height: 52%;
-      background: repeating-linear-gradient(
-        -45deg,
-        #111,
-        #111 2px,
-        #f5f3eb 2px,
-        #f5f3eb 6px
+      left: 0;
+      top: 11%;
+      bottom: 13%;
+      width: 4px;
+      border-radius: 0 4px 4px 0;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        var(--accent) 45%,
+        transparent
       );
-      border: 2px solid #111;
+      opacity: 0.85;
       z-index: 0;
       pointer-events: none;
     }

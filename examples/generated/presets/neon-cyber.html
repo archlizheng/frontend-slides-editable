@@ -360,27 +360,32 @@
       z-index: 0;
       opacity: 0.44;
     }
-    .slide-cover > .slide-bg::after {
-      content: "";
-      position: absolute;
-      left: 58%;
-      top: 18%;
-      width: 28%;
-      height: 54%;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(0,255,204,0.34), transparent 46%),
-        linear-gradient(135deg, rgba(255,0,170,0.18), rgba(0,255,204,0.08));
-      border: 1px solid rgba(0,255,204,0.35);
-      box-shadow: 0 0 30px rgba(0,255,204,0.12);
-      z-index: 0;
-      pointer-events: none;
-    }
     .panel-card .slide-object-text,
     .workflow-card .slide-object-text,
     .arch-card .slide-object-text,
     .metric-box .slide-object-text,
     .closing-note .slide-object-text {
       box-shadow: 0 0 0 1px rgba(0,255,204,0.14), 0 16px 30px rgba(0,0,0,0.26);
+    }
+
+    .slide-cover > .slide-bg::after {
+      content: "";
+      position: absolute;
+      right: var(--cover-decor-right, 6%);
+      top: var(--cover-decor-top, 9%);
+      bottom: var(--cover-decor-bottom, auto);
+      width: var(--cover-decor-width, clamp(56px, 7vw, 92px));
+      height: var(--cover-decor-height, clamp(56px, 7vw, 92px));
+      border: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
+      border-top: var(--cover-decor-border-top, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
+      border-right: var(--cover-decor-border-right, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
+      border-bottom: var(--cover-decor-border-bottom, none);
+      border-left: var(--cover-decor-border-left, none);
+      border-radius: var(--cover-decor-radius, 0 clamp(10px, 1vw, 14px) 0 0);
+      opacity: var(--cover-decor-opacity, 0.9);
+      z-index: 0;
+      pointer-events: none;
+      box-shadow: var(--cover-decor-shadow, 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent));
     }
 
     body {

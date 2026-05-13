@@ -377,17 +377,20 @@
       background: linear-gradient(180deg, #98d4bb, #c7b8ea, #f4b8c5, #a8d8ea, #ffe6a7);
       z-index: 1;
     }
+
     .slide-cover > .slide-bg::after {
       content: "";
       position: absolute;
-      left: 69%;
+      right: 0;
       top: 18%;
-      width: 10%;
-      height: 56%;
-      background: linear-gradient(180deg, rgba(90,124,106,0.12), rgba(90,124,106,0.02));
-      border: 1px dashed rgba(26,26,26,0.2);
+      width: clamp(8px, 1vw, 12px);
+      height: 52%;
+      border-radius: 10px 0 0 10px;
+      background: linear-gradient(180deg, #98d4bb 0%, #c7b8ea 34%, #f4b8c5 66%, #a8d8ea 100%);
+      opacity: 0.92;
       z-index: 0;
       pointer-events: none;
+      box-shadow: -6px 0 18px rgba(0, 0, 0, 0.12);
     }
 
     body {
