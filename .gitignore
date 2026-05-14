@@ -8,3 +8,4 @@ __pycache__/
 .design/
 .claude-design-slide-previews/
 examples/generated/test-artifacts/
+beautiful-html-templates/

@@ -20,11 +20,31 @@ Parity with parent `frontend-slides` (style flexibility)
 
 1. **Read STYLE_PRESETS for the chosen preset(s)** and reflect **layout + signatures** in HTML/CSS, not only `:root` colors and fonts.
 2. **The editable reference** ([examples/editable-deck-reference.html](examples/editable-deck-reference.html)) supplies **JS/CSS patterns** (chrome, sidebar, objects, history) — not a **frozen slide layout** to paste on every deck. Do **not** reuse one generic “title + subtitle + corner rounded rectangle” geometry for every style.
-3. **`examples/generated/presets/*.html`** (if present) are **mechanical smoke-test builds** for the runtime; they are **not** the design target for real deliveries. Generated user decks should match **STYLE_PRESETS** expressiveness, like the parent skill.
+3. **`examples/generated/presets/*.html`** are sample decks, not a layout shortcut. The 12 legacy samples are runtime smoke + visual previews; the 34 ported samples are real-template ports from `beautiful-html-templates` using the shared Swiss/reference runtime plus locked slot editing. For real deliveries, match the chosen preset/template grammar instead of reusing a generic README deck.
 4. **Static chrome** (decorations that should not be draggable) may live outside `.slide-edit-layer` (e.g. background pseudo-elements, fixed nav chrome) per preset; **movable** copy and blocks stay as `[data-slide-object]` inside the layer.
 
 If runtime constraints ever conflict with a signature element, **adapt the element** (e.g. implement the same visual with CSS, or split into multiple objects) — do **not** drop preset identity for the sake of a single template.
 </preset_fidelity>
+
+<template_ports>
+Real-template ports (slot-editable)
+
+For the 34 ported presets from `beautiful-html-templates`, prefer the upstream template's **mood / tone / density** and visual grammar over color-token matching alone.
+
+Interaction baseline: ported decks must use the same Swiss/reference editor chrome and object editor as `examples/editable-deck-reference.html` / `swiss-modern.html`. Native template slots are locked-layout content slots; user-added objects are normal `[data-slide-object][data-oid]` objects.
+
+When using or extending a ported preset:
+
+1. Treat the matching `beautiful-html-templates/templates/{source_slug}/template.html` as the visual system: preserve fonts, CSS variables, slide-level classes, layout grid, decorative DOM, and component grammar.
+2. Edit authored content through slots, not by decomposing the template into draggable boxes. Use:
+   - `data-edit-slot`
+   - `data-slot-type="text|image|metric|table-cell"`
+   - `data-slot-label`
+   - `data-slot-locked-layout="true"`
+3. Keep decorative elements locked unless the user should naturally change that exact item. Grids, paper texture, hairlines, scan lines, pixel/glitch layers, ornamental marks, and layout containers should not become draggable objects.
+4. Preserve `.slide-edit-layer` for user-added freeform objects. Added objects can use `[data-slide-object][data-oid]` and the normal Swiss drag/resize/multi-select runtime; native template slots use the Swiss RTE/Undo/Redo/Save/Export path but do not get move/resize handles.
+5. If a needed slide type is missing, design a new slide in the same template system: same fonts, palette, spacing rhythm, chrome, and component grammar. Do not mix in another template's visual language.
+</template_ports>
 
 <discovery_gate>
 Discovery gate (do not skip)
@@ -298,11 +318,13 @@ If images were provided, the slide outline already incorporates them from Step 1
 - [html-template.md](html-template.md) — HTML architecture and integration notes
 - [viewport-base.css](viewport-base.css) — Mandatory CSS (include in full)
 - [animation-patterns.md](animation-patterns.md) — Animation reference for the chosen feeling
+- For ported presets, also read local `beautiful-html-templates/templates/{source_slug}/template.html` and `template.json` when available; use `STYLE_PRESETS.md` as the index, but the upstream template as the detailed design grammar.
 
 **Key requirements:**
 - Single self-contained HTML file, all CSS/JS inline
 - Include the FULL contents of viewport-base.css in the `&lt;style&gt;` block
 - **Preset fidelity:** Implement **Layout** and **Signature Elements** from [STYLE_PRESETS.md](STYLE_PRESETS.md) for the selected style. Vary structure slide-to-slide and preset-to-preset; avoid a **single repeated title-slide prototype** across all aesthetics (parent skill does not do that).
+- **Ported preset fidelity:** For the 34 ported presets, preserve the upstream template DOM/CSS/classes and make authored content slot-editable. Prefer locked native layout + editable `data-edit-slot` content over making every native element draggable.
 - **Every slide** `section.slide` must have a stable `id`; movable content lives in `.slide-edit-layer` as `[data-slide-object][data-oid]` per [editor-runtime.md](editor-runtime.md)
 - **Deck slide list:** Never use a global `querySelectorAll('section.slide')` when a filmstrip clones slides — use only slides under the deck wrapper (e.g. `.slides-offset` + `:scope > section.slide`). See [html-template.md](html-template.md) §Regression guard.
 - Embed the **editable deck runtime** (from the reference example): `SlideDeck`, object editor (select / drag / snap / RTE toolbar), `SlideSidebar`, `HistoryStack`, save/export
@@ -355,7 +377,7 @@ Supporting Files
 |------|---------|-------------|
 | [editor-runtime.md](editor-runtime.md) | DOM contract, undo types, snap rules, generator checklist | Phase 3 (before codegen) |
 | [examples/editable-deck-reference.html](examples/editable-deck-reference.html) | Working reference: full runtime in one file | Phase 3 (copy/adapt JS/CSS) |
-| [STYLE_PRESETS.md](STYLE_PRESETS.md) | 19 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) |
+| [STYLE_PRESETS.md](STYLE_PRESETS.md) | 46 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) |
 | [viewport-base.css](viewport-base.css) | Mandatory responsive CSS — copy into every presentation | Phase 3 (generation) |
 | [html-template.md](html-template.md) | HTML structure, integration with editable runtime | Phase 3 (generation) |
 | [animation-patterns.md](animation-patterns.md) | CSS/JS animation snippets and effect-to-feeling guide | Phase 3 (generation) |

@@ -1,412 +1,886 @@
-<!DOCTYPE html>
-<html lang="zh-Hans" data-deck-id="preset-cobalt-grid">
+<!doctype html>
+<html lang="zh-Hans" data-deck-id="ported-cobalt-grid" data-template-source="cobalt-grid">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cobalt Grid · README Preset Deck</title>
-  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700&f[]=clash-display@600&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    /* === viewport-base.css (full) === */
-    /* ===========================================
-       VIEWPORT FITTING: MANDATORY BASE STYLES
-       Include this ENTIRE file in every presentation.
-       These styles ensure slides fit exactly in the viewport.
-       =========================================== */
 
-    /* 1. Lock html/body to viewport */
-    html, body {
-      height: 100%;
-      overflow-x: hidden;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    html {
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-    }
 
-    /* 2. Each slide = exact viewport height */
-    .slide {
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      overflow: hidden;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
 
-    /* 3. Content container with flex for centering */
-    .slide-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      max-height: 100%;
-      overflow: hidden;
-      padding: var(--slide-padding);
-    }
+<style>
+  :root {
+    --paper:    #F0EBDE;   /* warm cream / ivory paper canvas */
+    --paper-2:  #E6E0CE;
+    --ink:      #1F2BE0;   /* electric cobalt / royal blue */
+    --ink-soft: #5560E5;   /* lighter cobalt for secondary marks */
+    --grid:     rgba(31, 43, 224, 0.10);  /* very faint blue grid */
+    --rule:     #1F2BE0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #0a0a0a; }
+  body {
+    font-family: 'Hanken Grotesk', 'Helvetica Neue', sans-serif;
+    color: var(--ink);
+    overflow: hidden;
+  }
 
-    /* 4. ALL typography uses clamp() for responsive scaling */
-    :root {
-      --title-size: clamp(1.5rem, 5vw, 4rem);
-      --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
-      --h3-size: clamp(1rem, 2.5vw, 1.75rem);
-      --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
-      --small-size: clamp(0.65rem, 1vw, 0.875rem);
-      --slide-padding: clamp(1rem, 4vw, 4rem);
-      --content-gap: clamp(0.5rem, 2vw, 2rem);
-      --element-gap: clamp(0.25rem, 1vw, 1rem);
-      --font-display: 'Fraunces', serif;
-      --font-body: 'IBM Plex Sans', sans-serif;
-      --slide-bg-deep: #f0f4fa;
-      --slide-bg-gradient: linear-gradient(180deg, #f8fafc 0%, #e8f0fc 100%);
-      --text-primary: #0f172a;
-      --text-secondary: #334155;
-      --text-muted: #64748b;
-      --text-on-accent: #f8fafc;
-      --accent: #2563eb;
-      --surface: rgba(255, 255, 255, 0.88);
-      --surface-strong: rgba(37, 99, 235, 0.08);
-      --line: rgba(15, 23, 42, 0.1);
-      --panel-shadow: 0 14px 32px rgba(37, 99, 235, 0.08);
+  /* Deck wrapper — fills the viewport */
+  .deck { position: fixed; inset: 0; display: grid; place-items: center; }
+  .stage {
+    position: relative;
+    width: 100vw; height: 100vh;
+    overflow: hidden;
+    background: var(--paper);
+  }
 
-      --deck-chrome-bg: rgba(255, 255, 255, 0.92);
-      --deck-chrome-border: rgba(15, 23, 42, 0.12);
-      --deck-chrome-text: #0f172a;
-      --deck-chrome-muted: #64748b;
-      --deck-chrome-accent: #2563eb;
-      --deck-chrome-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
-      --deck-chrome-surface: rgba(241, 245, 249, 0.95);
-    }
+  /* Graph-paper grid behind every slide */
+  .stage::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, var(--grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size: clamp(28px, 2.2vw, 44px) clamp(28px, 2.2vw, 44px);
+    pointer-events: none;
+    z-index: 1;
+  }
 
-    /* 5. Cards/containers use viewport-relative max sizes */
-    .card, .container, .content-box {
-      max-width: min(90vw, 1000px);
-      max-height: min(80vh, 700px);
-    }
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 280ms ease;
+    z-index: 2;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; }
 
-    /* 6. Lists auto-scale with viewport */
-    .feature-list, .bullet-list {
-      gap: clamp(0.4rem, 1vh, 1rem);
-    }
+  /* ─── TYPE SYSTEM ──────────────────────────────────────────── */
+  .disp {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .body-tx {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .micro {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+  .mono {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-weight: 400;
+    color: var(--ink);
+  }
 
-    .feature-list li, .bullet-list li {
-      font-size: var(--body-size);
-      line-height: 1.4;
-    }
+  /* Single page-number marker, shared across slides.
+     Sits ABOVE the bottom hairline rule, with deliberate space between the
+     two so the chrome elements don't collide on any slide. */
+  .pagenum {
+    position: absolute;
+    right: clamp(28px, 2.4vw, 48px);
+    bottom: clamp(48px, 4.8vh, 76px);
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(11px, 0.82vw, 13px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    z-index: 9;
+  }
 
-    /* 7. Grids adapt to available space */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-      gap: clamp(0.5rem, 1.5vw, 1rem);
-    }
+  /* Top + bottom slim hairlines that frame each slide.
+     Echo of the reference's thin rule above and below the composition. The
+     bottom rule is pinned at the slide's lower edge so the page number,
+     which sits above it, has clear space and never overlaps. */
+  .hairlines::before,
+  .hairlines::after {
+    content: '';
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    height: 1.5px;
+    background: var(--ink);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .hairlines::before { top: clamp(28px, 2.6vh, 48px); }
+  .hairlines::after  { bottom: clamp(20px, 2vh, 32px); }
 
-    /* 8. Images constrained to viewport */
-    img, .image-container {
-      max-width: 100%;
-      max-height: min(50vh, 400px);
-      object-fit: contain;
-    }
+  /* Fixed nav hint — sits above the bottom hairline, same vertical level
+     as the page number on the opposite side, so neither overlaps the rule. */
+  .nav-hint {
+    position: fixed;
+    left: clamp(36px, 3.6vw, 80px);
+    bottom: clamp(48px, 4.8vh, 76px);
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--ink);
+    letter-spacing: 0.08em;
+    opacity: 0.4;
+    z-index: 12;
+    pointer-events: none;
+  }
 
-    /* ===========================================
-       RESPONSIVE BREAKPOINTS
-       Aggressive scaling for smaller viewports
-       =========================================== */
+  /* ─── DECORATIVE: pixel-glitch stair (reusable SVG) ─────────── */
+  /* The SVG below renders a column of stair-stepped rectangles, each
+     filled with vertical scanlines — a direct echo of the reference's
+     "pixelated" shape on the right side. Decorative only, pointer-events
+     disabled, sits behind content. */
+  .pixel-glitch {
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .pixel-glitch svg { display: block; width: 100%; height: 100%; }
 
-    @media (max-height: 700px) {
-      :root {
-        --slide-padding: clamp(0.75rem, 3vw, 2rem);
-        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
-        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
-        --h2-size: clamp(1rem, 3vw, 1.75rem);
-      }
-    }
+  /* ─── DECORATIVE: small QR-style block ───────────────────────── */
+  /* The QR is paper-backgrounded so it reads as a discrete patch when it
+     overlaps the pixel-glitch column behind it — without the paper fill,
+     the empty grid cells let the glitch's vertical scanlines bleed
+     through and the QR loses its shape. */
+  .qr-block {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 1.5px;
+    background: var(--paper);
+    padding: 4px;
+    box-shadow: 0 0 0 1.5px var(--paper);
+  }
+  .qr-block .px { background: var(--paper); }
+  .qr-block .px.on { background: var(--ink); }
 
-    @media (max-height: 600px) {
-      :root {
-        --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
-        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
-        --title-size: clamp(1.1rem, 4vw, 2rem);
-        --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
-      }
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 1 — COVER
+     ────────────────────────────────────────────────────────────── */
+  .s-cover { background: var(--paper); }
 
-      .nav-dots, .keyboard-hint, .decorative {
-        display: none;
-      }
-    }
+  .s-cover .titlewrap {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    top: clamp(80px, 9vh, 160px);
+    z-index: 5;
+    max-width: 60%;
+  }
+  .s-cover .title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(100px, min(11vw, 18vh), 200px);
+    line-height: 0.92;
+    letter-spacing: -0.008em;
+    color: var(--ink);
+  }
+  .s-cover .subkicker {
+    margin-top: clamp(20px, 2.2vh, 36px);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .s-cover .subkicker .l {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(13px, 1vw, 16px);
+    color: var(--ink);
+  }
+  .s-cover .subkicker .ed {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(28px, min(2.8vw, 4.6vh), 50px);
+    line-height: 1.1;
+    color: var(--ink);
+  }
 
-    @media (max-height: 500px) {
-      :root {
-        --slide-padding: clamp(0.4rem, 2vw, 1rem);
-        --title-size: clamp(1rem, 3.5vw, 1.5rem);
-        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
-        --body-size: clamp(0.65rem, 1vw, 0.85rem);
-      }
-    }
+  /* Pixel-glitch column on the right side of the cover */
+  .s-cover .pixel-glitch {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(280px, 32vw, 560px);
+    bottom: clamp(110px, 12vh, 200px);
+  }
 
-    @media (max-width: 600px) {
-      :root {
-        --title-size: clamp(1.25rem, 7vw, 2.5rem);
-      }
+  /* QR block top-right */
+  .s-cover .qr-block {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(120px, 8vw, 200px);
+    width: clamp(58px, 4.2vw, 84px);
+    height: clamp(58px, 4.2vw, 84px);
+  }
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  /* Vertical right-side label column (reads as a stack of micro-text,
+     replacing the Korean column in the reference). */
+  .s-cover .vstack {
+    position: absolute;
+    right: clamp(36px, 3.6vw, 60px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex; flex-direction: column;
+    gap: clamp(10px, 1.2vh, 18px);
+    align-items: end;
+  }
+  .s-cover .vstack .v-row {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.9vw, 15px);
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
-      html { scroll-behavior: auto; }
-    }
+  /* Footer row */
+  .s-cover .cfooter {
+    /* Constrained to the left half so it never runs under the right-side
+       pixel-glitch column on any viewport. */
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(680px, 40vw, 880px);
+    bottom: clamp(82px, 8vh, 120px);
+    display: flex; justify-content: flex-start; align-items: end;
+    z-index: 5;
+    gap: clamp(28px, 3vw, 56px);
+  }
+  .s-cover .cfooter .colf {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.92vw, 15px);
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .s-cover .cfooter .colf .ftag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.78vw, 13px);
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
 
-    /* === theme (Cobalt Grid) === */
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 2 — MANIFESTO
+     ────────────────────────────────────────────────────────────── */
+  .s-manifesto { background: var(--paper); }
+  .s-manifesto .stmt-wrap {
+    position: absolute;
+    left: clamp(60px, 8vw, 160px);
+    right: clamp(60px, 8vw, 160px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    text-align: left;
+  }
+  .s-manifesto .stmt {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(56px, min(6.4vw, 11vh), 120px);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .s-manifesto .stmt .roman {
+    font-style: normal;
+    font-weight: 500;
+  }
+  .s-manifesto .attr {
+    margin-top: clamp(28px, 3vh, 50px);
+    display: flex; gap: clamp(14px, 1.4vw, 24px); align-items: center;
+    border-top: 1px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 18px);
+  }
+  .s-manifesto .attr .who {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+  }
+  .s-manifesto .attr .meta-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.82vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    opacity: 0.78;
+  }
 
-    .slide > .slide-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .slides-offset { background: var(--slide-bg-deep); }
-    .slide {
-      background: transparent;
-      color: var(--text-primary);
-    }
-    .slide > * { position: relative; }
-    .slide-static {
-      position: absolute;
-      z-index: 1;
-      pointer-events: none;
-    }
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
-    .slide.visible .reveal {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .slide.visible .reveal:nth-child(1) { transition-delay: 0.05s; }
-    .slide.visible .reveal:nth-child(2) { transition-delay: 0.12s; }
-    .slide.visible .reveal:nth-child(3) { transition-delay: 0.18s; }
-    .slide.visible .reveal:nth-child(4) { transition-delay: 0.24s; }
-    .slide.visible .reveal:nth-child(5) { transition-delay: 0.3s; }
-    .slide-object {
-      transition: transform 0.25s ease, box-shadow 0.25s ease, outline-color 0.25s ease;
-    }
-    .slide-object-text {
-      color: var(--text-primary);
-    }
-    .eyebrow .slide-object-text,
-    .section-number .slide-object-text {
-      font-size: clamp(0.68rem, 0.95vw, 0.86rem);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-    .hero-title .slide-object-text,
-    .section-title .slide-object-text {
-      font-family: var(--font-display);
-      font-weight: 800;
-      letter-spacing: -0.055em;
-      line-height: 0.94;
-    }
-    .hero-title .slide-object-text {
-      font-size: clamp(2.5rem, 7vw, 5.8rem);
-    }
-    .section-title .slide-object-text {
-      font-size: clamp(1.7rem, 4vw, 3.7rem);
-    }
-    .hero-subtitle .slide-object-text,
-    .section-copy .slide-object-text,
-    .closing-note .slide-object-text {
-      font-size: clamp(0.92rem, 1.26vw, 1.08rem);
-      line-height: 1.55;
-      color: var(--text-secondary);
-    }
-    .metric-box .slide-object-text {
-      padding: clamp(0.9rem, 1.3vw, 1.2rem);
-      border-radius: clamp(12px, 1.2vw, 18px);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--panel-shadow);
-    }
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(0.55rem, 0.9vw, 0.95rem);
-    }
-    .metric {
-      display: flex;
-      flex-direction: column;
-      gap: clamp(0.2rem, 0.4vw, 0.38rem);
-      padding-top: clamp(0.45rem, 0.7vw, 0.6rem);
-      border-top: 3px solid var(--accent);
-    }
-    .metric-value {
-      font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.8vw, 1.55rem);
-      letter-spacing: -0.04em;
-      color: var(--text-primary);
-    }
-    .metric-note {
-      font-size: clamp(0.74rem, 0.95vw, 0.88rem);
-      line-height: 1.42;
-      color: var(--text-secondary);
-    }
-    .panel-card .slide-object-text,
-    .workflow-card .slide-object-text,
-    .arch-card .slide-object-text,
-    .note-card .slide-object-text {
-      display: flex;
-      flex-direction: column;
-      gap: clamp(0.38rem, 0.7vw, 0.68rem);
-      height: 100%;
-      box-sizing: border-box;
-      padding: clamp(0.92rem, 1.3vw, 1.16rem);
-      border-radius: clamp(12px, 1.2vw, 20px);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--panel-shadow);
-      backdrop-filter: blur(6px);
-    }
-    .accent-card .slide-object-text {
-      background: var(--accent);
-      border-color: color-mix(in srgb, var(--accent) 70%, black);
-      color: var(--text-on-accent);
-    }
-    .label {
-      font-size: clamp(0.64rem, 0.86vw, 0.76rem);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-    .accent-card .label {
-      color: color-mix(in srgb, var(--text-on-accent) 74%, transparent);
-    }
-    .title {
-      font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.7vw, 1.55rem);
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
-    .body {
-      font-size: clamp(0.82rem, 1vw, 0.96rem);
-      line-height: 1.48;
-      color: var(--text-secondary);
-    }
-    .body strong {
-      color: var(--text-primary);
-    }
-    .accent-card .body,
-    .accent-card .body strong {
-      color: var(--text-on-accent);
-    }
-    .workflow-card .step-index {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      line-height: 1;
-      color: var(--accent);
-      letter-spacing: -0.06em;
-    }
-    .note-card .title {
-      font-size: clamp(1rem, 1.45vw, 1.25rem);
-    }
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: clamp(0.45rem, 0.65vw, 0.65rem);
-      margin-top: auto;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--surface-strong);
-      font-size: clamp(0.68rem, 0.82vw, 0.78rem);
-      line-height: 1;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    .closing-note .slide-object-text {
-      border-top: 4px solid var(--accent);
-      background: var(--surface);
-    }
-    @media (max-width: 820px) {
-      .metric-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 3 — INDEX (numbered list of trends)
+     ────────────────────────────────────────────────────────────── */
+  .s-index { background: var(--paper); }
+  .s-index .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 2.2vh, 36px);
+    z-index: 5;
+  }
+  .s-index .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    gap: 30px;
+  }
+  .s-index .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(48px, min(5vw, 8.5vh), 100px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-index .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-index .list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: clamp(14px, 2vh, 28px) clamp(28px, 3vw, 56px);
+  }
+  .s-index .row { align-self: stretch; }
+  .s-index .row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: clamp(12px, 1.4vw, 22px);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
+    padding-bottom: clamp(12px, 1.4vh, 20px);
+  }
+  .s-index .row .num-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.9vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    padding-top: 6px;
+  }
+  .s-index .row h3 {
+    margin: 0 0 6px 0;
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(26px, 2vw, 40px);
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .s-index .row p {
+    margin: 0;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 92%;
+  }
 
-    .slide { background: var(--slide-bg-gradient); }
-    .slide::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(37,99,235,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(37,99,235,0.07) 1px, transparent 1px);
-      background-size: clamp(22px, 3vw, 36px) clamp(22px, 3vw, 36px);
-      z-index: 0;
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 4 — CHAPTER (display + intro on glitch background)
+     ────────────────────────────────────────────────────────────── */
+  .s-chapter { background: var(--paper); }
+  .s-chapter .pixel-glitch {
+    top: clamp(60px, 6vh, 120px);
+    right: clamp(0px, 0vw, 0px);
+    width: clamp(220px, 26vw, 460px);
+    bottom: clamp(110px, 12vh, 200px);
+    opacity: 0.75;
+  }
+  .s-chapter .frame {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(280px, 30vw, 540px);
+    top: clamp(80px, 9vh, 140px);
+    bottom: clamp(110px, 11vh, 170px);
+    display: flex; flex-direction: column;
+    justify-content: center;
+    z-index: 5;
+    gap: clamp(18px, 2vh, 32px);
+  }
+  .s-chapter .nm-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.06em;
+  }
+  .s-chapter .ttl {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(56px, min(6vw, 10vh), 130px);
+    line-height: 1.0;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .s-chapter .lede {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(15px, 1vw, 18px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 56ch;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 5 — DATA (vertical pixel-stack bar chart)
+     ────────────────────────────────────────────────────────────── */
+  .s-data { background: var(--paper); }
+  .s-data .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 2vh, 36px);
+    z-index: 5;
+  }
+  .s-data .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    gap: 30px;
+  }
+  .s-data .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(46px, min(4.8vw, 8.2vh), 92px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-data .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-data .body {
+    display: grid;
+    grid-template-columns: 0.8fr 1.6fr;
+    gap: clamp(28px, 3vw, 56px);
+  }
+  .s-data .col-a {
+    display: flex; flex-direction: column; justify-content: center;
+    gap: clamp(20px, 2.4vh, 36px);
+  }
+  .s-data .stat .vbig {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(110px, min(11vw, 18vh), 240px);
+    line-height: 0.92;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+  .s-data .stat .lab2 {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(13px, 0.95vw, 15px);
+    color: var(--ink);
+    margin-top: 6px;
+  }
+  .s-data .stat .desc {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(15px, 1vw, 17px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 30ch;
+    margin-top: 6px;
+  }
+
+  /* The chart itself: a row of vertical "pixel stacks" — each track is
+     a column of small filled cells, with cell count proportional to the
+     value. Visually echoes the reference's pixel-glitch decoration. */
+  .s-data .chart {
+    display: flex; flex-direction: column; justify-content: end;
+    gap: clamp(10px, 1.2vh, 18px);
+  }
+  .s-data .chart .bars {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(10px, 1vw, 18px);
+    align-items: end;
+    height: 100%;
+    min-height: clamp(280px, 38vh, 540px);
+  }
+  .s-data .chart .stack {
+    display: flex; flex-direction: column-reverse; gap: 3px;
+    height: 100%;
+  }
+  .s-data .chart .stack .cell {
+    flex: 1 1 0;
+    min-height: 6px;
+    background: rgba(31, 43, 224, 0.10);
+  }
+  .s-data .chart .stack .cell.on { background: var(--ink); }
+  .s-data .chart .ticks {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(10px, 1vw, 18px);
+    border-top: 1.5px solid var(--ink);
+    padding-top: clamp(8px, 1vh, 14px);
+  }
+  .s-data .chart .ticks .ticklab {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 6 — QUOTE
+     ────────────────────────────────────────────────────────────── */
+  .s-quote { background: var(--paper); }
+  .s-quote .pixel-glitch {
+    top: clamp(40px, 4vh, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(160px, 16vw, 280px);
+    bottom: clamp(40px, 4vh, 80px);
+    opacity: 0.6;
+  }
+  .s-quote .qframe {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(220px, 22vw, 380px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+  }
+  .s-quote .qkicker {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink);
+    margin-bottom: clamp(16px, 1.8vh, 28px);
+  }
+  .s-quote .qbody {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(50px, min(5.6vw, 9vh), 110px);
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    max-width: 92%;
+  }
+  .s-quote .qattr {
+    margin-top: clamp(24px, 2.6vh, 40px);
+    display: grid; grid-template-columns: auto 1fr;
+    gap: clamp(14px, 1.4vw, 24px);
+    align-items: end;
+    border-top: 1px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 18px);
+  }
+  .s-quote .qattr .who-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+  }
+  .s-quote .qattr .role-meta {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(12px, 0.85vw, 14px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    opacity: 0.78;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 7 — TREND TABLE (dense ledger)
+     ────────────────────────────────────────────────────────────── */
+  .s-table { background: var(--paper); }
+  .s-table .frame {
+    position: absolute;
+    inset: clamp(76px, 8vh, 130px) clamp(36px, 3.6vw, 80px) clamp(100px, 10vh, 150px);
+    display: flex; flex-direction: column;
+    z-index: 5;
+  }
+  .s-table .topbar {
+    display: flex; align-items: end; justify-content: space-between;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: clamp(12px, 1.4vh, 22px);
+    margin-bottom: clamp(14px, 1.6vh, 24px);
+    gap: 30px;
+  }
+  .s-table .topbar .h {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(46px, min(4.8vw, 8.2vh), 92px);
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .s-table .topbar .lab-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink); text-align: right;
+  }
+  .s-table .ledger {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    /* Distribute the rows so they fill the available height.
+       The header row stays at the top, body rows space evenly below. */
+    justify-content: stretch;
+  }
+  .s-table .row {
+    display: grid;
+    grid-template-columns: 76px 0.6fr 1.4fr 0.7fr 0.5fr;
+    gap: clamp(14px, 1.4vw, 28px);
+    align-items: center;
+    padding: 0;
+    flex: 1 1 0;
+    min-height: clamp(46px, 6vh, 80px);
+    border-bottom: 1px solid rgba(31, 43, 224, 0.18);
+  }
+  .s-table .row.headrow {
+    border-bottom: 1.5px solid var(--ink);
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 8px 0;
+  }
+  .s-table .row.headrow > div {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.75vw, 12px);
+    color: var(--ink);
+  }
+  .s-table .num-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.95vw, 15px);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .s-table .nm {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(20px, 1.6vw, 28px);
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .s-table .desc {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .s-table .mood-tag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: clamp(13px, 0.92vw, 15px);
+    color: var(--ink);
+  }
+  .s-table .delta-tag {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: clamp(13px, 0.92vw, 15px);
+    text-align: right;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .s-table .delta-tag.up::before  { content: '↑ '; }
+  .s-table .delta-tag.down::before { content: '↓ '; opacity: 0.6; }
+  .s-table .delta-tag.flat::before { content: '— '; opacity: 0.6; }
+
+  /* ──────────────────────────────────────────────────────────────
+     SLIDE 8 — COLOPHON / CLOSING
+     ────────────────────────────────────────────────────────────── */
+  .s-colophon { background: var(--paper); }
+  .s-colophon .pixel-glitch {
+    top: clamp(80px, 9vh, 160px);
+    left: clamp(36px, 3.6vw, 80px);
+    width: clamp(220px, 26vw, 460px);
+    bottom: clamp(220px, 22vh, 360px);
+    opacity: 0.75;
+  }
+  .s-colophon .qr-block {
+    top: clamp(80px, 9vh, 160px);
+    right: clamp(36px, 3.6vw, 80px);
+    width: clamp(72px, 5vw, 100px);
+    height: clamp(72px, 5vw, 100px);
+  }
+  .s-colophon .titlewrap {
+    position: absolute;
+    right: clamp(36px, 3.6vw, 80px);
+    top: 28%;
+    z-index: 5;
+    max-width: 56%;
+    text-align: right;
+  }
+  .s-colophon .ktag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: clamp(12px, 0.9vw, 14px);
+    color: var(--ink);
+    margin-bottom: clamp(14px, 1.6vh, 24px);
+  }
+  .s-colophon .ttl {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(72px, min(8.4vw, 14vh), 180px);
+    line-height: 0.96;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .s-colophon .col-footer {
+    position: absolute;
+    left: clamp(36px, 3.6vw, 80px);
+    right: clamp(36px, 3.6vw, 80px);
+    bottom: clamp(106px, 10.4vh, 160px);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.2fr;
+    gap: clamp(20px, 2.4vw, 44px);
+    z-index: 5;
+  }
+  .s-colophon .col-footer > div {
+    border-top: 1.5px solid var(--ink);
+    padding-top: clamp(10px, 1.2vh, 16px);
+  }
+  .s-colophon .col-footer .ftag {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(11px, 0.78vw, 13px);
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .s-colophon .col-footer .ftxt {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(14px, 0.95vw, 15px);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+</style>
+
+<title>Cobalt Grid · Slot Editable Template Port</title>
+
+<style id="ported-template-runtime-css">
+  :root {
+    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+    --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --slide-bg-deep: #0f172a;
+    --deck-chrome-bg: rgba(15, 23, 42, 0.94);
+    --deck-chrome-border: rgba(255, 255, 255, 0.14);
+    --deck-chrome-text: #e2e8f0;
+    --deck-chrome-muted: #94a3b8;
+    --deck-chrome-accent: #2563eb;
+    --deck-chrome-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    --deck-chrome-surface: rgba(30, 41, 59, 0.92);
+  }
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+  html, body {
+    min-height: 100%;
+    overflow-x: hidden !important;
+  }
+  body.ported-template-deck {
+    margin: 0;
+  }
+  #deck.slides-offset {
+    display: block !important;
+    position: relative !important;
+    height: auto !important;
+    width: 100vw !important;
+    transform: none !important;
+    transition: padding-right 0.28s ease !important;
+    overflow: visible !important;
+  }
+  #deck.slides-offset > section.slide {
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    overflow: hidden !important;
+  }
+  body.deck-edit-mode [data-edit-slot] {
+    cursor: text;
+    outline: 2px dashed color-mix(in srgb, var(--deck-chrome-accent) 72%, transparent);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--deck-chrome-accent) 10%, transparent);
+  }
+  body.deck-edit-mode [data-slot-type="image"] {
+    cursor: pointer;
+  }
+  [data-edit-slot][contenteditable="true"] {
+    outline: 2px solid var(--deck-chrome-accent) !important;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
+  }
+  .static-chart-replacement {
+    width: 100%;
+    min-height: min(42vh, 360px);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+  }
+  .static-chart-bars {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: end;
+    gap: clamp(0.45rem, 1.2vw, 1rem);
+    min-height: min(34vh, 300px);
+    border-left: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    padding: clamp(0.5rem, 1.4vw, 1rem);
+  }
+  .static-chart-bar {
+    min-height: 18%;
+    height: var(--v);
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    background: currentColor;
+    opacity: 0.72;
+  }
+  .static-chart-bar b {
+    display: block;
+    transform: translateY(calc(-100% - 0.25rem));
+    color: inherit;
+    background: inherit;
+    font: inherit;
+  }
+  .static-chart-caption {
+    font-size: clamp(0.72rem, 1vw, 0.95rem);
+    opacity: 0.72;
+  }
+  @media print {
+    .deck-left-hover-anchor, .deck-add-element-menu, .slide-sidebar, .rte-toolbar, .progress-bar, .nav-dots {
+      display: none !important;
     }
-    .hero-title .slide-object-text { font-style: italic; color: #1e3a8a; }
-
-    .slide-cover {
-      --cover-decor-right: 7%;
-      --cover-decor-top: 11%;
-      --cover-decor-width: clamp(76px, 8vw, 112px);
-      --cover-decor-height: clamp(76px, 8vw, 112px);
-      --cover-decor-opacity: 0.66;
-      --cover-decor-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 22px color-mix(in srgb, var(--accent) 24%, transparent);
+    #deck.slides-offset > section.slide {
+      break-after: page;
     }
+  }
+</style>
 
-    .slide-cover > .slide-bg::after {
-      content: "";
-      position: absolute;
-      right: var(--cover-decor-right, 6%);
-      top: var(--cover-decor-top, 9%);
-      bottom: var(--cover-decor-bottom, auto);
-      width: var(--cover-decor-width, clamp(56px, 7vw, 92px));
-      height: var(--cover-decor-height, clamp(56px, 7vw, 92px));
-      border: 2px solid color-mix(in srgb, var(--accent) 75%, transparent);
-      border-top: var(--cover-decor-border-top, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
-      border-right: var(--cover-decor-border-right, 2px solid color-mix(in srgb, var(--accent) 75%, transparent));
-      border-bottom: var(--cover-decor-border-bottom, none);
-      border-left: var(--cover-decor-border-left, none);
-      border-radius: var(--cover-decor-radius, 0 clamp(10px, 1vw, 14px) 0 0);
-      opacity: var(--cover-decor-opacity, 0.9);
-      z-index: 0;
-      pointer-events: none;
-      box-shadow: var(--cover-decor-shadow, 0 0 22px color-mix(in srgb, var(--accent) 35%, transparent));
-    }
-
-    body {
-      margin: 0;
-      font-family: var(--font-body);
-      background: var(--slide-bg-deep);
-      color: var(--text-primary);
-    }
-    .slide { background: transparent; }
-
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .slide.visible .reveal { opacity: 1; transform: translateY(0); }
-    .slide.visible .reveal:nth-child(1) { transition-delay: 0.05s; }
-    .slide.visible .reveal:nth-child(2) { transition-delay: 0.12s; }
-    .slide.visible .reveal:nth-child(3) { transition-delay: 0.18s; }
-
+<style id="swiss-edit-runtime-css">
     /* === deck chrome (fixed UI) === */
     .progress-bar {
       position: fixed; top: 0; left: 0; height: 3px;
@@ -836,10 +1310,10 @@
     }
 
     body.deck-edit-mode.slide-anim-paused .reveal { transition: none !important; }
-  </style>
-</head>
-<body>
 
+</style>
+</head>
+<body class="ported-template-deck">
 <div class="deck-left-hover-anchor" id="deckLeftHover" aria-label="Deck controls">
   <div class="deck-left-row">
     <button type="button" class="edit-toggle" id="editToggle" title="Edit mode (E) — hover this corner to show">Edit</button>
@@ -922,181 +1396,402 @@
     </div>
   </div>
 </div>
+<input type="file" id="slotImageInput" accept="image/*" hidden data-deck-chrome-surface="">
 
-<div class="slides-offset">
-<section class="slide slide-cover" id="slide-0">
-  <div class="slide-bg" aria-hidden="true"></div>
-  <div class="slide-edit-layer">
-    <div class="slide-object reveal eyebrow" data-slide-object data-oid="s0-o0" data-object-type="text" style="left:8%;top:10%;width:28%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">Cobalt Grid / README deck</div>
-    </div>
-    <div class="slide-object reveal hero-title" data-slide-object data-oid="s0-o1" data-object-type="text" style="left:8%;top:18%;width:36%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">Frontend Slides<br>Editable</div>
-    </div>
-    <div class="slide-object reveal hero-subtitle" data-slide-object data-oid="s0-o2" data-object-type="text" style="left:8%;top:55%;width:30%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">中文为主，英文做轻量标签。可编辑 runtime 保留在单文件 HTML 里。</div>
-    </div>
-    <div class="slide-object reveal metric-box" data-slide-object data-oid="s0-o3" data-object-type="text" style="left:8%;top:74%;width:44%;height:14%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><div class="metric-grid"><div class="metric"><span class="metric-value">Preset</span><span class="metric-note">每套版式都保留自己的布局和签名元素</span></div><div class="metric"><span class="metric-value">Edit</span><span class="metric-note">拖拽 缩放 多选 Pages Undo / Redo</span></div><div class="metric"><span class="metric-value">Ship</span><span class="metric-note">Ctrl+S 保存结构，Export HTML 清理导出</span></div></div></div>
-    </div>
-  </div>
-</section>
-<section class="slide slide-value" id="slide-1">
-  <div class="slide-bg" aria-hidden="true"></div>
-  <div class="slide-edit-layer">
-    <div class="slide-object reveal section-number" data-slide-object data-oid="s1-o0" data-object-type="text" style="left:8%;top:10%;width:22%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">01 / Fork logic</div>
-    </div>
-    <div class="slide-object reveal section-title" data-slide-object data-oid="s1-o1" data-object-type="text" style="left:8%;top:17%;width:30%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">区别不在能不能生成，而在生成后还要不要继续改</div>
-    </div>
-    <div class="slide-object reveal section-copy" data-slide-object data-oid="s1-o2" data-object-type="text" style="left:8%;top:45%;width:25%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">README 把它定义成 <strong>frontend-slides</strong> 的可编辑分支：保留 style discovery、viewport discipline 与 PPT conversion，同时加入完整浏览器编辑 runtime。</div>
-    </div>
-    <div class="slide-object reveal panel-card accent-card" data-slide-object data-oid="s1-o3" data-object-type="text" style="left:46%;top:17%;width:19%;height:21%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Parent</span><span class="title">只读更轻</span><span class="body">接近定稿、体积敏感、只需要展示时，更适合父 skill。</span></div>
-    </div>
-    <div class="slide-object reveal panel-card" data-slide-object data-oid="s1-o4" data-object-type="text" style="left:68%;top:17%;width:20%;height:21%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Editable</span><span class="title">继续改布局</span><span class="body">客户反馈、团队评审、内容常变时，更适合这个分支。</span></div>
-    </div>
-    <div class="slide-object reveal panel-card" data-slide-object data-oid="s1-o5" data-object-type="text" style="left:46%;top:45%;width:19%;height:21%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Runtime</span><span class="title">对象级编辑</span><span class="body">拖拽、缩放、富文本、Pages、历史记录都保留在文件里。</span></div>
-    </div>
-    <div class="slide-object reveal panel-card" data-slide-object data-oid="s1-o6" data-object-type="text" style="left:68%;top:45%;width:20%;height:21%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Delivery</span><span class="title">保存与导出</span><span class="body">localStorage 持久化迭代状态，导出时再生成干净的独立 HTML。</span></div>
-    </div>
-  </div>
-</section>
-<section class="slide slide-workflow" id="slide-2">
-  <div class="slide-bg" aria-hidden="true"></div>
-  <div class="slide-edit-layer">
-    <div class="slide-object reveal section-number" data-slide-object data-oid="s2-o0" data-object-type="text" style="left:8%;top:10%;width:22%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">02 / Workflow</div>
-    </div>
-    <div class="slide-object reveal section-title" data-slide-object data-oid="s2-o1" data-object-type="text" style="left:8%;top:17%;width:30%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">先做 discovery，再选 preset，再把最后一轮修改留给浏览器</div>
-    </div>
-    <div class="slide-object reveal workflow-card" data-slide-object data-oid="s2-o2" data-object-type="text" style="left:46%;top:17%;width:19%;height:16%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="step-index">01</span><span class="title">成组 discovery</span><span class="body">目标、页数、内容、风格、编辑范围、图片素材一次问清。</span></div>
-    </div>
-    <div class="slide-object reveal workflow-card" data-slide-object data-oid="s2-o3" data-object-type="text" style="left:68%;top:17%;width:20%;height:16%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="step-index">02</span><span class="title">先缩小风格范围</span><span class="body">根据 style preference、受众和内容先收敛 2-4 个 preset。</span></div>
-    </div>
-    <div class="slide-object reveal workflow-card" data-slide-object data-oid="s2-o4" data-object-type="text" style="left:46%;top:38%;width:19%;height:16%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="step-index">03</span><span class="title">直选或看预览</span><span class="body">可以直接挑 preset，也可以先看预览再决定。</span></div>
-    </div>
-    <div class="slide-object reveal workflow-card" data-slide-object data-oid="s2-o5" data-object-type="text" style="left:68%;top:38%;width:20%;height:16%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="step-index">04</span><span class="title">生成可编辑 deck</span><span class="body">单文件 HTML 交付时仍然保留 Pages、save/export 与 history。</span></div>
-    </div>
-    <div class="slide-object reveal note-card accent-card" data-slide-object data-oid="s2-o6" data-object-type="text" style="left:46%;top:63%;width:42%;height:14%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="title">Editing controls</span><span class="body">进入编辑后，布局和文字都还可以继续收口，而不是生成后立刻冻结。</span><div class="pill-row"><span class="pill">E</span><span class="pill">Pages</span><span class="pill">Ctrl+click</span><span class="pill">Ctrl+S</span><span class="pill">Export HTML</span></div></div>
-    </div>
-  </div>
-</section>
-<section class="slide slide-architecture" id="slide-3">
-  <div class="slide-bg" aria-hidden="true"></div>
-  <div class="slide-edit-layer">
-    <div class="slide-object reveal section-number" data-slide-object data-oid="s3-o0" data-object-type="text" style="left:8%;top:10%;width:24%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">03 / Runtime contract</div>
-    </div>
-    <div class="slide-object reveal section-title" data-slide-object data-oid="s3-o1" data-object-type="text" style="left:8%;top:17%;width:32%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">真正不能丢的是结构契约、视口纪律和 preset identity</div>
-    </div>
-    <div class="slide-object reveal arch-card" data-slide-object data-oid="s3-o2" data-object-type="text" style="left:46%;top:17%;width:19%;height:18%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">DOM</span><span class="title">运行时契约</span><span class="body">`section.slide#id`、`.slide-edit-layer`、`[data-slide-object][data-oid]` 需要稳定。</span></div>
-    </div>
-    <div class="slide-object reveal arch-card" data-slide-object data-oid="s3-o3" data-object-type="text" style="left:68%;top:17%;width:20%;height:18%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Deck root</span><span class="title">只枚举真实 slides</span><span class="body">查 slide 时必须限定 deck root，不能把 filmstrip clones 算进去。</span></div>
-    </div>
-    <div class="slide-object reveal arch-card" data-slide-object data-oid="s3-o4" data-object-type="text" style="left:46%;top:40%;width:19%;height:18%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Viewport</span><span class="title">不滚动，放不下就拆页</span><span class="body">`100vh / 100dvh`、`clamp()`、内容过密就分拆到新 slide。</span></div>
-    </div>
-    <div class="slide-object reveal arch-card" data-slide-object data-oid="s3-o5" data-object-type="text" style="left:68%;top:40%;width:20%;height:18%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Docs</span><span class="title">支撑文件按需读取</span><span class="body">`SKILL.md`、`STYLE_PRESETS.md`、`editor-runtime.md`、`html-template.md`。</span></div>
-    </div>
-    <div class="slide-object reveal closing-note" data-slide-object data-oid="s3-o6" data-object-type="text" style="left:8%;top:69%;width:80%;height:12%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="title">Remember / 记住</span><span class="body">可编辑 runtime 是附加层，不是把所有 preset 压成一种模板。当前文件展示的是 <strong>Cobalt Grid</strong> 版本的 README deck，按 <strong>E</strong> 可继续编辑。</span></div>
-    </div>
-  </div>
-</section>
-</div></div>
+<div id="deck" class="slides-offset stage" data-ported-template="cobalt-grid">
+<section class="slide s-cover hairlines active" id="slide-0" data-template-slide-index="1">
+      <div class="titlewrap">
+        <h1 class="title">Index<br/>2026</h1>
+        <div class="subkicker">
+          <div class="l caption">Field Office Quarterly · Volume IV</div>
+          <div class="ed" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="A field report on the state of things." data-slot-locked-layout="true">A field report on the state of things.</div>
+        </div>
+      </div>
 
-<script>
+      <!-- Pixel-glitch staircase decoration -->
+      <div class="pixel-glitch" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="vs1" width="2.4" height="100" patternUnits="userSpaceOnUse">
+              <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" />
+            </pattern>
+          </defs>
+          <rect x="36" y="0"  width="38" height="14" fill="url(#vs1)"/>
+          <rect x="22" y="14" width="50" height="12" fill="url(#vs1)"/>
+          <rect x="34" y="26" width="46" height="11" fill="url(#vs1)"/>
+          <rect x="16" y="37" width="60" height="13" fill="url(#vs1)"/>
+          <rect x="28" y="50" width="48" height="11" fill="url(#vs1)"/>
+          <rect x="18" y="61" width="62" height="14" fill="url(#vs1)"/>
+          <rect x="34" y="75" width="44" height="12" fill="url(#vs1)"/>
+          <rect x="22" y="87" width="50" height="13" fill="url(#vs1)"/>
+        </svg>
+      </div>
+
+      <!-- Vertical stack of micro-text on far right (replaces Korean) -->
+      <div class="vstack">
+        <div class="v-row caption">issue.04</div>
+        <div class="v-row caption" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="spring 2026" data-slot-locked-layout="true">spring 2026</div>
+        <div class="v-row caption" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="field-office.co" data-slot-locked-layout="true">field-office.co</div>
+      </div>
+
+      <!-- Footer row — two columns, sized to clear the right-side pixel-glitch -->
+      <div class="cfooter">
+        <div class="colf">
+          <div class="ftag caption">Edited by</div>
+          <div data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="Field Office Editorial · Lin Ito &amp;amp; Anya Mehr" data-slot-locked-layout="true">Field Office Editorial · Lin Ito &amp; Anya Mehrotra</div>
+        </div>
+        <div class="colf">
+          <div class="ftag caption">Distributed</div>
+          <div data-edit-slot="s0-slot-5" data-slot-type="text" data-slot-label="To subscribers &amp;amp; the open web · twice a year" data-slot-locked-layout="true">To subscribers &amp; the open web · twice a year</div>
+        </div>
+      </div>
+
+      <div class="pagenum" data-edit-slot="s0-slot-6" data-slot-type="metric" data-slot-label="01 / 08" data-slot-locked-layout="true">01 / 08</div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-manifesto hairlines" id="slide-1" data-template-slide-index="2">
+      <div class="stmt-wrap">
+        <p class="stmt">A trend is a quiet question that several rooms started asking <span class="roman">at roughly the same time.</span></p>
+        <div class="attr">
+          <div class="who caption">From the editor's note</div>
+          <div class="meta-tag caption" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Index 2026 · opening pages" data-slot-locked-layout="true">Index 2026 · opening pages</div>
+        </div>
+      </div>
+      <div class="pagenum" data-edit-slot="s1-slot-2" data-slot-type="metric" data-slot-label="02 / 08" data-slot-locked-layout="true">02 / 08</div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-index hairlines" id="slide-2" data-template-slide-index="3">
+      <div class="frame">
+        <div class="topbar">
+          <div class="h">The index, in six entries.</div>
+          <div class="lab-tag caption" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Spring 2026 · selected trends" data-slot-locked-layout="true">Spring 2026 · selected trends</div>
+        </div>
+        <div class="list">
+          <div class="row">
+            <div class="num-tag caption">01.</div>
+            <div data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Slow software Tools that opt out of the urgency " data-slot-locked-layout="true">
+              <h3>Slow software</h3>
+              <p>Tools that opt out of the urgency contest and instead promise to be quiet, considered, and on by default.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">02.</div>
+            <div data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Domestic interfaces Screens designed to live in " data-slot-locked-layout="true">
+              <h3>Domestic interfaces</h3>
+              <p>Screens designed to live in living rooms — softer typography, warmer colour, and a willingness to be ignored.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">03.</div>
+            <div data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Hand-set print again A return to letterpress, ri" data-slot-locked-layout="true">
+              <h3>Hand-set print again</h3>
+              <p>A return to letterpress, risograph, and small-edition print, often paired with the most digital-feeling clients.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">04.</div>
+            <div data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Quietly weird type Display type with one slightl" data-slot-locked-layout="true">
+              <h3>Quietly weird type</h3>
+              <p>Display type with one slightly off detail — a tilted ear, a long tail — that keeps a reader looking twice.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">05.</div>
+            <div data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Receipts and ledgers Information designed to be " data-slot-locked-layout="true">
+              <h3>Receipts and ledgers</h3>
+              <p>Information designed to be filed, not consumed. Tabular layouts, dotted leaders, the page returning the favour.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">06.</div>
+            <div data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Public weather Brand and product writing that in" data-slot-locked-layout="true">
+              <h3>Public weather</h3>
+              <p>Brand and product writing that includes the actual weather of the day, the mood of the team, the unfinished thought.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagenum" data-edit-slot="s2-slot-8" data-slot-type="metric" data-slot-label="03 / 08" data-slot-locked-layout="true">03 / 08</div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-chapter hairlines" id="slide-3" data-template-slide-index="4">
+      <div class="pixel-glitch" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="vs4" width="2.4" height="100" patternUnits="userSpaceOnUse">
+              <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" />
+            </pattern>
+          </defs>
+          <rect x="40" y="0"  width="40" height="14" fill="url(#vs4)"/>
+          <rect x="20" y="14" width="56" height="12" fill="url(#vs4)"/>
+          <rect x="32" y="26" width="48" height="11" fill="url(#vs4)"/>
+          <rect x="14" y="37" width="64" height="13" fill="url(#vs4)"/>
+          <rect x="26" y="50" width="50" height="11" fill="url(#vs4)"/>
+          <rect x="16" y="61" width="62" height="14" fill="url(#vs4)"/>
+          <rect x="32" y="75" width="46" height="12" fill="url(#vs4)"/>
+          <rect x="20" y="87" width="54" height="13" fill="url(#vs4)"/>
+        </svg>
+      </div>
+
+      <div class="frame">
+        <div class="nm-tag caption">Chapter one — the case for slow software</div>
+        <h2 class="ttl" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Software is a room, and rooms are designed to be" data-slot-locked-layout="true">Software is a room, and rooms are designed to be lived in slowly.</h2>
+        <p class="lede" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="In its first chapter the Index follows the studi" data-slot-locked-layout="true">In its first chapter the Index follows the studios, products, and quiet middleware projects that are walking back the urgency the last decade trained us into. Less push. More return. The tools that do not page you, on principle, are the ones we have chosen to read first.</p>
+      </div>
+
+      <div class="pagenum" data-edit-slot="s3-slot-3" data-slot-type="metric" data-slot-label="04 / 08" data-slot-locked-layout="true">04 / 08</div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-data hairlines" id="slide-4" data-template-slide-index="5">
+      <div class="frame">
+        <div class="topbar">
+          <div class="h">Reader response, by quarter.</div>
+          <div class="lab-tag caption" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Newsletter opens · 2024 Q1 — 2026 Q1" data-slot-locked-layout="true">Newsletter opens · 2024 Q1 — 2026 Q1</div>
+        </div>
+        <div class="body">
+          <div class="col-a">
+            <div class="stat">
+              <div class="vbig">82%</div>
+              <div class="lab2 caption" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Open rate · Q1 2026" data-slot-locked-layout="true">Open rate · Q1 2026</div>
+              <div class="desc" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="A 2.1× lift on the inaugural issue, driven mostl" data-slot-locked-layout="true">A 2.1× lift on the inaugural issue, driven mostly by long-form chapters being read on Sunday mornings.</div>
+            </div>
+            <div class="stat">
+              <div class="vbig" style="font-size: clamp(72px, min(7vw, 11vh), 150px);">11k</div>
+              <div class="lab2 caption" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="Active subscribers" data-slot-locked-layout="true">Active subscribers</div>
+              <div class="desc" data-edit-slot="s4-slot-5" data-slot-type="text" data-slot-label="Quiet, mostly-not-on-social, paying readers; we " data-slot-locked-layout="true">Quiet, mostly-not-on-social, paying readers; we do not run a referral programme.</div>
+            </div>
+          </div>
+          <div class="chart">
+            <!-- Each .stack is a quarter; with column-reverse, the first .cell
+                 in source order sits at the BOTTOM of the column, so .on cells
+                 stack up from baseline like a real pixel-bar chart. -->
+            <div class="bars">
+              <div class="stack"><!-- Q1 2024: 4 -->
+                <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+                <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+              </div>
+              <div class="stack"><!-- Q2 2024: 5 -->
+                <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+                <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+              </div>
+              <div class="stack"><!-- Q3 2024: 5 -->
+                <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+                <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+              </div>
+              <div class="stack"><!-- Q4 2024: 6 -->
+                <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+                <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+              </div>
+              <div class="stack"><!-- Q1 2025: 7 -->
+                <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+                <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+              </div>
+              <div class="stack"><!-- Q2 2025: 7 -->
+                <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+                <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+              </div>
+              <div class="stack"><!-- Q4 2025: 8 -->
+                <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+                <div class="cell"></div><div class="cell"></div>
+              </div>
+              <div class="stack"><!-- Q1 2026: 9 -->
+                <div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div>
+                <div class="cell"></div>
+              </div>
+            </div>
+            <div class="ticks">
+              <div class="ticklab caption">Q1 24</div>
+              <div class="ticklab caption" data-edit-slot="s4-slot-6" data-slot-type="text" data-slot-label="Q2 24" data-slot-locked-layout="true">Q2 24</div>
+              <div class="ticklab caption" data-edit-slot="s4-slot-7" data-slot-type="text" data-slot-label="Q3 24" data-slot-locked-layout="true">Q3 24</div>
+              <div class="ticklab caption" data-edit-slot="s4-slot-8" data-slot-type="text" data-slot-label="Q4 24" data-slot-locked-layout="true">Q4 24</div>
+              <div class="ticklab caption" data-edit-slot="s4-slot-9" data-slot-type="text" data-slot-label="Q1 25" data-slot-locked-layout="true">Q1 25</div>
+              <div class="ticklab caption" data-edit-slot="s4-slot-10" data-slot-type="text" data-slot-label="Q2 25" data-slot-locked-layout="true">Q2 25</div>
+              <div class="ticklab caption" data-edit-slot="s4-slot-11" data-slot-type="text" data-slot-label="Q4 25" data-slot-locked-layout="true">Q4 25</div>
+              <div class="ticklab caption" data-edit-slot="s4-slot-12" data-slot-type="text" data-slot-label="Q1 26" data-slot-locked-layout="true">Q1 26</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagenum" data-edit-slot="s4-slot-13" data-slot-type="metric" data-slot-label="05 / 08" data-slot-locked-layout="true">05 / 08</div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-quote hairlines" id="slide-5" data-template-slide-index="6">
+      <div class="pixel-glitch" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="vs6" width="2.4" height="100" patternUnits="userSpaceOnUse">
+              <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" />
+            </pattern>
+          </defs>
+          <rect x="20" y="0"  width="50" height="14" fill="url(#vs6)"/>
+          <rect x="34" y="14" width="46" height="13" fill="url(#vs6)"/>
+          <rect x="14" y="27" width="62" height="14" fill="url(#vs6)"/>
+          <rect x="26" y="41" width="50" height="13" fill="url(#vs6)"/>
+          <rect x="22" y="54" width="56" height="14" fill="url(#vs6)"/>
+          <rect x="36" y="68" width="44" height="13" fill="url(#vs6)"/>
+          <rect x="20" y="81" width="60" height="14" fill="url(#vs6)"/>
+        </svg>
+      </div>
+      <div class="qframe">
+        <div class="qkicker caption">A note from the studio</div>
+        <p class="qbody" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="&quot;We started the bulletin because the loudest rea" data-slot-locked-layout="true">"We started the bulletin because the loudest readings of design were eating the ones we found ourselves rereading."</p>
+        <div class="qattr">
+          <div class="who-tag caption">Lin Ito</div>
+          <div class="role-meta caption" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Editor · Field Office Quarterly · letter to subs" data-slot-locked-layout="true">Editor · Field Office Quarterly · letter to subscribers, March 2025</div>
+        </div>
+      </div>
+      <div class="pagenum" data-edit-slot="s5-slot-3" data-slot-type="metric" data-slot-label="06 / 08" data-slot-locked-layout="true">06 / 08</div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-table hairlines" id="slide-6" data-template-slide-index="7">
+      <div class="frame">
+        <div class="topbar">
+          <div class="h">Trend ledger, in long.</div>
+          <div class="lab-tag caption" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="All ten · with our reading on each" data-slot-locked-layout="true">All ten · with our reading on each</div>
+        </div>
+        <div class="ledger">
+          <div class="row headrow">
+            <div class="caption">No.</div>
+            <div class="caption" data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Trend" data-slot-locked-layout="true">Trend</div>
+            <div class="caption" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Reading" data-slot-locked-layout="true">Reading</div>
+            <div class="caption" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Mood" data-slot-locked-layout="true">Mood</div>
+            <div class="caption" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="YoY" data-slot-locked-layout="true">YoY</div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">01.</div>
+            <div class="nm" data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Slow software" data-slot-locked-layout="true">Slow software</div>
+            <div class="desc" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="Tools that opt out of urgency by default." data-slot-locked-layout="true">Tools that opt out of urgency by default.</div>
+            <div class="mood-tag" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="Quiet · welcomed" data-slot-locked-layout="true">Quiet · welcomed</div>
+            <div class="delta-tag up caption" data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="14 pts" data-slot-locked-layout="true">14 pts</div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">02.</div>
+            <div class="nm" data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="Domestic interfaces" data-slot-locked-layout="true">Domestic interfaces</div>
+            <div class="desc" data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Screens designed to live in living rooms." data-slot-locked-layout="true">Screens designed to live in living rooms.</div>
+            <div class="mood-tag" data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="Warm · ambient" data-slot-locked-layout="true">Warm · ambient</div>
+            <div class="delta-tag up caption" data-edit-slot="s6-slot-13" data-slot-type="text" data-slot-label="9 pts" data-slot-locked-layout="true">9 pts</div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">03.</div>
+            <div class="nm" data-edit-slot="s6-slot-14" data-slot-type="text" data-slot-label="Hand-set print" data-slot-locked-layout="true">Hand-set print</div>
+            <div class="desc" data-edit-slot="s6-slot-15" data-slot-type="text" data-slot-label="Letterpress and risograph paired with digital br" data-slot-locked-layout="true">Letterpress and risograph paired with digital briefs.</div>
+            <div class="mood-tag" data-edit-slot="s6-slot-16" data-slot-type="text" data-slot-label="Tactile · careful" data-slot-locked-layout="true">Tactile · careful</div>
+            <div class="delta-tag up caption" data-edit-slot="s6-slot-17" data-slot-type="text" data-slot-label="7 pts" data-slot-locked-layout="true">7 pts</div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">04.</div>
+            <div class="nm" data-edit-slot="s6-slot-18" data-slot-type="text" data-slot-label="Quietly weird type" data-slot-locked-layout="true">Quietly weird type</div>
+            <div class="desc" data-edit-slot="s6-slot-19" data-slot-type="text" data-slot-label="Display faces with one slightly off detail." data-slot-locked-layout="true">Display faces with one slightly off detail.</div>
+            <div class="mood-tag" data-edit-slot="s6-slot-20" data-slot-type="text" data-slot-label="Curious · alert" data-slot-locked-layout="true">Curious · alert</div>
+            <div class="delta-tag flat caption" data-edit-slot="s6-slot-21" data-slot-type="text" data-slot-label="flat" data-slot-locked-layout="true">flat</div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">05.</div>
+            <div class="nm" data-edit-slot="s6-slot-22" data-slot-type="text" data-slot-label="Receipts &amp;amp; ledgers" data-slot-locked-layout="true">Receipts &amp; ledgers</div>
+            <div class="desc" data-edit-slot="s6-slot-23" data-slot-type="text" data-slot-label="Information designed to be filed, not consumed." data-slot-locked-layout="true">Information designed to be filed, not consumed.</div>
+            <div class="mood-tag" data-edit-slot="s6-slot-24" data-slot-type="text" data-slot-label="Plain · honest" data-slot-locked-layout="true">Plain · honest</div>
+            <div class="delta-tag up caption" data-edit-slot="s6-slot-25" data-slot-type="text" data-slot-label="5 pts" data-slot-locked-layout="true">5 pts</div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">06.</div>
+            <div class="nm" data-edit-slot="s6-slot-26" data-slot-type="text" data-slot-label="Public weather" data-slot-locked-layout="true">Public weather</div>
+            <div class="desc" data-edit-slot="s6-slot-27" data-slot-type="text" data-slot-label="Brand voice that admits the day&#x27;s actual mood." data-slot-locked-layout="true">Brand voice that admits the day's actual mood.</div>
+            <div class="mood-tag" data-edit-slot="s6-slot-28" data-slot-type="text" data-slot-label="Open · tender" data-slot-locked-layout="true">Open · tender</div>
+            <div class="delta-tag up caption" data-edit-slot="s6-slot-29" data-slot-type="text" data-slot-label="11 pts" data-slot-locked-layout="true">11 pts</div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">07.</div>
+            <div class="nm" data-edit-slot="s6-slot-30" data-slot-type="text" data-slot-label="Long-form receipts" data-slot-locked-layout="true">Long-form receipts</div>
+            <div class="desc" data-edit-slot="s6-slot-31" data-slot-type="text" data-slot-label="Newsletters that read like printed pamphlets." data-slot-locked-layout="true">Newsletters that read like printed pamphlets.</div>
+            <div class="mood-tag" data-edit-slot="s6-slot-32" data-slot-type="text" data-slot-label="Slow · sourced" data-slot-locked-layout="true">Slow · sourced</div>
+            <div class="delta-tag up caption" data-edit-slot="s6-slot-33" data-slot-type="text" data-slot-label="3 pts" data-slot-locked-layout="true">3 pts</div>
+          </div>
+          <div class="row">
+            <div class="num-tag caption">08.</div>
+            <div class="nm" data-edit-slot="s6-slot-34" data-slot-type="text" data-slot-label="Pre-loved objects" data-slot-locked-layout="true">Pre-loved objects</div>
+            <div class="desc" data-edit-slot="s6-slot-35" data-slot-type="text" data-slot-label="Resale and repair as the front of the brand." data-slot-locked-layout="true">Resale and repair as the front of the brand.</div>
+            <div class="mood-tag" data-edit-slot="s6-slot-36" data-slot-type="text" data-slot-label="Worn · cared" data-slot-locked-layout="true">Worn · cared</div>
+            <div class="delta-tag down caption" data-edit-slot="s6-slot-37" data-slot-type="text" data-slot-label="2 pts" data-slot-locked-layout="true">2 pts</div>
+          </div>
+        </div>
+      </div>
+      <div class="pagenum" data-edit-slot="s6-slot-38" data-slot-type="metric" data-slot-label="07 / 08" data-slot-locked-layout="true">07 / 08</div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-colophon hairlines" id="slide-7" data-template-slide-index="8">
+      <div class="pixel-glitch" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <pattern id="vs8" width="2.4" height="100" patternUnits="userSpaceOnUse">
+              <line x1="0.5" y1="0" x2="0.5" y2="100" stroke="#1F2BE0" stroke-width="1.0" />
+            </pattern>
+          </defs>
+          <rect x="0"  y="0"  width="48" height="13" fill="url(#vs8)"/>
+          <rect x="14" y="13" width="56" height="12" fill="url(#vs8)"/>
+          <rect x="0"  y="25" width="64" height="14" fill="url(#vs8)"/>
+          <rect x="20" y="39" width="50" height="13" fill="url(#vs8)"/>
+          <rect x="6"  y="52" width="60" height="14" fill="url(#vs8)"/>
+          <rect x="18" y="66" width="48" height="13" fill="url(#vs8)"/>
+          <rect x="0"  y="79" width="56" height="14" fill="url(#vs8)"/>
+          <rect x="20" y="93" width="44" height="7"  fill="url(#vs8)"/>
+        </svg>
+      </div>
+
+      <div class="qr-block" aria-hidden="true">
+        <span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span>
+        <span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px"></span>
+        <span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px on"></span>
+        <span class="px on"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span>
+        <span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span>
+        <span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span>
+        <span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span>
+        <span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span><span class="px on"></span><span class="px on"></span><span class="px"></span>
+      </div>
+
+      <div class="titlewrap">
+        <div class="ktag caption">Colophon · Index 2026</div>
+        <h2 class="ttl" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="See you in theautumn issue." data-slot-locked-layout="true">See you in the<br/>autumn issue.</h2>
+      </div>
+
+      <div class="col-footer">
+        <div>
+          <div class="ftag caption">Editors</div>
+          <div class="ftxt" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Lin Ito &amp;amp; Anya Mehrotrawith the field-office" data-slot-locked-layout="true">Lin Ito &amp; Anya Mehrotra<br/>with the field-office collective</div>
+        </div>
+        <div>
+          <div class="ftag caption">Designed</div>
+          <div class="ftxt" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="In Newsreader, Hanken Grotesk&amp;amp; DM Mono · cob" data-slot-locked-layout="true">In Newsreader, Hanken Grotesk<br/>&amp; DM Mono · cobalt on cream</div>
+        </div>
+        <div>
+          <div class="ftag caption">Subscribed</div>
+          <div class="ftxt" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="field-office.co · twice a yearquiet, paid, and r" data-slot-locked-layout="true">field-office.co · twice a year<br/>quiet, paid, and read slowly</div>
+        </div>
+        <div>
+          <div class="ftag caption">Until autumn</div>
+          <div class="ftxt" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="The next issue ships October 2026. Look for the " data-slot-locked-layout="true">The next issue ships October 2026. Look for the cobalt envelope on a Monday morning.</div>
+        </div>
+      </div>
+
+      <div class="pagenum" data-edit-slot="s7-slot-6" data-slot-type="metric" data-slot-label="08 / 08" data-slot-locked-layout="true">08 / 08</div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+</div>
+<script id="swiss-slot-edit-runtime-js">
 (function () {
   'use strict';
 
@@ -1113,7 +1808,7 @@
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
       node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
-      node.closest('.deck-edit-chrome') || node.closest('[data-deck-chrome-surface]'));
+      node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
   /* ---------- History ---------- */
@@ -1187,6 +1882,7 @@
         this.current = best;
         this.onSlideChange && this.onSlideChange(best);
       }
+      this.slides.forEach((s, i) => s.classList.toggle('is-active', i === best));
       this._updateChrome();
     }
     goTo(i) {
@@ -1217,7 +1913,7 @@
     }
     _keys(e) {
       if (document.body.classList.contains('deck-edit-mode')) {
-        if (e.target.closest('.slide-object-text[contenteditable="true"]')) return;
+        if (e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]')) return;
         if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
           e.preventDefault(); this.goTo(this.current + 1);
         } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
@@ -1316,7 +2012,7 @@
       const r = sel.getRangeAt(0);
       let n = r.commonAncestorContainer;
       if (n.nodeType === Node.TEXT_NODE) n = n.parentElement;
-      const textEl = n && n.closest && n.closest('.slide-object-text[contenteditable="true"]');
+      const textEl = n && n.closest && n.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
       if (!textEl || !textEl.contains(r.commonAncestorContainer)) return;
       try {
         this._rteFormatStash = { textEl: textEl, range: r.cloneRange() };
@@ -1358,7 +2054,7 @@
         this.clearSelection();
         this._clearRteFormatStash();
         this.toolbar.classList.remove('visible');
-        document.querySelectorAll('.slide-object-text[contenteditable="true"]').forEach((el) => {
+        document.querySelectorAll('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]').forEach((el) => {
           el.contentEditable = 'false';
         });
       }
@@ -1462,7 +2158,7 @@
 
       if (slide && !obj) {
         this.clearSelection();
-        document.querySelectorAll('.slide-object-text[contenteditable="true"]').forEach((el) => {
+        document.querySelectorAll('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]').forEach((el) => {
           el.contentEditable = 'false';
         });
         this.toolbar.classList.remove('visible');
@@ -1903,17 +2599,17 @@
 
     _activeTextEl() {
       const el = document.activeElement;
-      if (el && el.classList && el.classList.contains('slide-object-text') && el.getAttribute('contenteditable') === 'true') {
+      if (el && el.getAttribute && (el.classList.contains('slide-object-text') || el.hasAttribute('data-edit-slot')) && el.getAttribute('contenteditable') === 'true') {
         return el;
       }
       const sel = document.getSelection();
       if (!sel || !sel.rangeCount) return null;
       const n = sel.anchorNode;
       const p = n && (n.nodeType === 3 ? n.parentElement : n);
-      const active = p && p.closest && p.closest('.slide-object-text[contenteditable="true"]');
+      const active = p && p.closest && p.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
       if (active) return active;
       if (this.toolbar.contains(document.activeElement)) {
-        return document.querySelector('.slide-object-text[contenteditable="true"]');
+        return document.querySelector('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
       }
       return null;
     }
@@ -1940,7 +2636,7 @@
 
     _onFocusIn(e) {
       if (!this.active) return;
-      const te = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"]');
+      const te = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
       if (te) this._updateRteToolbar();
     }
 
@@ -2465,6 +3161,11 @@
       delete el.dataset._deckHtmlBefore;
       el.removeAttribute('data-_deck-html-before');
     });
+    root.querySelectorAll('[data-edit-slot][contenteditable="true"]').forEach((el) => {
+      el.setAttribute('contenteditable', 'false');
+      delete el.dataset._deckHtmlBefore;
+      el.removeAttribute('data-_deck-html-before');
+    });
     root.querySelectorAll('.snap-line-v, .snap-line-h').forEach((el) => el.remove());
   }
 
@@ -2481,6 +3182,7 @@
       body.classList.remove('deck-edit-mode', 'slide-anim-paused', 'deck-sidebar-open');
     }
     sanitizeEditableState(docEl);
+    docEl.querySelectorAll('.deck-left-hover-anchor, #deckAddElementMenu, #progressBar, #navDots, #slideSidebar, #rteToolbar, #slotImageInput, script').forEach((el) => el.remove());
     const filmstrip = docEl.querySelector('#filmstripList');
     if (filmstrip) filmstrip.innerHTML = '';
     const addMenu = docEl.querySelector('#deckAddElementMenu');
@@ -2604,9 +3306,128 @@
   const deck = new SlideDeck();
   const editor = new SlideObjectEditor(deck, history);
   const sidebar = new SlideSidebar(deck, history);
+  /* ---------- Slot editor: locked native template layout, editable content ---------- */
+  class SlotEditor {
+    constructor(history, richEditor, onChange) {
+      this.history = history;
+      this.richEditor = richEditor;
+      this.onChange = typeof onChange === 'function' ? onChange : function () {};
+      this.imageInput = document.getElementById('slotImageInput');
+      this.imageTargetId = null;
+    }
+    bind() {
+      document.addEventListener('click', (e) => this._onClick(e), true);
+      document.addEventListener('focusout', (e) => this._onFocusOut(e), true);
+      if (this.imageInput) {
+        this.imageInput.addEventListener('change', () => this._onImagePicked());
+      }
+    }
+    _slotSelector(id) {
+      if (window.CSS && CSS.escape) return '[data-edit-slot="' + CSS.escape(id) + '"]';
+      return '[data-edit-slot="' + String(id).replace(/"/g, '\\"') + '"]';
+    }
+    _slotById(id) {
+      const deckRoot = document.getElementById('deck');
+      return (deckRoot && deckRoot.querySelector(this._slotSelector(id))) || document.querySelector(this._slotSelector(id));
+    }
+    _onClick(e) {
+      if (!document.body.classList.contains('deck-edit-mode')) return;
+      if (isDeckChromeNode(e.target)) return;
+      const slot = e.target.closest && e.target.closest('[data-edit-slot]');
+      if (!slot) return;
+      if (slot.closest('[data-slide-object]')) return;
+
+      if (slot.dataset.slotType === 'image') {
+        if (!this.imageInput) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this.imageTargetId = slot.dataset.editSlot;
+        this.imageInput.value = '';
+        this.imageInput.click();
+        return;
+      }
+
+      if (slot.isContentEditable) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (slot.dataset._deckHtmlBefore === undefined) slot.dataset._deckHtmlBefore = slot.innerHTML;
+      slot.contentEditable = 'true';
+      slot.focus();
+      if (this.richEditor && this.richEditor._updateRteToolbar) this.richEditor._updateRteToolbar();
+    }
+    _onFocusOut(e) {
+      const slot = e.target.closest && e.target.closest('[data-edit-slot]');
+      if (!slot || !slot.isContentEditable) return;
+      setTimeout(() => {
+        const ae = document.activeElement;
+        const toolbar = document.getElementById('rteToolbar');
+        if (ae && (ae === slot || slot.contains(ae) || (toolbar && toolbar.contains(ae)))) return;
+        slot.contentEditable = 'false';
+        const before = slot.dataset._deckHtmlBefore;
+        const after = slot.innerHTML;
+        delete slot.dataset._deckHtmlBefore;
+        if (before !== undefined && before !== after) {
+          const id = slot.dataset.editSlot;
+          this.history.push({
+            undo: () => {
+              const fresh = this._slotById(id);
+              if (fresh) fresh.innerHTML = before;
+            },
+            redo: () => {
+              const fresh = this._slotById(id);
+              if (fresh) fresh.innerHTML = after;
+            }
+          });
+          this.onChange();
+        }
+        if (this.richEditor) {
+          this.richEditor._closeRteDrawers && this.richEditor._closeRteDrawers();
+          if (this.richEditor.toolbar) this.richEditor.toolbar.classList.remove('visible');
+        }
+      }, 0);
+    }
+    _onImagePicked() {
+      const file = this.imageInput && this.imageInput.files && this.imageInput.files[0];
+      const id = this.imageTargetId;
+      this.imageTargetId = null;
+      if (!file || !id) return;
+      const slot = this._slotById(id);
+      if (!slot) return;
+      const before = slot.outerHTML;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const fresh = this._slotById(id);
+        if (!fresh) return;
+        const dataUrl = reader.result;
+        if (fresh.tagName === 'IMG') fresh.src = dataUrl;
+        else {
+          fresh.style.backgroundImage = 'url("' + dataUrl + '")';
+          fresh.style.backgroundSize = 'cover';
+          fresh.style.backgroundPosition = 'center';
+          if (!fresh.querySelector('*')) fresh.textContent = '';
+        }
+        const after = fresh.outerHTML;
+        if (before === after) return;
+        this.history.push({
+          undo: () => {
+            const current = this._slotById(id);
+            if (current) current.outerHTML = before;
+          },
+          redo: () => {
+            const current = this._slotById(id);
+            if (current) current.outerHTML = after;
+          }
+        });
+        this.onChange();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  const slotEditor = new SlotEditor(history, editor, updateUndoRedoChrome);
 
   ensureObjectControls(document);
   editor.bind();
+  slotEditor.bind();
   updateUndoRedoChrome();
 
   function slideGraphicIsPlaceholder(html) {
@@ -2999,7 +3820,7 @@
   document.getElementById('btnExport').addEventListener('click', exportHtml);
 
   document.addEventListener('keydown', (e) => {
-    const ce = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"]');
+    const ce = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
     if (editor.active && (e.key === 'Escape' || e.key === 'Esc')) {
       if (ce) {
         e.preventDefault();

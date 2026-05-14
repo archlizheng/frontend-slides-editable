@@ -1,411 +1,908 @@
-<!DOCTYPE html>
-<html lang="zh-Hans" data-deck-id="preset-soft-editorial">
+<!doctype html>
+<html lang="zh-Hans" data-deck-id="ported-soft-editorial" data-template-source="soft-editorial">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Soft Editorial · README Preset Deck</title>
-  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700&f[]=clash-display@600&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    /* === viewport-base.css (full) === */
-    /* ===========================================
-       VIEWPORT FITTING: MANDATORY BASE STYLES
-       Include this ENTIRE file in every presentation.
-       These styles ensure slides fit exactly in the viewport.
-       =========================================== */
 
-    /* 1. Lock html/body to viewport */
-    html, body {
-      height: 100%;
-      overflow-x: hidden;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    html {
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-    }
 
-    /* 2. Each slide = exact viewport height */
-    .slide {
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      overflow: hidden;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
 
-    /* 3. Content container with flex for centering */
-    .slide-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      max-height: 100%;
-      overflow: hidden;
-      padding: var(--slide-padding);
-    }
+<style>
+  :root {
+    --paper:    #F2EEDF;     /* warm cream page */
+    --paper-2:  #ECE6D2;
+    --ink:      #2A241B;     /* warm near-black */
+    --ink-soft: #5C5345;
+    --pink:     #E1A4C2;     /* dusty pink */
+    --lemon:    #D6DD63;     /* chartreuse */
+    --blush:    #E8C9B6;     /* soft peach */
+    --sage:     #B7C7A8;     /* sage (extra) */
+    --lilac:    #C9BEDC;     /* lilac (extra) */
+  }
+  html, body { margin:0; padding:0; background:#1a1a1a; }
+  body { font-family: "Work Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: var(--ink); }
+  #deck.slides-offset { background: #1a1a1a; }
 
-    /* 4. ALL typography uses clamp() for responsive scaling */
-    :root {
-      --title-size: clamp(1.5rem, 5vw, 4rem);
-      --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
-      --h3-size: clamp(1rem, 2.5vw, 1.75rem);
-      --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
-      --small-size: clamp(0.65rem, 1vw, 0.875rem);
-      --slide-padding: clamp(1rem, 4vw, 4rem);
-      --content-gap: clamp(0.5rem, 2vw, 2rem);
-      --element-gap: clamp(0.25rem, 1vw, 1rem);
-      --font-display: 'Cormorant Garamond', serif;
-      --font-body: 'Nunito Sans', sans-serif;
-      --slide-bg-deep: #f4f0e8;
-      --slide-bg-gradient: linear-gradient(165deg, #f4f0e8 0%, #ebe4d6 55%, #f7f4ec 100%);
-      --text-primary: #2d2822;
-      --text-secondary: #4f4a42;
-      --text-muted: #7a7268;
-      --text-on-accent: #f4f0e8;
-      --accent: #7d9b76;
-      --surface: rgba(255, 255, 255, 0.78);
-      --surface-strong: rgba(125, 155, 118, 0.1);
-      --line: rgba(45, 40, 34, 0.1);
-      --panel-shadow: 0 14px 36px rgba(45, 40, 34, 0.08);
+  section.slide {
+    background: var(--paper);
+    color: var(--ink);
+    overflow: hidden;
+    position: relative;
+  }
 
-      --deck-chrome-bg: rgba(255, 255, 255, 0.92);
-      --deck-chrome-border: rgba(15, 23, 42, 0.12);
-      --deck-chrome-text: #0f172a;
-      --deck-chrome-muted: #64748b;
-      --deck-chrome-accent: #7d9b76;
-      --deck-chrome-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
-      --deck-chrome-surface: rgba(241, 245, 249, 0.95);
-    }
+  /* Header / footer chrome shared across slides */
+  .eyebrow {
+    position: absolute;
+    top: 60px; left: 80px;
+    font-family: "Work Sans", sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .footer {
+    position: absolute;
+    left: 80px; right: 80px; bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    font-family: "Cormorant Garamond", "Garamond", serif;
+    font-size: 26px;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  .pagedot {
+    position: absolute;
+    right: 80px; top: 60px;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--ink-soft);
+  }
 
-    /* 5. Cards/containers use viewport-relative max sizes */
-    .card, .container, .content-box {
-      max-width: min(90vw, 1000px);
-      max-height: min(80vh, 700px);
-    }
+  /* Typography */
+  h1, h2, h3, p { margin: 0; }
+  .serif      { font-family: "Cormorant Garamond", "Garamond", serif; font-weight: 500; }
+  .serif-it   { font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 500; }
+  .display {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 188px;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+  }
+  .title {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 124px;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1.1;
+  }
+  .body {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.5;
+  }
 
-    /* 6. Lists auto-scale with viewport */
-    .feature-list, .bullet-list {
-      gap: clamp(0.4rem, 1vh, 1rem);
-    }
+  /* ============== 1. COVER ================================== */
+  .s-cover .stack {
+    position: absolute;
+    left: 80px; right: 80px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 36px;
+  }
+  .s-cover .kicker {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 38px;
+    color: var(--ink-soft);
+  }
+  .s-cover h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 232px;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+  .s-cover h1 em { font-style: italic; font-weight: 400; }
+  .s-cover .lede {
+    font-size: 30px;
+    line-height: 1.4;
+    max-width: 60ch;
+    color: var(--ink-soft);
+  }
+  .s-cover .swatches {
+    position: absolute;
+    right: 80px; top: 80px;
+    display: flex; gap: 14px;
+  }
+  .s-cover .swatches i {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: block;
+  }
 
-    .feature-list li, .bullet-list li {
-      font-size: var(--body-size);
-      line-height: 1.4;
-    }
+  /* ============== 2. FOREWORD =============================== */
+  .s-foreword .col-l {
+    position: absolute;
+    left: 80px; top: 200px; width: 760px;
+  }
+  .s-foreword .col-l .opener {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 56px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 36px;
+  }
+  .s-foreword .col-l .opener:first-letter {
+    font-size: 132px;
+    float: left;
+    line-height: 0.85;
+    padding: 8px 14px 0 0;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .s-foreword .col-r {
+    position: absolute;
+    right: 80px; top: 200px; width: 760px;
+  }
+  .s-foreword .col-r p {
+    font-size: 24px;
+    line-height: 1.55;
+    margin-bottom: 22px;
+    color: var(--ink-soft);
+  }
+  .s-foreword .col-r p:first-child { color: var(--ink); }
+  .s-foreword .signoff {
+    margin-top: 24px;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 30px;
+    color: var(--ink);
+  }
 
-    /* 7. Grids adapt to available space */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-      gap: clamp(0.5rem, 1.5vw, 1rem);
-    }
+  /* ============== 3. THE METHOD ============================= */
+  .s-method .grid {
+    position: absolute;
+    left: 80px; right: 80px; top: 220px; bottom: 140px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  .s-method .step {
+    background: rgba(255,255,255,0.55);
+    border-radius: 32px;
+    padding: 36px 32px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+  .s-method .step .n {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 92px;
+    line-height: 0.9;
+    color: var(--ink);
+  }
+  .s-method .step h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 44px;
+    line-height: 1.05;
+    margin-top: 16px;
+  }
+  .s-method .step p {
+    font-size: 24px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+  .s-method .step.pink  { background: var(--pink); }
+  .s-method .step.lemon { background: var(--lemon); }
+  .s-method .step.blush { background: var(--blush); }
+  .s-method .step.sage  { background: var(--sage); }
 
-    /* 8. Images constrained to viewport */
-    img, .image-container {
-      max-width: 100%;
-      max-height: min(50vh, 400px);
-      object-fit: contain;
-    }
+  /* ============== 4. INSIGHTS (reference layout) ============ */
+  .s-insights .row {
+    position: absolute;
+    left: 80px; right: 80px; top: 200px; bottom: 200px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .s-insights .card {
+    border-radius: 36px;
+    padding: 64px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 36px;
+  }
+  .s-insights .card.pink  { background: var(--pink); }
+  .s-insights .card.lemon { background: var(--lemon); }
+  .s-insights .card.blush { background: var(--blush); }
+  .s-insights .card .head h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 72px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    white-space: nowrap;
+  }
+  .s-insights .card .head .sub {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.1;
+  }
+  .s-insights .card p {
+    font-size: 24px;
+    line-height: 1.45;
+    max-width: 26ch;
+  }
 
-    /* ===========================================
-       RESPONSIVE BREAKPOINTS
-       Aggressive scaling for smaller viewports
-       =========================================== */
+  /* ============== 5. A CLOSER LOOK (full-bleed) ============= */
+  .s-closer { background: var(--pink); }
+  .s-closer .eyebrow,
+  .s-closer .pagedot,
+  .s-closer .footer { color: var(--ink); }
+  .s-closer .footer { color: rgba(42,36,27,.7); }
+  .s-closer .center {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1100px;
+    text-align: center;
+  }
+  .s-closer .marker {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 38px;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .s-closer h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 168px;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    margin-bottom: 36px;
+  }
+  .s-closer h2 em { font-style: italic; font-weight: 400; }
+  .s-closer p {
+    font-size: 28px;
+    line-height: 1.5;
+    max-width: 56ch;
+    margin: 0 auto;
+  }
 
-    @media (max-height: 700px) {
-      :root {
-        --slide-padding: clamp(0.75rem, 3vw, 2rem);
-        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
-        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
-        --h2-size: clamp(1rem, 3vw, 1.75rem);
-      }
-    }
+  /* ============== 6. BY THE NUMBERS ========================= */
+  .s-numbers .grid {
+    position: absolute;
+    left: 80px; right: 80px; top: 200px; bottom: 140px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 28px;
+  }
+  .s-numbers .stat {
+    border-radius: 36px;
+    padding: 42px 44px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+  .s-numbers .stat .v {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 200px;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+  .s-numbers .stat .v em { font-style: italic; font-weight: 400; }
+  .s-numbers .stat .lab {
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink);
+    max-width: 28ch;
+  }
+  .s-numbers .a { background: var(--lemon); grid-column: span 2; grid-row: span 2; }
+  .s-numbers .a .v { font-size: 320px; }
+  .s-numbers .b { background: var(--pink); }
+  .s-numbers .c { background: var(--blush); }
 
-    @media (max-height: 600px) {
-      :root {
-        --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
-        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
-        --title-size: clamp(1.1rem, 4vw, 2rem);
-        --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
-      }
+  /* ============== 7. IN THEIR WORDS ========================= */
+  .s-quote .center {
+    position: absolute;
+    left: 80px; right: 80px; top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+  .s-quote .qmark {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 220px;
+    line-height: 0.7;
+    color: var(--blush);
+    margin-bottom: 12px;
+  }
+  .s-quote blockquote {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 88px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 auto;
+    max-width: 28ch;
+    color: var(--ink);
+  }
+  .s-quote blockquote em { font-style: italic; font-weight: 400; }
+  .s-quote .attr {
+    margin-top: 48px;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--ink);
+  }
+  .s-quote .attr .role {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--ink-soft);
+    display: block;
+    margin-top: 4px;
+  }
 
-      .nav-dots, .keyboard-hint, .decorative {
-        display: none;
-      }
-    }
+  /* ============== 8. WHAT WE'LL DO NEXT ===================== */
+  .s-next .grid {
+    position: absolute;
+    left: 80px; right: 80px; top: 200px; bottom: 140px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+  .s-next .panel {
+    border-radius: 36px;
+    padding: 48px 52px;
+    display: flex; flex-direction: column;
+    gap: 18px;
+  }
+  .s-next .panel.l {
+    background: rgba(255,255,255,0.55);
+    justify-content: center;
+  }
+  .s-next .panel.l h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 124px;
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+  }
+  .s-next .panel.l h2 em { font-style: italic; font-weight: 400; }
+  .s-next .panel.l p {
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 36ch;
+    margin-top: 12px;
+  }
+  .s-next .panel.r {
+    background: transparent;
+    padding: 0;
+    gap: 20px;
+  }
+  .s-next .item {
+    border-radius: 28px;
+    padding: 24px 32px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  .s-next .item.pink  { background: var(--pink); }
+  .s-next .item.lemon { background: var(--lemon); }
+  .s-next .item.blush { background: var(--blush); }
+  .s-next .item .n {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 64px;
+    line-height: 1;
+  }
+  .s-next .item h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 1.05;
+    margin-bottom: 4px;
+  }
+  .s-next .item p {
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink);
+    opacity: 0.85;
+  }
 
-    @media (max-height: 500px) {
-      :root {
-        --slide-padding: clamp(0.4rem, 2vw, 1rem);
-        --title-size: clamp(1rem, 3.5vw, 1.5rem);
-        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
-        --body-size: clamp(0.65rem, 1vw, 0.85rem);
-      }
-    }
+  /* ============== CONSULT (text-dense) ====================== */
+  .s-consult .eyebrow,
+  .s-consult .pagedot,
+  .s-consult .footer { color: var(--ink-soft); }
+  .s-consult .action {
+    position: absolute;
+    left: 80px; right: 80px; top: 130px;
+    background: var(--lemon);
+    border-radius: 24px;
+    padding: 24px 36px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .s-consult .action .tag {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ink);
+    flex-shrink: 0;
+    border-right: 1px solid rgba(42,36,27,.3);
+    padding-right: 24px;
+  }
+  .s-consult .action h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+  }
+  .s-consult .body {
+    position: absolute;
+    left: 80px; right: 80px; top: 290px; bottom: 130px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr;
+    gap: 28px;
+  }
+  .s-consult .col {
+    background: rgba(255,255,255,0.55);
+    border-radius: 24px;
+    padding: 28px 30px;
+    display: flex; flex-direction: column;
+    gap: 16px;
+  }
+  .s-consult .col h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 32px;
+    line-height: 1.05;
+    color: var(--ink);
+    border-bottom: 1px solid rgba(42,36,27,.18);
+    padding-bottom: 14px;
+  }
+  .s-consult .col .meta {
+    font-family: "Work Sans", sans-serif;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .s-consult .col p {
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .s-consult .col ul {
+    margin: 0; padding-left: 18px;
+    font-size: 24px; line-height: 1.45;
+    color: var(--ink-soft);
+  }
+  .s-consult .col ul li { margin-bottom: 8px; }
+  .s-consult .col ul li strong { color: var(--ink); font-weight: 500; }
+  .s-consult .source {
+    margin-top: auto;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink-soft);
+    padding-top: 12px;
+    border-top: 1px dashed rgba(42,36,27,.18);
+  }
 
-    @media (max-width: 600px) {
-      :root {
-        --title-size: clamp(1.25rem, 7vw, 2.5rem);
-      }
+  /* ============== CHART =================================== */
+  .s-chart .left {
+    position: absolute;
+    left: 80px; top: 200px; bottom: 130px; width: 540px;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .s-chart .left h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 96px;
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+  }
+  .s-chart .left h2 em { font-style: italic; font-weight: 400; }
+  .s-chart .left p {
+    font-size: 24px; line-height: 1.5; color: var(--ink-soft);
+  }
+  .s-chart .left .legend {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-top: auto;
+  }
+  .s-chart .left .legend .li {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 24px; color: var(--ink);
+  }
+  .s-chart .left .legend .li i {
+    width: 28px; height: 12px; border-radius: 6px;
+  }
+  .s-chart .right {
+    position: absolute;
+    right: 80px; top: 200px; bottom: 200px; left: 680px;
+    background: rgba(255,255,255,0.55);
+    border-radius: 28px;
+    padding: 36px 40px 30px 80px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .s-chart .right .yhead {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .s-chart .right .plot {
+    flex: 1; min-height: 0; position: relative;
+    border-left: 1.5px solid rgba(42,36,27,.35);
+    border-bottom: 1.5px solid rgba(42,36,27,.35);
+    padding: 12px 12px 0 12px;
+  }
+  .s-chart .right .gline {
+    position: absolute; left: 0; right: 0;
+    border-top: 1px dashed rgba(42,36,27,.12);
+  }
+  .s-chart .right .yticks {
+    position: absolute; left: -56px; top: 0; bottom: 0;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font-size: 24px; color: var(--ink-soft);
+    font-family: "Cormorant Garamond", serif; font-style: italic;
+  }
+  .s-chart .right svg { width: 100%; height: 100%; display: block; position: absolute; inset: 12px 12px 0 12px; overflow: visible; }
+  .s-chart .right .xticks {
+    display: flex; justify-content: space-between;
+    margin-top: 12px;
+    font-size: 24px; color: var(--ink-soft);
+    font-family: "Cormorant Garamond", serif; font-style: italic;
+  }
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  /* ============== PROCESS DIAGRAM ========================= */
+  .s-process .head {
+    position: absolute;
+    left: 80px; right: 80px; top: 130px;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .s-process .head h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 88px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .s-process .head h2 em { font-style: italic; font-weight: 400; }
+  .s-process .head .sub {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ink-soft);
+    max-width: 32ch;
+    text-align: right;
+  }
+  .s-process .flow {
+    position: absolute;
+    left: 80px; right: 80px; top: 320px; bottom: 240px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+  .s-process .node {
+    border-radius: 28px;
+    padding: 26px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    position: relative;
+  }
+  .s-process .node .n {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 56px;
+    line-height: 0.9;
+  }
+  .s-process .node h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.05;
+  }
+  .s-process .node p {
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+  .s-process .node.n1 { background: var(--pink); }
+  .s-process .node.n2 { background: var(--blush); }
+  .s-process .node.n3 { background: var(--lemon); }
+  .s-process .node.n4 { background: var(--sage); }
+  .s-process .node.n5 { background: var(--lilac); }
+  .s-process .node .arrow {
+    position: absolute;
+    right: -20px; top: 50%; transform: translateY(-50%);
+    width: 32px; height: 32px;
+    z-index: 2;
+    color: var(--ink);
+  }
+  .s-process .node.n5 .arrow { display: none; }
+  .s-process .timeline {
+    position: absolute;
+    left: 80px; right: 80px; bottom: 140px; top: auto;
+    height: 60px;
+    background: rgba(255,255,255,0.55);
+    border-radius: 18px;
+    padding: 14px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink);
+  }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
-      html { scroll-behavior: auto; }
-    }
+  /* ============== COMPARISON MATRIX ======================= */
+  .s-matrix .head {
+    position: absolute;
+    left: 80px; right: 80px; top: 130px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 40px;
+  }
+  .s-matrix .head h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 76px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    flex-shrink: 0;
+  }
+  .s-matrix .head h2 em { font-style: italic; font-weight: 400; }
+  .s-matrix .head .sub {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--ink-soft);
+    max-width: 36ch;
+    text-align: right;
+    margin-top: 8px;
+  }
+  .s-matrix .table {
+    position: absolute;
+    left: 80px; right: 80px; top: 320px; bottom: 130px;
+    background: rgba(255,255,255,0.55);
+    border-radius: 28px;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    grid-auto-rows: minmax(0, 1fr);
+    overflow: hidden;
+  }
+  .s-matrix .table .cell {
+    padding: 22px 24px;
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--ink);
+    border-bottom: 1px dashed rgba(42,36,27,.18);
+    border-right: 1px dashed rgba(42,36,27,.18);
+  }
+  .s-matrix .table .cell:nth-child(4n) { border-right: 0; }
+  .s-matrix .table .cell.head-row {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ink);
+    border-bottom: 1.5px solid rgba(42,36,27,.4);
+    align-items: center;
+  }
+  .s-matrix .table .cell.row-label {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 28px;
+    color: var(--ink);
+    align-items: center;
+  }
+  .s-matrix .table .cell.last { border-bottom: 0; }
+  .s-matrix .pill {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .s-matrix .pill.yes  { background: var(--lemon); }
+  .s-matrix .pill.part { background: var(--blush); }
+  .s-matrix .pill.no   { background: var(--pink); }
+  .s-matrix .pill.note { background: rgba(255,255,255,0.6); border: 1px solid rgba(42,36,27,.18); color: var(--ink-soft); font-style: italic; font-family: "Cormorant Garamond", serif; font-weight: 400; }
 
-    /* === theme (Soft Editorial) === */
+  /* ============== 9. DESIGN SYSTEM ========================== */
+  .s-system .wrap {
+    position: absolute;
+    left: 80px; right: 80px; top: 140px; bottom: 100px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto 1fr 1fr;
+    gap: 24px;
+  }
+  .s-system .wrap > * { background: rgba(255,255,255,.55); border-radius: 24px; padding: 22px 26px; }
+  .s-system h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 26px;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .s-system .small { font-size: 17px; line-height: 1.5; color: var(--ink-soft); }
+  .s-system .small li { margin-bottom: 6px; }
+  .s-system .small ul { margin: 0; padding-left: 18px; }
 
-    .slide > .slide-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .slides-offset { background: var(--slide-bg-deep); }
-    .slide {
-      background: transparent;
-      color: var(--text-primary);
-    }
-    .slide > * { position: relative; }
-    .slide-static {
-      position: absolute;
-      z-index: 1;
-      pointer-events: none;
-    }
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
-    .slide.visible .reveal {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .slide.visible .reveal:nth-child(1) { transition-delay: 0.05s; }
-    .slide.visible .reveal:nth-child(2) { transition-delay: 0.12s; }
-    .slide.visible .reveal:nth-child(3) { transition-delay: 0.18s; }
-    .slide.visible .reveal:nth-child(4) { transition-delay: 0.24s; }
-    .slide.visible .reveal:nth-child(5) { transition-delay: 0.3s; }
-    .slide-object {
-      transition: transform 0.25s ease, box-shadow 0.25s ease, outline-color 0.25s ease;
-    }
-    .slide-object-text {
-      color: var(--text-primary);
-    }
-    .eyebrow .slide-object-text,
-    .section-number .slide-object-text {
-      font-size: clamp(0.68rem, 0.95vw, 0.86rem);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-    .hero-title .slide-object-text,
-    .section-title .slide-object-text {
-      font-family: var(--font-display);
-      font-weight: 800;
-      letter-spacing: -0.055em;
-      line-height: 0.94;
-    }
-    .hero-title .slide-object-text {
-      font-size: clamp(2.5rem, 7vw, 5.8rem);
-    }
-    .section-title .slide-object-text {
-      font-size: clamp(1.7rem, 4vw, 3.7rem);
-    }
-    .hero-subtitle .slide-object-text,
-    .section-copy .slide-object-text,
-    .closing-note .slide-object-text {
-      font-size: clamp(0.92rem, 1.26vw, 1.08rem);
-      line-height: 1.55;
-      color: var(--text-secondary);
-    }
-    .metric-box .slide-object-text {
-      padding: clamp(0.9rem, 1.3vw, 1.2rem);
-      border-radius: clamp(12px, 1.2vw, 18px);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--panel-shadow);
-    }
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(0.55rem, 0.9vw, 0.95rem);
-    }
-    .metric {
-      display: flex;
-      flex-direction: column;
-      gap: clamp(0.2rem, 0.4vw, 0.38rem);
-      padding-top: clamp(0.45rem, 0.7vw, 0.6rem);
-      border-top: 3px solid var(--accent);
-    }
-    .metric-value {
-      font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.8vw, 1.55rem);
-      letter-spacing: -0.04em;
-      color: var(--text-primary);
-    }
-    .metric-note {
-      font-size: clamp(0.74rem, 0.95vw, 0.88rem);
-      line-height: 1.42;
-      color: var(--text-secondary);
-    }
-    .panel-card .slide-object-text,
-    .workflow-card .slide-object-text,
-    .arch-card .slide-object-text,
-    .note-card .slide-object-text {
-      display: flex;
-      flex-direction: column;
-      gap: clamp(0.38rem, 0.7vw, 0.68rem);
-      height: 100%;
-      box-sizing: border-box;
-      padding: clamp(0.92rem, 1.3vw, 1.16rem);
-      border-radius: clamp(12px, 1.2vw, 20px);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--panel-shadow);
-      backdrop-filter: blur(6px);
-    }
-    .accent-card .slide-object-text {
-      background: var(--accent);
-      border-color: color-mix(in srgb, var(--accent) 70%, black);
-      color: var(--text-on-accent);
-    }
-    .label {
-      font-size: clamp(0.64rem, 0.86vw, 0.76rem);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-    .accent-card .label {
-      color: color-mix(in srgb, var(--text-on-accent) 74%, transparent);
-    }
-    .title {
-      font-family: var(--font-display);
-      font-size: clamp(1.05rem, 1.7vw, 1.55rem);
-      line-height: 1;
-      letter-spacing: -0.04em;
-    }
-    .body {
-      font-size: clamp(0.82rem, 1vw, 0.96rem);
-      line-height: 1.48;
-      color: var(--text-secondary);
-    }
-    .body strong {
-      color: var(--text-primary);
-    }
-    .accent-card .body,
-    .accent-card .body strong {
-      color: var(--text-on-accent);
-    }
-    .workflow-card .step-index {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      line-height: 1;
-      color: var(--accent);
-      letter-spacing: -0.06em;
-    }
-    .note-card .title {
-      font-size: clamp(1rem, 1.45vw, 1.25rem);
-    }
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: clamp(0.45rem, 0.65vw, 0.65rem);
-      margin-top: auto;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--surface-strong);
-      font-size: clamp(0.68rem, 0.82vw, 0.78rem);
-      line-height: 1;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    .closing-note .slide-object-text {
-      border-top: 4px solid var(--accent);
-      background: var(--surface);
-    }
-    @media (max-width: 820px) {
-      .metric-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+  .s-system .pal { grid-column: 1 / span 5; grid-row: 1 / span 2; }
+  .s-system .pal .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .s-system .pal .sw { aspect-ratio: 1/1.2; border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; font-family: "Work Sans", sans-serif; font-size: 11px; color: var(--ink); }
+  .s-system .pal .sw.s1 { background: var(--paper); border: 1px solid rgba(0,0,0,0.06); }
+  .s-system .pal .sw.s2 { background: var(--pink); }
+  .s-system .pal .sw.s3 { background: var(--lemon); }
+  .s-system .pal .sw.s4 { background: var(--blush); }
+  .s-system .pal .sw.s5 { background: var(--sage); }
 
-    .slide { background: var(--slide-bg-gradient); }
-    .slide::before {
-      content: "";
-      position: absolute;
-      right: 10%;
-      top: 12%;
-      width: 32%;
-      height: 48%;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(232,180,184,0.38), transparent 70%);
-      z-index: 0;
-    }
-    .slide::after {
-      content: "";
-      position: absolute;
-      left: 8%;
-      bottom: 16%;
-      width: 24%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), rgba(237, 220, 140, 0.9));
-      z-index: 0;
-    }
-    .hero-title .slide-object-text { font-style: italic; }
+  .s-system .type { grid-column: 6 / span 7; grid-row: 1 / span 2; }
+  .s-system .type .row {
+    display: flex; align-items: baseline; gap: 18px;
+    padding: 6px 0; border-bottom: 1px dashed rgba(42,36,27,.15);
+  }
+  .s-system .type .row:last-child { border-bottom: 0; }
+  .s-system .type .lbl {
+    font-family: "Work Sans", sans-serif;
+    font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-soft); margin-left: auto; white-space: nowrap;
+  }
 
-    .slide-cover > .slide-bg::after {
-      content: "";
-      position: absolute;
-      right: -18%;
-      top: -12%;
-      width: min(62vw, 720px);
-      height: min(62vw, 720px);
-      border-radius: 50%;
-      background: radial-gradient(
-        circle at 35% 35%,
-        color-mix(in srgb, var(--accent) 22%, transparent) 0%,
-        transparent 58%
-      );
-      z-index: 0;
-      pointer-events: none;
+  .s-system .rules { grid-column: 1 / span 7; grid-row: 3; }
+  .s-system .dont  { grid-column: 8 / span 5; grid-row: 3; }
+  .s-system .corners {
+    display: flex; gap: 12px; margin-top: 8px;
+  }
+  .s-system .corners .box {
+    width: 42px; height: 42px;
+    background: var(--pink);
+  }
+  .s-system .corners .box.r1 { border-radius: 14px; background: var(--lemon); }
+  .s-system .corners .box.r2 { border-radius: 22px; background: var(--blush); }
+  .s-system .corners .box.r3 { border-radius: 50%; background: var(--sage); }
+</style>
+
+<title>Soft Editorial · Slot Editable Template Port</title>
+
+<style id="ported-template-runtime-css">
+  :root {
+    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+    --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --slide-bg-deep: #0f172a;
+    --deck-chrome-bg: rgba(15, 23, 42, 0.94);
+    --deck-chrome-border: rgba(255, 255, 255, 0.14);
+    --deck-chrome-text: #e2e8f0;
+    --deck-chrome-muted: #94a3b8;
+    --deck-chrome-accent: #2563eb;
+    --deck-chrome-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    --deck-chrome-surface: rgba(30, 41, 59, 0.92);
+  }
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+  html, body {
+    min-height: 100%;
+    overflow-x: hidden !important;
+  }
+  body.ported-template-deck {
+    margin: 0;
+  }
+  #deck.slides-offset {
+    display: block !important;
+    position: relative !important;
+    height: auto !important;
+    width: 100vw !important;
+    transform: none !important;
+    transition: padding-right 0.28s ease !important;
+    overflow: visible !important;
+  }
+  #deck.slides-offset > section.slide {
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    overflow: hidden !important;
+  }
+  body.deck-edit-mode [data-edit-slot] {
+    cursor: text;
+    outline: 2px dashed color-mix(in srgb, var(--deck-chrome-accent) 72%, transparent);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--deck-chrome-accent) 10%, transparent);
+  }
+  body.deck-edit-mode [data-slot-type="image"] {
+    cursor: pointer;
+  }
+  [data-edit-slot][contenteditable="true"] {
+    outline: 2px solid var(--deck-chrome-accent) !important;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
+  }
+  .static-chart-replacement {
+    width: 100%;
+    min-height: min(42vh, 360px);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+  }
+  .static-chart-bars {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: end;
+    gap: clamp(0.45rem, 1.2vw, 1rem);
+    min-height: min(34vh, 300px);
+    border-left: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    padding: clamp(0.5rem, 1.4vw, 1rem);
+  }
+  .static-chart-bar {
+    min-height: 18%;
+    height: var(--v);
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    background: currentColor;
+    opacity: 0.72;
+  }
+  .static-chart-bar b {
+    display: block;
+    transform: translateY(calc(-100% - 0.25rem));
+    color: inherit;
+    background: inherit;
+    font: inherit;
+  }
+  .static-chart-caption {
+    font-size: clamp(0.72rem, 1vw, 0.95rem);
+    opacity: 0.72;
+  }
+  @media print {
+    .deck-left-hover-anchor, .deck-add-element-menu, .slide-sidebar, .rte-toolbar, .progress-bar, .nav-dots {
+      display: none !important;
     }
-
-    body {
-      margin: 0;
-      font-family: var(--font-body);
-      background: var(--slide-bg-deep);
-      color: var(--text-primary);
+    #deck.slides-offset > section.slide {
+      break-after: page;
     }
-    .slide { background: transparent; }
+  }
+</style>
 
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .slide.visible .reveal { opacity: 1; transform: translateY(0); }
-    .slide.visible .reveal:nth-child(1) { transition-delay: 0.05s; }
-    .slide.visible .reveal:nth-child(2) { transition-delay: 0.12s; }
-    .slide.visible .reveal:nth-child(3) { transition-delay: 0.18s; }
-
+<style id="swiss-edit-runtime-css">
     /* === deck chrome (fixed UI) === */
     .progress-bar {
       position: fixed; top: 0; left: 0; height: 3px;
@@ -835,10 +1332,10 @@
     }
 
     body.deck-edit-mode.slide-anim-paused .reveal { transition: none !important; }
-  </style>
-</head>
-<body>
 
+</style>
+</head>
+<body class="ported-template-deck">
 <div class="deck-left-hover-anchor" id="deckLeftHover" aria-label="Deck controls">
   <div class="deck-left-row">
     <button type="button" class="edit-toggle" id="editToggle" title="Edit mode (E) — hover this corner to show">Edit</button>
@@ -921,181 +1418,401 @@
     </div>
   </div>
 </div>
+<input type="file" id="slotImageInput" accept="image/*" hidden data-deck-chrome-surface="">
 
-<div class="slides-offset">
-<section class="slide slide-cover" id="slide-0">
-  <div class="slide-bg" aria-hidden="true"></div>
-  <div class="slide-edit-layer">
-    <div class="slide-object reveal eyebrow" data-slide-object data-oid="s0-o0" data-object-type="text" style="left:12%;top:12%;width:24%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">Soft Editorial / README deck</div>
+<div id="deck" class="slides-offset stage" data-ported-template="soft-editorial">
+<section class="slide s-cover" data-label="01 Cover" id="slide-0" data-template-slide-index="1">
+    <div class="eyebrow" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Field Notes" data-slot-locked-layout="true">Field Notes</div>
+    <div class="swatches" aria-hidden="true">
+      <i style="background:var(--pink)"></i>
+      <i style="background:var(--lemon)"></i>
+      <i style="background:var(--blush)"></i>
     </div>
-    <div class="slide-object reveal hero-title" data-slide-object data-oid="s0-o1" data-object-type="text" style="left:12%;top:19%;width:32%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">Frontend Slides<br>Editable</div>
+    <div class="stack">
+      <div class="kicker">A research debrief, vol. iii</div>
+      <h1 data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="What we learned this&amp;nbsp;quarter." data-slot-locked-layout="true">What we learned <em>this&nbsp;quarter.</em></h1>
+      <div class="lede" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="A short, honest look at what our customers told " data-slot-locked-layout="true">A short, honest look at what our customers told us between January and March — what's working, what's quietly broken, and what we want to try next.</div>
     </div>
-    <div class="slide-object reveal hero-subtitle" data-slide-object data-oid="s0-o2" data-object-type="text" style="left:12%;top:53%;width:24%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">中文为主，英文做轻量标签。可编辑 runtime 保留在单文件 HTML 里。</div>
+    <div class="footer" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
     </div>
-    <div class="slide-object reveal metric-box" data-slide-object data-oid="s0-o3" data-object-type="text" style="left:12%;top:73%;width:40%;height:14%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><div class="metric-grid"><div class="metric"><span class="metric-value">Preset</span><span class="metric-note">每套版式都保留自己的布局和签名元素</span></div><div class="metric"><span class="metric-value">Edit</span><span class="metric-note">拖拽 缩放 多选 Pages Undo / Redo</span></div><div class="metric"><span class="metric-value">Ship</span><span class="metric-note">Ctrl+S 保存结构，Export HTML 清理导出</span></div></div></div>
-    </div>
-  </div>
-</section>
-<section class="slide slide-value" id="slide-1">
-  <div class="slide-bg" aria-hidden="true"></div>
-  <div class="slide-edit-layer">
-    <div class="slide-object reveal section-number" data-slide-object data-oid="s1-o0" data-object-type="text" style="left:12%;top:12%;width:20%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">01 / Fork logic</div>
-    </div>
-    <div class="slide-object reveal section-title" data-slide-object data-oid="s1-o1" data-object-type="text" style="left:12%;top:19%;width:28%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">区别不在能不能生成，而在生成后还要不要继续改</div>
-    </div>
-    <div class="slide-object reveal section-copy" data-slide-object data-oid="s1-o2" data-object-type="text" style="left:12%;top:45%;width:24%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">README 把它定义成 <strong>frontend-slides</strong> 的可编辑分支：保留 style discovery、viewport discipline 与 PPT conversion，同时加入完整浏览器编辑 runtime。</div>
-    </div>
-    <div class="slide-object reveal panel-card accent-card" data-slide-object data-oid="s1-o3" data-object-type="text" style="left:47%;top:19%;width:16%;height:21%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Parent</span><span class="title">只读更轻</span><span class="body">接近定稿、体积敏感、只需要展示时，更适合父 skill。</span></div>
-    </div>
-    <div class="slide-object reveal panel-card" data-slide-object data-oid="s1-o4" data-object-type="text" style="left:66%;top:19%;width:16%;height:21%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Editable</span><span class="title">继续改布局</span><span class="body">客户反馈、团队评审、内容常变时，更适合这个分支。</span></div>
-    </div>
-    <div class="slide-object reveal panel-card" data-slide-object data-oid="s1-o5" data-object-type="text" style="left:47%;top:46%;width:16%;height:21%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Runtime</span><span class="title">对象级编辑</span><span class="body">拖拽、缩放、富文本、Pages、历史记录都保留在文件里。</span></div>
-    </div>
-    <div class="slide-object reveal panel-card" data-slide-object data-oid="s1-o6" data-object-type="text" style="left:66%;top:46%;width:16%;height:21%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Delivery</span><span class="title">保存与导出</span><span class="body">localStorage 持久化迭代状态，导出时再生成干净的独立 HTML。</span></div>
-    </div>
-  </div>
-</section>
-<section class="slide slide-workflow" id="slide-2">
-  <div class="slide-bg" aria-hidden="true"></div>
-  <div class="slide-edit-layer">
-    <div class="slide-object reveal section-number" data-slide-object data-oid="s2-o0" data-object-type="text" style="left:12%;top:12%;width:20%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">02 / Workflow</div>
-    </div>
-    <div class="slide-object reveal section-title" data-slide-object data-oid="s2-o1" data-object-type="text" style="left:12%;top:19%;width:30%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">先做 discovery，再选 preset，再把最后一轮修改留给浏览器</div>
-    </div>
-    <div class="slide-object reveal workflow-card" data-slide-object data-oid="s2-o2" data-object-type="text" style="left:47%;top:19%;width:16%;height:16%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="step-index">01</span><span class="title">成组 discovery</span><span class="body">目标、页数、内容、风格、编辑范围、图片素材一次问清。</span></div>
-    </div>
-    <div class="slide-object reveal workflow-card" data-slide-object data-oid="s2-o3" data-object-type="text" style="left:66%;top:19%;width:16%;height:16%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="step-index">02</span><span class="title">先缩小风格范围</span><span class="body">根据 style preference、受众和内容先收敛 2-4 个 preset。</span></div>
-    </div>
-    <div class="slide-object reveal workflow-card" data-slide-object data-oid="s2-o4" data-object-type="text" style="left:47%;top:40%;width:16%;height:16%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="step-index">03</span><span class="title">直选或看预览</span><span class="body">可以直接挑 preset，也可以先看预览再决定。</span></div>
-    </div>
-    <div class="slide-object reveal workflow-card" data-slide-object data-oid="s2-o5" data-object-type="text" style="left:66%;top:40%;width:16%;height:16%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="step-index">04</span><span class="title">生成可编辑 deck</span><span class="body">单文件 HTML 交付时仍然保留 Pages、save/export 与 history。</span></div>
-    </div>
-    <div class="slide-object reveal note-card accent-card" data-slide-object data-oid="s2-o6" data-object-type="text" style="left:47%;top:64%;width:35%;height:14%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="title">Editing controls</span><span class="body">进入编辑后，布局和文字都还可以继续收口，而不是生成后立刻冻结。</span><div class="pill-row"><span class="pill">E</span><span class="pill">Pages</span><span class="pill">Ctrl+click</span><span class="pill">Ctrl+S</span><span class="pill">Export HTML</span></div></div>
-    </div>
-  </div>
-</section>
-<section class="slide slide-architecture" id="slide-3">
-  <div class="slide-bg" aria-hidden="true"></div>
-  <div class="slide-edit-layer">
-    <div class="slide-object reveal section-number" data-slide-object data-oid="s3-o0" data-object-type="text" style="left:12%;top:12%;width:22%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">03 / Runtime contract</div>
-    </div>
-    <div class="slide-object reveal section-title" data-slide-object data-oid="s3-o1" data-object-type="text" style="left:12%;top:19%;width:30%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false">真正不能丢的是结构契约、视口纪律和 preset identity</div>
-    </div>
-    <div class="slide-object reveal arch-card" data-slide-object data-oid="s3-o2" data-object-type="text" style="left:47%;top:18%;width:16%;height:18%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">DOM</span><span class="title">运行时契约</span><span class="body">`section.slide#id`、`.slide-edit-layer`、`[data-slide-object][data-oid]` 需要稳定。</span></div>
-    </div>
-    <div class="slide-object reveal arch-card" data-slide-object data-oid="s3-o3" data-object-type="text" style="left:66%;top:18%;width:16%;height:18%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Deck root</span><span class="title">只枚举真实 slides</span><span class="body">查 slide 时必须限定 deck root，不能把 filmstrip clones 算进去。</span></div>
-    </div>
-    <div class="slide-object reveal arch-card" data-slide-object data-oid="s3-o4" data-object-type="text" style="left:47%;top:41%;width:16%;height:18%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Viewport</span><span class="title">不滚动，放不下就拆页</span><span class="body">`100vh / 100dvh`、`clamp()`、内容过密就分拆到新 slide。</span></div>
-    </div>
-    <div class="slide-object reveal arch-card" data-slide-object data-oid="s3-o5" data-object-type="text" style="left:66%;top:41%;width:16%;height:18%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="label">Docs</span><span class="title">支撑文件按需读取</span><span class="body">`SKILL.md`、`STYLE_PRESETS.md`、`editor-runtime.md`、`html-template.md`。</span></div>
-    </div>
-    <div class="slide-object reveal closing-note" data-slide-object data-oid="s3-o6" data-object-type="text" style="left:12%;top:69%;width:70%;height:12%;">
-      <button type="button" class="slide-object-move" aria-label="Move">⠿</button>
-      <button type="button" class="slide-object-delete" aria-label="Delete object">×</button>
-      <button type="button" class="slide-object-resize" aria-label="Resize"></button>
-      <div class="slide-object-text" contenteditable="false"><span class="title">Remember / 记住</span><span class="body">可编辑 runtime 是附加层，不是把所有 preset 压成一种模板。当前文件展示的是 <strong>Soft Editorial</strong> 版本的 README deck，按 <strong>E</strong> 可继续编辑。</span></div>
-    </div>
-  </div>
-</section>
-</div></div>
 
-<script>
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-foreword" data-label="02 Foreword" id="slide-1" data-template-slide-index="2">
+    <div class="eyebrow" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Foreword" data-slot-locked-layout="true">Foreword</div>
+    <div class="pagedot" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="ii" data-slot-locked-layout="true">ii</div>
+    <div class="col-l" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="We spent eight weeks listening, and what we hear" data-slot-locked-layout="true">
+      <p class="opener">We spent eight weeks listening, and what we heard surprised us in the kindest way.</p>
+    </div>
+    <div class="col-r">
+      <p>The team ran twenty-eight long-form interviews, shadowed nine teams during their busiest week of the year, and sat with the support inbox for ten unbroken days.</p>
+      <p>The themes that emerged were not the ones we set out to find. The brief asked about onboarding; the answers we got were about trust. So we followed the thread.</p>
+      <p>This deck is the short version. Each insight is a door — open the ones that matter to your team this quarter, and let the others wait.</p>
+      <div class="signoff">— The research desk</div>
+    </div>
+    <div class="footer" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-method" data-label="03 The Method" id="slide-2" data-template-slide-index="3">
+    <div class="eyebrow" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="The Method" data-slot-locked-layout="true">The Method</div>
+    <div class="pagedot" data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="iii" data-slot-locked-layout="true">iii</div>
+    <div class="grid">
+      <div class="step pink">
+        <div class="n">i.</div>
+        <div data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Listen Twenty-eight long-form conversations with" data-slot-locked-layout="true">
+          <h3>Listen</h3>
+          <p>Twenty-eight long-form conversations with customers across four segments and three regions.</p>
+        </div>
+      </div>
+      <div class="step lemon">
+        <div class="n">ii.</div>
+        <div data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Watch Nine on-site shadowing sessions during pea" data-slot-locked-layout="true">
+          <h3>Watch</h3>
+          <p>Nine on-site shadowing sessions during peak workflows. We took notes, not video.</p>
+        </div>
+      </div>
+      <div class="step blush">
+        <div class="n">iii.</div>
+        <div data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Read Ten days inside the support inbox, tagging " data-slot-locked-layout="true">
+          <h3>Read</h3>
+          <p>Ten days inside the support inbox, tagging every message by intent and emotional tone.</p>
+        </div>
+      </div>
+      <div class="step sage">
+        <div class="n">iv.</div>
+        <div data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Distill Three rounds of thematic clustering with" data-slot-locked-layout="true">
+          <h3>Distill</h3>
+          <p>Three rounds of thematic clustering with the design and policy teams, ending in eight themes.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-insights" data-label="04 Insights" id="slide-3" data-template-slide-index="4">
+    <div class="eyebrow" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Insights" data-slot-locked-layout="true">Insights</div>
+    <div class="pagedot" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="iv" data-slot-locked-layout="true">iv</div>
+    <div class="row">
+      <div class="card pink">
+        <div class="head">
+          <h3 class="serif">Insight #1</h3>
+          <div class="sub">Trust is the onboarding</div>
+        </div>
+        <p data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Customers don&#x27;t churn on day one because the pro" data-slot-locked-layout="true">Customers don't churn on day one because the product is hard. They churn because the first three emails feel like a stranger.</p>
+      </div>
+      <div class="card lemon">
+        <div class="head">
+          <h3 class="serif">Insight #2</h3>
+          <div class="sub">Power users dread upgrades</div>
+        </div>
+        <p data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="The people we asked to love new features the mos" data-slot-locked-layout="true">The people we asked to love new features the most quietly resent them. They want fewer surprises, not bigger ones.</p>
+      </div>
+      <div class="card blush">
+        <div class="head">
+          <h3 class="serif">Insight #3</h3>
+          <div class="sub">Support is product</div>
+        </div>
+        <p data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="Half of &quot;feature requests&quot; in the inbox are exis" data-slot-locked-layout="true">Half of "feature requests" in the inbox are existing features that customers couldn't find. We have a discovery problem dressed as a roadmap problem.</p>
+      </div>
+    </div>
+    <div class="footer" data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-closer" data-label="05 A Closer Look" id="slide-4" data-template-slide-index="5">
+    <div class="eyebrow" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="A closer look · 1 of 3" data-slot-locked-layout="true">A closer look · 1 of 3</div>
+    <div class="pagedot" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="v" data-slot-locked-layout="true">v</div>
+    <div class="center">
+      <div class="marker">on insight #1</div>
+      <h2 data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Trust is the onboarding." data-slot-locked-layout="true">Trust is the <em>onboarding.</em></h2>
+      <p data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="The product can be perfect on day one, but if th" data-slot-locked-layout="true">The product can be perfect on day one, but if the welcome email reads like a contract, half of new accounts will never log in twice. The fix is small and writerly, not technical.</p>
+    </div>
+    <div class="footer" data-edit-slot="s4-slot-5" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-numbers" data-label="06 By the Numbers" id="slide-5" data-template-slide-index="6">
+    <div class="eyebrow" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="By the numbers" data-slot-locked-layout="true">By the numbers</div>
+    <div class="pagedot" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="vi" data-slot-locked-layout="true">vi</div>
+    <div class="grid">
+      <div class="stat a">
+        <div class="lab serif-it" style="font-size:30px">of new accounts open the third email,<br/>up from 41% last quarter.</div>
+        <div class="v" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="68%" data-slot-locked-layout="true">68<em>%</em></div>
+      </div>
+      <div class="stat b">
+        <div class="v">28</div>
+        <div class="lab" data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="long-form customer interviews, across four segme" data-slot-locked-layout="true">long-form customer interviews, across four segments.</div>
+      </div>
+      <div class="stat c">
+        <div class="v">9</div>
+        <div class="lab" data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="teams we shadowed for their busiest week of the " data-slot-locked-layout="true">teams we shadowed for their busiest week of the year.</div>
+      </div>
+    </div>
+    <div class="footer" data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-quote" data-label="07 In Their Words" id="slide-6" data-template-slide-index="7">
+    <div class="eyebrow" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="In their words" data-slot-locked-layout="true">In their words</div>
+    <div class="pagedot" data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="vii" data-slot-locked-layout="true">vii</div>
+    <div class="center">
+      <div class="qmark">"</div>
+      <blockquote data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="I did not need a better product. I needed it to " data-slot-locked-layout="true">I did not need a <em>better</em> product. I needed it to behave like it remembered me.</blockquote>
+      <div class="attr" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Renée, three-year customer Studio of seven, Lisb" data-slot-locked-layout="true">
+        Renée, three-year customer
+        <span class="role">Studio of seven, Lisbon</span>
+      </div>
+    </div>
+    <div class="footer" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-next" data-label="08 What's Next" id="slide-7" data-template-slide-index="8">
+    <div class="eyebrow" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="What we&#x27;ll do next" data-slot-locked-layout="true">What we'll do next</div>
+    <div class="pagedot" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="viii" data-slot-locked-layout="true">viii</div>
+    <div class="grid">
+      <div class="panel l">
+        <h2>Three small <em>moves,</em><br/>before the next debrief.</h2>
+        <p>Each one is small enough to ship inside a sprint, and structured so we can tell, six weeks from now, whether it moved the dial.</p>
+      </div>
+      <div class="panel r">
+        <div class="item pink">
+          <div class="n">i.</div>
+          <div data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Rewrite the first three emails From templated to" data-slot-locked-layout="true">
+            <h3>Rewrite the first three emails</h3>
+            <p>From templated to written. Owner: lifecycle. By: May 17.</p>
+          </div>
+        </div>
+        <div class="item lemon">
+          <div class="n">ii.</div>
+          <div data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Quiet upgrades by default Opt-in for power users" data-slot-locked-layout="true">
+            <h3>Quiet upgrades by default</h3>
+            <p>Opt-in for power users; soft rollout for everyone else. Owner: product. By: June 1.</p>
+          </div>
+        </div>
+        <div class="item blush">
+          <div class="n">iii.</div>
+          <div data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Make the inbox a search bar Surface in-product h" data-slot-locked-layout="true">
+            <h3>Make the inbox a search bar</h3>
+            <p>Surface in-product help when a request matches a feature. Owner: support × product. By: June 14.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer" data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-consult" data-label="09 Findings · Detail" id="slide-8" data-template-slide-index="9">
+    <div class="eyebrow" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Findings · Detail" data-slot-locked-layout="true">Findings · Detail</div>
+    <div class="pagedot" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="ix" data-slot-locked-layout="true">ix</div>
+    <div class="action">
+      <div class="tag">Action title</div>
+      <h2 data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="The trust gap is built in the first 72 hours, no" data-slot-locked-layout="true">The trust gap is built in the first 72 hours, not the first 7 days — and the cost compounds for the rest of the lifecycle.</h2>
+    </div>
+    <div class="body">
+      <div class="col">
+        <h3>What we found</h3>
+        <p><strong style="color:var(--ink); font-weight:500">Three behavioral signals</strong> in the first 72 hours predict 18-month retention better than any feature-usage metric we tracked.</p>
+        <ul>
+          <li><strong>Email open #2</strong> — opening the second lifecycle email lifts D90 retention by 19 points.</li>
+          <li><strong>Personal salutation</strong> — accounts that received a written, non-templated welcome retained 2.4× the cohort.</li>
+          <li><strong>Reply received</strong> — a single human reply within 24 hours of signup is the single largest lever we measured.</li>
+        </ul>
+        <div class="source">Source: 14,200 cohorted accounts, Jan–Mar 2026.</div>
+      </div>
+      <div class="col">
+        <h3>Why it matters</h3>
+        <div class="meta">$4.1M in projected retained ARR, on the current cohort alone.</div>
+        <p data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="The first three days are the only window where c" data-slot-locked-layout="true">The first three days are the only window where customers are both paying attention and willing to write back. Every interaction during this window does the work of roughly four interactions in week three.</p>
+        <p data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="The cost of getting this wrong is not refunds — " data-slot-locked-layout="true">The cost of getting this wrong is not refunds — it is the long, quiet churn of an account that never returns to the inbox.</p>
+        <div class="source" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Modelled on FY24 cohort behaviour." data-slot-locked-layout="true">Modelled on FY24 cohort behaviour.</div>
+      </div>
+      <div class="col">
+        <h3>What to do</h3>
+        <ul>
+          <li><strong>Rewrite emails 1–3</strong> in human voice; ship behind a 50/50 holdout. Owner: lifecycle. By: May 17.</li>
+          <li><strong>Route every signup</strong> to a named human for one personal reply within 24h, capped at the top 200 accounts/day. Owner: success. By: May 24.</li>
+          <li><strong>Instrument the 72-hour window</strong> as a first-class metric in the weekly review. Owner: analytics. By: June 1.</li>
+        </ul>
+        <div class="source">Pilot scope: top-decile signups by ICP score.</div>
+      </div>
+    </div>
+    <div class="footer" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-chart" data-label="10 Retention Curve" id="slide-9" data-template-slide-index="10">
+    <div class="eyebrow" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Retention, by cohort" data-slot-locked-layout="true">Retention, by cohort</div>
+    <div class="pagedot" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="x" data-slot-locked-layout="true">x</div>
+    <div class="left">
+      <h2>The curve <em>bends</em><br/>around day three.</h2>
+      <p>Cohorts that received a written welcome and a human reply within 24 hours retain at roughly 2× the rate of the templated cohort, and the gap holds steady for the first ninety days.</p>
+      <div class="legend">
+        <div class="li"><i style="background:var(--pink)"></i> Templated welcome (control)</div>
+        <div class="li" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="Written welcome" data-slot-locked-layout="true"><i style="background:var(--lemon)"></i> Written welcome</div>
+        <div class="li" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="Written + human reply" data-slot-locked-layout="true"><i style="background:var(--ink); height:14px"></i> Written + human reply</div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="yhead">% of cohort active, by day</div>
+      <div class="plot">
+        <div class="yticks">
+          <span>100</span><span>75</span><span>50</span><span>25</span><span>0</span>
+        </div>
+        <div class="gline" style="top:0%"></div>
+        <div class="gline" style="top:25%"></div>
+        <div class="gline" style="top:50%"></div>
+        <div class="gline" style="top:75%"></div>
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline fill="none" stroke="#E1A4C2" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"
+            points="0,4 16,28 32,46 48,60 64,72 80,80 100,86" />
+          <polyline fill="none" stroke="#D6DD63" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"
+            points="0,4 16,16 32,26 48,36 64,44 80,50 100,54" />
+          <polyline fill="none" stroke="#2A241B" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"
+            points="0,4 16,10 32,16 48,22 64,28 80,32 100,36" />
+        </svg>
+      </div>
+      <div class="xticks">
+        <span>D0</span><span>D7</span><span>D14</span><span>D30</span><span>D45</span><span>D60</span><span>D90</span>
+      </div>
+    </div>
+    <div class="footer" data-edit-slot="s9-slot-5" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-process" data-label="11 Process" id="slide-10" data-template-slide-index="11">
+    <div class="eyebrow" data-edit-slot="s10-slot-1" data-slot-type="text" data-slot-label="How we&#x27;ll work" data-slot-locked-layout="true">How we'll work</div>
+    <div class="pagedot" data-edit-slot="s10-slot-2" data-slot-type="text" data-slot-label="xi" data-slot-locked-layout="true">xi</div>
+    <div class="head">
+      <h2>From <em>insight</em><br/>to shipped change.</h2>
+      <div class="sub">A five-step path each pilot follows, end to end, before it is allowed to graduate to the default experience.</div>
+    </div>
+    <div class="flow">
+      <div class="node n1">
+        <div class="n">i.</div>
+        <h3 data-edit-slot="s10-slot-3" data-slot-type="text" data-slot-label="Frame" data-slot-locked-layout="true">Frame</h3>
+        <p data-edit-slot="s10-slot-4" data-slot-type="text" data-slot-label="Translate the insight into a single behavioural " data-slot-locked-layout="true">Translate the insight into a single behavioural hypothesis we can falsify.</p>
+        <svg class="arrow" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
+      </div>
+      <div class="node n2">
+        <div class="n">ii.</div>
+        <h3 data-edit-slot="s10-slot-5" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
+        <p data-edit-slot="s10-slot-6" data-slot-type="text" data-slot-label="Sketch the smallest end-to-end change that lets " data-slot-locked-layout="true">Sketch the smallest end-to-end change that lets the hypothesis be tested in one sprint.</p>
+        <svg class="arrow" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
+      </div>
+      <div class="node n3">
+        <div class="n">iii.</div>
+        <h3 data-edit-slot="s10-slot-7" data-slot-type="text" data-slot-label="Pilot" data-slot-locked-layout="true">Pilot</h3>
+        <p data-edit-slot="s10-slot-8" data-slot-type="text" data-slot-label="Ship to a 50/50 holdout in a single segment. Hol" data-slot-locked-layout="true">Ship to a 50/50 holdout in a single segment. Hold the line for two full cycles.</p>
+        <svg class="arrow" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
+      </div>
+      <div class="node n4">
+        <div class="n">iv.</div>
+        <h3 data-edit-slot="s10-slot-9" data-slot-type="text" data-slot-label="Read" data-slot-locked-layout="true">Read</h3>
+        <p data-edit-slot="s10-slot-10" data-slot-type="text" data-slot-label="Review the cohort against pre-registered metrics" data-slot-locked-layout="true">Review the cohort against pre-registered metrics. Decide kill, scale, or extend.</p>
+        <svg class="arrow" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
+      </div>
+      <div class="node n5">
+        <div class="n">v.</div>
+        <h3 data-edit-slot="s10-slot-11" data-slot-type="text" data-slot-label="Default" data-slot-locked-layout="true">Default</h3>
+        <p data-edit-slot="s10-slot-12" data-slot-type="text" data-slot-label="Graduate the change to the default surface. Reti" data-slot-locked-layout="true">Graduate the change to the default surface. Retire the legacy path inside the same release.</p>
+      </div>
+    </div>
+    <div class="timeline" data-edit-slot="s10-slot-13" data-slot-type="text" data-slot-label="Week 1Weeks 2–3Weeks 3–6Week 7Week 8" data-slot-locked-layout="true">
+      <span>Week 1</span><span>Weeks 2–3</span><span>Weeks 3–6</span><span>Week 7</span><span>Week 8</span>
+    </div>
+    <div class="footer" data-edit-slot="s10-slot-14" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide s-matrix" data-label="12 Comparison" id="slide-11" data-template-slide-index="12">
+    <div class="eyebrow" data-edit-slot="s11-slot-1" data-slot-type="text" data-slot-label="The three pilots, side by side" data-slot-locked-layout="true">The three pilots, side by side</div>
+    <div class="pagedot" data-edit-slot="s11-slot-2" data-slot-type="text" data-slot-label="xii" data-slot-locked-layout="true">xii</div>
+    <div class="head">
+      <h2>Where each <em>pilot</em><br/>earns its keep.</h2>
+      <div class="sub">Scored against the four levers that matter most this cycle. We will only carry forward bets that win on at least two.</div>
+    </div>
+    <div class="table">
+      <div class="cell head-row">Lever</div>
+      <div class="cell head-row" data-edit-slot="s11-slot-3" data-slot-type="text" data-slot-label="Rewrite welcome" data-slot-locked-layout="true">Rewrite welcome</div>
+      <div class="cell head-row" data-edit-slot="s11-slot-4" data-slot-type="text" data-slot-label="Quiet upgrades" data-slot-locked-layout="true">Quiet upgrades</div>
+      <div class="cell head-row" data-edit-slot="s11-slot-5" data-slot-type="text" data-slot-label="Inbox-as-search" data-slot-locked-layout="true">Inbox-as-search</div>
+
+      <div class="cell row-label" data-edit-slot="s11-slot-6" data-slot-type="text" data-slot-label="Time-to-impact" data-slot-locked-layout="true">Time-to-impact</div>
+      <div class="cell" data-edit-slot="s11-slot-7" data-slot-type="text" data-slot-label="≤ 4 weeks" data-slot-locked-layout="true"><span class="pill yes">≤ 4 weeks</span></div>
+      <div class="cell" data-edit-slot="s11-slot-8" data-slot-type="text" data-slot-label="6–8 weeks" data-slot-locked-layout="true"><span class="pill part">6–8 weeks</span></div>
+      <div class="cell" data-edit-slot="s11-slot-9" data-slot-type="text" data-slot-label="≤ 4 weeks" data-slot-locked-layout="true"><span class="pill yes">≤ 4 weeks</span></div>
+
+      <div class="cell row-label" data-edit-slot="s11-slot-10" data-slot-type="text" data-slot-label="Build cost" data-slot-locked-layout="true">Build cost</div>
+      <div class="cell" data-edit-slot="s11-slot-11" data-slot-type="text" data-slot-label="Low" data-slot-locked-layout="true"><span class="pill yes">Low</span></div>
+      <div class="cell" data-edit-slot="s11-slot-12" data-slot-type="text" data-slot-label="Medium" data-slot-locked-layout="true"><span class="pill part">Medium</span></div>
+      <div class="cell" data-edit-slot="s11-slot-13" data-slot-type="text" data-slot-label="Low" data-slot-locked-layout="true"><span class="pill yes">Low</span></div>
+
+      <div class="cell row-label" data-edit-slot="s11-slot-14" data-slot-type="text" data-slot-label="Retention lift (model)" data-slot-locked-layout="true">Retention lift (model)</div>
+      <div class="cell" data-edit-slot="s11-slot-15" data-slot-type="text" data-slot-label="+19 pts D90" data-slot-locked-layout="true"><span class="pill yes">+19 pts D90</span></div>
+      <div class="cell" data-edit-slot="s11-slot-16" data-slot-type="text" data-slot-label="+7 pts D90" data-slot-locked-layout="true"><span class="pill part">+7 pts D90</span></div>
+      <div class="cell" data-edit-slot="s11-slot-17" data-slot-type="text" data-slot-label="+5 pts D90" data-slot-locked-layout="true"><span class="pill part">+5 pts D90</span></div>
+
+      <div class="cell row-label last" data-edit-slot="s11-slot-18" data-slot-type="text" data-slot-label="Risk to power users" data-slot-locked-layout="true">Risk to power users</div>
+      <div class="cell last" data-edit-slot="s11-slot-19" data-slot-type="text" data-slot-label="None" data-slot-locked-layout="true"><span class="pill yes">None</span></div>
+      <div class="cell last" data-edit-slot="s11-slot-20" data-slot-type="text" data-slot-label="Material" data-slot-locked-layout="true"><span class="pill no">Material</span></div>
+      <div class="cell last" data-edit-slot="s11-slot-21" data-slot-type="text" data-slot-label="Soft, reversible" data-slot-locked-layout="true"><span class="pill note">Soft, reversible</span></div>
+    </div>
+    <div class="footer" data-edit-slot="s11-slot-22" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+      <span>April 29, 2026</span>
+      <span>Field Notes · Vol. III</span>
+    </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+</div>
+<script id="swiss-slot-edit-runtime-js">
 (function () {
   'use strict';
 
@@ -1112,7 +1829,7 @@
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
       node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
-      node.closest('.deck-edit-chrome') || node.closest('[data-deck-chrome-surface]'));
+      node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
   /* ---------- History ---------- */
@@ -1186,6 +1903,7 @@
         this.current = best;
         this.onSlideChange && this.onSlideChange(best);
       }
+      this.slides.forEach((s, i) => s.classList.toggle('is-active', i === best));
       this._updateChrome();
     }
     goTo(i) {
@@ -1216,7 +1934,7 @@
     }
     _keys(e) {
       if (document.body.classList.contains('deck-edit-mode')) {
-        if (e.target.closest('.slide-object-text[contenteditable="true"]')) return;
+        if (e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]')) return;
         if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
           e.preventDefault(); this.goTo(this.current + 1);
         } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
@@ -1315,7 +2033,7 @@
       const r = sel.getRangeAt(0);
       let n = r.commonAncestorContainer;
       if (n.nodeType === Node.TEXT_NODE) n = n.parentElement;
-      const textEl = n && n.closest && n.closest('.slide-object-text[contenteditable="true"]');
+      const textEl = n && n.closest && n.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
       if (!textEl || !textEl.contains(r.commonAncestorContainer)) return;
       try {
         this._rteFormatStash = { textEl: textEl, range: r.cloneRange() };
@@ -1357,7 +2075,7 @@
         this.clearSelection();
         this._clearRteFormatStash();
         this.toolbar.classList.remove('visible');
-        document.querySelectorAll('.slide-object-text[contenteditable="true"]').forEach((el) => {
+        document.querySelectorAll('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]').forEach((el) => {
           el.contentEditable = 'false';
         });
       }
@@ -1461,7 +2179,7 @@
 
       if (slide && !obj) {
         this.clearSelection();
-        document.querySelectorAll('.slide-object-text[contenteditable="true"]').forEach((el) => {
+        document.querySelectorAll('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]').forEach((el) => {
           el.contentEditable = 'false';
         });
         this.toolbar.classList.remove('visible');
@@ -1902,17 +2620,17 @@
 
     _activeTextEl() {
       const el = document.activeElement;
-      if (el && el.classList && el.classList.contains('slide-object-text') && el.getAttribute('contenteditable') === 'true') {
+      if (el && el.getAttribute && (el.classList.contains('slide-object-text') || el.hasAttribute('data-edit-slot')) && el.getAttribute('contenteditable') === 'true') {
         return el;
       }
       const sel = document.getSelection();
       if (!sel || !sel.rangeCount) return null;
       const n = sel.anchorNode;
       const p = n && (n.nodeType === 3 ? n.parentElement : n);
-      const active = p && p.closest && p.closest('.slide-object-text[contenteditable="true"]');
+      const active = p && p.closest && p.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
       if (active) return active;
       if (this.toolbar.contains(document.activeElement)) {
-        return document.querySelector('.slide-object-text[contenteditable="true"]');
+        return document.querySelector('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
       }
       return null;
     }
@@ -1939,7 +2657,7 @@
 
     _onFocusIn(e) {
       if (!this.active) return;
-      const te = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"]');
+      const te = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
       if (te) this._updateRteToolbar();
     }
 
@@ -2464,6 +3182,11 @@
       delete el.dataset._deckHtmlBefore;
       el.removeAttribute('data-_deck-html-before');
     });
+    root.querySelectorAll('[data-edit-slot][contenteditable="true"]').forEach((el) => {
+      el.setAttribute('contenteditable', 'false');
+      delete el.dataset._deckHtmlBefore;
+      el.removeAttribute('data-_deck-html-before');
+    });
     root.querySelectorAll('.snap-line-v, .snap-line-h').forEach((el) => el.remove());
   }
 
@@ -2480,6 +3203,7 @@
       body.classList.remove('deck-edit-mode', 'slide-anim-paused', 'deck-sidebar-open');
     }
     sanitizeEditableState(docEl);
+    docEl.querySelectorAll('.deck-left-hover-anchor, #deckAddElementMenu, #progressBar, #navDots, #slideSidebar, #rteToolbar, #slotImageInput, script').forEach((el) => el.remove());
     const filmstrip = docEl.querySelector('#filmstripList');
     if (filmstrip) filmstrip.innerHTML = '';
     const addMenu = docEl.querySelector('#deckAddElementMenu');
@@ -2603,9 +3327,128 @@
   const deck = new SlideDeck();
   const editor = new SlideObjectEditor(deck, history);
   const sidebar = new SlideSidebar(deck, history);
+  /* ---------- Slot editor: locked native template layout, editable content ---------- */
+  class SlotEditor {
+    constructor(history, richEditor, onChange) {
+      this.history = history;
+      this.richEditor = richEditor;
+      this.onChange = typeof onChange === 'function' ? onChange : function () {};
+      this.imageInput = document.getElementById('slotImageInput');
+      this.imageTargetId = null;
+    }
+    bind() {
+      document.addEventListener('click', (e) => this._onClick(e), true);
+      document.addEventListener('focusout', (e) => this._onFocusOut(e), true);
+      if (this.imageInput) {
+        this.imageInput.addEventListener('change', () => this._onImagePicked());
+      }
+    }
+    _slotSelector(id) {
+      if (window.CSS && CSS.escape) return '[data-edit-slot="' + CSS.escape(id) + '"]';
+      return '[data-edit-slot="' + String(id).replace(/"/g, '\\"') + '"]';
+    }
+    _slotById(id) {
+      const deckRoot = document.getElementById('deck');
+      return (deckRoot && deckRoot.querySelector(this._slotSelector(id))) || document.querySelector(this._slotSelector(id));
+    }
+    _onClick(e) {
+      if (!document.body.classList.contains('deck-edit-mode')) return;
+      if (isDeckChromeNode(e.target)) return;
+      const slot = e.target.closest && e.target.closest('[data-edit-slot]');
+      if (!slot) return;
+      if (slot.closest('[data-slide-object]')) return;
+
+      if (slot.dataset.slotType === 'image') {
+        if (!this.imageInput) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this.imageTargetId = slot.dataset.editSlot;
+        this.imageInput.value = '';
+        this.imageInput.click();
+        return;
+      }
+
+      if (slot.isContentEditable) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (slot.dataset._deckHtmlBefore === undefined) slot.dataset._deckHtmlBefore = slot.innerHTML;
+      slot.contentEditable = 'true';
+      slot.focus();
+      if (this.richEditor && this.richEditor._updateRteToolbar) this.richEditor._updateRteToolbar();
+    }
+    _onFocusOut(e) {
+      const slot = e.target.closest && e.target.closest('[data-edit-slot]');
+      if (!slot || !slot.isContentEditable) return;
+      setTimeout(() => {
+        const ae = document.activeElement;
+        const toolbar = document.getElementById('rteToolbar');
+        if (ae && (ae === slot || slot.contains(ae) || (toolbar && toolbar.contains(ae)))) return;
+        slot.contentEditable = 'false';
+        const before = slot.dataset._deckHtmlBefore;
+        const after = slot.innerHTML;
+        delete slot.dataset._deckHtmlBefore;
+        if (before !== undefined && before !== after) {
+          const id = slot.dataset.editSlot;
+          this.history.push({
+            undo: () => {
+              const fresh = this._slotById(id);
+              if (fresh) fresh.innerHTML = before;
+            },
+            redo: () => {
+              const fresh = this._slotById(id);
+              if (fresh) fresh.innerHTML = after;
+            }
+          });
+          this.onChange();
+        }
+        if (this.richEditor) {
+          this.richEditor._closeRteDrawers && this.richEditor._closeRteDrawers();
+          if (this.richEditor.toolbar) this.richEditor.toolbar.classList.remove('visible');
+        }
+      }, 0);
+    }
+    _onImagePicked() {
+      const file = this.imageInput && this.imageInput.files && this.imageInput.files[0];
+      const id = this.imageTargetId;
+      this.imageTargetId = null;
+      if (!file || !id) return;
+      const slot = this._slotById(id);
+      if (!slot) return;
+      const before = slot.outerHTML;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const fresh = this._slotById(id);
+        if (!fresh) return;
+        const dataUrl = reader.result;
+        if (fresh.tagName === 'IMG') fresh.src = dataUrl;
+        else {
+          fresh.style.backgroundImage = 'url("' + dataUrl + '")';
+          fresh.style.backgroundSize = 'cover';
+          fresh.style.backgroundPosition = 'center';
+          if (!fresh.querySelector('*')) fresh.textContent = '';
+        }
+        const after = fresh.outerHTML;
+        if (before === after) return;
+        this.history.push({
+          undo: () => {
+            const current = this._slotById(id);
+            if (current) current.outerHTML = before;
+          },
+          redo: () => {
+            const current = this._slotById(id);
+            if (current) current.outerHTML = after;
+          }
+        });
+        this.onChange();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  const slotEditor = new SlotEditor(history, editor, updateUndoRedoChrome);
 
   ensureObjectControls(document);
   editor.bind();
+  slotEditor.bind();
   updateUndoRedoChrome();
 
   function slideGraphicIsPlaceholder(html) {
@@ -2998,7 +3841,7 @@
   document.getElementById('btnExport').addEventListener('click', exportHtml);
 
   document.addEventListener('keydown', (e) => {
-    const ce = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"]');
+    const ce = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
     if (editor.active && (e.key === 'Escape' || e.key === 'Esc')) {
       if (ce) {
         e.preventDefault();

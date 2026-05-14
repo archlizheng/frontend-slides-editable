@@ -42,6 +42,10 @@ ROOT_NEEDLE_END = "      --deck-chrome-surface: rgba(30, 41, 59, 0.92);\n"
 HEAD_FONTSHARE = """  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700&f[]=clash-display@600&display=swap" rel="stylesheet">"""
 
+
+def normalize_generated_html(source: str) -> str:
+    return "\n".join(line.rstrip() for line in source.splitlines()) + "\n"
+
 THEME_NEEDLE_OLD = """    /* === theme === */
     body {
       margin: 0;
@@ -257,6 +261,81 @@ COMMON_COMPONENT_CSS = """
       border-top: 4px solid var(--accent);
       background: var(--surface);
     }
+    .layout-bold .section-number .slide-object-text {
+      font-size: clamp(2.8rem, 8vw, 6.8rem);
+      line-height: 0.8;
+      color: var(--accent);
+      opacity: 0.96;
+    }
+    .layout-bold .panel-card .slide-object-text,
+    .layout-bold .workflow-card .slide-object-text {
+      border-radius: 2px;
+      border-width: 2px;
+      border-color: color-mix(in srgb, var(--accent) 38%, var(--line));
+      transform: rotate(var(--card-tilt, 0deg));
+    }
+    .layout-split .section-title .slide-object-text {
+      max-width: 11ch;
+    }
+    .layout-split .panel-card .slide-object-text,
+    .layout-split .workflow-card .slide-object-text {
+      border-radius: 0;
+      border-left: 6px solid var(--accent);
+      box-shadow: none;
+    }
+    .layout-editorial .section-title .slide-object-text {
+      font-size: clamp(2.1rem, 5.8vw, 5.2rem);
+      line-height: 0.9;
+      font-style: italic;
+    }
+    .layout-editorial .panel-card .slide-object-text,
+    .layout-editorial .workflow-card .slide-object-text,
+    .layout-editorial .arch-card .slide-object-text {
+      background: transparent;
+      box-shadow: none;
+      border-width: 0 0 1px 0;
+      border-radius: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .layout-notebook .panel-card .slide-object-text,
+    .layout-notebook .workflow-card .slide-object-text,
+    .layout-soft .panel-card .slide-object-text,
+    .layout-soft .workflow-card .slide-object-text {
+      border-radius: clamp(18px, 2vw, 30px);
+    }
+    .layout-notebook .section-number .slide-object-text,
+    .layout-soft .section-number .slide-object-text {
+      display: inline-flex;
+      width: auto;
+      padding: 0.42rem 0.76rem;
+      border-radius: 999px;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+    }
+    .layout-cyber .panel-card .slide-object-text,
+    .layout-cyber .workflow-card .slide-object-text,
+    .layout-cyber .arch-card .slide-object-text {
+      border-radius: 0;
+      border-color: color-mix(in srgb, var(--accent) 44%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent), var(--panel-shadow);
+    }
+    .layout-cyber .label::before {
+      content: "// ";
+      color: var(--accent);
+    }
+    .layout-minimal .panel-card .slide-object-text,
+    .layout-minimal .workflow-card .slide-object-text,
+    .layout-minimal .arch-card .slide-object-text,
+    .layout-minimal .metric-box .slide-object-text {
+      border-radius: 0;
+      box-shadow: none;
+      border: 1px solid var(--text-primary);
+    }
+    .layout-minimal .section-title .slide-object-text {
+      line-height: 0.86;
+      text-transform: uppercase;
+    }
     @media (max-width: 820px) {
       .metric-grid {
         grid-template-columns: 1fr;
@@ -270,6 +349,8 @@ class Preset:
     slug: str
     title: str
     family: str
+    cover_archetype: str
+    content_archetype: str
     light_chrome: bool
     accent: str
     root_lines: str
@@ -591,300 +672,74 @@ COVER_DECOR_VARIABLES_BY_SLUG: dict[str, str] = {
 }
 
 
-LAYOUTS = {
+COVER_LAYOUTS_BY_ARCHETYPE = {
+    "slab": {"eyebrow": box("7%", "9%", "22%"), "title": box("7%", "24%", "32%"), "subtitle": box("7%", "63%", "27%"), "metrics": box("50%", "69%", "38%", "15%")},
+    "horizon": {"eyebrow": box("8%", "10%", "24%"), "title": box("8%", "17%", "43%"), "subtitle": box("56%", "57%", "27%"), "metrics": box("8%", "72%", "40%", "14%")},
+    "voltage": {"eyebrow": box("48%", "12%", "28%"), "title": box("8%", "22%", "42%"), "subtitle": box("52%", "25%", "29%"), "metrics": box("52%", "62%", "34%", "17%")},
+    "botanical": {"eyebrow": box("13%", "12%", "22%"), "title": box("30%", "24%", "32%"), "subtitle": box("13%", "61%", "26%"), "metrics": box("47%", "66%", "33%", "15%")},
+    "notebook": {"eyebrow": box("18%", "13%", "22%"), "title": box("18%", "23%", "28%"), "subtitle": box("50%", "29%", "21%"), "metrics": box("18%", "72%", "43%", "13%")},
+    "pastel-card": {"eyebrow": box("13%", "14%", "22%"), "title": box("13%", "22%", "30%"), "subtitle": box("50%", "23%", "24%"), "metrics": box("31%", "70%", "42%", "13%")},
+    "diptych": {"eyebrow": box("9%", "12%", "23%"), "title": box("9%", "23%", "35%"), "subtitle": box("57%", "23%", "25%"), "metrics": box("57%", "61%", "30%", "17%")},
+    "masthead": {"eyebrow": box("11%", "10%", "70%"), "title": box("11%", "24%", "36%"), "subtitle": box("55%", "31%", "22%"), "metrics": box("11%", "72%", "56%", "12%")},
+    "neon-frame": {"eyebrow": box("8%", "11%", "26%"), "title": box("8%", "21%", "34%"), "subtitle": box("8%", "61%", "27%"), "metrics": box("50%", "17%", "34%", "18%")},
+    "terminal": {"eyebrow": box("7%", "12%", "34%"), "title": box("7%", "25%", "42%"), "subtitle": box("7%", "58%", "35%"), "metrics": box("54%", "61%", "33%", "17%")},
+    "swiss": {"eyebrow": box("12%", "11%", "20%"), "title": box("32%", "16%", "28%"), "subtitle": box("12%", "57%", "22%"), "metrics": box("58%", "57%", "27%", "18%")},
+    "paper-rule": {"eyebrow": box("10%", "15%", "24%"), "title": box("10%", "23%", "31%"), "subtitle": box("50%", "28%", "24%"), "metrics": box("10%", "72%", "44%", "13%")},
+    "soft-wash": {"eyebrow": box("14%", "13%", "22%"), "title": box("14%", "23%", "31%"), "subtitle": box("47%", "29%", "26%"), "metrics": box("14%", "70%", "46%", "14%")},
+    "signal-spine": {"eyebrow": box("12%", "12%", "22%"), "title": box("12%", "25%", "32%"), "subtitle": box("50%", "19%", "25%"), "metrics": box("50%", "59%", "34%", "17%")},
+    "studio-scan": {"eyebrow": box("7%", "12%", "24%"), "title": box("7%", "21%", "40%"), "subtitle": box("52%", "18%", "29%"), "metrics": box("52%", "63%", "35%", "15%")},
+    "ledger": {"eyebrow": box("11%", "12%", "22%"), "title": box("11%", "23%", "28%"), "subtitle": box("46%", "24%", "23%"), "metrics": box("46%", "61%", "37%", "15%")},
+    "neo-brutal": {"eyebrow": box("9%", "9%", "22%"), "title": box("9%", "18%", "35%"), "subtitle": box("58%", "18%", "25%"), "metrics": box("9%", "70%", "50%", "14%")},
+    "vellum": {"eyebrow": box("13%", "12%", "23%"), "title": box("13%", "26%", "34%"), "subtitle": box("53%", "30%", "24%"), "metrics": box("13%", "72%", "42%", "13%")},
+    "cobalt": {"eyebrow": box("8%", "12%", "22%"), "title": box("8%", "24%", "34%"), "subtitle": box("52%", "23%", "28%"), "metrics": box("52%", "68%", "34%", "14%")},
+}
+
+
+CONTENT_LAYOUTS = {
     "bold": {
-        "cover": {
-            "eyebrow": box("8%", "10%", "24%"),
-            "title": box("8%", "18%", "38%"),
-            "subtitle": box("8%", "53%", "30%"),
-            "metrics": box("8%", "71%", "46%", "16%"),
-        },
-        "value": {
-            "number": box("8%", "10%", "18%"),
-            "title": box("8%", "17%", "34%"),
-            "copy": box("8%", "46%", "30%"),
-            "cards": [
-                box("50%", "16%", "18%", "24%"),
-                box("71%", "16%", "19%", "24%"),
-                box("50%", "46%", "18%", "24%"),
-                box("71%", "46%", "19%", "24%"),
-            ],
-        },
-        "workflow": {
-            "number": box("8%", "10%", "18%"),
-            "title": box("8%", "17%", "34%"),
-            "cards": [
-                box("48%", "18%", "18%", "17%"),
-                box("69%", "18%", "19%", "17%"),
-                box("48%", "40%", "18%", "17%"),
-                box("69%", "40%", "19%", "17%"),
-            ],
-            "note": box("48%", "65%", "40%", "14%"),
-        },
-        "arch": {
-            "number": box("8%", "10%", "22%"),
-            "title": box("8%", "17%", "36%"),
-            "cards": [
-                box("48%", "16%", "18%", "19%"),
-                box("69%", "16%", "19%", "19%"),
-                box("48%", "40%", "18%", "19%"),
-                box("69%", "40%", "19%", "19%"),
-            ],
-            "note": box("8%", "68%", "80%", "12%"),
-        },
+        "value": {"number": box("6%", "8%", "24%"), "title": box("8%", "22%", "36%"), "copy": box("8%", "58%", "30%"), "cards": [box("50%", "11%", "16%", "28%"), box("70%", "15%", "18%", "20%"), box("47%", "49%", "22%", "28%"), box("73%", "51%", "16%", "22%")]},
+        "workflow": {"number": box("6%", "8%", "22%"), "title": box("31%", "12%", "38%"), "cards": [box("9%", "43%", "18%", "31%"), box("31%", "39%", "18%", "31%"), box("53%", "43%", "18%", "31%"), box("75%", "39%", "16%", "31%")], "note": box("31%", "76%", "38%", "11%")},
+        "arch": {"number": box("6%", "8%", "24%"), "title": box("8%", "22%", "40%"), "cards": [box("51%", "14%", "18%", "18%"), box("71%", "14%", "18%", "18%"), box("51%", "39%", "18%", "18%"), box("71%", "39%", "18%", "18%")], "note": box("8%", "72%", "80%", "12%")},
     },
     "split": {
-        "cover": {
-            "eyebrow": box("8%", "10%", "28%"),
-            "title": box("8%", "17%", "44%"),
-            "subtitle": box("8%", "52%", "28%"),
-            "metrics": box("8%", "71%", "42%", "16%"),
-        },
-        "value": {
-            "number": box("8%", "10%", "20%"),
-            "title": box("8%", "17%", "28%"),
-            "copy": box("8%", "43%", "24%"),
-            "cards": [
-                box("46%", "16%", "20%", "22%"),
-                box("69%", "16%", "19%", "22%"),
-                box("46%", "45%", "20%", "22%"),
-                box("69%", "45%", "19%", "22%"),
-            ],
-        },
-        "workflow": {
-            "number": box("8%", "10%", "20%"),
-            "title": box("8%", "17%", "30%"),
-            "cards": [
-                box("46%", "17%", "20%", "16%"),
-                box("69%", "17%", "19%", "16%"),
-                box("46%", "38%", "20%", "16%"),
-                box("69%", "38%", "19%", "16%"),
-            ],
-            "note": box("46%", "63%", "42%", "14%"),
-        },
-        "arch": {
-            "number": box("8%", "10%", "22%"),
-            "title": box("8%", "17%", "32%"),
-            "cards": [
-                box("46%", "16%", "20%", "18%"),
-                box("69%", "16%", "19%", "18%"),
-                box("46%", "39%", "20%", "18%"),
-                box("69%", "39%", "19%", "18%"),
-            ],
-            "note": box("8%", "68%", "80%", "12%"),
-        },
+        "value": {"number": box("8%", "9%", "18%"), "title": box("8%", "18%", "32%"), "copy": box("8%", "52%", "27%"), "cards": [box("45%", "14%", "20%", "24%"), box("68%", "14%", "20%", "24%"), box("45%", "47%", "20%", "24%"), box("68%", "47%", "20%", "24%")]},
+        "workflow": {"number": box("8%", "9%", "18%"), "title": box("8%", "18%", "34%"), "cards": [box("42%", "13%", "16%", "18%"), box("60%", "28%", "16%", "18%"), box("42%", "47%", "16%", "18%"), box("60%", "62%", "16%", "18%")], "note": box("8%", "70%", "29%", "13%")},
+        "arch": {"number": box("8%", "9%", "20%"), "title": box("8%", "18%", "32%"), "cards": [box("45%", "15%", "42%", "13%"), box("45%", "33%", "42%", "13%"), box("45%", "51%", "42%", "13%"), box("45%", "69%", "42%", "13%")], "note": box("8%", "72%", "30%", "12%")},
     },
     "editorial": {
-        "cover": {
-            "eyebrow": box("12%", "11%", "26%"),
-            "title": box("12%", "18%", "34%"),
-            "subtitle": box("12%", "52%", "24%"),
-            "metrics": box("12%", "72%", "42%", "15%"),
-        },
-        "value": {
-            "number": box("12%", "11%", "22%"),
-            "title": box("12%", "18%", "28%"),
-            "copy": box("12%", "44%", "24%"),
-            "cards": [
-                box("46%", "18%", "17%", "22%"),
-                box("66%", "18%", "18%", "22%"),
-                box("46%", "46%", "17%", "22%"),
-                box("66%", "46%", "18%", "22%"),
-            ],
-        },
-        "workflow": {
-            "number": box("12%", "11%", "22%"),
-            "title": box("12%", "18%", "30%"),
-            "cards": [
-                box("46%", "18%", "17%", "16%"),
-                box("66%", "18%", "18%", "16%"),
-                box("46%", "39%", "17%", "16%"),
-                box("66%", "39%", "18%", "16%"),
-            ],
-            "note": box("46%", "64%", "38%", "14%"),
-        },
-        "arch": {
-            "number": box("12%", "11%", "24%"),
-            "title": box("12%", "18%", "30%"),
-            "cards": [
-                box("46%", "18%", "17%", "18%"),
-                box("66%", "18%", "18%", "18%"),
-                box("46%", "41%", "17%", "18%"),
-                box("66%", "41%", "18%", "18%"),
-            ],
-            "note": box("12%", "69%", "72%", "12%"),
-        },
+        "value": {"number": box("11%", "11%", "20%"), "title": box("11%", "22%", "37%"), "copy": box("55%", "21%", "23%"), "cards": [box("11%", "65%", "18%", "16%"), box("32%", "65%", "18%", "16%"), box("53%", "65%", "18%", "16%"), box("74%", "65%", "14%", "16%")]},
+        "workflow": {"number": box("11%", "11%", "20%"), "title": box("11%", "22%", "32%"), "cards": [box("50%", "14%", "28%", "13%"), box("50%", "32%", "28%", "13%"), box("50%", "50%", "28%", "13%"), box("50%", "68%", "28%", "13%")], "note": box("11%", "69%", "31%", "13%")},
+        "arch": {"number": box("11%", "11%", "18%"), "title": box("11%", "22%", "36%"), "cards": [box("12%", "61%", "17%", "17%"), box("33%", "61%", "17%", "17%"), box("54%", "61%", "17%", "17%"), box("75%", "61%", "13%", "17%")], "note": box("53%", "25%", "28%", "17%")},
     },
     "notebook": {
-        "cover": {
-            "eyebrow": box("16%", "13%", "24%"),
-            "title": box("16%", "20%", "30%"),
-            "subtitle": box("16%", "54%", "22%"),
-            "metrics": box("16%", "73%", "40%", "14%"),
-        },
-        "value": {
-            "number": box("16%", "13%", "20%"),
-            "title": box("16%", "20%", "26%"),
-            "copy": box("16%", "46%", "22%"),
-            "cards": [
-                box("46%", "19%", "16%", "21%"),
-                box("65%", "19%", "16%", "21%"),
-                box("46%", "46%", "16%", "21%"),
-                box("65%", "46%", "16%", "21%"),
-            ],
-        },
-        "workflow": {
-            "number": box("16%", "13%", "20%"),
-            "title": box("16%", "20%", "28%"),
-            "cards": [
-                box("46%", "19%", "16%", "16%"),
-                box("65%", "19%", "16%", "16%"),
-                box("46%", "40%", "16%", "16%"),
-                box("65%", "40%", "16%", "16%"),
-            ],
-            "note": box("46%", "64%", "35%", "14%"),
-        },
-        "arch": {
-            "number": box("16%", "13%", "22%"),
-            "title": box("16%", "20%", "28%"),
-            "cards": [
-                box("46%", "18%", "16%", "18%"),
-                box("65%", "18%", "16%", "18%"),
-                box("46%", "41%", "16%", "18%"),
-                box("65%", "41%", "16%", "18%"),
-            ],
-            "note": box("16%", "69%", "65%", "12%"),
-        },
+        "value": {"number": box("18%", "13%", "18%"), "title": box("18%", "22%", "27%"), "copy": box("18%", "51%", "24%"), "cards": [box("48%", "18%", "17%", "20%"), box("67%", "18%", "17%", "20%"), box("48%", "45%", "17%", "20%"), box("67%", "45%", "17%", "20%")]},
+        "workflow": {"number": box("18%", "13%", "18%"), "title": box("18%", "22%", "27%"), "cards": [box("47%", "17%", "37%", "12%"), box("47%", "33%", "37%", "12%"), box("47%", "49%", "37%", "12%"), box("47%", "65%", "37%", "12%")], "note": box("18%", "69%", "25%", "13%")},
+        "arch": {"number": box("18%", "13%", "18%"), "title": box("18%", "22%", "27%"), "cards": [box("48%", "18%", "17%", "18%"), box("67%", "18%", "17%", "18%"), box("48%", "43%", "17%", "18%"), box("67%", "43%", "17%", "18%")], "note": box("18%", "70%", "66%", "11%")},
     },
     "soft": {
-        "cover": {
-            "eyebrow": box("12%", "12%", "24%"),
-            "title": box("12%", "19%", "32%"),
-            "subtitle": box("12%", "53%", "24%"),
-            "metrics": box("12%", "73%", "40%", "14%"),
-        },
-        "value": {
-            "number": box("12%", "12%", "20%"),
-            "title": box("12%", "19%", "28%"),
-            "copy": box("12%", "45%", "24%"),
-            "cards": [
-                box("47%", "19%", "16%", "21%"),
-                box("66%", "19%", "16%", "21%"),
-                box("47%", "46%", "16%", "21%"),
-                box("66%", "46%", "16%", "21%"),
-            ],
-        },
-        "workflow": {
-            "number": box("12%", "12%", "20%"),
-            "title": box("12%", "19%", "30%"),
-            "cards": [
-                box("47%", "19%", "16%", "16%"),
-                box("66%", "19%", "16%", "16%"),
-                box("47%", "40%", "16%", "16%"),
-                box("66%", "40%", "16%", "16%"),
-            ],
-            "note": box("47%", "64%", "35%", "14%"),
-        },
-        "arch": {
-            "number": box("12%", "12%", "22%"),
-            "title": box("12%", "19%", "30%"),
-            "cards": [
-                box("47%", "18%", "16%", "18%"),
-                box("66%", "18%", "16%", "18%"),
-                box("47%", "41%", "16%", "18%"),
-                box("66%", "41%", "16%", "18%"),
-            ],
-            "note": box("12%", "69%", "70%", "12%"),
-        },
+        "value": {"number": box("13%", "12%", "18%"), "title": box("13%", "22%", "30%"), "copy": box("52%", "20%", "24%"), "cards": [box("13%", "62%", "18%", "17%"), box("34%", "58%", "18%", "21%"), box("55%", "62%", "18%", "17%"), box("76%", "58%", "12%", "21%")]},
+        "workflow": {"number": box("13%", "12%", "18%"), "title": box("13%", "22%", "30%"), "cards": [box("47%", "17%", "17%", "17%"), box("66%", "17%", "17%", "17%"), box("47%", "42%", "17%", "17%"), box("66%", "42%", "17%", "17%")], "note": box("13%", "67%", "31%", "14%")},
+        "arch": {"number": box("13%", "12%", "18%"), "title": box("13%", "22%", "31%"), "cards": [box("47%", "16%", "17%", "18%"), box("66%", "16%", "17%", "18%"), box("47%", "41%", "17%", "18%"), box("66%", "41%", "17%", "18%")], "note": box("13%", "69%", "70%", "11%")},
     },
     "cyber": {
-        "cover": {
-            "eyebrow": box("8%", "10%", "28%"),
-            "title": box("8%", "18%", "36%"),
-            "subtitle": box("8%", "55%", "30%"),
-            "metrics": box("8%", "74%", "44%", "14%"),
-        },
-        "value": {
-            "number": box("8%", "10%", "22%"),
-            "title": box("8%", "17%", "30%"),
-            "copy": box("8%", "45%", "25%"),
-            "cards": [
-                box("46%", "17%", "19%", "21%"),
-                box("68%", "17%", "20%", "21%"),
-                box("46%", "45%", "19%", "21%"),
-                box("68%", "45%", "20%", "21%"),
-            ],
-        },
-        "workflow": {
-            "number": box("8%", "10%", "22%"),
-            "title": box("8%", "17%", "30%"),
-            "cards": [
-                box("46%", "17%", "19%", "16%"),
-                box("68%", "17%", "20%", "16%"),
-                box("46%", "38%", "19%", "16%"),
-                box("68%", "38%", "20%", "16%"),
-            ],
-            "note": box("46%", "63%", "42%", "14%"),
-        },
-        "arch": {
-            "number": box("8%", "10%", "24%"),
-            "title": box("8%", "17%", "32%"),
-            "cards": [
-                box("46%", "17%", "19%", "18%"),
-                box("68%", "17%", "20%", "18%"),
-                box("46%", "40%", "19%", "18%"),
-                box("68%", "40%", "20%", "18%"),
-            ],
-            "note": box("8%", "69%", "80%", "12%"),
-        },
+        "value": {"number": box("7%", "9%", "22%"), "title": box("7%", "18%", "32%"), "copy": box("7%", "49%", "26%"), "cards": [box("44%", "12%", "20%", "18%"), box("67%", "12%", "20%", "18%"), box("44%", "39%", "20%", "18%"), box("67%", "39%", "20%", "18%")]},
+        "workflow": {"number": box("7%", "9%", "22%"), "title": box("7%", "18%", "32%"), "cards": [box("43%", "15%", "44%", "12%"), box("43%", "32%", "44%", "12%"), box("43%", "49%", "44%", "12%"), box("43%", "66%", "44%", "12%")], "note": box("7%", "70%", "31%", "13%")},
+        "arch": {"number": box("7%", "9%", "22%"), "title": box("7%", "18%", "32%"), "cards": [box("43%", "14%", "20%", "18%"), box("67%", "14%", "20%", "18%"), box("43%", "41%", "20%", "18%"), box("67%", "41%", "20%", "18%")], "note": box("7%", "70%", "80%", "12%")},
     },
     "minimal": {
-        "cover": {
-            "eyebrow": box("11%", "11%", "24%"),
-            "title": box("11%", "18%", "30%"),
-            "subtitle": box("11%", "54%", "22%"),
-            "metrics": box("11%", "73%", "38%", "14%"),
-        },
-        "value": {
-            "number": box("11%", "11%", "18%"),
-            "title": box("11%", "18%", "26%"),
-            "copy": box("11%", "44%", "22%"),
-            "cards": [
-                box("50%", "18%", "15%", "20%"),
-                box("68%", "18%", "15%", "20%"),
-                box("50%", "44%", "15%", "20%"),
-                box("68%", "44%", "15%", "20%"),
-            ],
-        },
-        "workflow": {
-            "number": box("11%", "11%", "18%"),
-            "title": box("11%", "18%", "28%"),
-            "cards": [
-                box("50%", "18%", "15%", "15%"),
-                box("68%", "18%", "15%", "15%"),
-                box("50%", "38%", "15%", "15%"),
-                box("68%", "38%", "15%", "15%"),
-            ],
-            "note": box("50%", "62%", "33%", "14%"),
-        },
-        "arch": {
-            "number": box("11%", "11%", "20%"),
-            "title": box("11%", "18%", "28%"),
-            "cards": [
-                box("50%", "18%", "15%", "18%"),
-                box("68%", "18%", "15%", "18%"),
-                box("50%", "40%", "15%", "18%"),
-                box("68%", "40%", "15%", "18%"),
-            ],
-            "note": box("11%", "69%", "72%", "12%"),
-        },
+        "value": {"number": box("10%", "10%", "17%"), "title": box("10%", "20%", "27%"), "copy": box("10%", "52%", "24%"), "cards": [box("46%", "18%", "14%", "20%"), box("62%", "18%", "14%", "20%"), box("46%", "46%", "14%", "20%"), box("62%", "46%", "14%", "20%")]},
+        "workflow": {"number": box("10%", "10%", "17%"), "title": box("10%", "20%", "29%"), "cards": [box("45%", "18%", "38%", "10%"), box("45%", "33%", "38%", "10%"), box("45%", "48%", "38%", "10%"), box("45%", "63%", "38%", "10%")], "note": box("10%", "72%", "29%", "12%")},
+        "arch": {"number": box("10%", "10%", "17%"), "title": box("10%", "20%", "30%"), "cards": [box("45%", "18%", "18%", "16%"), box("65%", "18%", "18%", "16%"), box("45%", "43%", "18%", "16%"), box("65%", "43%", "18%", "16%")], "note": box("10%", "70%", "73%", "12%")},
     },
 }
 
 
-def cover_slide(slide_index: int, preset_title: str, layout: dict[str, str]) -> str:
-    builder = SlideBuilder(slide_index, "slide-cover")
-    builder.text("eyebrow", layout["eyebrow"], f"{preset_title} / README deck")
+def cover_slide(slide_index: int, preset: Preset, layout: dict[str, str]) -> str:
+    builder = SlideBuilder(
+        slide_index,
+        f"slide-cover cover-{preset.cover_archetype} layout-{preset.content_archetype}",
+    )
+    builder.text("eyebrow", layout["eyebrow"], f"{preset.title} / README deck")
     builder.text("hero-title", layout["title"], "Frontend Slides<br>Editable")
     builder.text(
         "hero-subtitle",
@@ -895,8 +750,8 @@ def cover_slide(slide_index: int, preset_title: str, layout: dict[str, str]) -> 
     return builder.render()
 
 
-def value_slide(slide_index: int, layout: dict[str, object]) -> str:
-    builder = SlideBuilder(slide_index, "slide-value")
+def value_slide(slide_index: int, preset: Preset, layout: dict[str, object]) -> str:
+    builder = SlideBuilder(slide_index, f"slide-value layout-{preset.content_archetype}")
     builder.text("section-number", layout["number"], "01 / Fork logic")
     builder.text("section-title", layout["title"], "区别不在能不能生成，而在生成后还要不要继续改")
     builder.text(
@@ -910,8 +765,8 @@ def value_slide(slide_index: int, layout: dict[str, object]) -> str:
     return builder.render()
 
 
-def workflow_slide(slide_index: int, layout: dict[str, object]) -> str:
-    builder = SlideBuilder(slide_index, "slide-workflow")
+def workflow_slide(slide_index: int, preset: Preset, layout: dict[str, object]) -> str:
+    builder = SlideBuilder(slide_index, f"slide-workflow layout-{preset.content_archetype}")
     builder.text("section-number", layout["number"], "02 / Workflow")
     builder.text("section-title", layout["title"], "先做 discovery，再选 preset，再把最后一轮修改留给浏览器")
     for style, card in zip(layout["cards"], WORKFLOW_CARDS):
@@ -928,23 +783,24 @@ def workflow_slide(slide_index: int, layout: dict[str, object]) -> str:
     return builder.render()
 
 
-def arch_slide(slide_index: int, preset_title: str, layout: dict[str, object]) -> str:
-    builder = SlideBuilder(slide_index, "slide-architecture")
+def arch_slide(slide_index: int, preset: Preset, layout: dict[str, object]) -> str:
+    builder = SlideBuilder(slide_index, f"slide-architecture layout-{preset.content_archetype}")
     builder.text("section-number", layout["number"], "03 / Runtime contract")
     builder.text("section-title", layout["title"], "真正不能丢的是结构契约、视口纪律和 preset identity")
     for style, card in zip(layout["cards"], ARCH_CARDS):
         builder.text("arch-card", style, card_html(*card))
-    builder.text("closing-note", layout["note"], arch_note_html(preset_title))
+    builder.text("closing-note", layout["note"], arch_note_html(preset.title))
     return builder.render()
 
 
 def render_deck(preset: Preset) -> str:
-    layout = LAYOUTS[preset.family]
+    cover_layout = COVER_LAYOUTS_BY_ARCHETYPE[preset.cover_archetype]
+    layout = CONTENT_LAYOUTS[preset.content_archetype]
     slides = [
-        cover_slide(0, preset.title, layout["cover"]),
-        value_slide(1, layout["value"]),
-        workflow_slide(2, layout["workflow"]),
-        arch_slide(3, preset.title, layout["arch"]),
+        cover_slide(0, preset, cover_layout),
+        value_slide(1, preset, layout["value"]),
+        workflow_slide(2, preset, layout["workflow"]),
+        arch_slide(3, preset, layout["arch"]),
     ]
     return '<div class="slides-offset">\n' + "\n".join(slides) + "\n</div>"
 
@@ -954,6 +810,8 @@ PRESETS = [
         slug="bold-signal",
         title="Bold Signal",
         family="bold",
+        cover_archetype="slab",
+        content_archetype="bold",
         light_chrome=False,
         accent="#ff5722",
         root_lines="""      --font-display: 'Archivo Black', sans-serif;
@@ -1026,6 +884,8 @@ PRESETS = [
         slug="electric-studio",
         title="Electric Studio",
         family="split",
+        cover_archetype="horizon",
+        content_archetype="split",
         light_chrome=True,
         accent="#4361ee",
         root_lines="""      --font-display: 'Manrope', sans-serif;
@@ -1089,6 +949,8 @@ PRESETS = [
         slug="creative-voltage",
         title="Creative Voltage",
         family="split",
+        cover_archetype="voltage",
+        content_archetype="split",
         light_chrome=False,
         accent="#d4ff00",
         root_lines="""      --font-display: 'Syne', sans-serif;
@@ -1144,6 +1006,8 @@ PRESETS = [
         slug="dark-botanical",
         title="Dark Botanical",
         family="editorial",
+        cover_archetype="botanical",
+        content_archetype="editorial",
         light_chrome=False,
         accent="#d4a574",
         root_lines="""      --font-display: 'Cormorant', serif;
@@ -1213,6 +1077,8 @@ PRESETS = [
         slug="notebook-tabs",
         title="Notebook Tabs",
         family="notebook",
+        cover_archetype="notebook",
+        content_archetype="notebook",
         light_chrome=True,
         accent="#5a7c6a",
         root_lines="""      --font-display: 'Bodoni Moda', serif;
@@ -1275,6 +1141,8 @@ PRESETS = [
         slug="pastel-geometry",
         title="Pastel Geometry",
         family="soft",
+        cover_archetype="pastel-card",
+        content_archetype="soft",
         light_chrome=True,
         accent="#7c6aad",
         root_lines="""      --font-display: 'Plus Jakarta Sans', sans-serif;
@@ -1339,6 +1207,8 @@ PRESETS = [
         slug="split-pastel",
         title="Split Pastel",
         family="split",
+        cover_archetype="diptych",
+        content_archetype="split",
         light_chrome=True,
         accent="#5a7c6a",
         root_lines="""      --font-display: 'Outfit', sans-serif;
@@ -1390,6 +1260,8 @@ PRESETS = [
         slug="vintage-editorial",
         title="Vintage Editorial",
         family="editorial",
+        cover_archetype="masthead",
+        content_archetype="editorial",
         light_chrome=True,
         accent="#1a1a1a",
         root_lines="""      --font-display: 'Fraunces', serif;
@@ -1455,6 +1327,8 @@ PRESETS = [
         slug="neon-cyber",
         title="Neon Cyber",
         family="cyber",
+        cover_archetype="neon-frame",
+        content_archetype="cyber",
         light_chrome=False,
         accent="#00ffcc",
         root_lines="""      --font-display: 'Clash Display', sans-serif;
@@ -1513,6 +1387,8 @@ PRESETS = [
         slug="terminal-green",
         title="Terminal Green",
         family="cyber",
+        cover_archetype="terminal",
+        content_archetype="cyber",
         light_chrome=False,
         accent="#39d353",
         root_lines="""      --font-display: 'JetBrains Mono', monospace;
@@ -1573,6 +1449,8 @@ PRESETS = [
         slug="swiss-modern",
         title="Swiss Modern",
         family="minimal",
+        cover_archetype="swiss",
+        content_archetype="minimal",
         light_chrome=True,
         accent="#ff3300",
         root_lines="""      --font-display: 'Archivo', sans-serif;
@@ -1642,6 +1520,8 @@ PRESETS = [
         slug="paper-ink",
         title="Paper & Ink",
         family="editorial",
+        cover_archetype="paper-rule",
+        content_archetype="editorial",
         light_chrome=True,
         accent="#c41e3a",
         root_lines="""      --font-display: 'Cormorant Garamond', serif;
@@ -1708,6 +1588,8 @@ PRESETS = [
         slug="soft-editorial",
         title="Soft Editorial",
         family="soft",
+        cover_archetype="soft-wash",
+        content_archetype="soft",
         light_chrome=True,
         accent="#7d9b76",
         root_lines="""      --font-display: 'Cormorant Garamond', serif;
@@ -1767,6 +1649,8 @@ PRESETS = [
         slug="signal-gold",
         title="Signal",
         family="bold",
+        cover_archetype="signal-spine",
+        content_archetype="bold",
         light_chrome=False,
         accent="#c9a227",
         root_lines="""      --font-display: 'Libre Baskerville', serif;
@@ -1819,6 +1703,8 @@ PRESETS = [
         slug="studio-volt",
         title="Studio",
         family="cyber",
+        cover_archetype="studio-scan",
+        content_archetype="cyber",
         light_chrome=False,
         accent="#f5e000",
         root_lines="""      --font-display: 'Bebas Neue', sans-serif;
@@ -1867,6 +1753,8 @@ PRESETS = [
         slug="monochrome-ledger",
         title="Monochrome",
         family="minimal",
+        cover_archetype="ledger",
+        content_archetype="minimal",
         light_chrome=True,
         accent="#111111",
         root_lines="""      --font-display: 'Lora', serif;
@@ -1921,6 +1809,8 @@ PRESETS = [
         slug="neo-grid-yellow",
         title="Neo-Grid Bold",
         family="minimal",
+        cover_archetype="neo-brutal",
+        content_archetype="minimal",
         light_chrome=True,
         accent="#d4e817",
         root_lines="""      --font-display: 'Archivo Black', sans-serif;
@@ -1978,6 +1868,8 @@ PRESETS = [
         slug="vellum-navy",
         title="Vellum",
         family="editorial",
+        cover_archetype="vellum",
+        content_archetype="editorial",
         light_chrome=False,
         accent="#5b8f96",
         root_lines="""      --font-display: 'Cormorant', serif;
@@ -2028,6 +1920,8 @@ PRESETS = [
         slug="cobalt-grid",
         title="Cobalt Grid",
         family="cyber",
+        cover_archetype="cobalt",
+        content_archetype="cyber",
         light_chrome=True,
         accent="#2563eb",
         root_lines="""      --font-display: 'Fraunces', serif;
@@ -2094,18 +1988,9 @@ def patch_root(text: str, preset: Preset) -> str:
 
 
 def patch_head_fonts(text: str, google_url: Optional[str]) -> str:
-    if google_url:
-        links = (
-            HEAD_FONTSHARE
-            + "\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n"
-            + "  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n"
-            + f'  <link href="{google_url}" rel="stylesheet">'
-        )
-    else:
-        links = HEAD_FONTSHARE
     if HEAD_FONTSHARE not in text:
         raise SystemExit("Could not find font block in reference")
-    return text.replace(HEAD_FONTSHARE, links, 1)
+    return text.replace(HEAD_FONTSHARE, "", 1)
 
 
 def patch_theme_section(text: str, preset: Preset) -> str:
@@ -2157,7 +2042,7 @@ def main() -> None:
             "<title>Editable Deck Reference</title>",
             f"<title>{preset.title} · README Preset Deck</title>",
         )
-        html = patch_slides(html, render_deck(preset))
+        html = normalize_generated_html(patch_slides(html, render_deck(preset)))
 
         out_path = OUT_DIR / f"{preset.slug}.html"
         out_path.write_text(html, encoding="utf-8")

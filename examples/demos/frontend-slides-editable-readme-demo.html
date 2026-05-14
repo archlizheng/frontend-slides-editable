@@ -381,7 +381,7 @@
     /* === deck chrome (fixed UI) === */
     .progress-bar {
       position: fixed; top: 0; left: 0; height: 3px;
-      background: linear-gradient(90deg, var(--deck-chrome-accent), #101010);
+      background: linear-gradient(90deg, var(--deck-chrome-accent), #a78bfa);
       width: 0%; z-index: 8000; pointer-events: none;
     }
     .nav-dots {
@@ -390,7 +390,7 @@
     }
     .nav-dots button {
       width: 9px; height: 9px; border-radius: 50%; border: none; padding: 0;
-      background: color-mix(in srgb, var(--deck-chrome-text) 18%, transparent); cursor: pointer;
+      background: color-mix(in srgb, var(--deck-chrome-text) 22%, transparent); cursor: pointer;
     }
     .nav-dots button.active { background: var(--deck-chrome-accent); transform: scale(1.15); }
 
@@ -480,7 +480,7 @@
     }
     .deck-edit-chrome svg { width: 18px; height: 18px; fill: currentColor; }
 
-    .edit-toggle, .sidebar-pages-toggle, .deck-btn-save {
+    .edit-toggle, .sidebar-pages-toggle, .deck-btn-save, .deck-btn-add {
       position: relative;
       z-index: 10001;
       border: 1px solid var(--deck-chrome-border);
@@ -488,14 +488,46 @@
       font-size: clamp(0.7rem, 1.1vw, 0.875rem); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
       white-space: nowrap;
     }
-    .deck-btn-save { display: none; }
-    body.deck-edit-mode .deck-btn-save {
+    .deck-btn-save, .deck-btn-add {
+      display: none;
+    }
+    body.deck-edit-mode .deck-btn-save,
+    body.deck-edit-mode .deck-btn-add {
       display: inline-flex;
       align-items: center;
       justify-content: center;
     }
     .edit-toggle.show, .edit-toggle.active, .sidebar-pages-toggle.show, .sidebar-pages-toggle.active,
-    body.deck-edit-mode .deck-btn-save.show { opacity: 1; pointer-events: auto; }
+    body.deck-edit-mode .deck-btn-save.show,
+    body.deck-edit-mode .deck-btn-add.show { opacity: 1; pointer-events: auto; }
+
+    .deck-add-element-menu {
+      position: fixed;
+      z-index: 10002;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 140px;
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-bg);
+      box-shadow: var(--deck-chrome-shadow);
+    }
+    .deck-add-element-menu.open { display: flex; }
+    .deck-add-element-menu button {
+      text-align: left;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-surface);
+      color: var(--deck-chrome-text);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: clamp(0.72rem, 1.1vw, 0.85rem);
+      cursor: pointer;
+    }
+    .deck-add-element-menu button:hover {
+      background: color-mix(in srgb, var(--deck-chrome-accent) 18%, var(--deck-chrome-surface));
+    }
 
     /* === sidebar === */
     .slide-sidebar {
@@ -520,7 +552,7 @@
     .filmstrip-item.is-current { border-color: var(--deck-chrome-accent); }
     .filmstrip-item.dragging { opacity: 0.55; }
     .filmstrip-item .filmstrip-drop-line {
-      display: none; height: 3px; background: var(--deck-chrome-accent); border-radius: 2px; margin: 4px 0;
+      display: none; height: 3px; background: #a78bfa; border-radius: 2px; margin: 4px 0;
     }
     .filmstrip-item.drop-before .filmstrip-drop-line-before { display: block; }
     .filmstrip-item.drop-after .filmstrip-drop-line-after { display: block; }
@@ -558,13 +590,72 @@
     }
     body.deck-edit-mode .slide-object-move { display: flex; }
 
-    .slide-object-resize {
-      position: absolute; right: -7px; bottom: -7px; width: 14px; height: 14px;
-      border-radius: 3px; background: var(--deck-chrome-accent); cursor: nwse-resize;
-      display: none; z-index: 4; border: 1px solid var(--deck-chrome-border);
-      padding: 0; box-sizing: border-box;
+    .slide-object-delete {
+      position: absolute;
+      left: -22px;
+      top: 36px;
+      width: 20px;
+      height: 22px;
+      border: 1px solid var(--deck-chrome-border);
+      border-radius: 6px;
+      background: var(--deck-chrome-bg);
+      color: var(--deck-chrome-muted);
+      font-size: 14px;
+      line-height: 1;
+      padding: 0;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
     }
-    body.deck-edit-mode .slide-object.is-selected .slide-object-resize { display: block; }
+    body.deck-edit-mode .slide-object:hover .slide-object-delete,
+    body.deck-edit-mode .slide-object.is-selected .slide-object-delete {
+      display: flex;
+    }
+    .slide-object-delete:hover {
+      color: #f87171;
+      background: color-mix(in srgb, #f87171 12%, var(--deck-chrome-bg));
+    }
+
+    .slide-object-resize {
+      position: absolute;
+      border-radius: 3px;
+      background: var(--deck-chrome-accent);
+      display: none;
+      z-index: 4;
+      border: 1px solid var(--deck-chrome-border);
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .slide-object-resize--se {
+      right: -7px;
+      bottom: -7px;
+      width: 14px;
+      height: 14px;
+      cursor: nwse-resize;
+    }
+    .slide-object-resize--e {
+      right: -6px;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 32px;
+      border-radius: 4px;
+      cursor: ew-resize;
+    }
+    .slide-object-resize--s {
+      bottom: -6px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 10px;
+      border-radius: 4px;
+      cursor: ns-resize;
+    }
+    body.deck-edit-mode .slide-object.is-selected [data-resize-handle] { display: block; }
 
     .slide-object-text {
       min-height: 1.2em; outline: none; font-size: var(--body-size);
@@ -572,21 +663,69 @@
       overflow-wrap: anywhere; word-break: break-word;
     }
     .slide-object[data-object-type="text"] .slide-object-text { cursor: text; }
-    .slide-object-graphic { width: 100%; height: 100%; box-sizing: border-box; }
+    .slide-object-graphic { width: 100%; height: 100%; box-sizing: border-box; position: relative; }
+    .slide-object[data-object-type="image"] .slide-object-graphic img,
+    .slide-object[data-object-type="video"] .slide-object-graphic video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: none;
+      object-fit: contain;
+    }
+    body.deck-edit-mode .slide-object[data-object-type="video"] .slide-object-graphic video {
+      pointer-events: none;
+    }
+    .slide-object-graphic--empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(72px, 16vh, 140px);
+      border-radius: 8px;
+      border: 1px dashed color-mix(in srgb, var(--deck-chrome-muted) 55%, transparent);
+      background: linear-gradient(135deg, rgba(100, 116, 139, 0.2), rgba(148, 163, 184, 0.12));
+    }
+    .slide-object-media-pick {
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-surface);
+      color: var(--deck-chrome-text);
+      cursor: pointer;
+    }
+    .slide-object-media-pick:hover {
+      filter: brightness(1.08);
+    }
+    .slide-object-media-file {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     .snap-line-v, .snap-line-h {
-      position: absolute; background: var(--deck-chrome-accent); pointer-events: none; z-index: 7; opacity: 0.85;
+      position: absolute; background: #f472b6; pointer-events: none; z-index: 7; opacity: 0.85;
     }
     .snap-line-v { width: 1px; top: 0; bottom: 0; }
     .snap-line-h { height: 1px; left: 0; right: 0; }
 
     /* === RTE toolbar === */
     .rte-toolbar {
-      position: fixed; z-index: 9600; display: none; flex-wrap: wrap; gap: 4px;
+      position: fixed; z-index: 9600; display: none; flex-direction: column; align-items: stretch;
+      gap: 0; min-width: min(200px, 92vw);
       padding: 6px; background: var(--deck-chrome-bg); border: 1px solid var(--deck-chrome-border);
       border-radius: 10px; box-shadow: var(--deck-chrome-shadow);
     }
     .rte-toolbar.visible { display: flex; }
+    .rte-toolbar-main {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+    }
     .rte-toolbar button {
       border: 1px solid var(--deck-chrome-border); background: var(--deck-chrome-surface);
       color: var(--deck-chrome-text); border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer;
@@ -594,16 +733,77 @@
     .rte-toolbar button.is-active {
       outline: 2px solid var(--deck-chrome-accent); outline-offset: 1px;
     }
-    .rte-toolbar-group {
-      display: inline-flex; align-items: center; gap: 4px; padding-left: 2px;
-      border-left: 1px solid color-mix(in srgb, var(--deck-chrome-border) 70%, transparent);
-      margin-left: 2px;
+    .rte-drawer-trigger {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
     }
-    .rte-toolbar-group:first-of-type {
-      border-left: 0; margin-left: 0; padding-left: 0;
+    .rte-drawer-trigger.is-open {
+      background: color-mix(in srgb, var(--deck-chrome-accent) 22%, var(--deck-chrome-surface));
+      border-color: color-mix(in srgb, var(--deck-chrome-accent) 45%, var(--deck-chrome-border));
+    }
+    .rte-drawer-trigger.rte-drawer-trigger--hint:not(.is-open) {
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--deck-chrome-accent) 35%, transparent);
+    }
+    .rte-toolbar-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 0;
+      max-width: min(320px, 92vw);
+    }
+    .rte-drawer-card {
+      margin-top: 6px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--deck-chrome-border);
+      background: color-mix(in srgb, var(--deck-chrome-surface) 88%, transparent);
+    }
+    .rte-drawer-card[hidden] {
+      display: none !important;
+    }
+    .rte-drawer-card-inner {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+    }
+    .rte-drawer-card-inner.rte-drawer-card-inner--font {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .rte-drawer-card-inner.rte-drawer-card-inner--scale {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .rte-drawer-card-inner button {
+      padding: 6px 6px;
+      font-size: 11px;
+    }
+    .rte-px-custom {
+      grid-column: 1 / -1;
+      display: none;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      padding-top: 6px;
+      border-top: 1px solid color-mix(in srgb, var(--deck-chrome-border) 65%, transparent);
+    }
+    .rte-px-custom.is-open {
+      display: flex;
+    }
+    .rte-px-custom input[type="number"] {
+      width: 4.5rem;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-bg);
+      color: var(--deck-chrome-text);
+      font-size: 12px;
+    }
+    .rte-px-custom button {
+      padding: 4px 10px;
     }
     .rte-toolbar-meta {
-      font-size: 11px; color: var(--deck-chrome-muted); text-transform: uppercase; letter-spacing: 0.04em;
+      font-size: 10px; color: var(--deck-chrome-muted); text-transform: uppercase; letter-spacing: 0.06em;
+      grid-column: 1 / -1;
+      margin-bottom: 2px;
     }
 
     body.deck-edit-mode.slide-anim-paused .reveal { transition: none !important; }
@@ -616,6 +816,7 @@
     <button type="button" class="edit-toggle" id="editToggle" title="Edit mode (E) — hover this corner to show">Edit</button>
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
+    <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -626,6 +827,12 @@
     </button>
     <button type="button" class="deck-btn-done" id="btnDoneEdit">Done</button>
   </div>
+</div>
+
+<div class="deck-add-element-menu" id="deckAddElementMenu" data-deck-chrome-surface="" role="menu" aria-label="Add element" hidden>
+  <button type="button" role="menuitem" data-add-kind="text">Text</button>
+  <button type="button" role="menuitem" data-add-kind="image">Image</button>
+  <button type="button" role="menuitem" data-add-kind="video">Video</button>
 </div>
 
 <div class="progress-bar" id="progressBar"></div>
@@ -640,20 +847,51 @@
 </aside>
 
 <div class="rte-toolbar" id="rteToolbar" role="toolbar" aria-label="Text format" data-deck-chrome-surface="">
-  <button type="button" data-cmd="bold"><strong>B</strong></button>
-  <button type="button" data-cmd="italic"><em>I</em></button>
-  <span class="rte-toolbar-group" aria-label="Font family">
-    <span class="rte-toolbar-meta">Font</span>
-    <button type="button" data-font="var(--font-body)">Body</button>
-    <button type="button" data-font="var(--font-display)">Display</button>
-  </span>
-  <span class="rte-toolbar-group" aria-label="Font size">
-    <span class="rte-toolbar-meta">Size</span>
-    <button type="button" data-size="0.85">S</button>
-    <button type="button" data-size="1">M</button>
-    <button type="button" data-size="1.2">L</button>
-    <button type="button" data-size="1.45">XL</button>
-  </span>
+  <div class="rte-toolbar-main">
+    <button type="button" data-cmd="bold"><strong>B</strong></button>
+    <button type="button" data-cmd="italic"><em>I</em></button>
+    <button type="button" class="rte-drawer-trigger" data-rte-drawer="font" aria-expanded="false" aria-controls="rteDrawerFont" title="Font family">Font</button>
+    <button type="button" class="rte-drawer-trigger" data-rte-drawer="scale" aria-expanded="false" aria-controls="rteDrawerScale" title="Viewport scale (clamp)">Scale</button>
+    <button type="button" class="rte-drawer-trigger" data-rte-drawer="px" aria-expanded="false" aria-controls="rteDrawerPx" title="Fixed size in px">Px</button>
+  </div>
+  <div class="rte-toolbar-panels" aria-live="polite">
+    <div class="rte-drawer-card" id="rteDrawerFont" data-rte-panel="font" role="group" aria-label="Font family" hidden>
+      <div class="rte-drawer-card-inner rte-drawer-card-inner--font">
+        <span class="rte-toolbar-meta">Font</span>
+        <button type="button" data-font="var(--font-body)">Body</button>
+        <button type="button" data-font="var(--font-display)">Display</button>
+        <button type="button" data-font="Georgia, 'Times New Roman', serif">Serif</button>
+        <button type="button" data-font="system-ui, -apple-system, 'Segoe UI', sans-serif">Sans</button>
+        <button type="button" data-font="ui-monospace, 'Cascadia Code', 'Consolas', monospace">Mono</button>
+      </div>
+    </div>
+    <div class="rte-drawer-card" id="rteDrawerScale" data-rte-panel="scale" role="group" aria-label="Scale" hidden>
+      <div class="rte-drawer-card-inner rte-drawer-card-inner--scale">
+        <span class="rte-toolbar-meta">Scale (viewport-safe)</span>
+        <button type="button" data-size="0.55" title="Small">S</button>
+        <button type="button" data-size="1" title="Medium (base)">M</button>
+        <button type="button" data-size="1.9" title="Large">L</button>
+        <button type="button" data-size="2.85" title="Extra large">XL</button>
+      </div>
+    </div>
+    <div class="rte-drawer-card" id="rteDrawerPx" data-rte-panel="px" role="group" aria-label="Pixel size" hidden>
+      <div class="rte-drawer-card-inner">
+        <span class="rte-toolbar-meta">Pixel size</span>
+        <button type="button" data-size-px="24">24</button>
+        <button type="button" data-size-px="36">36</button>
+        <button type="button" data-size-px="48">48</button>
+        <button type="button" data-size-px="72">72</button>
+        <button type="button" data-size-px="96">96</button>
+        <button type="button" data-size-custom title="Enter custom size in px">Custom…</button>
+        <div class="rte-px-custom" id="rtePxCustomRow" aria-hidden="true">
+          <label class="rte-toolbar-meta" for="rtePxCustomInput" style="margin:0;width:100%;">Px (8–400)</label>
+          <input type="number" id="rtePxCustomInput" min="8" max="400" step="1" inputmode="numeric" autocomplete="off" />
+          <button type="button" id="rtePxCustomApply">Apply</button>
+          <button type="button" id="rtePxCustomCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="slides-offset">
@@ -992,6 +1230,7 @@
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
       node.closest('.deck-edit-chrome') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -1119,16 +1358,43 @@
     }
   }
 
-  function ensureResizeHandles(root) {
-    const el = root || document;
-    el.querySelectorAll('[data-slide-object]').forEach((obj) => {
-      if (obj.querySelector('.slide-object-resize')) return;
+  function ensureResizeHandles(obj) {
+    obj.querySelectorAll('.slide-object-resize:not([data-resize-handle])').forEach((b) => b.remove());
+    const specs = [
+      ['se', 'Resize', 'slide-object-resize slide-object-resize--se'],
+      ['e', 'Resize width', 'slide-object-resize slide-object-resize--e'],
+      ['s', 'Resize height', 'slide-object-resize slide-object-resize--s']
+    ];
+    specs.forEach(([axis, label, cls]) => {
+      if (obj.querySelector('[data-resize-handle="' + axis + '"]')) return;
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'slide-object-resize';
-      btn.setAttribute('aria-label', 'Resize');
+      btn.className = cls;
+      btn.setAttribute('data-resize-handle', axis);
+      btn.setAttribute('aria-label', label);
       obj.appendChild(btn);
     });
+  }
+
+  function ensureObjectControls(root) {
+    const el = root || document;
+    el.querySelectorAll('[data-slide-object]').forEach((obj) => {
+      ensureResizeHandles(obj);
+      if (!obj.querySelector('.slide-object-delete')) {
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'slide-object-delete';
+        del.setAttribute('aria-label', 'Delete object');
+        del.textContent = '\u00d7';
+        const move = obj.querySelector('.slide-object-move');
+        if (move) move.insertAdjacentElement('afterend', del);
+        else obj.insertBefore(del, obj.firstChild);
+      }
+    });
+  }
+
+  function allocateDeckOid() {
+    return 'oid-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
   }
 
   /* ---------- Editor: select, drag, resize, snap, RTE ---------- */
@@ -1150,15 +1416,65 @@
       this._onResizeUp = this._onResizeUp.bind(this);
       this._onSelectionChange = this._onSelectionChange.bind(this);
       this._onFocusIn = this._onFocusIn.bind(this);
+      this._rteOutsidePointer = this._rteOutsidePointer.bind(this);
+      this._rteToolbarPointerForStash = this._rteToolbarPointerForStash.bind(this);
+      this._rteFormatStash = null;
+    }
+
+    _rteToolbarPointerForStash(e) {
+      if (!this.active || !e.target || !e.target.closest) return;
+      if (!e.target.closest('#rteToolbar')) return;
+      if (e.target.closest('input') || e.target.closest('textarea')) return;
+      this._stashRteFormatSelection();
+    }
+
+    _stashRteFormatSelection() {
+      const sel = window.getSelection();
+      if (!sel || !sel.rangeCount) return;
+      const r = sel.getRangeAt(0);
+      let n = r.commonAncestorContainer;
+      if (n.nodeType === Node.TEXT_NODE) n = n.parentElement;
+      const textEl = n && n.closest && n.closest('.slide-object-text[contenteditable="true"]');
+      if (!textEl || !textEl.contains(r.commonAncestorContainer)) return;
+      try {
+        this._rteFormatStash = { textEl: textEl, range: r.cloneRange() };
+      } catch (_) {
+        this._rteFormatStash = null;
+      }
+    }
+
+    _clearRteFormatStash() {
+      this._rteFormatStash = null;
+    }
+
+    _restoreRteFormatSelection(textEl) {
+      const stash = this._rteFormatStash;
+      if (!stash || !stash.range || stash.textEl !== textEl) return false;
+      if (!textEl.isConnected || !stash.textEl.isConnected) {
+        this._rteFormatStash = null;
+        return false;
+      }
+      try {
+        textEl.focus();
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(stash.range);
+        return true;
+      } catch (_) {
+        this._rteFormatStash = null;
+        return false;
+      }
     }
     setActive(on) {
       this.active = !!on;
       document.body.classList.toggle('deck-edit-mode', on);
       document.body.classList.toggle('slide-anim-paused', on);
       if (on) {
-        ensureResizeHandles(document);
+        ensureObjectControls(document);
       } else {
+        this._closeRteDrawers();
         this.clearSelection();
+        this._clearRteFormatStash();
         this.toolbar.classList.remove('visible');
         document.querySelectorAll('.slide-object-text[contenteditable="true"]').forEach((el) => {
           el.contentEditable = 'false';
@@ -1204,18 +1520,42 @@
       }
 
       if (obj && !e.ctrlKey) {
-        const onResize = e.target.closest('.slide-object-resize');
+        const onDelete = e.target.closest('.slide-object-delete');
+        if (onDelete) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.removeObjectsWithHistory([obj], { confirmMulti: false });
+          return;
+        }
+
+        const onResize = e.target.closest('[data-resize-handle]');
         if (onResize) {
           e.preventDefault();
           e.stopPropagation();
           if (!this.selected.has(obj)) this._selectOnly(obj);
-          if (this.selected.size === 1) this._startResize(e, obj);
+          if (this.selected.size === 1) {
+            const mode = onResize.getAttribute('data-resize-handle') || 'se';
+            this._startResize(e, obj, mode);
+          }
           return;
         }
 
-        const isText = obj.getAttribute('data-object-type') === 'text';
+        const otype = obj.getAttribute('data-object-type') || '';
+        const isText = otype === 'text';
         const onMove = e.target.closest('.slide-object-move');
         const onText = e.target.closest('.slide-object-text');
+
+        if (e.target.closest('.slide-object-media-pick')) {
+          if (!this.selected.has(obj)) this._selectOnly(obj);
+          return;
+        }
+
+        if ((otype === 'image' || otype === 'video') && !onMove) {
+          this._selectOnly(obj);
+          e.preventDefault();
+          this._startDrag(e, obj);
+          return;
+        }
 
         if (isText && onText && !onMove) {
           this._selectOnly(obj);
@@ -1312,7 +1652,7 @@
       try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
     }
 
-    _startResize(e, obj) {
+    _startResize(e, obj, mode) {
       const slide = obj.closest('section.slide');
       if (!slide) return;
       const sr = this._slideRect(slide);
@@ -1323,6 +1663,7 @@
         slide,
         el: obj,
         sr,
+        mode: mode === 'e' || mode === 's' ? mode : 'se',
         startX: e.clientX,
         startY: e.clientY,
         startW: r.width,
@@ -1345,10 +1686,13 @@
       const dx = e.clientX - st.startX;
       const dy = e.clientY - st.startY;
       const minPx = Math.min(sr.width, sr.height) * RESIZE_MIN_FRAC;
-      let nw = Math.max(minPx, st.startW + dx);
-      let nh = Math.max(minPx, st.startH + dy);
-      st.el.style.width = (nw / sr.width * 100) + '%';
-      st.el.style.height = (nh / sr.height * 100) + '%';
+      const mode = st.mode || 'se';
+      let nw = st.startW;
+      let nh = st.startH;
+      if (mode === 'se' || mode === 'e') nw = Math.max(minPx, st.startW + dx);
+      if (mode === 'se' || mode === 's') nh = Math.max(minPx, st.startH + dy);
+      if (mode === 'se' || mode === 'e') st.el.style.width = (nw / sr.width * 100) + '%';
+      if (mode === 'se' || mode === 's') st.el.style.height = (nh / sr.height * 100) + '%';
     }
 
     _onResizeUp() {
@@ -1526,6 +1870,153 @@
       try {
         if (italicBtn) italicBtn.classList.toggle('is-active', document.queryCommandState('italic'));
       } catch (_) {}
+
+      const textEl = this._activeTextEl();
+      if (!textEl) return;
+      let probe = textEl;
+      const s = window.getSelection();
+      if (s && s.rangeCount) {
+        let n = s.getRangeAt(0).commonAncestorContainer;
+        if (n.nodeType === 3) n = n.parentElement;
+        if (n && textEl.contains(n)) probe = n;
+      }
+      const styleEl = probe.nodeType === 1 ? probe : textEl;
+      const cs = window.getComputedStyle(styleEl);
+      const ff = (cs.fontFamily || '').toLowerCase();
+      const rootStyle = getComputedStyle(document.documentElement);
+      const bodyFont = rootStyle.getPropertyValue('--font-body').trim().toLowerCase();
+      const dispFont = rootStyle.getPropertyValue('--font-display').trim().toLowerCase();
+      this.toolbar.querySelectorAll('button[data-font]').forEach((btn) => {
+        const raw = (btn.getAttribute('data-font') || '').trim();
+        let compare = raw;
+        if (raw === 'var(--font-body)') compare = bodyFont;
+        else if (raw === 'var(--font-display)') compare = dispFont;
+        const key = compare.split(',')[0].replace(/['"]/g, '').trim().toLowerCase();
+        const active = key.length > 1 && ff.indexOf(key) !== -1;
+        btn.classList.toggle('is-active', !!active);
+      });
+      const fsPx = parseFloat(cs.fontSize) || 0;
+      const bodyPx = parseFloat(getComputedStyle(textEl).fontSize) || 16;
+      let pxPresetHit = false;
+      this.toolbar.querySelectorAll('button[data-size-px]').forEach((btn) => {
+        const px = parseFloat(btn.getAttribute('data-size-px') || '0');
+        const hit = fsPx > 0 && Math.abs(fsPx - px) < 2;
+        if (hit) pxPresetHit = true;
+        btn.classList.toggle('is-active', hit);
+      });
+      const customBtn = this.toolbar.querySelector('button[data-size-custom]');
+      if (customBtn && fsPx > 0) {
+        const nearPxPreset = [24, 36, 48, 72, 96].some((p) => Math.abs(fsPx - p) < 2);
+        const nearRel = this.toolbar.querySelectorAll('button[data-size]');
+        let nearScale = false;
+        nearRel.forEach((b) => {
+          const fac = parseFloat(b.getAttribute('data-size') || '1');
+          if (Math.abs(fsPx - bodyPx * fac) < Math.max(2.5, bodyPx * 0.2)) nearScale = true;
+        });
+        customBtn.classList.toggle('is-active', !nearPxPreset && !nearScale);
+      } else if (customBtn) {
+        customBtn.classList.remove('is-active');
+      }
+      this.toolbar.querySelectorAll('button[data-size]').forEach((btn) => {
+        const fac = parseFloat(btn.getAttribute('data-size') || '1');
+        const target = bodyPx * fac;
+        const relHit =
+          fsPx > 0 &&
+          !pxPresetHit &&
+          Math.abs(fsPx - target) < Math.max(2.5, bodyPx * 0.2);
+        btn.classList.toggle('is-active', relHit);
+      });
+      this._syncDrawerTriggerHints();
+    }
+
+    _closePxCustomRow() {
+      if (!this.toolbar) return;
+      const row = this.toolbar.querySelector('#rtePxCustomRow');
+      if (row) {
+        row.classList.remove('is-open');
+        row.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    _openPxCustomRow() {
+      if (!this.toolbar) return;
+      this._stashRteFormatSelection();
+      const row = this.toolbar.querySelector('#rtePxCustomRow');
+      const input = this.toolbar.querySelector('#rtePxCustomInput');
+      if (!row || !input) return;
+      row.classList.add('is-open');
+      row.setAttribute('aria-hidden', 'false');
+      const textEl = this._activeTextEl();
+      if (textEl) {
+        const cs = window.getComputedStyle(textEl);
+        input.value = String(Math.round(parseFloat(cs.fontSize) || 16));
+      } else {
+        input.value = '16';
+      }
+      const self = this;
+      setTimeout(function () {
+        try {
+          input.focus();
+          input.select();
+        } catch (_) {}
+        self._updateRteToolbar();
+      }, 0);
+    }
+
+    _closeRteDrawers() {
+      if (!this.toolbar) return;
+      this._closePxCustomRow();
+      this.toolbar.querySelectorAll('.rte-drawer-card').forEach(function (p) {
+        p.hidden = true;
+      });
+      this.toolbar.querySelectorAll('.rte-drawer-trigger').forEach(function (b) {
+        b.setAttribute('aria-expanded', 'false');
+        b.classList.remove('is-open');
+      });
+    }
+
+    _toggleRteDrawer(panelId) {
+      if (!this.toolbar) return;
+      const panel = this.toolbar.querySelector('[data-rte-panel="' + panelId + '"]');
+      const trig = this.toolbar.querySelector('[data-rte-drawer="' + panelId + '"]');
+      if (!panel || !trig) return;
+      const wasOpen = !panel.hidden;
+      this._closeRteDrawers();
+      if (!wasOpen) {
+        panel.hidden = false;
+        trig.setAttribute('aria-expanded', 'true');
+        trig.classList.add('is-open');
+        this._updateRteToolbar();
+      }
+    }
+
+    _syncDrawerTriggerHints() {
+      if (!this.toolbar) return;
+      const fontPanel = this.toolbar.querySelector('[data-rte-panel="font"]');
+      const fontOn = !!(fontPanel && fontPanel.querySelector('button[data-font].is-active'));
+      const tFont = this.toolbar.querySelector('.rte-drawer-trigger[data-rte-drawer="font"]');
+      if (tFont) tFont.classList.toggle('rte-drawer-trigger--hint', fontOn);
+
+      const scalePanel = this.toolbar.querySelector('[data-rte-panel="scale"]');
+      const scaleOn = !!(scalePanel && scalePanel.querySelector('button[data-size].is-active'));
+      const tScale = this.toolbar.querySelector('.rte-drawer-trigger[data-rte-drawer="scale"]');
+      if (tScale) tScale.classList.toggle('rte-drawer-trigger--hint', scaleOn);
+
+      const pxPanel = this.toolbar.querySelector('[data-rte-panel="px"]');
+      const pxOn = !!(
+        pxPanel &&
+        (pxPanel.querySelector('button[data-size-px].is-active') ||
+          pxPanel.querySelector('button[data-size-custom].is-active'))
+      );
+      const tPx = this.toolbar.querySelector('.rte-drawer-trigger[data-rte-drawer="px"]');
+      if (tPx) tPx.classList.toggle('rte-drawer-trigger--hint', pxOn);
+    }
+
+    _rteOutsidePointer(e) {
+      if (!this.active || !this.toolbar.classList.contains('visible')) return;
+      if (e.target.closest && e.target.closest('#rteToolbar')) return;
+      this._closeRteDrawers();
+      this._clearRteFormatStash();
     }
 
     _activeTextEl() {
@@ -1549,6 +2040,7 @@
       if (!this.active) return;
       const inside = this._activeTextEl();
       if (!inside) {
+        this._closeRteDrawers();
         this.toolbar.classList.remove('visible');
         return;
       }
@@ -1576,11 +2068,30 @@
     }
 
     _applyInlineStyle(textEl, stylePatch) {
+      this._restoreRteFormatSelection(textEl);
       textEl.focus();
       const sel = window.getSelection();
-      if (!sel || !sel.rangeCount) return false;
-      const range = sel.getRangeAt(0);
-      if (!textEl.contains(range.commonAncestorContainer)) return false;
+      let range;
+      if (!sel) {
+        this._clearRteFormatStash();
+        return false;
+      }
+      if (!sel.rangeCount) {
+        range = document.createRange();
+        range.selectNodeContents(textEl);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } else {
+        range = sel.getRangeAt(0);
+        if (!textEl.contains(range.commonAncestorContainer)) {
+          range = document.createRange();
+          range.selectNodeContents(textEl);
+          range.collapse(false);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
 
       const span = document.createElement('span');
       Object.keys(stylePatch).forEach((key) => {
@@ -1594,6 +2105,7 @@
         nr.collapse(true);
         sel.removeAllRanges();
         sel.addRange(nr);
+        this._clearRteFormatStash();
         return true;
       }
 
@@ -1604,22 +2116,85 @@
       nr.selectNodeContents(span);
       sel.removeAllRanges();
       sel.addRange(nr);
+      this._clearRteFormatStash();
       return true;
     }
 
     _applyFontSizeFactor(textEl, fac) {
-      const fs = 'clamp(' + (0.7 * fac) + 'rem, ' + (1.2 * fac) + 'vw, ' + (1.4 * fac) + 'rem)';
+      const minRem = 0.5 * fac;
+      const vw = 1.35 * fac;
+      const maxRem = 2.35 * fac;
+      const fs = 'clamp(' + minRem + 'rem, ' + vw + 'vw, ' + maxRem + 'rem)';
       return this._applyInlineStyle(textEl, { fontSize: fs });
+    }
+
+    _applyFontSizePx(textEl, px) {
+      const n = Math.round(Number(px));
+      if (!Number.isFinite(n) || n < 8 || n > 400) return false;
+      return this._applyInlineStyle(textEl, { fontSize: n + 'px' });
     }
 
     _applyFontFamily(textEl, fontExpr) {
       return this._applyInlineStyle(textEl, { fontFamily: fontExpr });
     }
 
+    removeObjectsWithHistory(objectEls, opts) {
+      opts = opts || {};
+      const list = (objectEls || []).filter((el) => el && el.isConnected);
+      if (!list.length) return;
+      if (opts.confirmMulti !== false && list.length >= 2) {
+        if (!confirm('Delete ' + list.length + ' objects?')) return;
+      }
+      const snapshots = list.map((el) => {
+        const slideSec = el.closest('section.slide');
+        return {
+          slideId: slideSec ? slideSec.id : '',
+          oid: el.getAttribute('data-oid') || '',
+          html: el.outerHTML
+        };
+      });
+      list.forEach((el) => el.remove());
+      this.clearSelection();
+      this.history.push({
+        undo: () => {
+          snapshots.forEach((s) => {
+            const slideSec = document.getElementById(s.slideId);
+            if (!slideSec) return;
+            const layer = slideSec.querySelector('.slide-edit-layer');
+            if (!layer) return;
+            const tpl = document.createElement('template');
+            tpl.innerHTML = s.html.trim();
+            const node = tpl.content.firstElementChild;
+            if (node) layer.appendChild(node);
+          });
+          ensureObjectControls(document);
+        },
+        redo: () => {
+          snapshots.forEach((s) => {
+            const slideSec = document.getElementById(s.slideId);
+            if (!slideSec || !s.oid) return;
+            const safe = s.oid.replace(/"/g, '');
+            const n = slideSec.querySelector('[data-oid="' + safe + '"]');
+            if (n) n.remove();
+          });
+        }
+      });
+    }
+
     bind() {
+      document.addEventListener('pointerdown', this._rteToolbarPointerForStash, true);
       document.addEventListener('pointerdown', this._onDocPointerDown, true);
+      document.addEventListener('pointerdown', this._rteOutsidePointer, true);
       document.addEventListener('focusin', this._onFocusIn, true);
       document.addEventListener('selectionchange', this._onSelectionChange);
+      this.toolbar.querySelectorAll('.rte-drawer-trigger').forEach((btn) => {
+        btn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        btn.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          const id = btn.getAttribute('data-rte-drawer');
+          if (id) this._toggleRteDrawer(id);
+        });
+      });
       this.toolbar.querySelectorAll('button[data-cmd]').forEach((btn) => {
         btn.addEventListener('mousedown', (ev) => ev.preventDefault());
         btn.addEventListener('click', () => this._exec(btn.getAttribute('data-cmd')));
@@ -1632,7 +2207,7 @@
           const textEl = this._activeTextEl();
           if (!textEl) return;
           const beforeHtml = textEl.innerHTML;
-          const fac = parseFloat(v, 10);
+          const fac = parseFloat(v);
           this._applyFontSizeFactor(textEl, fac);
           const afterHtml = textEl.innerHTML;
           if (beforeHtml !== afterHtml) {
@@ -1644,6 +2219,81 @@
           this._updateRteToolbar();
         });
       });
+      this.toolbar.querySelectorAll('button[data-size-px]').forEach((btn) => {
+        btn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        btn.addEventListener('click', () => {
+          const v = btn.getAttribute('data-size-px');
+          if (!v) return;
+          const textEl = this._activeTextEl();
+          if (!textEl) return;
+          const beforeHtml = textEl.innerHTML;
+          const ok = this._applyFontSizePx(textEl, v);
+          const afterHtml = textEl.innerHTML;
+          if (ok && beforeHtml !== afterHtml) {
+            this.history.push({
+              undo: () => { textEl.innerHTML = beforeHtml; },
+              redo: () => { textEl.innerHTML = afterHtml; }
+            });
+          }
+          this._updateRteToolbar();
+        });
+      });
+      const customSizeBtn = this.toolbar.querySelector('button[data-size-custom]');
+      const pxCustomRow = this.toolbar.querySelector('#rtePxCustomRow');
+      const pxInput = this.toolbar.querySelector('#rtePxCustomInput');
+      const pxApply = this.toolbar.querySelector('#rtePxCustomApply');
+      const pxCancel = this.toolbar.querySelector('#rtePxCustomCancel');
+      if (customSizeBtn && pxCustomRow && pxInput) {
+        customSizeBtn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        customSizeBtn.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          if (!this._activeTextEl()) return;
+          if (pxCustomRow.classList.contains('is-open')) {
+            this._closePxCustomRow();
+          } else {
+            this._openPxCustomRow();
+          }
+        });
+      }
+      if (pxApply && pxInput) {
+        pxApply.addEventListener('mousedown', (ev) => ev.preventDefault());
+        pxApply.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const textEl = this._activeTextEl();
+          if (!textEl) return;
+          const n = parseInt(String(pxInput.value).trim(), 10);
+          const beforeHtml = textEl.innerHTML;
+          const ok = this._applyFontSizePx(textEl, n);
+          if (!ok) this._clearRteFormatStash();
+          const afterHtml = textEl.innerHTML;
+          if (ok && beforeHtml !== afterHtml) {
+            this.history.push({
+              undo: () => { textEl.innerHTML = beforeHtml; },
+              redo: () => { textEl.innerHTML = afterHtml; }
+            });
+          }
+          this._closePxCustomRow();
+          this._updateRteToolbar();
+        });
+      }
+      if (pxCancel) {
+        pxCancel.addEventListener('mousedown', (ev) => ev.preventDefault());
+        pxCancel.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          this._closePxCustomRow();
+          this._updateRteToolbar();
+        });
+      }
+      if (pxInput) {
+        pxInput.addEventListener('keydown', (ev) => {
+          if (ev.key !== 'Enter') return;
+          ev.preventDefault();
+          if (pxApply) pxApply.click();
+        });
+      }
       this.toolbar.querySelectorAll('button[data-font]').forEach((btn) => {
         btn.addEventListener('mousedown', (ev) => ev.preventDefault());
         btn.addEventListener('click', () => {
@@ -1668,6 +2318,7 @@
     _exec(cmd) {
       const textEl = this._activeTextEl();
       if (!textEl) return;
+      this._restoreRteFormatSelection(textEl);
       textEl.focus();
       const before = textEl.innerHTML;
       document.execCommand(cmd, false, null);
@@ -1678,6 +2329,7 @@
           redo: () => { textEl.innerHTML = after; }
         });
       }
+      this._clearRteFormatStash();
       this._syncRteButtons();
       this._updateRteToolbar();
     }
@@ -1723,7 +2375,9 @@
         num.textContent = 'Slide ' + (idx + 1);
         const del = document.createElement('button');
         del.type = 'button';
-        del.textContent = 'Delete';
+        del.textContent = '\u00d7';
+        del.setAttribute('aria-label', 'Delete slide');
+        del.title = 'Delete slide';
         del.addEventListener('click', (ev) => {
           ev.stopPropagation();
           this._deleteSlide(idx);
@@ -1768,7 +2422,7 @@
         n.removeAttribute('data-object-type');
         n.classList.remove('is-selected');
       });
-      cl.querySelectorAll('.slide-object-move, .slide-object-resize').forEach((n) => n.remove());
+      cl.querySelectorAll('.slide-object-move, .slide-object-delete, [data-resize-handle], .slide-object-resize').forEach((n) => n.remove());
       cl.querySelectorAll('[contenteditable]').forEach((n) => n.setAttribute('contenteditable', 'false'));
       const w = slideEl.offsetWidth || window.innerWidth;
       const h = slideEl.offsetHeight || window.innerHeight;
@@ -1877,10 +2531,10 @@
     _deleteSlide(index) {
       this.deck.refreshSlides();
       if (this.deck.slides.length <= 1) {
-        alert('At least one slide is required.');
+        alert('Keep at least one slide.');
         return;
       }
-      if (!confirm('Delete this slide?')) return;
+      if (!confirm('Delete slide?')) return;
       const slide = this.deck.slides[index];
       const parent = slide.parentNode;
       const next = slide.nextElementSibling;
@@ -1900,7 +2554,7 @@
             parent.insertBefore(node, ref);
           } else parent.appendChild(node);
           this.deck.refreshSlides();
-          ensureResizeHandles(document);
+          ensureObjectControls(document);
           this.deck._updateChrome();
           this.refresh();
         },
@@ -1947,13 +2601,34 @@
     sanitizeEditableState(docEl);
     const filmstrip = docEl.querySelector('#filmstripList');
     if (filmstrip) filmstrip.innerHTML = '';
-    ['#editToggle', '#pagesToggle', '#btnSave', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    const addMenu = docEl.querySelector('#deckAddElementMenu');
+    if (addMenu) {
+      addMenu.classList.remove('open');
+      addMenu.hidden = true;
+    }
+    docEl.querySelectorAll('.slide-object-media-pick, input.slide-object-media-file').forEach((el) => el.remove());
+    docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
+      if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
+    });
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
       if (selector === '#rteToolbar') {
         el.style.left = '';
         el.style.top = '';
+        el.querySelectorAll('.rte-drawer-card').forEach((c) => {
+          c.hidden = true;
+        });
+        el.querySelectorAll('.rte-drawer-trigger').forEach((b) => {
+          b.classList.remove('is-open');
+          b.setAttribute('aria-expanded', 'false');
+        });
+        const pxRow = el.querySelector('#rtePxCustomRow');
+        if (pxRow) {
+          pxRow.classList.remove('is-open');
+          pxRow.setAttribute('aria-hidden', 'true');
+        }
       }
     });
   }
@@ -1987,7 +2662,7 @@
           if (el) el.innerHTML = entry.html;
         });
       } else return;
-      ensureResizeHandles(document);
+      ensureObjectControls(document);
       deck.refreshSlides();
       deck._syncCurrentFromScroll();
       deck._updateChrome();
@@ -2015,6 +2690,22 @@
   const editToggle = document.getElementById('editToggle');
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
+  const btnAddElement = document.getElementById('btnAddElement');
+  const deckAddElementMenu = document.getElementById('deckAddElementMenu');
+
+  function closeAddElementMenu() {
+    if (!deckAddElementMenu) return;
+    deckAddElementMenu.classList.remove('open');
+    deckAddElementMenu.hidden = true;
+  }
+
+  function positionAddElementMenu() {
+    if (!deckAddElementMenu || !btnAddElement) return;
+    const r = btnAddElement.getBoundingClientRect();
+    const mw = deckAddElementMenu.offsetWidth || 160;
+    deckAddElementMenu.style.left = Math.min(window.innerWidth - mw - 8, Math.max(8, r.left)) + 'px';
+    deckAddElementMenu.style.top = (r.bottom + 6) + 'px';
+  }
 
   function updateUndoRedoChrome() {
     if (btnUndo) {
@@ -2032,9 +2723,281 @@
   const editor = new SlideObjectEditor(deck, history);
   const sidebar = new SlideSidebar(deck, history);
 
-  ensureResizeHandles(document);
+  ensureObjectControls(document);
   editor.bind();
   updateUndoRedoChrome();
+
+  function slideGraphicIsPlaceholder(html) {
+    if (!html || !String(html).trim()) return true;
+    const d = document.createElement('div');
+    d.innerHTML = html;
+    return !d.querySelector('img, video');
+  }
+
+  function firstImageFileFromClipboard(ev) {
+    const cd = ev.clipboardData;
+    if (!cd) return null;
+    if (cd.files && cd.files.length) {
+      for (let i = 0; i < cd.files.length; i++) {
+        const f = cd.files[i];
+        if (f && f.type && f.type.indexOf('image/') === 0) return f;
+      }
+    }
+    const items = cd.items;
+    if (!items) return null;
+    for (let i = 0; i < items.length; i++) {
+      const it = items[i];
+      if (it.kind === 'file' && it.type && it.type.indexOf('image/') === 0) {
+        const f = it.getAsFile();
+        if (f) return f;
+      }
+    }
+    return null;
+  }
+
+  function pasteHandlerBlocksSlideImagePaste(target) {
+    if (!target || !target.closest) return true;
+    if (target.closest('input, textarea, select')) return true;
+    if (target.closest('[contenteditable="true"]')) return true;
+    if (isDeckChromeNode(target)) return true;
+    return false;
+  }
+
+  function applyMediaFileToSlideObject(wrap, file) {
+    const kind = wrap && wrap.getAttribute('data-object-type');
+    if (!wrap || (kind !== 'image' && kind !== 'video') || !file) return;
+    const g = wrap.querySelector('.slide-object-graphic');
+    if (!g) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      const beforeHtml = g.innerHTML;
+      if (kind === 'image') {
+        let img = g.querySelector('img');
+        if (!img) {
+          g.replaceChildren();
+          img = document.createElement('img');
+          img.alt = '';
+          g.appendChild(img);
+        }
+        img.src = dataUrl;
+      } else {
+        let vid = g.querySelector('video');
+        if (!vid) {
+          g.replaceChildren();
+          vid = document.createElement('video');
+          vid.setAttribute('controls', '');
+          vid.style.background = '#0f172a';
+          g.appendChild(vid);
+        }
+        vid.src = dataUrl;
+      }
+      g.classList.toggle('slide-object-graphic--empty', slideGraphicIsPlaceholder(g.innerHTML));
+      const afterHtml = g.innerHTML;
+      if (beforeHtml === afterHtml) return;
+      history.push({
+        undo: () => {
+          g.innerHTML = beforeHtml;
+          g.classList.toggle('slide-object-graphic--empty', slideGraphicIsPlaceholder(beforeHtml));
+        },
+        redo: () => {
+          g.innerHTML = afterHtml;
+          g.classList.toggle('slide-object-graphic--empty', slideGraphicIsPlaceholder(afterHtml));
+        }
+      });
+      updateUndoRedoChrome();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.addEventListener('click', (e) => {
+    const pick = e.target.closest('.slide-object-media-pick');
+    if (!pick || !document.body.classList.contains('deck-edit-mode')) return;
+    const g = pick.closest('.slide-object-graphic');
+    const inp = g && g.querySelector('input.slide-object-media-file');
+    if (!inp) return;
+    e.preventDefault();
+    e.stopPropagation();
+    inp.click();
+  }, true);
+
+  document.addEventListener('change', (e) => {
+    const inp = e.target;
+    if (!inp.matches || !inp.matches('input.slide-object-media-file')) return;
+    if (!document.body.classList.contains('deck-edit-mode')) return;
+    const wrap = inp.closest('[data-slide-object]');
+    if (!wrap) return;
+    const f = inp.files && inp.files[0];
+    inp.value = '';
+    if (!f) return;
+    applyMediaFileToSlideObject(wrap, f);
+  }, true);
+
+  document.addEventListener('dblclick', (e) => {
+    if (!document.body.classList.contains('deck-edit-mode')) return;
+    if (e.target.closest('.slide-object-media-pick')) return;
+    const wrap = e.target.closest('.slide-object[data-object-type="image"], .slide-object[data-object-type="video"]');
+    if (!wrap) return;
+    const g = wrap.querySelector('.slide-object-graphic');
+    if (!g || !g.querySelector('img, video')) return;
+    if (!g.contains(e.target)) return;
+    const kind = wrap.getAttribute('data-object-type');
+    e.preventDefault();
+    e.stopPropagation();
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = kind === 'image' ? 'image/*' : 'video/*';
+    inp.style.cssText = 'position:fixed;left:-100px;width:1px;height:1px;opacity:0';
+    document.body.appendChild(inp);
+    inp.addEventListener('change', () => {
+      const f = inp.files && inp.files[0];
+      inp.remove();
+      if (f) applyMediaFileToSlideObject(wrap, f);
+    }, { once: true });
+    inp.click();
+  }, true);
+
+  document.addEventListener('paste', (e) => {
+    if (!document.body.classList.contains('deck-edit-mode')) return;
+    if (pasteHandlerBlocksSlideImagePaste(e.target)) return;
+    const file = firstImageFileFromClipboard(e);
+    if (!file) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (editor.selected.size === 1) {
+      const w = editor.selected.values().next().value;
+      if (w && w.getAttribute('data-object-type') === 'image') {
+        applyMediaFileToSlideObject(w, file);
+        return;
+      }
+    }
+    addSlideObjectToCurrentSlide('image');
+    const picked = editor.selected.values().next().value;
+    if (picked && picked.getAttribute('data-object-type') === 'image') {
+      applyMediaFileToSlideObject(picked, file);
+    }
+  }, true);
+
+  function addSlideObjectToCurrentSlide(kind) {
+    deck.refreshSlides();
+    const slide = deck.slides[deck.current];
+    if (!slide) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+
+    const oid = allocateDeckOid();
+    const wrap = document.createElement('div');
+    wrap.className = 'slide-object';
+    wrap.setAttribute('data-slide-object', '');
+    wrap.setAttribute('data-oid', oid);
+    wrap.style.cssText = 'left:12%;top:32%;width:42%;min-height:3rem;';
+
+    const moveBtn = document.createElement('button');
+    moveBtn.type = 'button';
+    moveBtn.className = 'slide-object-move';
+    moveBtn.setAttribute('aria-label', 'Move');
+    moveBtn.textContent = '\u283f';
+
+    const delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className = 'slide-object-delete';
+    delBtn.setAttribute('aria-label', 'Delete object');
+    delBtn.textContent = '\u00d7';
+
+    wrap.appendChild(moveBtn);
+    wrap.appendChild(delBtn);
+
+    if (kind === 'text') {
+      wrap.setAttribute('data-object-type', 'text');
+      const te = document.createElement('div');
+      te.className = 'slide-object-text';
+      te.setAttribute('contenteditable', 'false');
+      te.textContent = 'New text';
+      wrap.appendChild(te);
+    } else if (kind === 'image') {
+      wrap.setAttribute('data-object-type', 'image');
+      wrap.style.height = '28%';
+      const g = document.createElement('div');
+      g.className = 'slide-object-graphic slide-object-graphic--empty';
+      const pick = document.createElement('button');
+      pick.type = 'button';
+      pick.className = 'slide-object-media-pick';
+      pick.textContent = '选择或粘贴图片…';
+      const finp = document.createElement('input');
+      finp.type = 'file';
+      finp.accept = 'image/*';
+      finp.className = 'slide-object-media-file';
+      g.appendChild(pick);
+      g.appendChild(finp);
+      wrap.appendChild(g);
+    } else if (kind === 'video') {
+      wrap.setAttribute('data-object-type', 'video');
+      wrap.style.height = '32%';
+      const g = document.createElement('div');
+      g.className = 'slide-object-graphic slide-object-graphic--empty';
+      const pick = document.createElement('button');
+      pick.type = 'button';
+      pick.className = 'slide-object-media-pick';
+      pick.textContent = '选择本地视频…';
+      const finp = document.createElement('input');
+      finp.type = 'file';
+      finp.accept = 'video/*';
+      finp.className = 'slide-object-media-file';
+      g.appendChild(pick);
+      g.appendChild(finp);
+      wrap.appendChild(g);
+    }
+
+    layer.appendChild(wrap);
+    ensureObjectControls(layer);
+    editor.clearSelection();
+    editor._selectOnly(wrap);
+    history.push({
+      undo: () => {
+        wrap.remove();
+        editor.clearSelection();
+      },
+      redo: () => {
+        layer.appendChild(wrap);
+        ensureObjectControls(document);
+        editor.clearSelection();
+        editor._selectOnly(wrap);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  document.addEventListener('pointerdown', (e) => {
+    if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
+    if (deckAddElementMenu.contains(e.target)) return;
+    if (btnAddElement && btnAddElement.contains(e.target)) return;
+    closeAddElementMenu();
+  }, true);
+
+  if (btnAddElement && deckAddElementMenu) {
+    btnAddElement.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!editor.active) return;
+      if (deckAddElementMenu.classList.contains('open')) {
+        closeAddElementMenu();
+        return;
+      }
+      deckAddElementMenu.hidden = false;
+      deckAddElementMenu.classList.add('open');
+      requestAnimationFrame(positionAddElementMenu);
+    });
+    btnAddElement.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnAddElement.addEventListener('mouseleave', scheduleHide);
+    deckAddElementMenu.querySelectorAll('[data-add-kind]').forEach((b) => {
+      b.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        const k = b.getAttribute('data-add-kind');
+        closeAddElementMenu();
+        if (k === 'text' || k === 'image' || k === 'video') addSlideObjectToCurrentSlide(k);
+      });
+    });
+  }
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -2056,6 +3019,7 @@
         });
       }
       delete t.dataset._deckHtmlBefore;
+      editor._closeRteDrawers();
       editor.toolbar.classList.remove('visible');
       updateUndoRedoChrome();
     }, 0);
@@ -2074,6 +3038,7 @@
   }
 
   function exitEditMode() {
+    closeAddElementMenu();
     editor.setActive(false);
     editToggle.classList.remove('active');
     pagesToggle.classList.remove('active');
@@ -2082,6 +3047,7 @@
     pagesToggle.classList.remove('show');
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
+    if (btnAddElement) btnAddElement.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -2107,6 +3073,7 @@
     pagesToggle.classList.add('show');
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
+      if (btnAddElement) btnAddElement.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -2115,6 +3082,7 @@
       editToggle.classList.remove('show');
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
+      if (btnAddElement) btnAddElement.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -2155,7 +3123,15 @@
         e.preventDefault();
         ce.contentEditable = 'false';
         ce.blur();
+        editor._closeRteDrawers();
         editor.toolbar.classList.remove('visible');
+        return;
+      }
+      const openDrawer = editor.toolbar.querySelector('.rte-drawer-card:not([hidden])');
+      if (openDrawer) {
+        e.preventDefault();
+        editor._closeRteDrawers();
+        editor._updateRteToolbar();
         return;
       }
       e.preventDefault();
@@ -2182,41 +3158,7 @@
     }
     if (editor.active && !ce && (e.key === 'Delete' || e.key === 'Backspace')) {
       if (editor.selected.size === 0) return;
-      if (editor.selected.size >= 2 && !confirm('Delete ' + editor.selected.size + ' objects?')) return;
-      const toRemove = Array.from(editor.selected);
-      const snapshots = toRemove.map((el) => {
-        const slideSec = el.closest('section.slide');
-        return {
-          slideId: slideSec ? slideSec.id : '',
-          oid: el.getAttribute('data-oid') || '',
-          html: el.outerHTML
-        };
-      });
-      toRemove.forEach((el) => el.remove());
-      editor.clearSelection();
-      history.push({
-        undo: () => {
-          snapshots.forEach((s) => {
-            const slideSec = document.getElementById(s.slideId);
-            if (!slideSec) return;
-            const layer = slideSec.querySelector('.slide-edit-layer');
-            if (!layer) return;
-            const tpl = document.createElement('template');
-            tpl.innerHTML = s.html.trim();
-            const node = tpl.content.firstElementChild;
-            if (node) layer.appendChild(node);
-          });
-          ensureResizeHandles(document);
-        },
-        redo: () => {
-          snapshots.forEach((s) => {
-            const slideSec = document.getElementById(s.slideId);
-            if (!slideSec || !s.oid) return;
-            const n = slideSec.querySelector('[data-oid="' + s.oid.replace(/"/g, '') + '"]');
-            if (n) n.remove();
-          });
-        }
-      });
+      editor.removeObjectsWithHistory(Array.from(editor.selected), { confirmMulti: true });
     }
   });
 

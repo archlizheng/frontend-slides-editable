@@ -1,0 +1,4756 @@
+<!doctype html>
+<html lang="zh-Hans" data-deck-id="ported-broadside" data-template-source="broadside">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+    <!-- Broadside fonts: Barlow (the workhorse grotesque), IBM Plex Mono (chrome),
+         Noto Sans SC (CJK fallback for all roles) -->
+
+
+    <style>
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE A · TOKENS                                                     ║
+   ║                                                                      ║
+   ║  This is the ONLY block you replace to change the visual style.      ║
+   ║  Every color, font, and size in this file reads from these vars.     ║
+   ║  Never write raw hex values, font names, or px sizes outside here.   ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+      :root {
+        /* ── Palette ──────────────────────────────────────────────────────── */
+        --c-bg: #111111; /* near-black — the default slide background  */
+        --c-bg-alt: #1a1a18; /* secondary surface on dark slides            */
+
+        /* Broadside has NO light slides. These vars are overridden to dark
+           so any accidental .light class still renders dark. */
+        --c-bg-light: #111111;
+        --c-bg-light-alt: #1a1a18;
+
+        /* The signature: orange is not an accent here — it is the ENVIRONMENT.
+           Cover and chapter slides use this as their full background fill. */
+        --c-bg-orange: #e85d26;
+
+        --c-fg: #f0ece5; /* primary text on dark slides                 */
+        --c-fg-2: #888880; /* secondary / muted text on dark              */
+        --c-fg-3: #505048; /* tertiary / hint text on dark                */
+
+        /* Text colours for orange slides — ink on fire */
+        --c-fg-light: #111111; /* primary text on orange                */
+        --c-fg-light-2: #2a1810; /* muted text on orange                  */
+        --c-fg-light-3: rgba(
+          17,
+          17,
+          17,
+          0.55
+        ); /* hint text on orange               */
+
+        --c-accent: #e85d26; /* orange = accent everywhere on dark slides   */
+        --c-border: #282826; /* divider lines on dark slides                */
+        --c-border-light: #282826; /* same dark border even on "light" (overridden)*/
+
+        /* ── Typography ──────────────────────────────────────────────────── */
+        /* Barlow: the defining typeface. Condensed grotesque. Always heavy.
+           Used at max weight — 900 for display, 800 for h1, 700 for h2.
+           Noto Sans SC provides full CJK coverage at matching weights. */
+        --f-display: "Barlow", "Noto Sans SC", sans-serif;
+        --f-heading: "Barlow", "Noto Sans SC", sans-serif;
+        --f-body: "Barlow", "Noto Sans SC", system-ui, sans-serif;
+        /* Mono: IBM Plex Mono for chrome labels, metadata, slide numbers */
+        --f-mono: "IBM Plex Mono", monospace;
+
+        /* ── Type Scale ───────────────────────────────────────────────────── */
+        /* Broadside's defining trait: TYPE IS MASSIVE. Display is 13vw —
+           on a 1440px screen that is ~187px. Words become graphic elements. */
+        --sz-display: 13vw; /* the whole point — nearly abstract at full size */
+        --sz-h1: 7.5vw; /* chapter title — still enormous                */
+        --sz-h2: 4.5vw; /* slide headline                                */
+        --sz-h3: 2.8vw; /* sub-headline                                  */
+        --sz-lead: 1.6vw; /* lead paragraph                                */
+        --sz-body: 1.2vw; /* body text                                     */
+        --sz-caption: 0.9vw; /* captions, footnotes                           */
+        --sz-label: 0.72vw; /* chrome labels, slide numbers, metadata        */
+
+        /* ── Spacing ─────────────────────────────────────────────────────── */
+        --pad-x: 5.5vw; /* tighter than skeleton — type fills the space  */
+        --pad-y: 5.5vh;
+        --gap-lg: 3.5vh;
+        --gap-md: 2vh;
+        --gap-sm: 1vh;
+
+        /* ── Motion ──────────────────────────────────────────────────────── */
+        --ease-slide: cubic-bezier(0.77, 0, 0.175, 1);
+        --dur-slide: 0.8s;
+        --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+        --dur-enter: 0.5s;
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE B · ENGINE — DO NOT MODIFY                                     ║
+   ║                                                                      ║
+   ║  Layout engine, transitions, animation system, navigation.           ║
+   ║  Touching this breaks the mechanics.                                 ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--c-bg);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Deck container — all slides sit side by side */
+      #deck {
+        display: flex;
+        height: 100vh;
+        /* Width = N * 100vw, set dynamically by JS */
+        transition: transform var(--dur-slide) var(--ease-slide);
+        will-change: transform;
+      }
+
+      /* Slide base — each slide is one full viewport */
+      .slide {
+        flex: 0 0 100vw;
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        padding: var(--pad-y) var(--pad-x);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        overflow: hidden;
+      }
+      /* Prevent grid children from overflowing */
+      .slide-body {
+        min-height: 0;
+      }
+
+      /* Slide themes */
+      .slide.dark {
+        background: var(--c-bg);
+        color: var(--c-fg);
+      }
+      /* Broadside: .light is overridden to dark — there are no cream/white slides */
+      .slide.light {
+        background: var(--c-bg-light);
+        color: var(--c-fg);
+      }
+      /* The orange theme — the signature Broadside treatment */
+      .slide.orange {
+        background: var(--c-bg-orange);
+        color: var(--c-fg-light);
+      }
+
+      /* ── Animation system ──────────────────────────────────────────────── */
+      /* All data-anim elements start invisible.
+   They animate when their parent slide receives .is-active.
+   JS resets animations before adding .is-active so re-visiting a slide re-plays them. */
+
+      [data-anim] {
+        opacity: 0;
+      }
+
+      .slide.is-active [data-anim] {
+        animation-duration: var(--dur-enter);
+        animation-timing-function: var(--ease-enter);
+        animation-fill-mode: forwards;
+      }
+      .slide.is-active [data-anim="fade-up"] {
+        animation-name: kFadeUp;
+      }
+      .slide.is-active [data-anim="fade-in"] {
+        animation-name: kFadeIn;
+      }
+      .slide.is-active [data-anim="reveal-right"] {
+        animation-name: kRevealRight;
+      }
+      .slide.is-active [data-anim="reveal-left"] {
+        animation-name: kRevealLeft;
+      }
+      .slide.is-active [data-anim="scale-in"] {
+        animation-name: kScaleIn;
+      }
+
+      /* Stagger delays — add data-delay="N" to offset each element */
+      [data-delay="0"] {
+        animation-delay: 0s;
+      }
+      [data-delay="1"] {
+        animation-delay: 0.08s;
+      }
+      [data-delay="2"] {
+        animation-delay: 0.18s;
+      }
+      [data-delay="3"] {
+        animation-delay: 0.3s;
+      }
+      [data-delay="4"] {
+        animation-delay: 0.44s;
+      }
+      [data-delay="5"] {
+        animation-delay: 0.6s;
+      }
+      [data-delay="6"] {
+        animation-delay: 0.78s;
+      }
+
+      @keyframes kFadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes kFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes kRevealRight {
+        from {
+          clip-path: inset(0 100% 0 0);
+          opacity: 1;
+        }
+        to {
+          clip-path: inset(0 0% 0 0);
+          opacity: 1;
+        }
+      }
+      @keyframes kRevealLeft {
+        from {
+          clip-path: inset(0 0 0 100%);
+          opacity: 1;
+        }
+        to {
+          clip-path: inset(0 0 0 0%);
+          opacity: 1;
+        }
+      }
+      @keyframes kScaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.94);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ── Navigation ───────────────────────────────────────────────────── */
+      #nav-dots {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 7px;
+        z-index: 100;
+      }
+      .nav-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.22);
+        cursor: pointer;
+        transition:
+          background 0.3s,
+          transform 0.3s;
+        padding: 0;
+      }
+      .nav-dot.is-active {
+        background: rgba(255, 255, 255, 0.8);
+        transform: scale(1.4);
+      }
+
+      #slide-counter {
+        position: fixed;
+        bottom: 20px;
+        right: 28px;
+        font-family: var(--f-mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        color: rgba(255, 255, 255, 0.25);
+        z-index: 100;
+        user-select: none;
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE C · TYPOGRAPHY                                                 ║
+   ║                                                                      ║
+   ║  Use only these classes for text. Never set font-family, font-size,  ║
+   ║  or color inline. Exception: overriding size via                     ║
+   ║  style="--sz-h2: 2.5vw" is OK — it stays within the token system.   ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      /* Base typographic classes — all font families read from tokens */
+      .display {
+        font-family: var(--f-display);
+        font-size: var(--sz-display);
+        /* Broadside: maximum weight. Lowercase is the aesthetic — NOT uppercase. */
+        font-weight: 900;
+        line-height: 0.88;
+        letter-spacing: -0.04em;
+      }
+      .h1 {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h1);
+        font-weight: 800;
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+      }
+      .h2 {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h2);
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      .h3 {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .lead {
+        font-family: var(--f-body);
+        font-size: var(--sz-lead);
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      .body {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        font-weight: 400;
+        line-height: 1.6;
+      }
+      .caption {
+        font-family: var(--f-body);
+        font-size: var(--sz-caption);
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      .label {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      /* Contextual color helpers — reads from active slide theme */
+      .dark .muted {
+        color: var(--c-fg-2);
+      }
+      .light .muted {
+        color: var(--c-fg-2);
+      } /* light = dark in Broadside */
+      /* On orange slides: muted text is dark ink at reduced opacity */
+      .orange .muted {
+        color: var(--c-fg-light-2);
+      }
+
+      /* The orange accent colour — used for emphasis on dark slides */
+      .accent {
+        color: var(--c-accent);
+      }
+
+      /* ── Orange slide text overrides ────────────────────────────────────── */
+      /* On orange slides, display/heading text is near-black (ink on fire).
+         This is the protest-poster aesthetic: dark ink on vivid ground. */
+      .orange .display,
+      .orange .h1,
+      .orange .h2,
+      .orange .h3 {
+        color: #111111;
+      }
+      .orange .lead,
+      .orange .body {
+        color: rgba(17, 17, 17, 0.75);
+      }
+      .orange .label {
+        color: rgba(17, 17, 17, 0.55);
+      }
+      /* On orange, .accent still means "the contrast pop" — use sparingly */
+      .orange .accent {
+        color: #111111;
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE D · CHROME                                                     ║
+   ║                                                                      ║
+   ║  Header + footer present on slides that show them.                   ║
+   ║  Cover, chapter, quote, and end slides suppress both.                ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      .slide-chrome,
+      .slide-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .slide-chrome {
+        padding-bottom: var(--gap-sm);
+        border-bottom: 1px solid var(--c-border);
+        margin-bottom: var(--gap-md);
+      }
+      .slide-foot {
+        padding-top: var(--gap-sm);
+        border-top: 1px solid var(--c-border);
+        margin-top: var(--gap-md);
+      }
+
+      /* On orange slides, chrome borders use dark ink at low opacity */
+      .orange .slide-chrome,
+      .orange .slide-foot {
+        border-color: rgba(17, 17, 17, 0.2);
+      }
+
+      /* Slides that suppress chrome/foot entirely */
+      .slide--cover .slide-chrome,
+      .slide--cover .slide-foot,
+      .slide--chapter .slide-chrome,
+      .slide--chapter .slide-foot,
+      .slide--quote .slide-chrome,
+      .slide--quote .slide-foot,
+      .slide--end .slide-chrome,
+      .slide--end .slide-foot {
+        display: none;
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE E · LAYOUT PATTERNS                                            ║
+   ║                                                                      ║
+   ║  9 slide types. Use the class names below — do not invent new ones.  ║
+   ║  Broadside note: .slide--cover and .slide--chapter use .orange       ║
+   ║  (not .dark or .light). Dark slides use .dark.                       ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      /* ── 1. COVER ─────────────────────────────────────────────────────── */
+      /* Title slide. Always orange in Broadside. The broadside-num sits
+         top-left like a catalogue number. Title fills most of the slide. */
+      .slide--cover {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .cover-body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        justify-content: flex-end;
+        gap: var(--gap-md);
+      }
+      .cover-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: var(--gap-lg);
+        padding-top: var(--gap-sm);
+        border-top: 1px solid rgba(17, 17, 17, 0.2);
+      }
+
+      /* ── 2. CHAPTER ───────────────────────────────────────────────────── */
+      /* Section divider. Always orange in Broadside.
+         Big weight-900 title, no chrome, maximum negative space. */
+      .slide--chapter {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0;
+      }
+      .chapter-num {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        /* On orange: dark ink; on dark: orange accent */
+        color: rgba(17, 17, 17, 0.55);
+        margin-bottom: var(--gap-md);
+      }
+      /* On dark chapter slides the number gets orange accent */
+      .dark .chapter-num {
+        color: var(--c-accent);
+      }
+      .chapter-rule {
+        width: 36px;
+        height: 2px;
+        background: #111111; /* dark rule on orange */
+        margin-bottom: var(--gap-md);
+      }
+      .dark .chapter-rule {
+        background: var(--c-accent);
+      }
+
+      /* ── 3. STATEMENT ─────────────────────────────────────────────────── */
+      /* Single bold claim. No image. The dark counterpart to the orange covers.
+         4-8 words max. Let the type breathe. */
+      .slide--statement .statement-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-md);
+      }
+
+      /* ── 4. SPLIT ─────────────────────────────────────────────────────── */
+      /* Left: text content. Right: image. Dark background.
+         Orange kicker/rule above the headline. */
+      .slide--split .slide-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--pad-x) * 0.7);
+        align-items: center;
+      }
+      .split-text {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+      }
+      .split-image {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: var(--gap-sm);
+      }
+      /* Always explicit height in vh to prevent overflow on different screens */
+      .split-image img {
+        width: 100%;
+        height: 55vh;
+        object-fit: cover;
+        display: block;
+      }
+      /* Placeholder shown when no real image is wired up. Same footprint
+         as a real <img> so the surrounding layout stays unchanged. */
+      .img-placeholder {
+        width: 100%;
+        height: 55vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px dashed var(--c-border);
+        font-family: var(--font-mono, "IBM Plex Mono", monospace);
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--c-fg-2, var(--c-fg));
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* ── 5. STATS ─────────────────────────────────────────────────────── */
+      /* 3 or 4 large data cards. Add .cols-4 to .stats-grid for 4 columns. */
+      .slide--stats .slide-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-lg);
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+      }
+      .stats-grid.cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .stat-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        padding: var(--gap-md) var(--gap-md) var(--gap-md) 0;
+        border-top: 1px solid var(--c-border);
+      }
+      /* The big number — orange on dark slides */
+      .stat-value {
+        font-family: var(--f-display);
+        font-size: 5.5vw;
+        font-weight: 900;
+        line-height: 1;
+        color: var(--c-accent);
+        letter-spacing: -0.04em;
+      }
+      .stat-label {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        line-height: 1.5;
+      }
+      .stat-note {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.05em;
+        color: var(--c-fg-3);
+      }
+
+      /* ── 6. QUOTE ─────────────────────────────────────────────────────── */
+      /* Full-slide pull quote. Dark background. Orange opening mark. */
+      .slide--quote {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: calc(var(--pad-y) * 1.2) calc(var(--pad-x) * 1.1);
+      }
+      .quote-mark {
+        font-family: var(--f-display);
+        font-size: 10vw;
+        line-height: 0.6;
+        color: var(--c-accent);
+        margin-bottom: var(--gap-md);
+        font-weight: 900;
+      }
+      .quote-text {
+        font-family: var(--f-display);
+        font-size: 3.8vw;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        max-width: 78%;
+        margin-bottom: var(--gap-lg);
+      }
+      .quote-attr {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4vh;
+      }
+
+      /* ── 7. LIST ──────────────────────────────────────────────────────── */
+      /* Headline left, bullets right. Max 3 bullets in Broadside — this style
+         prizes density of impact over density of information. */
+      .slide--list .slide-body {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        gap: calc(var(--pad-x) * 0.8);
+        align-items: center;
+      }
+      .list-head {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        padding-top: var(--gap-sm);
+      }
+      .bullet-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+      }
+      .bullet-list li {
+        display: grid;
+        grid-template-columns: 1.2em 1fr;
+        gap: 0.5em;
+        font-family: var(--f-body);
+        font-size: var(--sz-lead);
+        font-weight: 500;
+        line-height: 1.4;
+      }
+      /* Orange dash marker */
+      .bullet-list li::before {
+        content: "/";
+        color: var(--c-accent);
+        font-family: var(--f-mono);
+        font-weight: 700;
+      }
+      .dark .bullet-list li {
+        color: var(--c-fg);
+      }
+      .light .bullet-list li {
+        color: var(--c-fg);
+      }
+
+      /* ── 8. COMPARE ───────────────────────────────────────────────────── */
+      /* Side-by-side before/after or A vs B. Orange "after" label. */
+      .slide--compare .slide-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100%;
+      }
+      .compare-panel {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        padding: var(--gap-md) 0;
+      }
+      .compare-panel.left {
+        padding-right: calc(var(--pad-x) * 0.55);
+        border-right: 1px solid var(--c-border);
+      }
+      .compare-panel.right {
+        padding-left: calc(var(--pad-x) * 0.55);
+      }
+      .compare-label {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding-bottom: var(--gap-sm);
+        border-bottom: 1px solid var(--c-border);
+        color: var(--c-fg-2);
+      }
+      /* The "after" panel uses orange — the payoff */
+      .compare-label.after {
+        color: var(--c-accent);
+        border-color: var(--c-accent);
+      }
+
+      /* ── 9. END ───────────────────────────────────────────────────────── */
+      /* Closing slide. Dark background. Massive closing headline. No chrome. */
+      .slide--end {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-md);
+      }
+
+      /* ╔══════════════════════════════════════════════════════════════════════╗
+   ║  ZONE F · COMPONENTS                                                 ║
+   ║                                                                      ║
+   ║  Reusable pieces used across multiple layouts.                       ║
+   ╚══════════════════════════════════════════════════════════════════════╝ */
+
+      /* Accent rule — orange on dark, dark-ink on orange */
+      .rule {
+        width: 36px;
+        height: 2px;
+        background: var(--c-accent);
+      }
+      .orange .rule {
+        background: #111111;
+      }
+      .rule.full {
+        width: 100%;
+        background: var(--c-border);
+      }
+      .orange .rule.full {
+        background: rgba(17, 17, 17, 0.2);
+      }
+
+      /* Eyebrow / kicker label — orange on dark, dark-ink on orange */
+      .kicker {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--c-accent);
+      }
+      .orange .kicker {
+        color: rgba(17, 17, 17, 0.55);
+      }
+
+      /* Bordered tag */
+      .tag {
+        display: inline-block;
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--c-accent);
+        border: 1px solid var(--c-accent);
+        padding: 0.3em 0.8em;
+        line-height: 1;
+      }
+      .orange .tag {
+        color: #111111;
+        border-color: rgba(17, 17, 17, 0.4);
+      }
+
+      /* Image caption */
+      .img-caption {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.04em;
+        opacity: 0.5;
+        margin-top: 0.8vh;
+      }
+
+      /* ── Broadside-specific: slide number ─────────────────────────────── */
+      /* The large catalogue number in the top-left corner of orange slides.
+         Inspired by SPACE10 deck: "01" in small mono, top-left, low opacity. */
+      .broadside-num {
+        font-family: var(--f-mono);
+        font-size: 1.1vw;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        color: rgba(17, 17, 17, 0.45); /* dark ink on orange */
+      }
+      /* On dark slides the number uses muted fg */
+      .dark .broadside-num {
+        color: var(--c-fg-3);
+      }
+
+      /* Corner label utility — used for section labels at slide edges */
+      .corner-label {
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.4);
+      }
+      .dark .corner-label {
+        color: var(--c-fg-3);
+      }
+
+      /* Orange slide cover: a thin top strip showing the slide number + section name */
+      .broadside-top-chrome {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: auto;
+        padding-bottom: 0;
+      }
+
+      /* ── FADELIST (SPACE10 Before/During/After) ────────────────────────── */
+      .slide--fadelist {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .fadelist-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .fadelist-items {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0;
+        line-height: 0.92;
+      }
+      .fadelist-item {
+        font-family: var(--f-display);
+        font-size: 7.5vw;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        color: #111111;
+        line-height: 1;
+      }
+      .fadelist-item:nth-child(2) {
+        opacity: 0.5;
+      }
+      .fadelist-item:nth-child(3) {
+        opacity: 0.22;
+      }
+      .fadelist-title {
+        font-family: var(--f-display);
+        font-size: 10.5vw;
+        font-weight: 900;
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        color: #111111;
+        align-self: flex-end;
+      }
+
+      /* Stats on orange: dark ink instead of cream */
+      .orange .stat-value {
+        color: #111111;
+      }
+      .orange .stat-label {
+        color: rgba(17, 17, 17, 0.65);
+      }
+      .orange .stat-note {
+        color: rgba(17, 17, 17, 0.4);
+      }
+      .orange .stat-card {
+        border-top-color: rgba(17, 17, 17, 0.22);
+      }
+
+      /* Compare: right panel gets orange fill */
+      .compare-panel.panel-orange {
+        padding-left: calc(var(--pad-x) * 0.55);
+        background: var(--c-accent);
+      }
+      .compare-panel.panel-orange .compare-label {
+        color: rgba(17, 17, 17, 0.55);
+        border-color: rgba(17, 17, 17, 0.22);
+      }
+      .compare-panel.panel-orange .h3 {
+        color: #111111;
+      }
+      .compare-panel.panel-orange .lead {
+        color: rgba(17, 17, 17, 0.7);
+      }
+      .compare-panel.panel-orange .bullet-list li {
+        color: #111111;
+      }
+      .compare-panel.panel-orange .bullet-list li::before {
+        color: rgba(17, 17, 17, 0.45);
+      }
+
+      /* ── CHART ─────────────────────────────────────────────────────────── */
+      .slide--chart .slide-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        min-height: 0;
+      }
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-shrink: 0;
+      }
+      .chart-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 0;
+      }
+      .bar-track {
+        height: 30vh;
+        display: flex;
+        align-items: flex-end;
+        gap: 4vw;
+        border-left: 1px solid var(--c-border);
+        padding-left: 0.5vw;
+      }
+      .orange .bar-track {
+        border-color: rgba(17, 17, 17, 0.2);
+      }
+      .bar-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+        gap: 1vh;
+        height: 100%;
+      }
+      .bar-fill {
+        width: 100%;
+        background: var(--c-fg-3);
+        transition: height 0.6s var(--ease-enter);
+      }
+      .bar-fill.accent {
+        background: var(--c-accent);
+      }
+      .orange .bar-fill {
+        background: rgba(17, 17, 17, 0.22);
+      }
+      .orange .bar-fill.accent {
+        background: #111111;
+      }
+      .bar-x-label {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.1em;
+        color: var(--c-fg-3);
+        white-space: nowrap;
+        text-transform: uppercase;
+      }
+      .orange .bar-x-label {
+        color: rgba(17, 17, 17, 0.45);
+      }
+      .bar-val {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        font-weight: 700;
+        color: var(--c-fg-2);
+      }
+      .bar-val.hi {
+        color: var(--c-accent);
+      }
+      .orange .bar-val {
+        color: rgba(17, 17, 17, 0.55);
+      }
+      .orange .bar-val.hi {
+        color: #111111;
+      }
+      .chart-baseline {
+        height: 1px;
+        background: var(--c-border);
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .orange .chart-baseline {
+        background: rgba(17, 17, 17, 0.2);
+      }
+      .chart-source {
+        flex-shrink: 0;
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        color: var(--c-fg-3);
+        letter-spacing: 0.06em;
+        margin-top: var(--gap-sm);
+      }
+      .orange .chart-source {
+        color: rgba(17, 17, 17, 0.4);
+      }
+
+      /* ── DIAGRAM ────────────────────────────────────────────────────────── */
+      .slide--diagram .slide-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-lg);
+        min-height: 0;
+      }
+      .flow {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+      }
+      .flow-step {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        padding-right: calc(var(--pad-x) * 0.35);
+      }
+      .flow-num {
+        font-family: var(--f-display);
+        font-size: 5vw;
+        font-weight: 900;
+        line-height: 1;
+        color: var(--c-accent);
+        letter-spacing: -0.03em;
+      }
+      .orange .flow-num {
+        color: rgba(17, 17, 17, 0.2);
+      }
+      .flow-title {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 700;
+        line-height: 1.15;
+        color: var(--c-fg);
+      }
+      .orange .flow-title {
+        color: #111111;
+      }
+      .flow-desc {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        color: var(--c-fg-2);
+        line-height: 1.6;
+        font-weight: 400;
+      }
+      .orange .flow-desc {
+        color: rgba(17, 17, 17, 0.6);
+      }
+      .flow-arrow {
+        display: flex;
+        align-items: flex-start;
+        padding-top: 1.2em;
+        padding-right: calc(var(--pad-x) * 0.35);
+        font-size: 2.2vw;
+        color: var(--c-accent);
+        font-weight: 300;
+        flex-shrink: 0;
+      }
+      .orange .flow-arrow {
+        color: rgba(17, 17, 17, 0.3);
+      }
+      /* ── PIE / DONUT CHART ──────────────────────────────────────────────── */
+      .slide--pie .slide-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        min-height: 0;
+      }
+      .pie-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--pad-x) * 0.7);
+        align-items: center;
+        flex: 1;
+        min-height: 0;
+      }
+      .pie-donut {
+        width: min(28vw, 44vh);
+        height: min(28vw, 44vh);
+        border-radius: 50%;
+        position: relative;
+        flex-shrink: 0;
+        justify-self: center;
+      }
+      .pie-donut::after {
+        content: "";
+        position: absolute;
+        inset: 20%;
+        border-radius: 50%;
+        background: var(--c-bg);
+      }
+      .orange .pie-donut::after {
+        background: var(--c-bg-orange);
+      }
+      .pie-legend {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+      }
+      .pie-item {
+        display: grid;
+        grid-template-columns: 0.8em 1fr auto;
+        gap: 1em;
+        align-items: center;
+      }
+      .pie-swatch {
+        width: 0.8em;
+        height: 0.8em;
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+      .pie-item-label {
+        font-family: var(--f-body);
+        font-size: var(--sz-lead);
+        font-weight: 700;
+        line-height: 1.4;
+      }
+      .pie-item-val {
+        font-family: var(--f-mono);
+        font-size: var(--sz-body);
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        color: var(--c-accent);
+      }
+      .orange .pie-item-val {
+        color: #111;
+      }
+      .pie-total {
+        margin-top: var(--gap-sm);
+        padding-top: var(--gap-sm);
+        border-top: 1px solid var(--c-border);
+        font-family: var(--f-mono);
+        font-size: var(--sz-label);
+        letter-spacing: 0.1em;
+        color: var(--c-fg-3);
+      }
+
+      /* ── PYRAMID ─────────────────────────────────────────────────────────── */
+      .slide--pyramid .slide-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--gap-md);
+        min-height: 0;
+      }
+      .pyramid {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        align-items: center;
+      }
+      .pyr-level {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5vh 2.5vw;
+        border-left: 4px solid var(--c-accent);
+        transition: width 0.3s;
+      }
+      .orange .pyr-level {
+        border-left-color: rgba(17, 17, 17, 0.4);
+      }
+      .pyr-level:nth-child(1) {
+        background: color-mix(in srgb, var(--c-accent) 75%, var(--c-bg));
+        width: 36%;
+      }
+      .pyr-level:nth-child(2) {
+        background: color-mix(in srgb, var(--c-accent) 50%, var(--c-bg));
+        width: 52%;
+      }
+      .pyr-level:nth-child(3) {
+        background: color-mix(in srgb, var(--c-accent) 28%, var(--c-bg));
+        width: 68%;
+      }
+      .pyr-level:nth-child(4) {
+        background: color-mix(in srgb, var(--c-accent) 14%, var(--c-bg));
+        width: 84%;
+      }
+      .pyr-level:nth-child(5) {
+        background: color-mix(in srgb, var(--c-accent) 6%, var(--c-bg));
+        width: 100%;
+      }
+      .pyr-name {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 900;
+        line-height: 1.1;
+        text-transform: lowercase;
+      }
+      .pyr-desc {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        color: var(--c-fg-2);
+        text-align: right;
+        max-width: 55%;
+        line-height: 1.4;
+        font-weight: 400;
+      }
+
+      /* ── VERTICAL TIMELINE ───────────────────────────────────────────────── */
+      .slide--vtimeline {
+        grid-template-rows: auto auto 1fr auto;
+      }
+      .vt-hl {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h2);
+        font-weight: 900;
+        text-transform: lowercase;
+        letter-spacing: -0.03em;
+        padding-bottom: var(--gap-md);
+        border-bottom: 1px solid var(--c-border);
+      }
+      .vtimeline {
+        display: grid;
+        grid-template-columns: 8em 2px 1fr;
+        gap: 0;
+        min-height: 0;
+        padding-top: var(--gap-md);
+      }
+      .vt-date {
+        font-family: var(--f-mono);
+        font-size: var(--sz-caption);
+        letter-spacing: 0.1em;
+        color: var(--c-fg-3);
+        text-align: right;
+        padding: 0 1.5vw 3.5vh 0;
+        line-height: 1.4;
+      }
+      .vt-spine {
+        background: var(--c-border);
+        position: relative;
+      }
+      .vt-spine::before {
+        content: "";
+        position: absolute;
+        top: 0.2em;
+        left: -5px;
+        width: 10px;
+        height: 10px;
+        background: var(--c-accent);
+      }
+      .vt-content {
+        padding: 0 0 3.5vh 1.5vw;
+      }
+      .vt-title {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 900;
+        margin-bottom: 0.6vh;
+        line-height: 1.1;
+        text-transform: lowercase;
+      }
+      .vt-body {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        color: var(--c-fg-2);
+        line-height: 1.65;
+        font-weight: 400;
+      }
+
+      /* ── CYCLE PROCESS ───────────────────────────────────────────────────── */
+      .slide--cycle .slide-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-md);
+        min-height: 0;
+      }
+      .cycle-grid {
+        display: grid;
+        grid-template-columns: 1fr 3em 1fr;
+        grid-template-rows: 1fr 3em 1fr;
+        gap: var(--gap-sm);
+        flex: 1;
+        min-height: 0;
+        align-items: center;
+      }
+      .cycle-step {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        padding: var(--gap-md);
+        border-top: 3px solid var(--c-accent);
+      }
+      .cycle-num {
+        font-family: var(--f-display);
+        font-size: 4vw;
+        font-weight: 900;
+        color: var(--c-accent);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        text-transform: lowercase;
+      }
+      .cycle-title {
+        font-family: var(--f-heading);
+        font-size: var(--sz-h3);
+        font-weight: 900;
+        line-height: 1.1;
+        text-transform: lowercase;
+      }
+      .cycle-desc {
+        font-family: var(--f-body);
+        font-size: var(--sz-body);
+        color: var(--c-fg-2);
+        line-height: 1.6;
+        font-weight: 400;
+      }
+      .cycle-arrow {
+        color: var(--c-fg-3);
+        font-size: 2.2vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+
+<title>Broadside · Slot Editable Template Port</title>
+
+<style id="ported-template-runtime-css">
+  :root {
+    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+    --font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --slide-bg-deep: #0f172a;
+    --deck-chrome-bg: rgba(15, 23, 42, 0.94);
+    --deck-chrome-border: rgba(255, 255, 255, 0.14);
+    --deck-chrome-text: #e2e8f0;
+    --deck-chrome-muted: #94a3b8;
+    --deck-chrome-accent: #2563eb;
+    --deck-chrome-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    --deck-chrome-surface: rgba(30, 41, 59, 0.92);
+  }
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+  html, body {
+    min-height: 100%;
+    overflow-x: hidden !important;
+  }
+  body.ported-template-deck {
+    margin: 0;
+  }
+  #deck.slides-offset {
+    display: block !important;
+    position: relative !important;
+    height: auto !important;
+    width: 100vw !important;
+    transform: none !important;
+    transition: padding-right 0.28s ease !important;
+    overflow: visible !important;
+  }
+  #deck.slides-offset > section.slide {
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    overflow: hidden !important;
+  }
+  body.deck-edit-mode [data-edit-slot] {
+    cursor: text;
+    outline: 2px dashed color-mix(in srgb, var(--deck-chrome-accent) 72%, transparent);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--deck-chrome-accent) 10%, transparent);
+  }
+  body.deck-edit-mode [data-slot-type="image"] {
+    cursor: pointer;
+  }
+  [data-edit-slot][contenteditable="true"] {
+    outline: 2px solid var(--deck-chrome-accent) !important;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
+  }
+  .static-chart-replacement {
+    width: 100%;
+    min-height: min(42vh, 360px);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+  }
+  .static-chart-bars {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: end;
+    gap: clamp(0.45rem, 1.2vw, 1rem);
+    min-height: min(34vh, 300px);
+    border-left: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    padding: clamp(0.5rem, 1.4vw, 1rem);
+  }
+  .static-chart-bar {
+    min-height: 18%;
+    height: var(--v);
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    background: currentColor;
+    opacity: 0.72;
+  }
+  .static-chart-bar b {
+    display: block;
+    transform: translateY(calc(-100% - 0.25rem));
+    color: inherit;
+    background: inherit;
+    font: inherit;
+  }
+  .static-chart-caption {
+    font-size: clamp(0.72rem, 1vw, 0.95rem);
+    opacity: 0.72;
+  }
+  @media print {
+    .deck-left-hover-anchor, .deck-add-element-menu, .slide-sidebar, .rte-toolbar, .progress-bar, .nav-dots {
+      display: none !important;
+    }
+    #deck.slides-offset > section.slide {
+      break-after: page;
+    }
+  }
+</style>
+
+<style id="swiss-edit-runtime-css">
+    /* === deck chrome (fixed UI) === */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--deck-chrome-accent), #a78bfa);
+      width: 0%; z-index: 8000; pointer-events: none;
+    }
+    .nav-dots {
+      position: fixed; bottom: clamp(0.5rem, 2vh, 1.25rem); left: 50%; transform: translateX(-50%);
+      display: flex; gap: 0.45rem; z-index: 8000;
+    }
+    .nav-dots button {
+      width: 9px; height: 9px; border-radius: 50%; border: none; padding: 0;
+      background: color-mix(in srgb, var(--deck-chrome-text) 22%, transparent); cursor: pointer;
+    }
+    .nav-dots button.active { background: var(--deck-chrome-accent); transform: scale(1.15); }
+
+    /* === top-left cluster: hover reveals Edit / Pages / (in edit mode) Undo·Redo·Done === */
+    .deck-left-hover-anchor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10000;
+      padding: clamp(0.35rem, 1vh, 0.5rem) clamp(0.5rem, 1.2vw, 0.65rem);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: clamp(0.35rem, 1vh, 0.5rem);
+      min-width: min(280px, 72vw);
+      min-height: 44px;
+      pointer-events: auto;
+      background: transparent;
+    }
+    .deck-left-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: clamp(0.3rem, 0.9vw, 0.45rem);
+    }
+    .deck-left-row--tools {
+      flex-wrap: nowrap;
+      max-width: min(100vw - 1rem, 420px);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    /* === edit mode row: Undo / Redo / Done (top-left, hover-revealed) === */
+    .deck-edit-chrome {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-bg);
+      box-shadow: var(--deck-chrome-shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    body.deck-edit-mode .deck-edit-chrome {
+      display: flex;
+    }
+    body.deck-edit-mode .deck-edit-chrome.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .deck-edit-chrome button {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: 8px;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-surface);
+      color: var(--deck-chrome-text);
+      cursor: pointer;
+    }
+    .deck-edit-chrome button:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--deck-chrome-accent) 18%, var(--deck-chrome-surface));
+    }
+    .deck-edit-chrome button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .deck-edit-chrome .deck-btn-done {
+      width: auto;
+      padding: 0 12px;
+      font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+      font-weight: 600;
+      color: var(--slide-bg-deep);
+      background: var(--deck-chrome-accent);
+      border-color: color-mix(in srgb, var(--deck-chrome-accent) 70%, #000);
+    }
+    .deck-edit-chrome .deck-btn-done:hover:not(:disabled) {
+      filter: brightness(1.08);
+    }
+    .deck-edit-chrome svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .edit-toggle, .sidebar-pages-toggle, .deck-btn-save, .deck-btn-add {
+      position: relative;
+      z-index: 10001;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-bg); color: var(--deck-chrome-text); border-radius: 10px; padding: 8px 12px;
+      font-size: clamp(0.7rem, 1.1vw, 0.875rem); cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+      white-space: nowrap;
+    }
+    .deck-btn-save, .deck-btn-add {
+      display: none;
+    }
+    body.deck-edit-mode .deck-btn-save,
+    body.deck-edit-mode .deck-btn-add {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .edit-toggle.show, .edit-toggle.active, .sidebar-pages-toggle.show, .sidebar-pages-toggle.active,
+    body.deck-edit-mode .deck-btn-save.show,
+    body.deck-edit-mode .deck-btn-add.show { opacity: 1; pointer-events: auto; }
+
+    .deck-add-element-menu {
+      position: fixed;
+      z-index: 10002;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 140px;
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-bg);
+      box-shadow: var(--deck-chrome-shadow);
+    }
+    .deck-add-element-menu.open { display: flex; }
+    .deck-add-element-menu button {
+      text-align: left;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-surface);
+      color: var(--deck-chrome-text);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: clamp(0.72rem, 1.1vw, 0.85rem);
+      cursor: pointer;
+    }
+    .deck-add-element-menu button:hover {
+      background: color-mix(in srgb, var(--deck-chrome-accent) 18%, var(--deck-chrome-surface));
+    }
+
+    /* === sidebar === */
+    .slide-sidebar {
+      position: fixed; top: 0; right: 0; bottom: 0; width: min(200px, 28vw);
+      background: var(--deck-chrome-bg); border-left: 1px solid var(--deck-chrome-border);
+      z-index: 9500; transform: translateX(100%); transition: transform 0.28s ease;
+      display: flex; flex-direction: column; padding: 10px 8px; gap: 8px;
+      box-shadow: -8px 0 32px rgba(0,0,0,0.35);
+    }
+    body.deck-sidebar-open .slide-sidebar { transform: translateX(0); }
+    body.deck-sidebar-open .slides-offset { padding-right: min(200px, 28vw); }
+
+    .slide-sidebar h3 {
+      font-size: clamp(0.65rem, 1.2vw, 0.8rem); text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--deck-chrome-muted); margin: 0 4px 4px;
+    }
+    .filmstrip-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .filmstrip-item {
+      position: relative; border-radius: 8px; border: 2px solid transparent;
+      background: color-mix(in srgb, var(--deck-chrome-surface) 80%, transparent); padding: 6px; cursor: grab; touch-action: none;
+    }
+    .filmstrip-item.is-current { border-color: var(--deck-chrome-accent); }
+    .filmstrip-item.dragging { opacity: 0.55; }
+    .filmstrip-item .filmstrip-drop-line {
+      display: none; height: 3px; background: #a78bfa; border-radius: 2px; margin: 4px 0;
+    }
+    .filmstrip-item.drop-before .filmstrip-drop-line-before { display: block; }
+    .filmstrip-item.drop-after .filmstrip-drop-line-after { display: block; }
+    .filmstrip-thumb-host { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: #020617; }
+    .filmstrip-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; gap: 4px; }
+    .filmstrip-actions button {
+      font-size: 11px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-surface); color: var(--deck-chrome-text); cursor: pointer;
+    }
+    .filmstrip-actions button:hover { filter: brightness(1.12); }
+    .filmstrip-num { font-size: 11px; color: var(--deck-chrome-muted); }
+
+    /* === slide edit layer & objects === */
+    .slide-edit-layer {
+      position: absolute; inset: 0; z-index: 6; pointer-events: none;
+    }
+    body.deck-edit-mode .slide-edit-layer { pointer-events: none; }
+    body.deck-edit-mode .slide { cursor: default; }
+
+    .slide-object {
+      position: absolute; box-sizing: border-box; pointer-events: auto;
+      outline: 1px dashed transparent; border-radius: 4px;
+    }
+    body.deck-edit-mode .slide-object { outline-color: color-mix(in srgb, var(--deck-chrome-muted) 40%, transparent); }
+    .slide-object.is-selected {
+      outline: 2px solid var(--deck-chrome-accent);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--deck-chrome-accent) 25%, transparent);
+    }
+
+    .slide-object-move {
+      position: absolute; left: -22px; top: 4px; width: 20px; height: 28px;
+      border: 1px solid var(--deck-chrome-border); border-radius: 6px; background: var(--deck-chrome-bg);
+      color: var(--deck-chrome-muted); font-size: 12px; line-height: 1; padding: 0; cursor: grab;
+      display: none; align-items: center; justify-content: center; z-index: 2;
+    }
+    body.deck-edit-mode .slide-object-move { display: flex; }
+
+    .slide-object-delete {
+      position: absolute;
+      left: -22px;
+      top: 36px;
+      width: 20px;
+      height: 22px;
+      border: 1px solid var(--deck-chrome-border);
+      border-radius: 6px;
+      background: var(--deck-chrome-bg);
+      color: var(--deck-chrome-muted);
+      font-size: 14px;
+      line-height: 1;
+      padding: 0;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+    body.deck-edit-mode .slide-object:hover .slide-object-delete,
+    body.deck-edit-mode .slide-object.is-selected .slide-object-delete {
+      display: flex;
+    }
+    .slide-object-delete:hover {
+      color: #f87171;
+      background: color-mix(in srgb, #f87171 12%, var(--deck-chrome-bg));
+    }
+
+    .slide-object-resize {
+      position: absolute;
+      border-radius: 3px;
+      background: var(--deck-chrome-accent);
+      display: none;
+      z-index: 4;
+      border: 1px solid var(--deck-chrome-border);
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .slide-object-resize--se {
+      right: -7px;
+      bottom: -7px;
+      width: 14px;
+      height: 14px;
+      cursor: nwse-resize;
+    }
+    .slide-object-resize--e {
+      right: -6px;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 32px;
+      border-radius: 4px;
+      cursor: ew-resize;
+    }
+    .slide-object-resize--s {
+      bottom: -6px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 10px;
+      border-radius: 4px;
+      cursor: ns-resize;
+    }
+    body.deck-edit-mode .slide-object.is-selected [data-resize-handle] { display: block; }
+
+    .slide-object-text {
+      min-height: 1.2em; outline: none; font-size: var(--body-size);
+      width: 100%; box-sizing: border-box;
+      overflow-wrap: anywhere; word-break: break-word;
+    }
+    .slide-object[data-object-type="text"] .slide-object-text { cursor: text; }
+    .slide-object-graphic { width: 100%; height: 100%; box-sizing: border-box; position: relative; }
+    .slide-object[data-object-type="image"] .slide-object-graphic img,
+    .slide-object[data-object-type="video"] .slide-object-graphic video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: none;
+      object-fit: contain;
+    }
+    body.deck-edit-mode .slide-object[data-object-type="video"] .slide-object-graphic video {
+      pointer-events: none;
+    }
+    .slide-object-graphic--empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(72px, 16vh, 140px);
+      border-radius: 8px;
+      border: 1px dashed color-mix(in srgb, var(--deck-chrome-muted) 55%, transparent);
+      background: linear-gradient(135deg, rgba(100, 116, 139, 0.2), rgba(148, 163, 184, 0.12));
+    }
+    .slide-object-media-pick {
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-surface);
+      color: var(--deck-chrome-text);
+      cursor: pointer;
+    }
+    .slide-object-media-pick:hover {
+      filter: brightness(1.08);
+    }
+    .slide-object-media-file {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .snap-line-v, .snap-line-h {
+      position: absolute; background: #f472b6; pointer-events: none; z-index: 7; opacity: 0.85;
+    }
+    .snap-line-v { width: 1px; top: 0; bottom: 0; }
+    .snap-line-h { height: 1px; left: 0; right: 0; }
+
+    /* === RTE toolbar === */
+    .rte-toolbar {
+      position: fixed; z-index: 9600; display: none; flex-direction: column; align-items: stretch;
+      gap: 0; min-width: min(200px, 92vw);
+      padding: 6px; background: var(--deck-chrome-bg); border: 1px solid var(--deck-chrome-border);
+      border-radius: 10px; box-shadow: var(--deck-chrome-shadow);
+    }
+    .rte-toolbar.visible { display: flex; }
+    .rte-toolbar-main {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+    }
+    .rte-toolbar button {
+      border: 1px solid var(--deck-chrome-border); background: var(--deck-chrome-surface);
+      color: var(--deck-chrome-text); border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer;
+    }
+    .rte-toolbar button.is-active {
+      outline: 2px solid var(--deck-chrome-accent); outline-offset: 1px;
+    }
+    .rte-drawer-trigger {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+    }
+    .rte-drawer-trigger.is-open {
+      background: color-mix(in srgb, var(--deck-chrome-accent) 22%, var(--deck-chrome-surface));
+      border-color: color-mix(in srgb, var(--deck-chrome-accent) 45%, var(--deck-chrome-border));
+    }
+    .rte-drawer-trigger.rte-drawer-trigger--hint:not(.is-open) {
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--deck-chrome-accent) 35%, transparent);
+    }
+    .rte-toolbar-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 0;
+      max-width: min(320px, 92vw);
+    }
+    .rte-drawer-card {
+      margin-top: 6px;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--deck-chrome-border);
+      background: color-mix(in srgb, var(--deck-chrome-surface) 88%, transparent);
+    }
+    .rte-drawer-card[hidden] {
+      display: none !important;
+    }
+    .rte-drawer-card-inner {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4px;
+    }
+    .rte-drawer-card-inner.rte-drawer-card-inner--font {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .rte-drawer-card-inner.rte-drawer-card-inner--scale {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .rte-drawer-card-inner button {
+      padding: 6px 6px;
+      font-size: 11px;
+    }
+    .rte-px-custom {
+      grid-column: 1 / -1;
+      display: none;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      padding-top: 6px;
+      border-top: 1px solid color-mix(in srgb, var(--deck-chrome-border) 65%, transparent);
+    }
+    .rte-px-custom.is-open {
+      display: flex;
+    }
+    .rte-px-custom input[type="number"] {
+      width: 4.5rem;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid var(--deck-chrome-border);
+      background: var(--deck-chrome-bg);
+      color: var(--deck-chrome-text);
+      font-size: 12px;
+    }
+    .rte-px-custom button {
+      padding: 4px 10px;
+    }
+    .rte-toolbar-meta {
+      font-size: 10px; color: var(--deck-chrome-muted); text-transform: uppercase; letter-spacing: 0.06em;
+      grid-column: 1 / -1;
+      margin-bottom: 2px;
+    }
+
+    body.deck-edit-mode.slide-anim-paused .reveal { transition: none !important; }
+
+</style>
+</head>
+<body class="ported-template-deck">
+<div class="deck-left-hover-anchor" id="deckLeftHover" aria-label="Deck controls">
+  <div class="deck-left-row">
+    <button type="button" class="edit-toggle" id="editToggle" title="Edit mode (E) — hover this corner to show">Edit</button>
+    <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
+    <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
+    <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+  </div>
+  <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
+    <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14l-4-4 4-4M5 10h8a5 5 0 010 10h-2"/></svg>
+    </button>
+    <button type="button" id="btnRedo" aria-label="Redo" title="Redo (Ctrl+Y / Ctrl+Shift+Z)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14l4-4-4-4M19 10h-8a5 5 0 000 10h2"/></svg>
+    </button>
+    <button type="button" class="deck-btn-done" id="btnDoneEdit">Done</button>
+  </div>
+</div>
+
+<div class="deck-add-element-menu" id="deckAddElementMenu" data-deck-chrome-surface="" role="menu" aria-label="Add element" hidden>
+  <button type="button" role="menuitem" data-add-kind="text">Text</button>
+  <button type="button" role="menuitem" data-add-kind="image">Image</button>
+  <button type="button" role="menuitem" data-add-kind="video">Video</button>
+</div>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots" aria-label="Slides"></nav>
+
+<aside class="slide-sidebar" id="slideSidebar" aria-label="Slide pages">
+  <h3>Slides</h3>
+  <div class="filmstrip-list" id="filmstripList"></div>
+  <div class="filmstrip-actions" style="margin-top:auto;">
+    <button type="button" id="btnExport">Export HTML</button>
+  </div>
+</aside>
+
+<div class="rte-toolbar" id="rteToolbar" role="toolbar" aria-label="Text format" data-deck-chrome-surface="">
+  <div class="rte-toolbar-main">
+    <button type="button" data-cmd="bold"><strong>B</strong></button>
+    <button type="button" data-cmd="italic"><em>I</em></button>
+    <button type="button" class="rte-drawer-trigger" data-rte-drawer="font" aria-expanded="false" aria-controls="rteDrawerFont" title="Font family">Font</button>
+    <button type="button" class="rte-drawer-trigger" data-rte-drawer="scale" aria-expanded="false" aria-controls="rteDrawerScale" title="Viewport scale (clamp)">Scale</button>
+    <button type="button" class="rte-drawer-trigger" data-rte-drawer="px" aria-expanded="false" aria-controls="rteDrawerPx" title="Fixed size in px">Px</button>
+  </div>
+  <div class="rte-toolbar-panels" aria-live="polite">
+    <div class="rte-drawer-card" id="rteDrawerFont" data-rte-panel="font" role="group" aria-label="Font family" hidden>
+      <div class="rte-drawer-card-inner rte-drawer-card-inner--font">
+        <span class="rte-toolbar-meta">Font</span>
+        <button type="button" data-font="var(--font-body)">Body</button>
+        <button type="button" data-font="var(--font-display)">Display</button>
+        <button type="button" data-font="Georgia, 'Times New Roman', serif">Serif</button>
+        <button type="button" data-font="system-ui, -apple-system, 'Segoe UI', sans-serif">Sans</button>
+        <button type="button" data-font="ui-monospace, 'Cascadia Code', 'Consolas', monospace">Mono</button>
+      </div>
+    </div>
+    <div class="rte-drawer-card" id="rteDrawerScale" data-rte-panel="scale" role="group" aria-label="Scale" hidden>
+      <div class="rte-drawer-card-inner rte-drawer-card-inner--scale">
+        <span class="rte-toolbar-meta">Scale (viewport-safe)</span>
+        <button type="button" data-size="0.55" title="Small">S</button>
+        <button type="button" data-size="1" title="Medium (base)">M</button>
+        <button type="button" data-size="1.9" title="Large">L</button>
+        <button type="button" data-size="2.85" title="Extra large">XL</button>
+      </div>
+    </div>
+    <div class="rte-drawer-card" id="rteDrawerPx" data-rte-panel="px" role="group" aria-label="Pixel size" hidden>
+      <div class="rte-drawer-card-inner">
+        <span class="rte-toolbar-meta">Pixel size</span>
+        <button type="button" data-size-px="24">24</button>
+        <button type="button" data-size-px="36">36</button>
+        <button type="button" data-size-px="48">48</button>
+        <button type="button" data-size-px="72">72</button>
+        <button type="button" data-size-px="96">96</button>
+        <button type="button" data-size-custom title="Enter custom size in px">Custom…</button>
+        <div class="rte-px-custom" id="rtePxCustomRow" aria-hidden="true">
+          <label class="rte-toolbar-meta" for="rtePxCustomInput" style="margin:0;width:100%;">Px (8–400)</label>
+          <input type="number" id="rtePxCustomInput" min="8" max="400" step="1" inputmode="numeric" autocomplete="off" />
+          <button type="button" id="rtePxCustomApply">Apply</button>
+          <button type="button" id="rtePxCustomCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="file" id="slotImageInput" accept="image/*" hidden data-deck-chrome-surface="">
+
+<div id="deck" class="slides-offset stage" data-ported-template="broadside">
+<section class="slide slide--cover orange" id="slide-0" data-template-slide-index="1">
+        <!-- Top chrome: slide number left, section label right -->
+        <div class="broadside-top-chrome" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="01 Broadside" data-slot-locked-layout="true">
+          <span class="broadside-num" data-anim="fade-in" data-delay="0"
+            >01</span
+          >
+          <span class="corner-label" data-anim="fade-in" data-delay="0"
+            >Broadside</span
+          >
+        </div>
+
+        <!-- Main content: fills the slide, anchored to bottom -->
+        <div class="cover-body" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="this is the broadside style Protest poster meets" data-slot-locked-layout="true">
+          <h1
+            class="display"
+            data-anim="fade-up"
+            data-delay="1"
+            style="max-width: 95%"
+          >
+            this is the broadside style
+          </h1>
+          <p
+            class="lead"
+            data-anim="fade-up"
+            data-delay="2"
+            style="opacity: 0.65; max-width: 55%"
+          >
+            Protest poster meets publication cover. Type so large it becomes
+            image.
+          </p>
+        </div>
+
+        <!-- Bottom meta: author left, date right -->
+        <div class="cover-meta" data-anim="fade-in" data-delay="3" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="[[Author Name]] [Year] · Context" data-slot-locked-layout="true">
+          <span class="broadside-num">[[Author Name]]</span>
+          <span class="broadside-num">[Year] · Context</span>
+        </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--chapter orange" id="slide-1" data-template-slide-index="2">
+        <!-- Chapter number: top-left, same small mono as cover -->
+        <div
+          class="broadside-num"
+          data-anim="fade-in"
+          data-delay="0"
+          style="margin-bottom: var(--gap-lg)"
+         data-edit-slot="s1-slot-1" data-slot-type="metric" data-slot-label="02 / Chapter" data-slot-locked-layout="true">
+          02 / Chapter
+        </div>
+
+        <h2 class="h1" data-anim="fade-up" data-delay="1" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="the next chapter begins here" data-slot-locked-layout="true">
+          the next chapter begins here
+        </h2>
+
+        <p
+          class="lead"
+          data-anim="fade-up"
+          data-delay="2"
+          style="max-width: 50%; margin-top: var(--gap-md); opacity: 0.65"
+         data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="One optional sentence that frames what this sect" data-slot-locked-layout="true">
+          One optional sentence that frames what this section is about.
+        </p>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--statement dark" id="slide-2" data-template-slide-index="3">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="The Argument" data-slot-locked-layout="true">The Argument</span>
+          <span class="label muted" data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="03" data-slot-locked-layout="true">03</span>
+        </header>
+
+        <div class="statement-body">
+          <p class="kicker" data-anim="fade-in" data-delay="0">Core Thesis</p>
+          <div
+            class="rule"
+            data-anim="reveal-right"
+            data-delay="1"
+            style="margin: 1.8vh 0"
+          ></div>
+          <!-- The .accent class makes this orange — the punchline -->
+          <h2
+            class="h1 accent"
+            data-anim="fade-up"
+            data-delay="2"
+            style="max-width: 75%"
+           data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="orange is not an accent. it is the room." data-slot-locked-layout="true">
+            orange is not an accent. it is the room.
+          </h2>
+        </div>
+
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="label muted" data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--split dark" id="slide-3" data-template-slide-index="4">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Details" data-slot-locked-layout="true">Details</span>
+          <span class="label muted" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="04" data-slot-locked-layout="true">04</span>
+        </header>
+
+        <div class="slide-body">
+          <div class="split-text">
+            <p class="kicker" data-anim="fade-in" data-delay="0">Context</p>
+            <div
+              class="rule"
+              data-anim="reveal-right"
+              data-delay="1"
+              style="margin: 1.5vh 0"
+            ></div>
+            <h2 class="h2" data-anim="fade-up" data-delay="2" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="when content needs image support" data-slot-locked-layout="true">
+              when content needs image support
+            </h2>
+            <p
+              class="lead muted"
+              data-anim="fade-up"
+              data-delay="3"
+              style="max-width: 90%"
+             data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="One or two sentences of supporting context. Shor" data-slot-locked-layout="true">
+              One or two sentences of supporting context. Short. Dense. No
+              padding.
+            </p>
+            <!-- Broadside list: max 3 items, forward-slash bullet -->
+            <ul class="bullet-list" data-anim="fade-up" data-delay="4">
+              <li data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="First key supporting point" data-slot-locked-layout="true">First key supporting point</li>
+              <li data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Second point, equally direct" data-slot-locked-layout="true">Second point, equally direct</li>
+              <li data-edit-slot="s3-slot-7" data-slot-type="text" data-slot-label="Third and final — end strong" data-slot-locked-layout="true">Third and final — end strong</li>
+            </ul>
+          </div>
+
+          <div class="split-image" data-anim="reveal-right" data-delay="2">
+            <div class="img-placeholder" data-edit-slot="s3-image-1" data-slot-type="image" data-slot-label="Image" data-slot-locked-layout="true">Image Placeholder</div>
+            <p class="img-caption" data-edit-slot="s3-slot-8" data-slot-type="text" data-slot-label="Image caption or source · Year" data-slot-locked-layout="true">Image caption or source · Year</p>
+          </div>
+        </div>
+
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s3-slot-9" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="label muted" data-edit-slot="s3-slot-10" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--stats orange" id="slide-4" data-template-slide-index="5">
+        <header class="slide-chrome">
+          <span class="broadside-num" data-edit-slot="s4-slot-1" data-slot-type="metric" data-slot-label="05" data-slot-locked-layout="true">05</span>
+          <span class="corner-label" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="By the numbers" data-slot-locked-layout="true">By the numbers</span>
+        </header>
+        <div class="slide-body">
+          <div class="stats-grid" data-anim="fade-up" data-delay="1">
+            <div class="stat-card">
+              <div class="stat-value" data-anim="scale-in" data-delay="1">
+                $3.5B
+              </div>
+              <div class="stat-label body" data-edit-slot="s4-slot-3" data-slot-type="metric" data-slot-label="Series E closed at $61.5B valuation" data-slot-locked-layout="true">
+                Series E closed at $61.5B valuation
+              </div>
+              <div class="stat-note" data-edit-slot="s4-slot-4" data-slot-type="metric" data-slot-label="[Source] · [Year]" data-slot-locked-layout="true">[Source] · [Year]</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" data-anim="scale-in" data-delay="2">
+                3×
+              </div>
+              <div class="stat-label body" data-edit-slot="s4-slot-5" data-slot-type="metric" data-slot-label="Enterprise deployments up quarter over quarter" data-slot-locked-layout="true">
+                Enterprise deployments up quarter over quarter
+              </div>
+              <div class="stat-note" data-edit-slot="s4-slot-6" data-slot-type="metric" data-slot-label="Primary research" data-slot-locked-layout="true">Primary research</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" data-anim="scale-in" data-delay="3">
+                #1
+              </div>
+              <div class="stat-label body" data-edit-slot="s4-slot-7" data-slot-type="metric" data-slot-label="App Store ranking · [Product Name] · [Date]" data-slot-locked-layout="true">
+                App Store ranking · [Product Name] · [Date]
+              </div>
+              <div class="stat-note" data-edit-slot="s4-slot-8" data-slot-type="metric" data-slot-label="App Store Charts" data-slot-locked-layout="true">App Store Charts</div>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span class="broadside-num" style="opacity: 0.4" data-edit-slot="s4-slot-9" data-slot-type="metric" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="broadside-num" style="opacity: 0.4" data-edit-slot="s4-slot-10" data-slot-type="metric" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--fadelist orange" id="slide-5" data-template-slide-index="6">
+        <div class="fadelist-top">
+          <span class="broadside-num" data-anim="fade-in" data-delay="0"
+            >01</span
+          >
+          <div class="fadelist-items" data-anim="fade-up" data-delay="1">
+            <span class="fadelist-item">Before</span>
+            <span class="fadelist-item">During</span>
+            <span class="fadelist-item">After</span>
+          </div>
+        </div>
+        <div class="fadelist-title" data-anim="fade-up" data-delay="2" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="thesession" data-slot-locked-layout="true">
+          the<br />session
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: var(--gap-sm);
+            border-top: 1px solid rgba(17, 17, 17, 0.15);
+          "
+         data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="[Studio X] Guidelines 06 / 10" data-slot-locked-layout="true">
+          <span class="broadside-num" style="opacity: 0.4"
+            >[Studio X] Guidelines</span
+          >
+          <span class="broadside-num" style="opacity: 0.4">06 / 10</span>
+        </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--list dark" id="slide-6" data-template-slide-index="7">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="The Framework" data-slot-locked-layout="true">The Framework</span>
+          <span class="label muted" data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="07" data-slot-locked-layout="true">07</span>
+        </header>
+        <div class="slide-body">
+          <div class="list-head">
+            <p class="kicker" data-anim="fade-in" data-delay="0">Four rules</p>
+            <h2 class="h2" data-anim="fade-up" data-delay="1">
+              what separates<br />signal from noise
+            </h2>
+          </div>
+          <ul class="bullet-list" data-anim="fade-up" data-delay="2">
+            <li data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Ship before it&#x27;s ready — learn faster than you p" data-slot-locked-layout="true">Ship before it's ready — learn faster than you plan</li>
+            <li data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="One metric that matters — ignore everything else" data-slot-locked-layout="true">
+              One metric that matters — ignore everything else this quarter
+            </li>
+            <li data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="The customer is always wrong about solutions, ne" data-slot-locked-layout="true">
+              The customer is always wrong about solutions, never about problems
+            </li>
+            <li data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Speed is a feature — slow companies don&#x27;t get a " data-slot-locked-layout="true">
+              Speed is a feature — slow companies don't get a second chance
+            </li>
+          </ul>
+        </div>
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="label muted" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--quote dark" id="slide-7" data-template-slide-index="8">
+        <p
+          class="kicker accent"
+          data-anim="fade-in"
+          data-delay="0"
+          style="margin-bottom: var(--gap-lg)"
+         data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="On speed" data-slot-locked-layout="true">
+          On speed
+        </p>
+        <div class="quote-text" data-anim="fade-up" data-delay="1" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="&quot;Move fast and you&#x27;ll break things. Move slow an" data-slot-locked-layout="true">
+          "Move fast and you'll break things. Move slow and something else will
+          break you."
+        </div>
+        <div class="quote-attr" data-anim="fade-up" data-delay="2" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="[Industry Leader] [Source] · [Year]" data-slot-locked-layout="true">
+          <span class="label accent">[Industry Leader]</span>
+          <span class="label muted">[Source] · [Year]</span>
+        </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--compare dark" id="slide-8" data-template-slide-index="9">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Before · After" data-slot-locked-layout="true">Before · After</span>
+          <span class="label muted" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="09" data-slot-locked-layout="true">09</span>
+        </header>
+        <div class="slide-body">
+          <div class="compare-panel left">
+            <div class="compare-label" data-anim="fade-in" data-delay="0">
+              Before
+            </div>
+            <h3 class="h3" data-anim="fade-up" data-delay="1" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="six-month build cycles" data-slot-locked-layout="true">
+              six-month build cycles
+            </h3>
+            <p class="lead muted" data-anim="fade-up" data-delay="2" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Teams planned for months before shipping anythin" data-slot-locked-layout="true">
+              Teams planned for months before shipping anything. By launch, the
+              market had moved.
+            </p>
+            <ul
+              class="bullet-list"
+              data-anim="fade-up"
+              data-delay="3"
+              style="--sz-lead: 1.2vw"
+            >
+              <li data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Waterfall planning, quarterly roadmaps" data-slot-locked-layout="true">Waterfall planning, quarterly roadmaps</li>
+              <li data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="User testing at the end, not the start" data-slot-locked-layout="true">User testing at the end, not the start</li>
+              <li data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Success measured by features shipped" data-slot-locked-layout="true">Success measured by features shipped</li>
+            </ul>
+          </div>
+          <div class="compare-panel panel-orange">
+            <div class="compare-label after" data-anim="fade-in" data-delay="0">
+              After
+            </div>
+            <h3
+              class="h3"
+              data-anim="fade-up"
+              data-delay="1"
+              style="color: #111"
+             data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="two-week iteration loops" data-slot-locked-layout="true">
+              two-week iteration loops
+            </h3>
+            <p
+              class="lead"
+              data-anim="fade-up"
+              data-delay="2"
+              style="color: rgba(17, 17, 17, 0.65)"
+             data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Ship a rough version. Watch what users actually " data-slot-locked-layout="true">
+              Ship a rough version. Watch what users actually do. Rebuild. Ship
+              again.
+            </p>
+            <ul
+              class="bullet-list"
+              data-anim="fade-up"
+              data-delay="3"
+              style="--sz-lead: 1.2vw"
+            >
+              <li data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="Weekly user sessions, continuous discovery" data-slot-locked-layout="true">Weekly user sessions, continuous discovery</li>
+              <li data-edit-slot="s8-slot-11" data-slot-type="text" data-slot-label="Metrics reviewed daily, not quarterly" data-slot-locked-layout="true">Metrics reviewed daily, not quarterly</li>
+              <li data-edit-slot="s8-slot-12" data-slot-type="text" data-slot-label="Success measured by behavior change" data-slot-locked-layout="true">Success measured by behavior change</li>
+            </ul>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s8-slot-13" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="label muted" data-edit-slot="s8-slot-14" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--chart dark" id="slide-9" data-template-slide-index="10">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Growth Metrics" data-slot-locked-layout="true">Growth Metrics</span>
+          <span class="label muted" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="11" data-slot-locked-layout="true">11</span>
+        </header>
+        <div class="slide-body">
+          <div class="chart-header">
+            <h2 class="h2" data-anim="fade-up" data-delay="0">
+              revenue by quarter
+            </h2>
+            <span class="caption muted" data-anim="fade-in" data-delay="1"
+              >USD · Millions · FY 2025</span
+            >
+          </div>
+          <div class="chart-wrapper" data-anim="fade-up" data-delay="2">
+            <div class="bar-track">
+              <div class="bar-col">
+                <span class="bar-val">$1.2M</span>
+                <div class="bar-fill" style="height: 12vh"></div>
+                <span class="bar-x-label" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="Q1" data-slot-locked-layout="true">Q1</span>
+              </div>
+              <div class="bar-col">
+                <span class="bar-val">$1.7M</span>
+                <div class="bar-fill" style="height: 17vh"></div>
+                <span class="bar-x-label" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="Q2" data-slot-locked-layout="true">Q2</span>
+              </div>
+              <div class="bar-col">
+                <span class="bar-val">$2.1M</span>
+                <div class="bar-fill" style="height: 21vh"></div>
+                <span class="bar-x-label" data-edit-slot="s9-slot-5" data-slot-type="text" data-slot-label="Q3" data-slot-locked-layout="true">Q3</span>
+              </div>
+              <div class="bar-col">
+                <span class="bar-val hi">$2.8M</span>
+                <div class="bar-fill accent" style="height: 28vh"></div>
+                <span class="bar-x-label" data-edit-slot="s9-slot-6" data-slot-type="text" data-slot-label="Q4" data-slot-locked-layout="true">Q4</span>
+              </div>
+            </div>
+            <div class="chart-baseline"></div>
+          </div>
+          <p class="chart-source" data-anim="fade-in" data-delay="3" data-edit-slot="s9-slot-7" data-slot-type="text" data-slot-label="Source: Internal finance data · Q4 2025 Annual R" data-slot-locked-layout="true">
+            Source: Internal finance data · Q4 2025 Annual Report
+          </p>
+        </div>
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s9-slot-8" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="label muted" data-edit-slot="s9-slot-9" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--diagram orange" id="slide-10" data-template-slide-index="11">
+        <header class="slide-chrome">
+          <span class="broadside-num" data-edit-slot="s10-slot-1" data-slot-type="metric" data-slot-label="12" data-slot-locked-layout="true">12</span>
+          <span class="corner-label" data-edit-slot="s10-slot-2" data-slot-type="text" data-slot-label="The Process" data-slot-locked-layout="true">The Process</span>
+        </header>
+        <div class="slide-body">
+          <h2
+            class="h2"
+            style="color: #111; letter-spacing: -0.02em"
+            data-anim="fade-up"
+            data-delay="0"
+          >
+            how it works
+          </h2>
+          <div class="flow" data-anim="fade-up" data-delay="1">
+            <div class="flow-step">
+              <div class="flow-num">01</div>
+              <div class="flow-title" data-edit-slot="s10-slot-3" data-slot-type="text" data-slot-label="Discover" data-slot-locked-layout="true">Discover</div>
+              <div class="flow-desc" data-edit-slot="s10-slot-4" data-slot-type="text" data-slot-label="Talk to users. Read the data. Surface what&#x27;s act" data-slot-locked-layout="true">
+                Talk to users. Read the data. Surface what's actually true vs.
+                what the team assumes.
+              </div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-num">02</div>
+              <div class="flow-title" data-edit-slot="s10-slot-5" data-slot-type="text" data-slot-label="Define" data-slot-locked-layout="true">Define</div>
+              <div class="flow-desc" data-edit-slot="s10-slot-6" data-slot-type="text" data-slot-label="Narrow to one problem worth solving. Write it as" data-slot-locked-layout="true">
+                Narrow to one problem worth solving. Write it as a testable
+                hypothesis, not a feature request.
+              </div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-num">03</div>
+              <div class="flow-title" data-edit-slot="s10-slot-7" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</div>
+              <div class="flow-desc" data-edit-slot="s10-slot-8" data-slot-type="text" data-slot-label="Build the simplest thing that could prove or dis" data-slot-locked-layout="true">
+                Build the simplest thing that could prove or disprove the
+                hypothesis. Skip the polish.
+              </div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">
+              <div class="flow-num">04</div>
+              <div class="flow-title" data-edit-slot="s10-slot-9" data-slot-type="text" data-slot-label="Deploy" data-slot-locked-layout="true">Deploy</div>
+              <div class="flow-desc" data-edit-slot="s10-slot-10" data-slot-type="text" data-slot-label="Ship to real users. Measure behavior, not opinio" data-slot-locked-layout="true">
+                Ship to real users. Measure behavior, not opinions. Repeat from
+                step one with new data.
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-foot" style="border-color: rgba(17, 17, 17, 0.15)">
+          <span class="broadside-num" style="opacity: 0.4" data-edit-slot="s10-slot-11" data-slot-type="metric" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="broadside-num" style="opacity: 0.4" data-edit-slot="s10-slot-12" data-slot-type="metric" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--pie dark" id="slide-11" data-template-slide-index="12">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s11-slot-1" data-slot-type="text" data-slot-label="Market Share" data-slot-locked-layout="true">Market Share</span>
+          <span class="label muted" data-edit-slot="s11-slot-2" data-slot-type="text" data-slot-label="13" data-slot-locked-layout="true">13</span>
+        </header>
+        <div class="slide-body">
+          <h2
+            class="h2"
+            data-anim="fade-up"
+            data-delay="0"
+            style="font-weight: 900"
+          >
+            where the market sits
+          </h2>
+          <div class="pie-row" data-anim="fade-up" data-delay="1">
+            <!-- Donut: conic-gradient segments match legend order -->
+            <div
+              class="pie-donut"
+              style="
+                background: conic-gradient(
+                  var(--c-accent) 0% 40%,
+                  #3a3a38 40% 68%,
+                  #555550 68% 88%,
+                  #282826 88% 100%
+                );
+              "
+            ></div>
+            <div class="pie-legend">
+              <div class="pie-item">
+                <div
+                  class="pie-swatch"
+                  style="background: var(--c-accent)"
+                ></div>
+                <span class="pie-item-label" data-edit-slot="s11-slot-3" data-slot-type="text" data-slot-label="Leader" data-slot-locked-layout="true">Leader</span>
+                <span class="pie-item-val" data-edit-slot="s11-slot-4" data-slot-type="text" data-slot-label="40%" data-slot-locked-layout="true">40%</span>
+              </div>
+              <div class="pie-item">
+                <div class="pie-swatch" style="background: #3a3a38"></div>
+                <span class="pie-item-label" data-edit-slot="s11-slot-5" data-slot-type="text" data-slot-label="Challenger" data-slot-locked-layout="true">Challenger</span>
+                <span class="pie-item-val" data-edit-slot="s11-slot-6" data-slot-type="text" data-slot-label="28%" data-slot-locked-layout="true">28%</span>
+              </div>
+              <div class="pie-item">
+                <div class="pie-swatch" style="background: #555550"></div>
+                <span class="pie-item-label" data-edit-slot="s11-slot-7" data-slot-type="text" data-slot-label="Followers" data-slot-locked-layout="true">Followers</span>
+                <span class="pie-item-val" data-edit-slot="s11-slot-8" data-slot-type="text" data-slot-label="20%" data-slot-locked-layout="true">20%</span>
+              </div>
+              <div class="pie-item">
+                <div class="pie-swatch" style="background: #282826"></div>
+                <span class="pie-item-label" data-edit-slot="s11-slot-9" data-slot-type="text" data-slot-label="Other" data-slot-locked-layout="true">Other</span>
+                <span class="pie-item-val" data-edit-slot="s11-slot-10" data-slot-type="text" data-slot-label="12%" data-slot-locked-layout="true">12%</span>
+              </div>
+              <div class="pie-total" data-edit-slot="s11-slot-11" data-slot-type="text" data-slot-label="TOTAL MARKET: $[X]B · [Year] ESTIMATE" data-slot-locked-layout="true">TOTAL MARKET: $[X]B · [Year] ESTIMATE</div>
+            </div>
+          </div>
+          <p class="chart-source" data-anim="fade-in" data-delay="2" data-edit-slot="s11-slot-12" data-slot-type="text" data-slot-label="Source: [Industry report] · [Year] · Estimates o" data-slot-locked-layout="true">
+            Source: [Industry report] · [Year] · Estimates only
+          </p>
+        </div>
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s11-slot-13" data-slot-type="text" data-slot-label="[Author]" data-slot-locked-layout="true">[Author]</span>
+          <span class="label muted" data-edit-slot="s11-slot-14" data-slot-type="text" data-slot-label="[Year]" data-slot-locked-layout="true">[Year]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--pyramid dark" id="slide-12" data-template-slide-index="13">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s12-slot-1" data-slot-type="text" data-slot-label="The Hierarchy" data-slot-locked-layout="true">The Hierarchy</span>
+          <span class="label muted" data-edit-slot="s12-slot-2" data-slot-type="text" data-slot-label="14" data-slot-locked-layout="true">14</span>
+        </header>
+        <div class="slide-body">
+          <h2
+            class="h2"
+            data-anim="fade-up"
+            data-delay="0"
+            style="font-weight: 900"
+          >
+            what actually matters
+          </h2>
+          <div class="pyramid" data-anim="fade-up" data-delay="1">
+            <div class="pyr-level">
+              <span class="pyr-name">mission</span>
+              <span class="pyr-desc">why this exists</span>
+            </div>
+            <div class="pyr-level" data-edit-slot="s12-slot-3" data-slot-type="text" data-slot-label="strategy what we&#x27;re betting on" data-slot-locked-layout="true">
+              <span class="pyr-name">strategy</span>
+              <span class="pyr-desc">what we're betting on</span>
+            </div>
+            <div class="pyr-level" data-edit-slot="s12-slot-4" data-slot-type="text" data-slot-label="product what we&#x27;re building" data-slot-locked-layout="true">
+              <span class="pyr-name">product</span>
+              <span class="pyr-desc">what we're building</span>
+            </div>
+            <div class="pyr-level" data-edit-slot="s12-slot-5" data-slot-type="text" data-slot-label="growth how we reach people" data-slot-locked-layout="true">
+              <span class="pyr-name">growth</span>
+              <span class="pyr-desc">how we reach people</span>
+            </div>
+            <div class="pyr-level" data-edit-slot="s12-slot-6" data-slot-type="text" data-slot-label="operations how we run the day-to-day" data-slot-locked-layout="true">
+              <span class="pyr-name">operations</span>
+              <span class="pyr-desc">how we run the day-to-day</span>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s12-slot-7" data-slot-type="text" data-slot-label="[Author]" data-slot-locked-layout="true">[Author]</span>
+          <span class="label muted" data-edit-slot="s12-slot-8" data-slot-type="text" data-slot-label="[Year]" data-slot-locked-layout="true">[Year]</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--vtimeline dark" id="slide-13" data-template-slide-index="14">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s13-slot-1" data-slot-type="text" data-slot-label="The Story" data-slot-locked-layout="true">The Story</span>
+          <span class="label muted" data-edit-slot="s13-slot-2" data-slot-type="text" data-slot-label="15" data-slot-locked-layout="true">15</span>
+        </header>
+        <div class="vt-hl" data-anim="fade-up" data-delay="0" data-edit-slot="s13-slot-3" data-slot-type="text" data-slot-label="how we got here" data-slot-locked-layout="true">
+          how we got here
+        </div>
+        <div class="vtimeline" data-anim="fade-up" data-delay="1">
+          <!-- Event 1 -->
+          <div class="vt-date">[Year −3]</div>
+          <div class="vt-spine"></div>
+          <div class="vt-content">
+            <div class="vt-title">the idea</div>
+            <div class="vt-body" data-edit-slot="s13-slot-4" data-slot-type="text" data-slot-label="One slide. Three slides. Nineteen rejections. On" data-slot-locked-layout="true">
+              One slide. Three slides. Nineteen rejections. One yes.
+            </div>
+          </div>
+          <!-- Event 2 -->
+          <div class="vt-date" data-edit-slot="s13-slot-5" data-slot-type="text" data-slot-label="[Year −2]" data-slot-locked-layout="true">[Year −2]</div>
+          <div class="vt-spine"></div>
+          <div class="vt-content">
+            <div class="vt-title">first product</div>
+            <div class="vt-body" data-edit-slot="s13-slot-6" data-slot-type="text" data-slot-label="Launched to [N] users. [X]% used it daily after " data-slot-locked-layout="true">
+              Launched to [N] users. [X]% used it daily after week one.
+            </div>
+          </div>
+          <!-- Event 3 -->
+          <div class="vt-date" data-edit-slot="s13-slot-7" data-slot-type="text" data-slot-label="[Year −1]" data-slot-locked-layout="true">[Year −1]</div>
+          <div class="vt-spine"></div>
+          <div class="vt-content">
+            <div class="vt-title">the pivot</div>
+            <div class="vt-body" data-edit-slot="s13-slot-8" data-slot-type="text" data-slot-label="Killed [X] features. Found the one thing that ch" data-slot-locked-layout="true">
+              Killed [X] features. Found the one thing that changed retention.
+            </div>
+          </div>
+          <!-- Event 4 -->
+          <div class="vt-date" data-edit-slot="s13-slot-9" data-slot-type="text" data-slot-label="[Year 0]" data-slot-locked-layout="true">[Year 0]</div>
+          <div class="vt-spine"></div>
+          <div class="vt-content">
+            <div class="vt-title">now</div>
+            <div class="vt-body" data-edit-slot="s13-slot-10" data-slot-type="text" data-slot-label="[N]k users. $[X]M ARR. The hard part starts here" data-slot-locked-layout="true">
+              [N]k users. $[X]M ARR. The hard part starts here.
+            </div>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s13-slot-11" data-slot-type="text" data-slot-label="[Author] / [Year]" data-slot-locked-layout="true">[Author] / [Year]</span>
+          <span class="label muted" data-edit-slot="s13-slot-12" data-slot-type="text" data-slot-label="15" data-slot-locked-layout="true">15</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--cycle dark" id="slide-14" data-template-slide-index="15">
+        <header class="slide-chrome">
+          <span class="label muted" data-edit-slot="s14-slot-1" data-slot-type="text" data-slot-label="The Loop" data-slot-locked-layout="true">The Loop</span>
+          <span class="label muted" data-edit-slot="s14-slot-2" data-slot-type="text" data-slot-label="16" data-slot-locked-layout="true">16</span>
+        </header>
+        <div class="slide-body">
+          <h2
+            class="h2"
+            data-anim="fade-up"
+            data-delay="0"
+            style="font-weight: 900"
+          >
+            build · measure · learn
+          </h2>
+          <div class="cycle-grid" data-anim="fade-up" data-delay="1">
+            <!-- Row 1 -->
+            <div class="cycle-step">
+              <div class="cycle-num">01</div>
+              <div class="cycle-title" data-edit-slot="s14-slot-3" data-slot-type="text" data-slot-label="build" data-slot-locked-layout="true">build</div>
+              <div class="cycle-desc" data-edit-slot="s14-slot-4" data-slot-type="text" data-slot-label="Ship the smallest version that could prove the i" data-slot-locked-layout="true">
+                Ship the smallest version that could prove the idea wrong.
+              </div>
+            </div>
+            <div class="cycle-arrow">→</div>
+            <div class="cycle-step">
+              <div class="cycle-num">02</div>
+              <div class="cycle-title" data-edit-slot="s14-slot-5" data-slot-type="text" data-slot-label="measure" data-slot-locked-layout="true">measure</div>
+              <div class="cycle-desc" data-edit-slot="s14-slot-6" data-slot-type="text" data-slot-label="What did users actually do? Not what they said —" data-slot-locked-layout="true">
+                What did users actually do? Not what they said — what they did.
+              </div>
+            </div>
+            <!-- Row 2: arrows -->
+            <div class="cycle-arrow">↓</div>
+            <div></div>
+            <div class="cycle-arrow">↓</div>
+            <!-- Row 3 (reversed: left=04, right=03 to form clockwise loop) -->
+            <div class="cycle-step">
+              <div class="cycle-num">04</div>
+              <div class="cycle-title" data-edit-slot="s14-slot-7" data-slot-type="text" data-slot-label="learn" data-slot-locked-layout="true">learn</div>
+              <div class="cycle-desc" data-edit-slot="s14-slot-8" data-slot-type="text" data-slot-label="Update the hypothesis. Kill what didn&#x27;t work. Do" data-slot-locked-layout="true">
+                Update the hypothesis. Kill what didn't work. Double what did.
+              </div>
+            </div>
+            <div class="cycle-arrow">←</div>
+            <div class="cycle-step">
+              <div class="cycle-num">03</div>
+              <div class="cycle-title" data-edit-slot="s14-slot-9" data-slot-type="text" data-slot-label="decide" data-slot-locked-layout="true">decide</div>
+              <div class="cycle-desc" data-edit-slot="s14-slot-10" data-slot-type="text" data-slot-label="Ship to more users or go back to step one. There" data-slot-locked-layout="true">
+                Ship to more users or go back to step one. There is no third
+                option.
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="slide-foot">
+          <span class="label muted" data-edit-slot="s14-slot-11" data-slot-type="text" data-slot-label="[Author] / [Year]" data-slot-locked-layout="true">[Author] / [Year]</span>
+          <span class="label muted" data-edit-slot="s14-slot-12" data-slot-type="text" data-slot-label="16" data-slot-locked-layout="true">16</span>
+        </footer>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+
+<section class="slide slide--end orange" id="slide-15" data-template-slide-index="16">
+        <div class="broadside-top-chrome" data-edit-slot="s15-slot-1" data-slot-type="text" data-slot-label="10 End" data-slot-locked-layout="true">
+          <span class="broadside-num" data-anim="fade-in" data-delay="0"
+            >10</span
+          >
+          <span class="corner-label" data-anim="fade-in" data-delay="0"
+            >End</span
+          >
+        </div>
+        <h1
+          class="display"
+          data-anim="fade-up"
+          data-delay="1"
+          style="
+            color: #111;
+            max-width: 80%;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+          "
+         data-edit-slot="s15-slot-2" data-slot-type="text" data-slot-label="let&#x27;stalk." data-slot-locked-layout="true">
+          let's<br />talk.
+        </h1>
+        <div
+          style="display: flex; flex-direction: column; gap: var(--gap-sm)"
+          data-anim="fade-up"
+          data-delay="2"
+         data-edit-slot="s15-slot-3" data-slot-type="text" data-slot-label="[hello@company.com] · [@handle] · [company.com]" data-slot-locked-layout="true">
+          <p class="lead" style="color: rgba(17, 17, 17, 0.65); max-width: 45%">
+            [hello@company.com] · [@handle] · [company.com]
+          </p>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: auto;
+            padding-top: var(--gap-sm);
+            border-top: 1px solid rgba(17, 17, 17, 0.15);
+          "
+         data-edit-slot="s15-slot-4" data-slot-type="text" data-slot-label="[Author Name] [Year]" data-slot-locked-layout="true">
+          <span class="broadside-num" style="opacity: 0.4">[Author Name]</span>
+          <span class="broadside-num" style="opacity: 0.4">[Year]</span>
+        </div>
+
+    <div class="slide-edit-layer" aria-hidden="true"></div>
+  </section>
+</div>
+<script id="swiss-slot-edit-runtime-js">
+(function () {
+  'use strict';
+
+  const STORAGE_KEY = 'editable-deck:' + (document.documentElement.getAttribute('data-deck-id') || 'default');
+  const SNAP_PX = 8;
+  const MAX_HISTORY = 60;
+  const RESIZE_MIN_FRAC = 0.05;
+
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function isDeckChromeNode(node) {
+    if (!node || !node.closest) return false;
+    return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
+  }
+
+  /* ---------- History ---------- */
+  class HistoryStack {
+    constructor(onChange) {
+      this._u = [];
+      this._r = [];
+      this._onChange = typeof onChange === 'function' ? onChange : function () {};
+    }
+    push(record) {
+      this._u.push(record);
+      if (this._u.length > MAX_HISTORY) this._u.shift();
+      this._r.length = 0;
+      this._onChange();
+    }
+    undo() {
+      const r = this._u.pop();
+      if (r && r.undo) r.undo();
+      if (r) this._r.push(r);
+      this._onChange();
+    }
+    redo() {
+      const r = this._r.pop();
+      if (r && r.redo) r.redo();
+      if (r) this._u.push(r);
+      this._onChange();
+    }
+    canUndo() { return this._u.length > 0; }
+    canRedo() { return this._r.length > 0; }
+  }
+
+  /* ---------- Slide deck (scroll / nav) ---------- */
+  class SlideDeck {
+    constructor() {
+      this.slidesContainer = document.body;
+      this.refreshSlides();
+      this.current = 0;
+      this.onSlideChange = null;
+      this._obs = new IntersectionObserver(
+        (ents) => {
+          ents.forEach((en) => {
+            if (en.isIntersecting) en.target.classList.add('visible');
+          });
+        },
+        { threshold: 0.35 }
+      );
+      this.slides.forEach((s) => this._obs.observe(s));
+      this._onScroll = () => this._syncCurrentFromScroll();
+      window.addEventListener('scroll', this._onScroll, { passive: true });
+      this._keys = this._keys.bind(this);
+      window.addEventListener('keydown', this._keys);
+      this._wheel = this._wheel.bind(this);
+      window.addEventListener('wheel', this._wheel, { passive: false });
+      this._syncCurrentFromScroll();
+    }
+    refreshSlides() {
+      const root = document.querySelector('.slides-offset');
+      this.slides = root
+        ? Array.from(root.querySelectorAll(':scope > section.slide'))
+        : [];
+    }
+    _syncCurrentFromScroll() {
+      const h = window.innerHeight;
+      let best = 0, bestRatio = 0;
+      this.slides.forEach((s, i) => {
+        const r = s.getBoundingClientRect();
+        const vis = Math.max(0, Math.min(r.bottom, h) - Math.max(r.top, 0)) / h;
+        if (vis > bestRatio) { bestRatio = vis; best = i; }
+      });
+      if (best !== this.current) {
+        this.current = best;
+        this.onSlideChange && this.onSlideChange(best);
+      }
+      this.slides.forEach((s, i) => s.classList.toggle('is-active', i === best));
+      this._updateChrome();
+    }
+    goTo(i) {
+      this.refreshSlides();
+      i = Math.max(0, Math.min(this.slides.length - 1, i));
+      this.slides[i].scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      this.current = i;
+      this._updateChrome();
+      this.onSlideChange && this.onSlideChange(i);
+    }
+    _updateChrome() {
+      const n = this.slides.length;
+      const p = n ? ((this.current + 1) / n) * 100 : 0;
+      const bar = document.getElementById('progressBar');
+      if (bar) bar.style.width = p + '%';
+      const dots = document.getElementById('navDots');
+      if (dots) {
+        dots.innerHTML = '';
+        for (let i = 0; i < n; i++) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          if (i === this.current) b.classList.add('active');
+          b.addEventListener('click', () => this.goTo(i));
+          dots.appendChild(b);
+        }
+      }
+    }
+    _keys(e) {
+      if (document.body.classList.contains('deck-edit-mode')) {
+        if (e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]')) return;
+        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+          e.preventDefault(); this.goTo(this.current + 1);
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          e.preventDefault(); this.goTo(this.current - 1);
+        }
+      } else {
+        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+          e.preventDefault(); this.goTo(this.current + 1);
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          e.preventDefault(); this.goTo(this.current - 1);
+        }
+      }
+    }
+    _wheel(e) {
+      if (document.body.classList.contains('deck-edit-mode')) return;
+      if (Math.abs(e.deltaY) < 8) return;
+      e.preventDefault();
+      if (e.deltaY > 0) this.goTo(this.current + 1);
+      else this.goTo(this.current - 1);
+    }
+  }
+
+  function ensureResizeHandles(obj) {
+    obj.querySelectorAll('.slide-object-resize:not([data-resize-handle])').forEach((b) => b.remove());
+    const specs = [
+      ['se', 'Resize', 'slide-object-resize slide-object-resize--se'],
+      ['e', 'Resize width', 'slide-object-resize slide-object-resize--e'],
+      ['s', 'Resize height', 'slide-object-resize slide-object-resize--s']
+    ];
+    specs.forEach(([axis, label, cls]) => {
+      if (obj.querySelector('[data-resize-handle="' + axis + '"]')) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = cls;
+      btn.setAttribute('data-resize-handle', axis);
+      btn.setAttribute('aria-label', label);
+      obj.appendChild(btn);
+    });
+  }
+
+  function ensureObjectControls(root) {
+    const el = root || document;
+    el.querySelectorAll('[data-slide-object]').forEach((obj) => {
+      ensureResizeHandles(obj);
+      if (!obj.querySelector('.slide-object-delete')) {
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'slide-object-delete';
+        del.setAttribute('aria-label', 'Delete object');
+        del.textContent = '\u00d7';
+        const move = obj.querySelector('.slide-object-move');
+        if (move) move.insertAdjacentElement('afterend', del);
+        else obj.insertBefore(del, obj.firstChild);
+      }
+    });
+  }
+
+  function allocateDeckOid() {
+    return 'oid-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+  }
+
+  /* ---------- Editor: select, drag, resize, snap, RTE ---------- */
+  class SlideObjectEditor {
+    constructor(deck, history) {
+      this.deck = deck;
+      this.history = history;
+      this.active = false;
+      this.selected = new Set();
+      this._dragState = null;
+      this._resizeState = null;
+      this._snapEls = [];
+
+      this.toolbar = document.getElementById('rteToolbar');
+      this._onDocPointerDown = this._onDocPointerDown.bind(this);
+      this._onDocPointerMove = this._onDocPointerMove.bind(this);
+      this._onDocPointerUp = this._onDocPointerUp.bind(this);
+      this._onResizeMove = this._onResizeMove.bind(this);
+      this._onResizeUp = this._onResizeUp.bind(this);
+      this._onSelectionChange = this._onSelectionChange.bind(this);
+      this._onFocusIn = this._onFocusIn.bind(this);
+      this._rteOutsidePointer = this._rteOutsidePointer.bind(this);
+      this._rteToolbarPointerForStash = this._rteToolbarPointerForStash.bind(this);
+      this._rteFormatStash = null;
+    }
+
+    _rteToolbarPointerForStash(e) {
+      if (!this.active || !e.target || !e.target.closest) return;
+      if (!e.target.closest('#rteToolbar')) return;
+      if (e.target.closest('input') || e.target.closest('textarea')) return;
+      this._stashRteFormatSelection();
+    }
+
+    _stashRteFormatSelection() {
+      const sel = window.getSelection();
+      if (!sel || !sel.rangeCount) return;
+      const r = sel.getRangeAt(0);
+      let n = r.commonAncestorContainer;
+      if (n.nodeType === Node.TEXT_NODE) n = n.parentElement;
+      const textEl = n && n.closest && n.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
+      if (!textEl || !textEl.contains(r.commonAncestorContainer)) return;
+      try {
+        this._rteFormatStash = { textEl: textEl, range: r.cloneRange() };
+      } catch (_) {
+        this._rteFormatStash = null;
+      }
+    }
+
+    _clearRteFormatStash() {
+      this._rteFormatStash = null;
+    }
+
+    _restoreRteFormatSelection(textEl) {
+      const stash = this._rteFormatStash;
+      if (!stash || !stash.range || stash.textEl !== textEl) return false;
+      if (!textEl.isConnected || !stash.textEl.isConnected) {
+        this._rteFormatStash = null;
+        return false;
+      }
+      try {
+        textEl.focus();
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(stash.range);
+        return true;
+      } catch (_) {
+        this._rteFormatStash = null;
+        return false;
+      }
+    }
+    setActive(on) {
+      this.active = !!on;
+      document.body.classList.toggle('deck-edit-mode', on);
+      document.body.classList.toggle('slide-anim-paused', on);
+      if (on) {
+        ensureObjectControls(document);
+      } else {
+        this._closeRteDrawers();
+        this.clearSelection();
+        this._clearRteFormatStash();
+        this.toolbar.classList.remove('visible');
+        document.querySelectorAll('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]').forEach((el) => {
+          el.contentEditable = 'false';
+        });
+      }
+    }
+    toggle() { this.setActive(!this.active); }
+
+    clearSelection() {
+      this.selected.forEach((el) => el.classList.remove('is-selected'));
+      this.selected.clear();
+    }
+    _addSel(el) {
+      el.classList.add('is-selected');
+      this.selected.add(el);
+    }
+    _toggleSel(el) {
+      if (this.selected.has(el)) {
+        el.classList.remove('is-selected');
+        this.selected.delete(el);
+      } else this._addSel(el);
+    }
+    _selectOnly(el) {
+      this.clearSelection();
+      this._addSel(el);
+    }
+
+    _closestObject(t) {
+      return t && t.closest && t.closest('[data-slide-object]');
+    }
+
+    _onDocPointerDown(e) {
+      if (!this.active) return;
+      if (isDeckChromeNode(e.target)) return;
+
+      const obj = this._closestObject(e.target);
+      const slide = e.target.closest && e.target.closest('section.slide');
+
+      if (obj && e.ctrlKey) {
+        e.preventDefault();
+        this._toggleSel(obj);
+        return;
+      }
+
+      if (obj && !e.ctrlKey) {
+        const onDelete = e.target.closest('.slide-object-delete');
+        if (onDelete) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.removeObjectsWithHistory([obj], { confirmMulti: false });
+          return;
+        }
+
+        const onResize = e.target.closest('[data-resize-handle]');
+        if (onResize) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!this.selected.has(obj)) this._selectOnly(obj);
+          if (this.selected.size === 1) {
+            const mode = onResize.getAttribute('data-resize-handle') || 'se';
+            this._startResize(e, obj, mode);
+          }
+          return;
+        }
+
+        const otype = obj.getAttribute('data-object-type') || '';
+        const isText = otype === 'text';
+        const onMove = e.target.closest('.slide-object-move');
+        const onText = e.target.closest('.slide-object-text');
+
+        if (e.target.closest('.slide-object-media-pick')) {
+          if (!this.selected.has(obj)) this._selectOnly(obj);
+          return;
+        }
+
+        if ((otype === 'image' || otype === 'video') && !onMove) {
+          this._selectOnly(obj);
+          e.preventDefault();
+          this._startDrag(e, obj);
+          return;
+        }
+
+        if (isText && onText && !onMove) {
+          this._selectOnly(obj);
+          const te = obj.querySelector('.slide-object-text');
+          if (te) {
+            if (te.dataset._deckHtmlBefore === undefined) te.dataset._deckHtmlBefore = te.innerHTML;
+            te.contentEditable = 'true';
+            te.focus();
+            this._updateRteToolbar();
+          }
+          return;
+        }
+
+        if (!this.selected.has(obj)) this._selectOnly(obj);
+
+        if (onMove || !isText) {
+          e.preventDefault();
+          this._startDrag(e, obj);
+        }
+        return;
+      }
+
+      if (slide && !obj) {
+        this.clearSelection();
+        document.querySelectorAll('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]').forEach((el) => {
+          el.contentEditable = 'false';
+        });
+        this.toolbar.classList.remove('visible');
+      }
+    }
+
+    _parsePct(el, prop) {
+      const v = getComputedStyle(el)[prop];
+      if (v.endsWith('%')) return parseFloat(v) || 0;
+      return null;
+    }
+
+    /**
+     * Resolved % of slide for left/top. Browsers report computed left/top in px — using that
+     * with ?? 0 caused objects to jump to (0,0) on drag start.
+     */
+    _positionPct(el, slide, axis) {
+      const prop = axis === 'left' ? 'left' : 'top';
+      const raw = el.style && el.style[prop] ? String(el.style[prop]).trim() : '';
+      if (raw.endsWith('%')) {
+        const p = parseFloat(raw);
+        return Number.isFinite(p) ? p : 0;
+      }
+      const sr = this._slideRect(slide);
+      const r = el.getBoundingClientRect();
+      if (axis === 'left') {
+        return ((r.left - sr.left) / sr.width) * 100;
+      }
+      return ((r.top - sr.top) / sr.height) * 100;
+    }
+
+    _setPct(el, leftPct, topPct) {
+      el.style.left = leftPct + '%';
+      el.style.top = topPct + '%';
+    }
+
+    _slideRect(slide) {
+      return slide.getBoundingClientRect();
+    }
+
+    _startDrag(e, primary) {
+      const slide = primary.closest('section.slide');
+      if (!slide) return;
+      const sr = this._slideRect(slide);
+      const moving = Array.from(this.selected).filter((o) => slide.contains(o));
+      if (!moving.length) moving.push(primary);
+
+      const starts = moving.map((o) => ({
+        el: o,
+        l: this._positionPct(o, slide, 'left'),
+        t: this._positionPct(o, slide, 'top'),
+        w: o.offsetWidth,
+        h: o.offsetHeight
+      }));
+
+      this._dragState = {
+        slide,
+        sr,
+        moving: starts,
+        startX: e.clientX,
+        startY: e.clientY,
+        primary: primary
+      };
+      this._clearSnap();
+
+      document.addEventListener('pointermove', this._onDocPointerMove);
+      document.addEventListener('pointerup', this._onDocPointerUp);
+      document.addEventListener('pointercancel', this._onDocPointerUp);
+      try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+    }
+
+    _startResize(e, obj, mode) {
+      const slide = obj.closest('section.slide');
+      if (!slide) return;
+      const sr = this._slideRect(slide);
+      const r = obj.getBoundingClientRect();
+      const wPct = this._parsePct(obj, 'width');
+      const hPct = this._parsePct(obj, 'height');
+      this._resizeState = {
+        slide,
+        el: obj,
+        sr,
+        mode: mode === 'e' || mode === 's' ? mode : 'se',
+        startX: e.clientX,
+        startY: e.clientY,
+        startW: r.width,
+        startH: r.height,
+        beforeW: obj.style.width,
+        beforeH: obj.style.height,
+        hadWidthPct: wPct != null,
+        hadHeightPct: hPct != null
+      };
+      document.addEventListener('pointermove', this._onResizeMove);
+      document.addEventListener('pointerup', this._onResizeUp);
+      document.addEventListener('pointercancel', this._onResizeUp);
+      try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+    }
+
+    _onResizeMove(e) {
+      if (!this._resizeState) return;
+      const st = this._resizeState;
+      const sr = st.sr;
+      const dx = e.clientX - st.startX;
+      const dy = e.clientY - st.startY;
+      const minPx = Math.min(sr.width, sr.height) * RESIZE_MIN_FRAC;
+      const mode = st.mode || 'se';
+      let nw = st.startW;
+      let nh = st.startH;
+      if (mode === 'se' || mode === 'e') nw = Math.max(minPx, st.startW + dx);
+      if (mode === 'se' || mode === 's') nh = Math.max(minPx, st.startH + dy);
+      if (mode === 'se' || mode === 'e') st.el.style.width = (nw / sr.width * 100) + '%';
+      if (mode === 'se' || mode === 's') st.el.style.height = (nh / sr.height * 100) + '%';
+    }
+
+    _onResizeUp() {
+      if (!this._resizeState) return;
+      const st = this._resizeState;
+      const el = st.el;
+      const afterW = el.style.width;
+      const afterH = el.style.height;
+      const beforeW = st.beforeW;
+      const beforeH = st.beforeH;
+      const changed = afterW !== beforeW || afterH !== beforeH;
+      if (changed) {
+        this.history.push({
+          undo: () => {
+            el.style.width = beforeW;
+            el.style.height = beforeH;
+          },
+          redo: () => {
+            el.style.width = afterW;
+            el.style.height = afterH;
+          }
+        });
+      }
+      this._resizeState = null;
+      document.removeEventListener('pointermove', this._onResizeMove);
+      document.removeEventListener('pointerup', this._onResizeUp);
+      document.removeEventListener('pointercancel', this._onResizeUp);
+    }
+
+    _otherObjects(slide, excludeSet) {
+      return Array.from(slide.querySelectorAll('[data-slide-object]')).filter((o) => !excludeSet.has(o));
+    }
+
+    /* Slide edge snap lines removed — only center guides + other objects (plan A). */
+    _snapLinesForSlide(slide, excludeSet) {
+      const sr = this._slideRect(slide);
+      const linesV = [sr.width / 2];
+      const linesH = [sr.height / 2];
+      this._otherObjects(slide, excludeSet).forEach((o) => {
+        const r = o.getBoundingClientRect();
+        const left = r.left - sr.left;
+        const top = r.top - sr.top;
+        linesV.push(left, left + r.width / 2, left + r.width);
+        linesH.push(top, top + r.height / 2, top + r.height);
+      });
+      return { linesV, linesH, sr };
+    }
+
+    _applySnap(dx, dy, primaryStart, state) {
+      if (prefersReducedMotion()) {
+        return { dx, dy, lv: null, lh: null };
+      }
+      const { slide, moving, sr } = state;
+      const exclude = new Set(moving.map((m) => m.el));
+      const snap = this._snapLinesForSlide(slide, exclude);
+      const pw = primaryStart.w;
+      const ph = primaryStart.h;
+      let pl = (primaryStart.l / 100) * sr.width + dx;
+      let pt = (primaryStart.t / 100) * sr.height + dy;
+
+      let bestVX = null, bestVd = SNAP_PX + 1;
+      snap.linesV.forEach((xv) => {
+        [pl, pl + pw / 2, pl + pw].forEach((edge) => {
+          const d = xv - edge;
+          if (Math.abs(d) < bestVd) { bestVd = Math.abs(d); bestVX = xv - edge; }
+        });
+      });
+      let bestHY = null, bestHd = SNAP_PX + 1;
+      snap.linesH.forEach((yh) => {
+        [pt, pt + ph / 2, pt + ph].forEach((edge) => {
+          const d = yh - edge;
+          if (Math.abs(d) < bestHd) { bestHd = Math.abs(d); bestHY = yh - edge; }
+        });
+      });
+
+      let ndx = dx, ndy = dy;
+      if (bestVX !== null && bestVd <= SNAP_PX) ndx += bestVX;
+      if (bestHY !== null && bestHd <= SNAP_PX) ndy += bestHY;
+
+      let lv = null, lh = null;
+      if (bestVX !== null && bestVd <= SNAP_PX) {
+        const nx = pl + ndx - dx;
+        lv = { pos: nx + pw / 2 };
+      }
+      if (bestHY !== null && bestHd <= SNAP_PX) {
+        const ny = pt + ndy - dy;
+        lh = { pos: ny + ph / 2 };
+      }
+      return { dx: ndx, dy: ndy, lv, lh, sr };
+    }
+
+    _showSnap(lv, lh, sr, slide) {
+      this._clearSnap();
+      const layer = slide.querySelector('.slide-edit-layer');
+      if (!layer) return;
+      if (lv) {
+        const d = document.createElement('div');
+        d.className = 'snap-line-v';
+        d.style.left = (lv.pos / sr.width * 100) + '%';
+        layer.appendChild(d);
+        this._snapEls.push(d);
+      }
+      if (lh) {
+        const d = document.createElement('div');
+        d.className = 'snap-line-h';
+        d.style.top = (lh.pos / sr.height * 100) + '%';
+        layer.appendChild(d);
+        this._snapEls.push(d);
+      }
+    }
+    _clearSnap() {
+      this._snapEls.forEach((e) => e.remove());
+      this._snapEls = [];
+    }
+
+    _onDocPointerMove(e) {
+      if (!this._dragState) return;
+      const st = this._dragState;
+      const sr = st.sr;
+      let dx = e.clientX - st.startX;
+      let dy = e.clientY - st.startY;
+
+      const primaryStart = st.moving.find((m) => m.el === st.primary) || st.moving[0];
+      const snapped = this._applySnap(dx, dy, primaryStart, st);
+      dx = snapped.dx;
+      dy = snapped.dy;
+
+      st.moving.forEach((m) => {
+        const nl = m.l + (dx / sr.width) * 100;
+        const nt = m.t + (dy / sr.height) * 100;
+        const maxL = 100 - (m.w / sr.width) * 100;
+        const maxT = 100 - (m.h / sr.height) * 100;
+        this._setPct(m.el, Math.max(0, Math.min(maxL, nl)), Math.max(0, Math.min(maxT, nt)));
+      });
+
+      if (snapped.lv || snapped.lh) this._showSnap(snapped.lv, snapped.lh, sr, st.slide);
+      else this._clearSnap();
+    }
+
+    _onDocPointerUp() {
+      if (!this._dragState) return;
+      const st = this._dragState;
+      const after = st.moving.map((m) => ({
+        el: m.el,
+        l: this._positionPct(m.el, st.slide, 'left'),
+        t: this._positionPct(m.el, st.slide, 'top')
+      }));
+      const before = st.moving.map((m) => ({ el: m.el, l: m.l, t: m.t }));
+
+      const changed = after.some((a, i) => a.l !== before[i].l || a.t !== before[i].t);
+      if (changed) {
+        this.history.push({
+          undo: () => {
+            before.forEach((b) => this._setPct(b.el, b.l, b.t));
+          },
+          redo: () => {
+            after.forEach((a) => this._setPct(a.el, a.l, a.t));
+          }
+        });
+      }
+
+      this._dragState = null;
+      this._clearSnap();
+      document.removeEventListener('pointermove', this._onDocPointerMove);
+      document.removeEventListener('pointerup', this._onDocPointerUp);
+      document.removeEventListener('pointercancel', this._onDocPointerUp);
+    }
+
+    _syncRteButtons() {
+      const boldBtn = this.toolbar.querySelector('button[data-cmd="bold"]');
+      try {
+        if (boldBtn) boldBtn.classList.toggle('is-active', document.queryCommandState('bold'));
+      } catch (_) {}
+      const italicBtn = this.toolbar.querySelector('button[data-cmd="italic"]');
+      try {
+        if (italicBtn) italicBtn.classList.toggle('is-active', document.queryCommandState('italic'));
+      } catch (_) {}
+
+      const textEl = this._activeTextEl();
+      if (!textEl) return;
+      let probe = textEl;
+      const s = window.getSelection();
+      if (s && s.rangeCount) {
+        let n = s.getRangeAt(0).commonAncestorContainer;
+        if (n.nodeType === 3) n = n.parentElement;
+        if (n && textEl.contains(n)) probe = n;
+      }
+      const styleEl = probe.nodeType === 1 ? probe : textEl;
+      const cs = window.getComputedStyle(styleEl);
+      const ff = (cs.fontFamily || '').toLowerCase();
+      const rootStyle = getComputedStyle(document.documentElement);
+      const bodyFont = rootStyle.getPropertyValue('--font-body').trim().toLowerCase();
+      const dispFont = rootStyle.getPropertyValue('--font-display').trim().toLowerCase();
+      this.toolbar.querySelectorAll('button[data-font]').forEach((btn) => {
+        const raw = (btn.getAttribute('data-font') || '').trim();
+        let compare = raw;
+        if (raw === 'var(--font-body)') compare = bodyFont;
+        else if (raw === 'var(--font-display)') compare = dispFont;
+        const key = compare.split(',')[0].replace(/['"]/g, '').trim().toLowerCase();
+        const active = key.length > 1 && ff.indexOf(key) !== -1;
+        btn.classList.toggle('is-active', !!active);
+      });
+      const fsPx = parseFloat(cs.fontSize) || 0;
+      const bodyPx = parseFloat(getComputedStyle(textEl).fontSize) || 16;
+      let pxPresetHit = false;
+      this.toolbar.querySelectorAll('button[data-size-px]').forEach((btn) => {
+        const px = parseFloat(btn.getAttribute('data-size-px') || '0');
+        const hit = fsPx > 0 && Math.abs(fsPx - px) < 2;
+        if (hit) pxPresetHit = true;
+        btn.classList.toggle('is-active', hit);
+      });
+      const customBtn = this.toolbar.querySelector('button[data-size-custom]');
+      if (customBtn && fsPx > 0) {
+        const nearPxPreset = [24, 36, 48, 72, 96].some((p) => Math.abs(fsPx - p) < 2);
+        const nearRel = this.toolbar.querySelectorAll('button[data-size]');
+        let nearScale = false;
+        nearRel.forEach((b) => {
+          const fac = parseFloat(b.getAttribute('data-size') || '1');
+          if (Math.abs(fsPx - bodyPx * fac) < Math.max(2.5, bodyPx * 0.2)) nearScale = true;
+        });
+        customBtn.classList.toggle('is-active', !nearPxPreset && !nearScale);
+      } else if (customBtn) {
+        customBtn.classList.remove('is-active');
+      }
+      this.toolbar.querySelectorAll('button[data-size]').forEach((btn) => {
+        const fac = parseFloat(btn.getAttribute('data-size') || '1');
+        const target = bodyPx * fac;
+        const relHit =
+          fsPx > 0 &&
+          !pxPresetHit &&
+          Math.abs(fsPx - target) < Math.max(2.5, bodyPx * 0.2);
+        btn.classList.toggle('is-active', relHit);
+      });
+      this._syncDrawerTriggerHints();
+    }
+
+    _closePxCustomRow() {
+      if (!this.toolbar) return;
+      const row = this.toolbar.querySelector('#rtePxCustomRow');
+      if (row) {
+        row.classList.remove('is-open');
+        row.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    _openPxCustomRow() {
+      if (!this.toolbar) return;
+      this._stashRteFormatSelection();
+      const row = this.toolbar.querySelector('#rtePxCustomRow');
+      const input = this.toolbar.querySelector('#rtePxCustomInput');
+      if (!row || !input) return;
+      row.classList.add('is-open');
+      row.setAttribute('aria-hidden', 'false');
+      const textEl = this._activeTextEl();
+      if (textEl) {
+        const cs = window.getComputedStyle(textEl);
+        input.value = String(Math.round(parseFloat(cs.fontSize) || 16));
+      } else {
+        input.value = '16';
+      }
+      const self = this;
+      setTimeout(function () {
+        try {
+          input.focus();
+          input.select();
+        } catch (_) {}
+        self._updateRteToolbar();
+      }, 0);
+    }
+
+    _closeRteDrawers() {
+      if (!this.toolbar) return;
+      this._closePxCustomRow();
+      this.toolbar.querySelectorAll('.rte-drawer-card').forEach(function (p) {
+        p.hidden = true;
+      });
+      this.toolbar.querySelectorAll('.rte-drawer-trigger').forEach(function (b) {
+        b.setAttribute('aria-expanded', 'false');
+        b.classList.remove('is-open');
+      });
+    }
+
+    _toggleRteDrawer(panelId) {
+      if (!this.toolbar) return;
+      const panel = this.toolbar.querySelector('[data-rte-panel="' + panelId + '"]');
+      const trig = this.toolbar.querySelector('[data-rte-drawer="' + panelId + '"]');
+      if (!panel || !trig) return;
+      const wasOpen = !panel.hidden;
+      this._closeRteDrawers();
+      if (!wasOpen) {
+        panel.hidden = false;
+        trig.setAttribute('aria-expanded', 'true');
+        trig.classList.add('is-open');
+        this._updateRteToolbar();
+      }
+    }
+
+    _syncDrawerTriggerHints() {
+      if (!this.toolbar) return;
+      const fontPanel = this.toolbar.querySelector('[data-rte-panel="font"]');
+      const fontOn = !!(fontPanel && fontPanel.querySelector('button[data-font].is-active'));
+      const tFont = this.toolbar.querySelector('.rte-drawer-trigger[data-rte-drawer="font"]');
+      if (tFont) tFont.classList.toggle('rte-drawer-trigger--hint', fontOn);
+
+      const scalePanel = this.toolbar.querySelector('[data-rte-panel="scale"]');
+      const scaleOn = !!(scalePanel && scalePanel.querySelector('button[data-size].is-active'));
+      const tScale = this.toolbar.querySelector('.rte-drawer-trigger[data-rte-drawer="scale"]');
+      if (tScale) tScale.classList.toggle('rte-drawer-trigger--hint', scaleOn);
+
+      const pxPanel = this.toolbar.querySelector('[data-rte-panel="px"]');
+      const pxOn = !!(
+        pxPanel &&
+        (pxPanel.querySelector('button[data-size-px].is-active') ||
+          pxPanel.querySelector('button[data-size-custom].is-active'))
+      );
+      const tPx = this.toolbar.querySelector('.rte-drawer-trigger[data-rte-drawer="px"]');
+      if (tPx) tPx.classList.toggle('rte-drawer-trigger--hint', pxOn);
+    }
+
+    _rteOutsidePointer(e) {
+      if (!this.active || !this.toolbar.classList.contains('visible')) return;
+      if (e.target.closest && e.target.closest('#rteToolbar')) return;
+      this._closeRteDrawers();
+      this._clearRteFormatStash();
+    }
+
+    _activeTextEl() {
+      const el = document.activeElement;
+      if (el && el.getAttribute && (el.classList.contains('slide-object-text') || el.hasAttribute('data-edit-slot')) && el.getAttribute('contenteditable') === 'true') {
+        return el;
+      }
+      const sel = document.getSelection();
+      if (!sel || !sel.rangeCount) return null;
+      const n = sel.anchorNode;
+      const p = n && (n.nodeType === 3 ? n.parentElement : n);
+      const active = p && p.closest && p.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
+      if (active) return active;
+      if (this.toolbar.contains(document.activeElement)) {
+        return document.querySelector('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
+      }
+      return null;
+    }
+
+    _updateRteToolbar() {
+      if (!this.active) return;
+      const inside = this._activeTextEl();
+      if (!inside) {
+        this._closeRteDrawers();
+        this.toolbar.classList.remove('visible');
+        return;
+      }
+      const sel = document.getSelection();
+      let rr = inside.getBoundingClientRect();
+      if (sel && sel.rangeCount) {
+        const r = sel.getRangeAt(0).getBoundingClientRect();
+        if (r.width > 1 && r.height > 1) rr = r;
+      }
+      this.toolbar.classList.add('visible');
+      this.toolbar.style.left = Math.min(window.innerWidth - this.toolbar.offsetWidth - 8, Math.max(8, rr.left + window.scrollX)) + 'px';
+      this.toolbar.style.top = (rr.top + window.scrollY - this.toolbar.offsetHeight - 8) + 'px';
+      this._syncRteButtons();
+    }
+
+    _onFocusIn(e) {
+      if (!this.active) return;
+      const te = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
+      if (te) this._updateRteToolbar();
+    }
+
+    _onSelectionChange() {
+      if (!this.active) return;
+      this._updateRteToolbar();
+    }
+
+    _applyInlineStyle(textEl, stylePatch) {
+      this._restoreRteFormatSelection(textEl);
+      textEl.focus();
+      const sel = window.getSelection();
+      let range;
+      if (!sel) {
+        this._clearRteFormatStash();
+        return false;
+      }
+      if (!sel.rangeCount) {
+        range = document.createRange();
+        range.selectNodeContents(textEl);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } else {
+        range = sel.getRangeAt(0);
+        if (!textEl.contains(range.commonAncestorContainer)) {
+          range = document.createRange();
+          range.selectNodeContents(textEl);
+          range.collapse(false);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+
+      const span = document.createElement('span');
+      Object.keys(stylePatch).forEach((key) => {
+        span.style[key] = stylePatch[key];
+      });
+      if (range.collapsed) {
+        span.appendChild(document.createTextNode('\u200b'));
+        range.insertNode(span);
+        const nr = document.createRange();
+        nr.setStart(span.firstChild, 1);
+        nr.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(nr);
+        this._clearRteFormatStash();
+        return true;
+      }
+
+      const contents = range.extractContents();
+      span.appendChild(contents);
+      range.insertNode(span);
+      const nr = document.createRange();
+      nr.selectNodeContents(span);
+      sel.removeAllRanges();
+      sel.addRange(nr);
+      this._clearRteFormatStash();
+      return true;
+    }
+
+    _applyFontSizeFactor(textEl, fac) {
+      const minRem = 0.5 * fac;
+      const vw = 1.35 * fac;
+      const maxRem = 2.35 * fac;
+      const fs = 'clamp(' + minRem + 'rem, ' + vw + 'vw, ' + maxRem + 'rem)';
+      return this._applyInlineStyle(textEl, { fontSize: fs });
+    }
+
+    _applyFontSizePx(textEl, px) {
+      const n = Math.round(Number(px));
+      if (!Number.isFinite(n) || n < 8 || n > 400) return false;
+      return this._applyInlineStyle(textEl, { fontSize: n + 'px' });
+    }
+
+    _applyFontFamily(textEl, fontExpr) {
+      return this._applyInlineStyle(textEl, { fontFamily: fontExpr });
+    }
+
+    removeObjectsWithHistory(objectEls, opts) {
+      opts = opts || {};
+      const list = (objectEls || []).filter((el) => el && el.isConnected);
+      if (!list.length) return;
+      if (opts.confirmMulti !== false && list.length >= 2) {
+        if (!confirm('Delete ' + list.length + ' objects?')) return;
+      }
+      const snapshots = list.map((el) => {
+        const slideSec = el.closest('section.slide');
+        return {
+          slideId: slideSec ? slideSec.id : '',
+          oid: el.getAttribute('data-oid') || '',
+          html: el.outerHTML
+        };
+      });
+      list.forEach((el) => el.remove());
+      this.clearSelection();
+      this.history.push({
+        undo: () => {
+          snapshots.forEach((s) => {
+            const slideSec = document.getElementById(s.slideId);
+            if (!slideSec) return;
+            const layer = slideSec.querySelector('.slide-edit-layer');
+            if (!layer) return;
+            const tpl = document.createElement('template');
+            tpl.innerHTML = s.html.trim();
+            const node = tpl.content.firstElementChild;
+            if (node) layer.appendChild(node);
+          });
+          ensureObjectControls(document);
+        },
+        redo: () => {
+          snapshots.forEach((s) => {
+            const slideSec = document.getElementById(s.slideId);
+            if (!slideSec || !s.oid) return;
+            const safe = s.oid.replace(/"/g, '');
+            const n = slideSec.querySelector('[data-oid="' + safe + '"]');
+            if (n) n.remove();
+          });
+        }
+      });
+    }
+
+    bind() {
+      document.addEventListener('pointerdown', this._rteToolbarPointerForStash, true);
+      document.addEventListener('pointerdown', this._onDocPointerDown, true);
+      document.addEventListener('pointerdown', this._rteOutsidePointer, true);
+      document.addEventListener('focusin', this._onFocusIn, true);
+      document.addEventListener('selectionchange', this._onSelectionChange);
+      this.toolbar.querySelectorAll('.rte-drawer-trigger').forEach((btn) => {
+        btn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        btn.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          const id = btn.getAttribute('data-rte-drawer');
+          if (id) this._toggleRteDrawer(id);
+        });
+      });
+      this.toolbar.querySelectorAll('button[data-cmd]').forEach((btn) => {
+        btn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        btn.addEventListener('click', () => this._exec(btn.getAttribute('data-cmd')));
+      });
+      this.toolbar.querySelectorAll('button[data-size]').forEach((btn) => {
+        btn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        btn.addEventListener('click', () => {
+          const v = btn.getAttribute('data-size');
+          if (!v) return;
+          const textEl = this._activeTextEl();
+          if (!textEl) return;
+          const beforeHtml = textEl.innerHTML;
+          const fac = parseFloat(v);
+          this._applyFontSizeFactor(textEl, fac);
+          const afterHtml = textEl.innerHTML;
+          if (beforeHtml !== afterHtml) {
+            this.history.push({
+              undo: () => { textEl.innerHTML = beforeHtml; },
+              redo: () => { textEl.innerHTML = afterHtml; }
+            });
+          }
+          this._updateRteToolbar();
+        });
+      });
+      this.toolbar.querySelectorAll('button[data-size-px]').forEach((btn) => {
+        btn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        btn.addEventListener('click', () => {
+          const v = btn.getAttribute('data-size-px');
+          if (!v) return;
+          const textEl = this._activeTextEl();
+          if (!textEl) return;
+          const beforeHtml = textEl.innerHTML;
+          const ok = this._applyFontSizePx(textEl, v);
+          const afterHtml = textEl.innerHTML;
+          if (ok && beforeHtml !== afterHtml) {
+            this.history.push({
+              undo: () => { textEl.innerHTML = beforeHtml; },
+              redo: () => { textEl.innerHTML = afterHtml; }
+            });
+          }
+          this._updateRteToolbar();
+        });
+      });
+      const customSizeBtn = this.toolbar.querySelector('button[data-size-custom]');
+      const pxCustomRow = this.toolbar.querySelector('#rtePxCustomRow');
+      const pxInput = this.toolbar.querySelector('#rtePxCustomInput');
+      const pxApply = this.toolbar.querySelector('#rtePxCustomApply');
+      const pxCancel = this.toolbar.querySelector('#rtePxCustomCancel');
+      if (customSizeBtn && pxCustomRow && pxInput) {
+        customSizeBtn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        customSizeBtn.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          if (!this._activeTextEl()) return;
+          if (pxCustomRow.classList.contains('is-open')) {
+            this._closePxCustomRow();
+          } else {
+            this._openPxCustomRow();
+          }
+        });
+      }
+      if (pxApply && pxInput) {
+        pxApply.addEventListener('mousedown', (ev) => ev.preventDefault());
+        pxApply.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const textEl = this._activeTextEl();
+          if (!textEl) return;
+          const n = parseInt(String(pxInput.value).trim(), 10);
+          const beforeHtml = textEl.innerHTML;
+          const ok = this._applyFontSizePx(textEl, n);
+          if (!ok) this._clearRteFormatStash();
+          const afterHtml = textEl.innerHTML;
+          if (ok && beforeHtml !== afterHtml) {
+            this.history.push({
+              undo: () => { textEl.innerHTML = beforeHtml; },
+              redo: () => { textEl.innerHTML = afterHtml; }
+            });
+          }
+          this._closePxCustomRow();
+          this._updateRteToolbar();
+        });
+      }
+      if (pxCancel) {
+        pxCancel.addEventListener('mousedown', (ev) => ev.preventDefault());
+        pxCancel.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          this._closePxCustomRow();
+          this._updateRteToolbar();
+        });
+      }
+      if (pxInput) {
+        pxInput.addEventListener('keydown', (ev) => {
+          if (ev.key !== 'Enter') return;
+          ev.preventDefault();
+          if (pxApply) pxApply.click();
+        });
+      }
+      this.toolbar.querySelectorAll('button[data-font]').forEach((btn) => {
+        btn.addEventListener('mousedown', (ev) => ev.preventDefault());
+        btn.addEventListener('click', () => {
+          const fontExpr = btn.getAttribute('data-font');
+          if (!fontExpr) return;
+          const textEl = this._activeTextEl();
+          if (!textEl) return;
+          const beforeHtml = textEl.innerHTML;
+          this._applyFontFamily(textEl, fontExpr);
+          const afterHtml = textEl.innerHTML;
+          if (beforeHtml !== afterHtml) {
+            this.history.push({
+              undo: () => { textEl.innerHTML = beforeHtml; },
+              redo: () => { textEl.innerHTML = afterHtml; }
+            });
+          }
+          this._updateRteToolbar();
+        });
+      });
+    }
+
+    _exec(cmd) {
+      const textEl = this._activeTextEl();
+      if (!textEl) return;
+      this._restoreRteFormatSelection(textEl);
+      textEl.focus();
+      const before = textEl.innerHTML;
+      document.execCommand(cmd, false, null);
+      const after = textEl.innerHTML;
+      if (before !== after) {
+        this.history.push({
+          undo: () => { textEl.innerHTML = before; },
+          redo: () => { textEl.innerHTML = after; }
+        });
+      }
+      this._clearRteFormatStash();
+      this._syncRteButtons();
+      this._updateRteToolbar();
+    }
+  }
+
+  /* ---------- Sidebar ---------- */
+  class SlideSidebar {
+    constructor(deck, history) {
+      this.deck = deck;
+      this.history = history;
+      this.list = document.getElementById('filmstripList');
+      this.open = false;
+      this._dragFilm = null;
+    }
+    setOpen(on) {
+      this.open = !!on;
+      document.body.classList.toggle('deck-sidebar-open', on);
+      document.getElementById('pagesToggle').classList.toggle('active', on);
+      if (on) this.refresh();
+    }
+    toggle() { this.setOpen(!this.open); }
+
+    refresh() {
+      this.list.innerHTML = '';
+      this.deck.refreshSlides();
+      this.deck.slides.forEach((slide, idx) => {
+        const item = document.createElement('div');
+        item.className = 'filmstrip-item';
+        item.dataset.slideIndex = String(idx);
+        if (idx === this.deck.current) item.classList.add('is-current');
+
+        const lineTop = document.createElement('div');
+        lineTop.className = 'filmstrip-drop-line filmstrip-drop-line-before';
+        const host = document.createElement('div');
+        host.className = 'filmstrip-thumb-host';
+        const lineBot = document.createElement('div');
+        lineBot.className = 'filmstrip-drop-line filmstrip-drop-line-after';
+
+        const actions = document.createElement('div');
+        actions.className = 'filmstrip-actions';
+        const num = document.createElement('span');
+        num.className = 'filmstrip-num';
+        num.textContent = 'Slide ' + (idx + 1);
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.textContent = '\u00d7';
+        del.setAttribute('aria-label', 'Delete slide');
+        del.title = 'Delete slide';
+        del.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          this._deleteSlide(idx);
+        });
+        actions.appendChild(num);
+        actions.appendChild(del);
+
+        item.appendChild(lineTop);
+        item.appendChild(host);
+        item.appendChild(lineBot);
+        item.appendChild(actions);
+
+        item.addEventListener('click', (ev) => {
+          if (ev.target.closest('button')) return;
+          this.deck.goTo(idx);
+          this.refresh();
+        });
+
+        this._fillThumb(slide, host);
+
+        item.addEventListener('pointerdown', (ev) => {
+          if (ev.target.closest('button')) return;
+          this._startFilmDrag(ev, item, idx);
+        });
+
+        this.list.appendChild(item);
+      });
+    }
+
+    _fillThumb(slideEl, host) {
+      host.innerHTML = '';
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;width:100%;height:100%;overflow:hidden;border-radius:6px;';
+      const sc = document.createElement('div');
+      sc.style.cssText = 'position:absolute;left:0;top:0;transform-origin:0 0;';
+      const cl = slideEl.cloneNode(true);
+      cl.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+      cl.querySelectorAll('script').forEach((n) => n.remove());
+      cl.querySelectorAll('[data-slide-object]').forEach((n) => {
+        n.removeAttribute('data-slide-object');
+        n.removeAttribute('data-oid');
+        n.removeAttribute('data-object-type');
+        n.classList.remove('is-selected');
+      });
+      cl.querySelectorAll('.slide-object-move, .slide-object-delete, [data-resize-handle], .slide-object-resize').forEach((n) => n.remove());
+      cl.querySelectorAll('[contenteditable]').forEach((n) => n.setAttribute('contenteditable', 'false'));
+      const w = slideEl.offsetWidth || window.innerWidth;
+      const h = slideEl.offsetHeight || window.innerHeight;
+      cl.style.width = w + 'px';
+      cl.style.height = h + 'px';
+      sc.appendChild(cl);
+      wrap.appendChild(sc);
+      host.appendChild(wrap);
+      requestAnimationFrame(() => {
+        const bw = host.clientWidth;
+        const bh = host.clientHeight;
+        const s = Math.min(bw / w, bh / h);
+        sc.style.transform = 'scale(' + s + ')';
+      });
+    }
+
+    _startFilmDrag(ev, item, fromIndex) {
+      if (ev.button !== 0) return;
+      ev.preventDefault();
+      item.classList.add('dragging');
+      this._dragFilm = { fromIndex, item, lastX: ev.clientX, lastY: ev.clientY, targetIndex: null, before: true };
+      const move = (e) => {
+        this._dragFilm.lastX = e.clientX;
+        this._dragFilm.lastY = e.clientY;
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        const target = el && el.closest && el.closest('.filmstrip-item');
+        this.list.querySelectorAll('.filmstrip-item').forEach((it) => {
+          it.classList.remove('drop-before', 'drop-after');
+        });
+        if (!target || target === item) return;
+        const r = target.getBoundingClientRect();
+        const before = e.clientY < r.top + r.height / 2;
+        target.classList.add(before ? 'drop-before' : 'drop-after');
+        this._dragFilm.targetIndex = parseInt(target.dataset.slideIndex, 10);
+        this._dragFilm.before = before;
+      };
+      const up = () => {
+        item.classList.remove('dragging');
+        this.list.querySelectorAll('.filmstrip-item').forEach((it) => {
+          it.classList.remove('drop-before', 'drop-after');
+        });
+        document.removeEventListener('pointermove', move);
+        document.removeEventListener('pointerup', up);
+        if (this._dragFilm) {
+          const { fromIndex, targetIndex, before } = this._dragFilm;
+          this._dragFilm = null;
+          if (targetIndex !== null && targetIndex !== undefined) {
+            this._reorderFilmstrip(fromIndex, targetIndex, before);
+          }
+        }
+      };
+      document.addEventListener('pointermove', move);
+      document.addEventListener('pointerup', up);
+    }
+
+    _reorderFilmstrip(fromIndex, targetIndex, before) {
+      this.deck.refreshSlides();
+      const slides = [...this.deck.slides];
+      const n = slides.length;
+      if (fromIndex < 0 || fromIndex >= n) return;
+      if (targetIndex < 0 || targetIndex >= n) return;
+
+      const beforeIds = slides.map((s) => s.id);
+      const [el] = slides.splice(fromIndex, 1);
+      let to;
+      if (before) {
+        to = fromIndex < targetIndex ? targetIndex - 1 : targetIndex;
+      } else {
+        to = fromIndex <= targetIndex ? targetIndex : targetIndex + 1;
+      }
+      to = Math.max(0, Math.min(slides.length, to));
+      slides.splice(to, 0, el);
+
+      const parent = slides[0].parentNode;
+      slides.forEach((s) => parent.appendChild(s));
+
+      this.deck.refreshSlides();
+      const afterIds = this.deck.slides.map((s) => s.id);
+
+      this.history.push({
+        undo: () => {
+          this._restoreOrder(parent, beforeIds);
+          this.deck.refreshSlides();
+          this.deck._updateChrome();
+          this.refresh();
+        },
+        redo: () => {
+          this._restoreOrder(parent, afterIds);
+          this.deck.refreshSlides();
+          this.deck._updateChrome();
+          this.refresh();
+        }
+      });
+      this.deck._updateChrome();
+      this.refresh();
+    }
+
+    _restoreOrder(parent, ids) {
+      const map = {};
+      Array.from(parent.querySelectorAll(':scope > section.slide')).forEach((s) => { map[s.id] = s; });
+      const frag = document.createDocumentFragment();
+      ids.forEach((id) => { if (map[id]) frag.appendChild(map[id]); });
+      parent.appendChild(frag);
+    }
+
+    _deleteSlide(index) {
+      this.deck.refreshSlides();
+      if (this.deck.slides.length <= 1) {
+        alert('Keep at least one slide.');
+        return;
+      }
+      if (!confirm('Delete slide?')) return;
+      const slide = this.deck.slides[index];
+      const parent = slide.parentNode;
+      const next = slide.nextElementSibling;
+      const outer = slide.outerHTML;
+      const nid = next && next.id ? next.id : null;
+      const sid = slide.id;
+
+      parent.removeChild(slide);
+      this.deck.refreshSlides();
+      this.history.push({
+        undo: () => {
+          const tpl = document.createElement('template');
+          tpl.innerHTML = outer.trim();
+          const node = tpl.content.firstElementChild;
+          if (nid) {
+            const ref = parent.querySelector('#' + CSS.escape(nid));
+            parent.insertBefore(node, ref);
+          } else parent.appendChild(node);
+          this.deck.refreshSlides();
+          ensureObjectControls(document);
+          this.deck._updateChrome();
+          this.refresh();
+        },
+        redo: () => {
+          const el = document.getElementById(sid);
+          if (el && el.parentNode) el.parentNode.removeChild(el);
+          this.deck.refreshSlides();
+          this.deck._updateChrome();
+          this.refresh();
+        }
+      });
+      this.deck.goTo(Math.min(index, this.deck.slides.length - 1));
+      this.refresh();
+    }
+  }
+
+  function sanitizeEditableState(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('.slide-object.is-selected').forEach((el) => {
+      el.classList.remove('is-selected');
+    });
+    root.querySelectorAll('.slide-object-text').forEach((el) => {
+      if (el.getAttribute('contenteditable') === 'true') {
+        el.setAttribute('contenteditable', 'false');
+      }
+      delete el.dataset._deckHtmlBefore;
+      el.removeAttribute('data-_deck-html-before');
+    });
+    root.querySelectorAll('[data-edit-slot][contenteditable="true"]').forEach((el) => {
+      el.setAttribute('contenteditable', 'false');
+      delete el.dataset._deckHtmlBefore;
+      el.removeAttribute('data-_deck-html-before');
+    });
+    root.querySelectorAll('.snap-line-v, .snap-line-h').forEach((el) => el.remove());
+  }
+
+  function serializeSlidesRoot(root) {
+    const clone = root.cloneNode(true);
+    sanitizeEditableState(clone);
+    return clone.innerHTML;
+  }
+
+  function sanitizeExportDocument(docEl) {
+    if (!docEl || !docEl.querySelector) return;
+    const body = docEl.querySelector('body');
+    if (body) {
+      body.classList.remove('deck-edit-mode', 'slide-anim-paused', 'deck-sidebar-open');
+    }
+    sanitizeEditableState(docEl);
+    docEl.querySelectorAll('.deck-left-hover-anchor, #deckAddElementMenu, #progressBar, #navDots, #slideSidebar, #rteToolbar, #slotImageInput, script').forEach((el) => el.remove());
+    const filmstrip = docEl.querySelector('#filmstripList');
+    if (filmstrip) filmstrip.innerHTML = '';
+    const addMenu = docEl.querySelector('#deckAddElementMenu');
+    if (addMenu) {
+      addMenu.classList.remove('open');
+      addMenu.hidden = true;
+    }
+    docEl.querySelectorAll('.slide-object-media-pick, input.slide-object-media-file').forEach((el) => el.remove());
+    docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
+      if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
+    });
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+      const el = docEl.querySelector(selector);
+      if (!el) return;
+      el.classList.remove('show', 'active', 'visible');
+      if (selector === '#rteToolbar') {
+        el.style.left = '';
+        el.style.top = '';
+        el.querySelectorAll('.rte-drawer-card').forEach((c) => {
+          c.hidden = true;
+        });
+        el.querySelectorAll('.rte-drawer-trigger').forEach((b) => {
+          b.classList.remove('is-open');
+          b.setAttribute('aria-expanded', 'false');
+        });
+        const pxRow = el.querySelector('#rtePxCustomRow');
+        if (pxRow) {
+          pxRow.classList.remove('is-open');
+          pxRow.setAttribute('aria-hidden', 'true');
+        }
+      }
+    });
+  }
+
+  /* ---------- persistence ---------- */
+  function saveState() {
+    const root = document.querySelector('.slides-offset') || document.body;
+    const data = {
+      v: 2,
+      deckHtml: serializeSlidesRoot(root)
+    };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) { console.warn(e); }
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (!data) return;
+      const parent = document.querySelector('.slides-offset') || document.body;
+      if (typeof data.deckHtml === 'string') {
+        parent.innerHTML = data.deckHtml;
+      } else if (Array.isArray(data.slides)) {
+        const map = {};
+        Array.from(parent.querySelectorAll(':scope > section.slide')).forEach((s) => { map[s.id] = s; });
+        data.slides.forEach((entry) => {
+          const el = map[entry.id];
+          if (el) el.innerHTML = entry.html;
+        });
+      } else return;
+      ensureObjectControls(document);
+      deck.refreshSlides();
+      deck._syncCurrentFromScroll();
+      deck._updateChrome();
+    } catch (e) { console.warn(e); }
+  }
+
+  function exportHtml() {
+    const clone = document.documentElement.cloneNode(true);
+    sanitizeExportDocument(clone);
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (document.title || 'deck') + '.html';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  /* ---------- init ---------- */
+  const btnUndo = document.getElementById('btnUndo');
+  const btnRedo = document.getElementById('btnRedo');
+  const btnDoneEdit = document.getElementById('btnDoneEdit');
+  const deckEditChromeEl = document.getElementById('deckEditChrome');
+  const deckLeftHover = document.getElementById('deckLeftHover');
+  const editToggle = document.getElementById('editToggle');
+  const pagesToggle = document.getElementById('pagesToggle');
+  const btnSave = document.getElementById('btnSave');
+  const btnAddElement = document.getElementById('btnAddElement');
+  const deckAddElementMenu = document.getElementById('deckAddElementMenu');
+
+  function closeAddElementMenu() {
+    if (!deckAddElementMenu) return;
+    deckAddElementMenu.classList.remove('open');
+    deckAddElementMenu.hidden = true;
+  }
+
+  function positionAddElementMenu() {
+    if (!deckAddElementMenu || !btnAddElement) return;
+    const r = btnAddElement.getBoundingClientRect();
+    const mw = deckAddElementMenu.offsetWidth || 160;
+    deckAddElementMenu.style.left = Math.min(window.innerWidth - mw - 8, Math.max(8, r.left)) + 'px';
+    deckAddElementMenu.style.top = (r.bottom + 6) + 'px';
+  }
+
+  function updateUndoRedoChrome() {
+    if (btnUndo) {
+      btnUndo.disabled = !history.canUndo();
+      btnUndo.setAttribute('aria-disabled', btnUndo.disabled ? 'true' : 'false');
+    }
+    if (btnRedo) {
+      btnRedo.disabled = !history.canRedo();
+      btnRedo.setAttribute('aria-disabled', btnRedo.disabled ? 'true' : 'false');
+    }
+  }
+
+  const history = new HistoryStack(updateUndoRedoChrome);
+  const deck = new SlideDeck();
+  const editor = new SlideObjectEditor(deck, history);
+  const sidebar = new SlideSidebar(deck, history);
+  /* ---------- Slot editor: locked native template layout, editable content ---------- */
+  class SlotEditor {
+    constructor(history, richEditor, onChange) {
+      this.history = history;
+      this.richEditor = richEditor;
+      this.onChange = typeof onChange === 'function' ? onChange : function () {};
+      this.imageInput = document.getElementById('slotImageInput');
+      this.imageTargetId = null;
+    }
+    bind() {
+      document.addEventListener('click', (e) => this._onClick(e), true);
+      document.addEventListener('focusout', (e) => this._onFocusOut(e), true);
+      if (this.imageInput) {
+        this.imageInput.addEventListener('change', () => this._onImagePicked());
+      }
+    }
+    _slotSelector(id) {
+      if (window.CSS && CSS.escape) return '[data-edit-slot="' + CSS.escape(id) + '"]';
+      return '[data-edit-slot="' + String(id).replace(/"/g, '\\"') + '"]';
+    }
+    _slotById(id) {
+      const deckRoot = document.getElementById('deck');
+      return (deckRoot && deckRoot.querySelector(this._slotSelector(id))) || document.querySelector(this._slotSelector(id));
+    }
+    _onClick(e) {
+      if (!document.body.classList.contains('deck-edit-mode')) return;
+      if (isDeckChromeNode(e.target)) return;
+      const slot = e.target.closest && e.target.closest('[data-edit-slot]');
+      if (!slot) return;
+      if (slot.closest('[data-slide-object]')) return;
+
+      if (slot.dataset.slotType === 'image') {
+        if (!this.imageInput) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this.imageTargetId = slot.dataset.editSlot;
+        this.imageInput.value = '';
+        this.imageInput.click();
+        return;
+      }
+
+      if (slot.isContentEditable) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (slot.dataset._deckHtmlBefore === undefined) slot.dataset._deckHtmlBefore = slot.innerHTML;
+      slot.contentEditable = 'true';
+      slot.focus();
+      if (this.richEditor && this.richEditor._updateRteToolbar) this.richEditor._updateRteToolbar();
+    }
+    _onFocusOut(e) {
+      const slot = e.target.closest && e.target.closest('[data-edit-slot]');
+      if (!slot || !slot.isContentEditable) return;
+      setTimeout(() => {
+        const ae = document.activeElement;
+        const toolbar = document.getElementById('rteToolbar');
+        if (ae && (ae === slot || slot.contains(ae) || (toolbar && toolbar.contains(ae)))) return;
+        slot.contentEditable = 'false';
+        const before = slot.dataset._deckHtmlBefore;
+        const after = slot.innerHTML;
+        delete slot.dataset._deckHtmlBefore;
+        if (before !== undefined && before !== after) {
+          const id = slot.dataset.editSlot;
+          this.history.push({
+            undo: () => {
+              const fresh = this._slotById(id);
+              if (fresh) fresh.innerHTML = before;
+            },
+            redo: () => {
+              const fresh = this._slotById(id);
+              if (fresh) fresh.innerHTML = after;
+            }
+          });
+          this.onChange();
+        }
+        if (this.richEditor) {
+          this.richEditor._closeRteDrawers && this.richEditor._closeRteDrawers();
+          if (this.richEditor.toolbar) this.richEditor.toolbar.classList.remove('visible');
+        }
+      }, 0);
+    }
+    _onImagePicked() {
+      const file = this.imageInput && this.imageInput.files && this.imageInput.files[0];
+      const id = this.imageTargetId;
+      this.imageTargetId = null;
+      if (!file || !id) return;
+      const slot = this._slotById(id);
+      if (!slot) return;
+      const before = slot.outerHTML;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const fresh = this._slotById(id);
+        if (!fresh) return;
+        const dataUrl = reader.result;
+        if (fresh.tagName === 'IMG') fresh.src = dataUrl;
+        else {
+          fresh.style.backgroundImage = 'url("' + dataUrl + '")';
+          fresh.style.backgroundSize = 'cover';
+          fresh.style.backgroundPosition = 'center';
+          if (!fresh.querySelector('*')) fresh.textContent = '';
+        }
+        const after = fresh.outerHTML;
+        if (before === after) return;
+        this.history.push({
+          undo: () => {
+            const current = this._slotById(id);
+            if (current) current.outerHTML = before;
+          },
+          redo: () => {
+            const current = this._slotById(id);
+            if (current) current.outerHTML = after;
+          }
+        });
+        this.onChange();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  const slotEditor = new SlotEditor(history, editor, updateUndoRedoChrome);
+
+  ensureObjectControls(document);
+  editor.bind();
+  slotEditor.bind();
+  updateUndoRedoChrome();
+
+  function slideGraphicIsPlaceholder(html) {
+    if (!html || !String(html).trim()) return true;
+    const d = document.createElement('div');
+    d.innerHTML = html;
+    return !d.querySelector('img, video');
+  }
+
+  function firstImageFileFromClipboard(ev) {
+    const cd = ev.clipboardData;
+    if (!cd) return null;
+    if (cd.files && cd.files.length) {
+      for (let i = 0; i < cd.files.length; i++) {
+        const f = cd.files[i];
+        if (f && f.type && f.type.indexOf('image/') === 0) return f;
+      }
+    }
+    const items = cd.items;
+    if (!items) return null;
+    for (let i = 0; i < items.length; i++) {
+      const it = items[i];
+      if (it.kind === 'file' && it.type && it.type.indexOf('image/') === 0) {
+        const f = it.getAsFile();
+        if (f) return f;
+      }
+    }
+    return null;
+  }
+
+  function pasteHandlerBlocksSlideImagePaste(target) {
+    if (!target || !target.closest) return true;
+    if (target.closest('input, textarea, select')) return true;
+    if (target.closest('[contenteditable="true"]')) return true;
+    if (isDeckChromeNode(target)) return true;
+    return false;
+  }
+
+  function applyMediaFileToSlideObject(wrap, file) {
+    const kind = wrap && wrap.getAttribute('data-object-type');
+    if (!wrap || (kind !== 'image' && kind !== 'video') || !file) return;
+    const g = wrap.querySelector('.slide-object-graphic');
+    if (!g) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      const beforeHtml = g.innerHTML;
+      if (kind === 'image') {
+        let img = g.querySelector('img');
+        if (!img) {
+          g.replaceChildren();
+          img = document.createElement('img');
+          img.alt = '';
+          g.appendChild(img);
+        }
+        img.src = dataUrl;
+      } else {
+        let vid = g.querySelector('video');
+        if (!vid) {
+          g.replaceChildren();
+          vid = document.createElement('video');
+          vid.setAttribute('controls', '');
+          vid.style.background = '#0f172a';
+          g.appendChild(vid);
+        }
+        vid.src = dataUrl;
+      }
+      g.classList.toggle('slide-object-graphic--empty', slideGraphicIsPlaceholder(g.innerHTML));
+      const afterHtml = g.innerHTML;
+      if (beforeHtml === afterHtml) return;
+      history.push({
+        undo: () => {
+          g.innerHTML = beforeHtml;
+          g.classList.toggle('slide-object-graphic--empty', slideGraphicIsPlaceholder(beforeHtml));
+        },
+        redo: () => {
+          g.innerHTML = afterHtml;
+          g.classList.toggle('slide-object-graphic--empty', slideGraphicIsPlaceholder(afterHtml));
+        }
+      });
+      updateUndoRedoChrome();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.addEventListener('click', (e) => {
+    const pick = e.target.closest('.slide-object-media-pick');
+    if (!pick || !document.body.classList.contains('deck-edit-mode')) return;
+    const g = pick.closest('.slide-object-graphic');
+    const inp = g && g.querySelector('input.slide-object-media-file');
+    if (!inp) return;
+    e.preventDefault();
+    e.stopPropagation();
+    inp.click();
+  }, true);
+
+  document.addEventListener('change', (e) => {
+    const inp = e.target;
+    if (!inp.matches || !inp.matches('input.slide-object-media-file')) return;
+    if (!document.body.classList.contains('deck-edit-mode')) return;
+    const wrap = inp.closest('[data-slide-object]');
+    if (!wrap) return;
+    const f = inp.files && inp.files[0];
+    inp.value = '';
+    if (!f) return;
+    applyMediaFileToSlideObject(wrap, f);
+  }, true);
+
+  document.addEventListener('dblclick', (e) => {
+    if (!document.body.classList.contains('deck-edit-mode')) return;
+    if (e.target.closest('.slide-object-media-pick')) return;
+    const wrap = e.target.closest('.slide-object[data-object-type="image"], .slide-object[data-object-type="video"]');
+    if (!wrap) return;
+    const g = wrap.querySelector('.slide-object-graphic');
+    if (!g || !g.querySelector('img, video')) return;
+    if (!g.contains(e.target)) return;
+    const kind = wrap.getAttribute('data-object-type');
+    e.preventDefault();
+    e.stopPropagation();
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = kind === 'image' ? 'image/*' : 'video/*';
+    inp.style.cssText = 'position:fixed;left:-100px;width:1px;height:1px;opacity:0';
+    document.body.appendChild(inp);
+    inp.addEventListener('change', () => {
+      const f = inp.files && inp.files[0];
+      inp.remove();
+      if (f) applyMediaFileToSlideObject(wrap, f);
+    }, { once: true });
+    inp.click();
+  }, true);
+
+  document.addEventListener('paste', (e) => {
+    if (!document.body.classList.contains('deck-edit-mode')) return;
+    if (pasteHandlerBlocksSlideImagePaste(e.target)) return;
+    const file = firstImageFileFromClipboard(e);
+    if (!file) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (editor.selected.size === 1) {
+      const w = editor.selected.values().next().value;
+      if (w && w.getAttribute('data-object-type') === 'image') {
+        applyMediaFileToSlideObject(w, file);
+        return;
+      }
+    }
+    addSlideObjectToCurrentSlide('image');
+    const picked = editor.selected.values().next().value;
+    if (picked && picked.getAttribute('data-object-type') === 'image') {
+      applyMediaFileToSlideObject(picked, file);
+    }
+  }, true);
+
+  function addSlideObjectToCurrentSlide(kind) {
+    deck.refreshSlides();
+    const slide = deck.slides[deck.current];
+    if (!slide) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+
+    const oid = allocateDeckOid();
+    const wrap = document.createElement('div');
+    wrap.className = 'slide-object';
+    wrap.setAttribute('data-slide-object', '');
+    wrap.setAttribute('data-oid', oid);
+    wrap.style.cssText = 'left:12%;top:32%;width:42%;min-height:3rem;';
+
+    const moveBtn = document.createElement('button');
+    moveBtn.type = 'button';
+    moveBtn.className = 'slide-object-move';
+    moveBtn.setAttribute('aria-label', 'Move');
+    moveBtn.textContent = '\u283f';
+
+    const delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className = 'slide-object-delete';
+    delBtn.setAttribute('aria-label', 'Delete object');
+    delBtn.textContent = '\u00d7';
+
+    wrap.appendChild(moveBtn);
+    wrap.appendChild(delBtn);
+
+    if (kind === 'text') {
+      wrap.setAttribute('data-object-type', 'text');
+      const te = document.createElement('div');
+      te.className = 'slide-object-text';
+      te.setAttribute('contenteditable', 'false');
+      te.textContent = 'New text';
+      wrap.appendChild(te);
+    } else if (kind === 'image') {
+      wrap.setAttribute('data-object-type', 'image');
+      wrap.style.height = '28%';
+      const g = document.createElement('div');
+      g.className = 'slide-object-graphic slide-object-graphic--empty';
+      const pick = document.createElement('button');
+      pick.type = 'button';
+      pick.className = 'slide-object-media-pick';
+      pick.textContent = '选择或粘贴图片…';
+      const finp = document.createElement('input');
+      finp.type = 'file';
+      finp.accept = 'image/*';
+      finp.className = 'slide-object-media-file';
+      g.appendChild(pick);
+      g.appendChild(finp);
+      wrap.appendChild(g);
+    } else if (kind === 'video') {
+      wrap.setAttribute('data-object-type', 'video');
+      wrap.style.height = '32%';
+      const g = document.createElement('div');
+      g.className = 'slide-object-graphic slide-object-graphic--empty';
+      const pick = document.createElement('button');
+      pick.type = 'button';
+      pick.className = 'slide-object-media-pick';
+      pick.textContent = '选择本地视频…';
+      const finp = document.createElement('input');
+      finp.type = 'file';
+      finp.accept = 'video/*';
+      finp.className = 'slide-object-media-file';
+      g.appendChild(pick);
+      g.appendChild(finp);
+      wrap.appendChild(g);
+    }
+
+    layer.appendChild(wrap);
+    ensureObjectControls(layer);
+    editor.clearSelection();
+    editor._selectOnly(wrap);
+    history.push({
+      undo: () => {
+        wrap.remove();
+        editor.clearSelection();
+      },
+      redo: () => {
+        layer.appendChild(wrap);
+        ensureObjectControls(document);
+        editor.clearSelection();
+        editor._selectOnly(wrap);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  document.addEventListener('pointerdown', (e) => {
+    if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
+    if (deckAddElementMenu.contains(e.target)) return;
+    if (btnAddElement && btnAddElement.contains(e.target)) return;
+    closeAddElementMenu();
+  }, true);
+
+  if (btnAddElement && deckAddElementMenu) {
+    btnAddElement.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!editor.active) return;
+      if (deckAddElementMenu.classList.contains('open')) {
+        closeAddElementMenu();
+        return;
+      }
+      deckAddElementMenu.hidden = false;
+      deckAddElementMenu.classList.add('open');
+      requestAnimationFrame(positionAddElementMenu);
+    });
+    btnAddElement.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnAddElement.addEventListener('mouseleave', scheduleHide);
+    deckAddElementMenu.querySelectorAll('[data-add-kind]').forEach((b) => {
+      b.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        const k = b.getAttribute('data-add-kind');
+        closeAddElementMenu();
+        if (k === 'text' || k === 'image' || k === 'video') addSlideObjectToCurrentSlide(k);
+      });
+    });
+  }
+
+  document.addEventListener('focusout', (e) => {
+    const t = e.target;
+    if (!editor.active) return;
+    if (!t.classList || !t.classList.contains('slide-object-text')) return;
+    if (t.getAttribute('contenteditable') !== 'true') return;
+
+    setTimeout(() => {
+      if (!editor.active) return;
+      const ae = document.activeElement;
+      if (ae && (ae === t || t.contains(ae) || editor.toolbar.contains(ae))) return;
+      t.contentEditable = 'false';
+      const before = t.dataset._deckHtmlBefore;
+      if (before !== undefined && before !== t.innerHTML) {
+        const after = t.innerHTML;
+        history.push({
+          undo: () => { t.innerHTML = before; },
+          redo: () => { t.innerHTML = after; }
+        });
+      }
+      delete t.dataset._deckHtmlBefore;
+      editor._closeRteDrawers();
+      editor.toolbar.classList.remove('visible');
+      updateUndoRedoChrome();
+    }, 0);
+  }, true);
+
+  if (btnUndo) {
+    btnUndo.addEventListener('mousedown', (ev) => ev.preventDefault());
+    btnUndo.addEventListener('click', () => { history.undo(); });
+  }
+  if (btnRedo) {
+    btnRedo.addEventListener('mousedown', (ev) => ev.preventDefault());
+    btnRedo.addEventListener('click', () => { history.redo(); });
+  }
+  if (btnDoneEdit) {
+    btnDoneEdit.addEventListener('click', () => exitEditMode());
+  }
+
+  function exitEditMode() {
+    closeAddElementMenu();
+    editor.setActive(false);
+    editToggle.classList.remove('active');
+    pagesToggle.classList.remove('active');
+    sidebar.setOpen(false);
+    editToggle.classList.remove('show');
+    pagesToggle.classList.remove('show');
+    if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
+    if (btnSave) btnSave.classList.remove('show');
+    if (btnAddElement) btnAddElement.classList.remove('show');
+    updateUndoRedoChrome();
+  }
+
+  function enterEditMode() {
+    editor.setActive(true);
+    editToggle.classList.add('active');
+    sidebar.setOpen(true);
+    updateUndoRedoChrome();
+  }
+
+  loadState();
+
+  deck.onSlideChange = () => {
+    if (sidebar.open) sidebar.refresh();
+    deck._updateChrome();
+  };
+
+  /* Top-left cluster: hover reveals controls (Edit / Pages / in edit mode Undo·Redo·Done) */
+  let hideT = null;
+  function showToggles() {
+    clearTimeout(hideT);
+    editToggle.classList.add('show');
+    pagesToggle.classList.add('show');
+    if (document.body.classList.contains('deck-edit-mode')) {
+      if (btnSave) btnSave.classList.add('show');
+      if (btnAddElement) btnAddElement.classList.add('show');
+      if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
+    }
+  }
+  function scheduleHide() {
+    hideT = setTimeout(() => {
+      editToggle.classList.remove('show');
+      pagesToggle.classList.remove('show');
+      if (btnSave) btnSave.classList.remove('show');
+      if (btnAddElement) btnAddElement.classList.remove('show');
+      if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
+    }, 400);
+  }
+  if (deckLeftHover) {
+    deckLeftHover.addEventListener('mouseenter', showToggles);
+    deckLeftHover.addEventListener('mouseleave', scheduleHide);
+  }
+  editToggle.addEventListener('mouseenter', () => clearTimeout(hideT));
+  editToggle.addEventListener('mouseleave', scheduleHide);
+  pagesToggle.addEventListener('mouseenter', () => clearTimeout(hideT));
+  pagesToggle.addEventListener('mouseleave', scheduleHide);
+  if (deckEditChromeEl) {
+    deckEditChromeEl.addEventListener('mouseenter', () => clearTimeout(hideT));
+    deckEditChromeEl.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnSave) {
+    btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+
+  editToggle.addEventListener('click', () => {
+    if (!editor.active) enterEditMode();
+  });
+
+  pagesToggle.addEventListener('click', () => {
+    sidebar.toggle();
+    pagesToggle.classList.toggle('active', sidebar.open);
+    if (sidebar.open) sidebar.refresh();
+  });
+
+  if (btnSave) btnSave.addEventListener('click', saveState);
+  document.getElementById('btnExport').addEventListener('click', exportHtml);
+
+  document.addEventListener('keydown', (e) => {
+    const ce = e.target.closest && e.target.closest('.slide-object-text[contenteditable="true"], [data-edit-slot][contenteditable="true"]');
+    if (editor.active && (e.key === 'Escape' || e.key === 'Esc')) {
+      if (ce) {
+        e.preventDefault();
+        ce.contentEditable = 'false';
+        ce.blur();
+        editor._closeRteDrawers();
+        editor.toolbar.classList.remove('visible');
+        return;
+      }
+      const openDrawer = editor.toolbar.querySelector('.rte-drawer-card:not([hidden])');
+      if (openDrawer) {
+        e.preventDefault();
+        editor._closeRteDrawers();
+        editor._updateRteToolbar();
+        return;
+      }
+      e.preventDefault();
+      exitEditMode();
+      return;
+    }
+    if ((e.key === 'e' || e.key === 'E') && !ce) {
+      e.preventDefault();
+      if (editor.active) exitEditMode();
+      else enterEditMode();
+    }
+    if (editor.active && (e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+      e.preventDefault();
+      saveState();
+    }
+    if (editor.active && !ce && (e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) {
+      e.preventDefault();
+      if (e.shiftKey) history.redo();
+      else history.undo();
+    }
+    if (editor.active && !ce && (e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) {
+      e.preventDefault();
+      history.redo();
+    }
+    if (editor.active && !ce && (e.key === 'Delete' || e.key === 'Backspace')) {
+      if (editor.selected.size === 0) return;
+      editor.removeObjectsWithHistory(Array.from(editor.selected), { confirmMulti: true });
+    }
+  });
+
+  deck._updateChrome();
+})();
+</script>
+</body>
+</html>
