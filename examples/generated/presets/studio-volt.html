@@ -892,6 +892,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1465,13 +1475,13 @@
         </div>
 
         <!-- Type block: "PROPOSAL" at display scale — type over image -->
-        <div class="cover-type" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="PROPOSAL" data-slot-locked-layout="true">
+        <div class="cover-type">
           <h1
             class="display"
             style="color: var(--c-fg)"
             data-anim="fade-up"
             data-delay="1"
-          >
+           data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="PROPOSAL" data-slot-locked-layout="true">
             PROPOSAL
           </h1>
         </div>
@@ -1482,10 +1492,10 @@
             [Studio Name] × [Client Name]<br />
             [Date]
           </div>
-          <div class="cover-meta-col" style="text-align: center" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="[Presentation Title]" data-slot-locked-layout="true">
+          <div class="cover-meta-col" style="text-align: center" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="[Presentation Title]" data-slot-locked-layout="true">
             [Presentation Title]
           </div>
-          <div class="cover-meta-col" style="text-align: right" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="[Studio Name]" data-slot-locked-layout="true">
+          <div class="cover-meta-col" style="text-align: right" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="[Studio Name]" data-slot-locked-layout="true">
             [Studio Name]
           </div>
         </div>
@@ -1505,7 +1515,7 @@
           style="max-width: 90%; color: var(--c-fg-light)"
           data-anim="fade-up"
           data-delay="1"
-         data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="WHO WE ARE" data-slot-locked-layout="true">
+         data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="WHO WE ARE" data-slot-locked-layout="true">
           WHO WE ARE
         </h1>
 
@@ -1522,13 +1532,13 @@
             flex-direction: column;
             padding-bottom: calc(var(--pad-y) * 0.5);
           "
-         data-edit-slot="s2-slot-1" data-slot-type="metric" data-slot-label="GREAT WORK DOESN&#x27;T HAPPEN BY ACCIDENT" data-slot-locked-layout="true">
+        >
           <h1
             class="h1"
             style="max-width: 90%"
             data-anim="fade-up"
             data-delay="0"
-          >
+           data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="GREAT WORK DOESN&#x27;T HAPPEN BY ACCIDENT" data-slot-locked-layout="true">
             GREAT WORK DOESN'T HAPPEN BY ACCIDENT
           </h1>
         </div>
@@ -1564,7 +1574,7 @@
             >
               APPROACH
             </p>
-            <h2 class="h2" style="color: var(--c-fg-light)">
+            <h2 class="h2" style="color: var(--c-fg-light)" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="WE BUILD WHAT OTHERS PLAN" data-slot-locked-layout="true">
               WE BUILD WHAT OTHERS PLAN
             </h2>
             <p
@@ -1645,7 +1655,7 @@
             style="color: var(--c-fg-light)"
             data-anim="fade-up"
             data-delay="1"
-          >
+           data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="THE STUDIO" data-slot-locked-layout="true">
             THE STUDIO
           </h2>
 
@@ -1699,7 +1709,7 @@
         <div class="slide-body">
           <!-- Left: heading -->
           <div class="list-head" data-anim="fade-up" data-delay="1">
-            <h2 class="h2" style="color: var(--c-fg)">WHAT WE OFFER</h2>
+            <h2 class="h2" style="color: var(--c-fg)" data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="WHAT WE OFFER" data-slot-locked-layout="true">WHAT WE OFFER</h2>
             <p
               class="lead muted"
               style="text-transform: none; font-weight: 400; max-width: 90%"
@@ -1779,7 +1789,7 @@
             <div class="compare-label" style="color: var(--c-fg-light-2)">
               BEFORE
             </div>
-            <h3 class="h3" style="color: var(--c-fg-light)" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="GENERIC IDENTITY, FORGETTABLE CAMPAIGNS" data-slot-locked-layout="true">
+            <h3 class="h3" style="color: var(--c-fg-light)" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="GENERIC IDENTITY, FORGETTABLE CAMPAIGNS" data-slot-locked-layout="true">
               GENERIC IDENTITY, FORGETTABLE CAMPAIGNS
             </h3>
             <p
@@ -1789,14 +1799,14 @@
                 text-transform: none;
                 font-weight: 400;
               "
-             data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="A brand built by committee, refined to inoffensi" data-slot-locked-layout="true">
+             data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="A brand built by committee, refined to inoffensi" data-slot-locked-layout="true">
               A brand built by committee, refined to inoffensiveness. Nothing
               wrong. Nothing memorable. Indistinguishable from category norms.
             </p>
             <ul class="bullet-list">
-              <li data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="No clear point of view" data-slot-locked-layout="true">No clear point of view</li>
-              <li data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Inconsistent execution across touchpoints" data-slot-locked-layout="true">Inconsistent execution across touchpoints</li>
-              <li data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Campaigns that launched and disappeared" data-slot-locked-layout="true">Campaigns that launched and disappeared</li>
+              <li data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="No clear point of view" data-slot-locked-layout="true">No clear point of view</li>
+              <li data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Inconsistent execution across touchpoints" data-slot-locked-layout="true">Inconsistent execution across touchpoints</li>
+              <li data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Campaigns that launched and disappeared" data-slot-locked-layout="true">Campaigns that launched and disappeared</li>
             </ul>
           </div>
 
@@ -1805,7 +1815,7 @@
             <div class="compare-label after" style="font-weight: 700">
               AFTER
             </div>
-            <h3 class="h3" style="color: var(--c-fg-light)" data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="A DISTINCTIVE VOICE PEOPLE RECOGNIZE" data-slot-locked-layout="true">
+            <h3 class="h3" style="color: var(--c-fg-light)" data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="A DISTINCTIVE VOICE PEOPLE RECOGNIZE" data-slot-locked-layout="true">
               A DISTINCTIVE VOICE PEOPLE RECOGNIZE
             </h3>
             <p
@@ -1815,19 +1825,19 @@
                 text-transform: none;
                 font-weight: 400;
               "
-             data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="A brand with a defined perspective. Work that ac" data-slot-locked-layout="true">
+             data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="A brand with a defined perspective. Work that ac" data-slot-locked-layout="true">
               A brand with a defined perspective. Work that accumulates — each
               campaign reinforces the one before, building memory and trust.
             </p>
             <ul class="bullet-list">
-              <li data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="Ownable visual and verbal territory" data-slot-locked-layout="true">Ownable visual and verbal territory</li>
-              <li data-edit-slot="s7-slot-10" data-slot-type="text" data-slot-label="System that scales without diluting" data-slot-locked-layout="true">System that scales without diluting</li>
-              <li data-edit-slot="s7-slot-11" data-slot-type="text" data-slot-label="Campaigns that created lasting recall" data-slot-locked-layout="true">Campaigns that created lasting recall</li>
+              <li data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="Ownable visual and verbal territory" data-slot-locked-layout="true">Ownable visual and verbal territory</li>
+              <li data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="System that scales without diluting" data-slot-locked-layout="true">System that scales without diluting</li>
+              <li data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="Campaigns that created lasting recall" data-slot-locked-layout="true">Campaigns that created lasting recall</li>
             </ul>
           </div>
         </div>
 
-        <div class="slide-foot" data-edit-slot="s7-slot-12" data-slot-type="text" data-slot-label="[Studio Name] · [Date] 08 / 12" data-slot-locked-layout="true">
+        <div class="slide-foot" data-edit-slot="s7-slot-10" data-slot-type="text" data-slot-label="[Studio Name] · [Date] 08 / 12" data-slot-locked-layout="true">
           <span class="label" style="color: var(--c-fg-light-3)"
             >[Studio Name] · [Date]</span
           >
@@ -1849,7 +1859,7 @@
           style="max-width: 90%; color: var(--c-fg)"
           data-anim="fade-up"
           data-delay="1"
-         data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="THE WORK" data-slot-locked-layout="true">
+         data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="THE WORK" data-slot-locked-layout="true">
           THE WORK
         </h1>
 
@@ -1866,13 +1876,13 @@
             flex-direction: column;
             padding-bottom: calc(var(--pad-y) * 0.5);
           "
-         data-edit-slot="s9-slot-1" data-slot-type="metric" data-slot-label="BOLD IDEAS DESERVE BOLD EXECUTION" data-slot-locked-layout="true">
+        >
           <h1
             class="h1"
             style="max-width: 95%; color: var(--c-fg-light)"
             data-anim="fade-up"
             data-delay="0"
-          >
+           data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="BOLD IDEAS DESERVE BOLD EXECUTION" data-slot-locked-layout="true">
             BOLD IDEAS DESERVE BOLD EXECUTION
           </h1>
         </div>
@@ -1898,7 +1908,7 @@
               style="color: var(--c-fg)"
               data-anim="fade-up"
               data-delay="0"
-            >
+             data-edit-slot="s10-title-1" data-slot-type="text" data-slot-label="PROJECTS BY YEAR" data-slot-locked-layout="true">
               PROJECTS BY YEAR
             </h2>
             <span
@@ -1972,7 +1982,7 @@
           "
           data-anim="fade-up"
           data-delay="0"
-         data-edit-slot="s11-slot-1" data-slot-type="text" data-slot-label="ANY QUESTIONS OR THOUGHTS?" data-slot-locked-layout="true">
+         data-edit-slot="s11-title-1" data-slot-type="text" data-slot-label="ANY QUESTIONS OR THOUGHTS?" data-slot-locked-layout="true">
           ANY QUESTIONS OR THOUGHTS?
         </h1>
 
@@ -1993,7 +2003,7 @@
               or via phone on [+00 000 000 000]
             </p>
           </div>
-          <div data-edit-slot="s11-slot-2" data-slot-type="text" data-slot-label="Contact [Name B] via email on [name@studio.com] " data-slot-locked-layout="true">
+          <div data-edit-slot="s11-slot-1" data-slot-type="text" data-slot-label="Contact [Name B] via email on [name@studio.com] " data-slot-locked-layout="true">
             <p class="body" style="color: var(--c-fg-light-2)">
               Contact [Name B] via email on [name@studio.com]<br />
               or via phone on [+00 000 000 000]
@@ -2007,7 +2017,7 @@
           style="border-top-color: var(--c-border-light)"
           data-anim="fade-in"
           data-delay="4"
-         data-edit-slot="s11-slot-3" data-slot-type="text" data-slot-label="Page 12[Studio Name] × [Client Name] [Presentati" data-slot-locked-layout="true">
+         data-edit-slot="s11-slot-2" data-slot-type="text" data-slot-label="Page 12 [Studio Name] × [Client Name] [Presentat" data-slot-locked-layout="true">
           <span class="cover-footer-col" style="color: var(--c-fg-light-2)">
             Page 12<br />[Studio Name] × [Client Name]
           </span>

@@ -982,6 +982,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1556,16 +1566,16 @@
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
       <div class="accent-line"></div>
-      <h1 data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Market Outlook &amp;amp;Strategic Priorities" data-slot-locked-layout="true">Market Outlook &amp;<br>Strategic Priorities</h1>
-      <p class="subtitle" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="An analytical overview of emerging trends, shift" data-slot-locked-layout="true">An analytical overview of emerging trends, shifting investor sentiment, and the key decisions shaping the next growth cycle.</p>
-      <p class="meta" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="Q2 2026 &amp;nbsp;&amp;middot;&amp;nbsp; Confidential" data-slot-locked-layout="true">Q2 2026 &nbsp;&middot;&nbsp; Confidential</p>
+      <h1 data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Market Outlook &amp;amp; Strategic Priorities" data-slot-locked-layout="true">Market Outlook &amp;<br>Strategic Priorities</h1>
+      <p class="subtitle" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="An analytical overview of emerging trends, shift" data-slot-locked-layout="true">An analytical overview of emerging trends, shifting investor sentiment, and the key decisions shaping the next growth cycle.</p>
+      <p class="meta" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="Q2 2026 &amp;nbsp;&amp;middot;&amp;nbsp; Confidential" data-slot-locked-layout="true">Q2 2026 &nbsp;&middot;&nbsp; Confidential</p>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
 
 <section class="slide layout-agenda" id="slide-1" data-template-slide-index="2">
-      <div class="slide-header" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Table of Contents Overview" data-slot-locked-layout="true">
-        <h4>Table of Contents</h4>
+      <div class="slide-header">
+        <h4 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Table of Contents" data-slot-locked-layout="true">Table of Contents</h4>
         <span class="tag">Overview</span>
       </div>
       <div class="slide-content">
@@ -1574,42 +1584,42 @@
           <div class="agenda-item">
             <span class="agenda-num">01</span>
             <div>
-              <h3>Executive Summary</h3>
+              <h3 data-edit-slot="s1-title-2" data-slot-type="text" data-slot-label="Executive Summary" data-slot-locked-layout="true">Executive Summary</h3>
               <p>High-level findings and key takeaways from the latest quarterly assessment.</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-num">02</span>
             <div>
-              <h3>Macroeconomic Sentiment</h3>
+              <h3 data-edit-slot="s1-title-3" data-slot-type="text" data-slot-label="Macroeconomic Sentiment" data-slot-locked-layout="true">Macroeconomic Sentiment</h3>
               <p>Investor perspectives on growth, inflation, and risk factors in the current environment.</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-num">03</span>
             <div>
-              <h3>Capital Allocation Trends</h3>
+              <h3 data-edit-slot="s1-title-4" data-slot-type="text" data-slot-label="Capital Allocation Trends" data-slot-locked-layout="true">Capital Allocation Trends</h3>
               <p>How portfolios are shifting in response to policy changes and volatility signals.</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-num">04</span>
             <div>
-              <h3>Strategic Recommendations</h3>
+              <h3 data-edit-slot="s1-title-5" data-slot-type="text" data-slot-label="Strategic Recommendations" data-slot-locked-layout="true">Strategic Recommendations</h3>
               <p>Actionable priorities for leadership teams navigating an uncertain landscape.</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-num">05</span>
             <div>
-              <h3>Risk &amp; Opportunity Matrix</h3>
+              <h3 data-edit-slot="s1-title-6" data-slot-type="text" data-slot-label="Risk &amp;amp; Opportunity Matrix" data-slot-locked-layout="true">Risk &amp; Opportunity Matrix</h3>
               <p>Evaluating the trade-offs between defensive positioning and offensive growth bets.</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-num">06</span>
             <div>
-              <h3>Conclusion &amp; Next Steps</h3>
+              <h3 data-edit-slot="s1-title-7" data-slot-type="text" data-slot-label="Conclusion &amp;amp; Next Steps" data-slot-locked-layout="true">Conclusion &amp; Next Steps</h3>
               <p>Summary of implications and recommended follow-up actions for stakeholders.</p>
             </div>
           </div>
@@ -1620,49 +1630,49 @@
   </section>
 
 <section class="slide layout-metrics" id="slide-2" data-template-slide-index="3">
-      <div class="slide-header" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Executive Summary Key Findings" data-slot-locked-layout="true">
-        <h4>Executive Summary</h4>
+      <div class="slide-header">
+        <h4 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Executive Summary" data-slot-locked-layout="true">Executive Summary</h4>
         <span class="tag">Key Findings</span>
       </div>
       <div class="slide-content">
-        <h2>Sentiment has shifted measurably from the prior quarter</h2>
+        <h2 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Sentiment has shifted measurably from the prior " data-slot-locked-layout="true">Sentiment has shifted measurably from the prior quarter</h2>
         <div class="metrics-row">
           <div class="metric-card">
             <div class="metric-value">73%</div>
-            <div class="metric-label" data-edit-slot="s2-slot-2" data-slot-type="metric" data-slot-label="Bullish on three-year outlook" data-slot-locked-layout="true">Bullish on three-year outlook</div>
-            <div class="metric-desc" data-edit-slot="s2-slot-3" data-slot-type="metric" data-slot-label="An all-time series high, reflecting renewed conf" data-slot-locked-layout="true">An all-time series high, reflecting renewed confidence in medium-term fundamentals despite near-term uncertainty.</div>
+            <div class="metric-label" data-edit-slot="s2-slot-1" data-slot-type="metric" data-slot-label="Bullish on three-year outlook" data-slot-locked-layout="true">Bullish on three-year outlook</div>
+            <div class="metric-desc" data-edit-slot="s2-slot-2" data-slot-type="metric" data-slot-label="An all-time series high, reflecting renewed conf" data-slot-locked-layout="true">An all-time series high, reflecting renewed confidence in medium-term fundamentals despite near-term uncertainty.</div>
             <ul class="metric-supports">
-              <li data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Highest reading since the survey began in 2018" data-slot-locked-layout="true">Highest reading since the survey began in 2018</li>
-              <li data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Cross-sector consensus, led by tech and industri" data-slot-locked-layout="true">Cross-sector consensus, led by tech and industrials</li>
-              <li data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Driven by clarity on rate trajectory and AI cape" data-slot-locked-layout="true">Driven by clarity on rate trajectory and AI capex</li>
+              <li data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Highest reading since the survey began in 2018" data-slot-locked-layout="true">Highest reading since the survey began in 2018</li>
+              <li data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Cross-sector consensus, led by tech and industri" data-slot-locked-layout="true">Cross-sector consensus, led by tech and industrials</li>
+              <li data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Driven by clarity on rate trajectory and AI cape" data-slot-locked-layout="true">Driven by clarity on rate trajectory and AI capex</li>
             </ul>
-            <div class="metric-change positive" data-edit-slot="s2-slot-7" data-slot-type="metric" data-slot-label="&amp;uarr; +11 pts vs. prior quarter" data-slot-locked-layout="true">
+            <div class="metric-change positive" data-edit-slot="s2-slot-6" data-slot-type="metric" data-slot-label="&amp;uarr; +11 pts vs. prior quarter" data-slot-locked-layout="true">
               <span>&uarr;</span> +11 pts vs. prior quarter
             </div>
           </div>
           <div class="metric-card">
             <div class="metric-value">55%</div>
-            <div class="metric-label" data-edit-slot="s2-slot-8" data-slot-type="metric" data-slot-label="Expect recession before year-end" data-slot-locked-layout="true">Expect recession before year-end</div>
-            <div class="metric-desc" data-edit-slot="s2-slot-9" data-slot-type="metric" data-slot-label="Down significantly from the prior reading, indic" data-slot-locked-layout="true">Down significantly from the prior reading, indicating easing fears of a severe or prolonged contraction.</div>
+            <div class="metric-label" data-edit-slot="s2-slot-7" data-slot-type="metric" data-slot-label="Expect recession before year-end" data-slot-locked-layout="true">Expect recession before year-end</div>
+            <div class="metric-desc" data-edit-slot="s2-slot-8" data-slot-type="metric" data-slot-label="Down significantly from the prior reading, indic" data-slot-locked-layout="true">Down significantly from the prior reading, indicating easing fears of a severe or prolonged contraction.</div>
             <ul class="metric-supports">
-              <li data-edit-slot="s2-slot-10" data-slot-type="text" data-slot-label="Soft-landing scenario now the modal expectation" data-slot-locked-layout="true">Soft-landing scenario now the modal expectation</li>
-              <li data-edit-slot="s2-slot-11" data-slot-type="text" data-slot-label="Median timeline pushed from Q2 to Q4" data-slot-locked-layout="true">Median timeline pushed from Q2 to Q4</li>
-              <li data-edit-slot="s2-slot-12" data-slot-type="text" data-slot-label="Severity expectations also moderated meaningfull" data-slot-locked-layout="true">Severity expectations also moderated meaningfully</li>
+              <li data-edit-slot="s2-slot-9" data-slot-type="text" data-slot-label="Soft-landing scenario now the modal expectation" data-slot-locked-layout="true">Soft-landing scenario now the modal expectation</li>
+              <li data-edit-slot="s2-slot-10" data-slot-type="text" data-slot-label="Median timeline pushed from Q2 to Q4" data-slot-locked-layout="true">Median timeline pushed from Q2 to Q4</li>
+              <li data-edit-slot="s2-slot-11" data-slot-type="text" data-slot-label="Severity expectations also moderated meaningfull" data-slot-locked-layout="true">Severity expectations also moderated meaningfully</li>
             </ul>
-            <div class="metric-change positive" data-edit-slot="s2-slot-13" data-slot-type="metric" data-slot-label="&amp;darr; -36 pts vs. prior quarter" data-slot-locked-layout="true">
+            <div class="metric-change positive" data-edit-slot="s2-slot-12" data-slot-type="metric" data-slot-label="&amp;darr; -36 pts vs. prior quarter" data-slot-locked-layout="true">
               <span>&darr;</span> -36 pts vs. prior quarter
             </div>
           </div>
           <div class="metric-card">
             <div class="metric-value">4.5%</div>
-            <div class="metric-label" data-edit-slot="s2-slot-14" data-slot-type="metric" data-slot-label="Median inflation expectation" data-slot-locked-layout="true">Median inflation expectation</div>
-            <div class="metric-desc" data-edit-slot="s2-slot-15" data-slot-type="metric" data-slot-label="Investors expect price pressures to remain eleva" data-slot-locked-layout="true">Investors expect price pressures to remain elevated through the end of the current calendar year.</div>
+            <div class="metric-label" data-edit-slot="s2-slot-13" data-slot-type="metric" data-slot-label="Median inflation expectation" data-slot-locked-layout="true">Median inflation expectation</div>
+            <div class="metric-desc" data-edit-slot="s2-slot-14" data-slot-type="metric" data-slot-label="Investors expect price pressures to remain eleva" data-slot-locked-layout="true">Investors expect price pressures to remain elevated through the end of the current calendar year.</div>
             <ul class="metric-supports">
-              <li data-edit-slot="s2-slot-16" data-slot-type="text" data-slot-label="Wage and services inflation remain the stickiest" data-slot-locked-layout="true">Wage and services inflation remain the stickiest</li>
-              <li data-edit-slot="s2-slot-17" data-slot-type="text" data-slot-label="Energy disinflation slower than originally model" data-slot-locked-layout="true">Energy disinflation slower than originally modeled</li>
-              <li data-edit-slot="s2-slot-18" data-slot-type="text" data-slot-label="Long-run anchor steady at 3% for the next decade" data-slot-locked-layout="true">Long-run anchor steady at 3% for the next decade</li>
+              <li data-edit-slot="s2-slot-15" data-slot-type="text" data-slot-label="Wage and services inflation remain the stickiest" data-slot-locked-layout="true">Wage and services inflation remain the stickiest</li>
+              <li data-edit-slot="s2-slot-16" data-slot-type="text" data-slot-label="Energy disinflation slower than originally model" data-slot-locked-layout="true">Energy disinflation slower than originally modeled</li>
+              <li data-edit-slot="s2-slot-17" data-slot-type="text" data-slot-label="Long-run anchor steady at 3% for the next decade" data-slot-locked-layout="true">Long-run anchor steady at 3% for the next decade</li>
             </ul>
-            <div class="metric-change negative" data-edit-slot="s2-slot-19" data-slot-type="metric" data-slot-label="&amp;uarr; +0.3 pts vs. prior quarter" data-slot-locked-layout="true">
+            <div class="metric-change negative" data-edit-slot="s2-slot-18" data-slot-type="metric" data-slot-label="&amp;uarr; +0.3 pts vs. prior quarter" data-slot-locked-layout="true">
               <span>&uarr;</span> +0.3 pts vs. prior quarter
             </div>
           </div>
@@ -1673,60 +1683,60 @@
   </section>
 
 <section class="slide layout-dashboard" id="slide-3" data-template-slide-index="4">
-      <div class="slide-header" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Macroeconomic Sentiment Data Overview" data-slot-locked-layout="true">
-        <h4>Macroeconomic Sentiment</h4>
+      <div class="slide-header">
+        <h4 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Macroeconomic Sentiment" data-slot-locked-layout="true">Macroeconomic Sentiment</h4>
         <span class="tag">Data Overview</span>
       </div>
       <div class="slide-content">
-        <h2>Current perspectives on the economy and markets</h2>
+        <h2 data-edit-slot="s3-title-2" data-slot-type="text" data-slot-label="Current perspectives on the economy and markets" data-slot-locked-layout="true">Current perspectives on the economy and markets</h2>
         <div class="stats-grid">
           <div class="stat-cell">
             <div class="stat-top">
               <span class="stat-num">22%</span>
               <span class="stat-unit">of respondents</span>
             </div>
-            <div class="stat-name" data-edit-slot="s3-slot-2" data-slot-type="metric" data-slot-label="Bullish for the current calendar year" data-slot-locked-layout="true">Bullish for the current calendar year</div>
-            <div class="stat-context" data-edit-slot="s3-slot-3" data-slot-type="metric" data-slot-label="Steady from prior quarter, anchored by tariff an" data-slot-locked-layout="true">Steady from prior quarter, anchored by tariff and policy uncertainty.</div>
+            <div class="stat-name" data-edit-slot="s3-slot-1" data-slot-type="metric" data-slot-label="Bullish for the current calendar year" data-slot-locked-layout="true">Bullish for the current calendar year</div>
+            <div class="stat-context" data-edit-slot="s3-slot-2" data-slot-type="metric" data-slot-label="Steady from prior quarter, anchored by tariff an" data-slot-locked-layout="true">Steady from prior quarter, anchored by tariff and policy uncertainty.</div>
           </div>
           <div class="stat-cell">
             <div class="stat-top">
               <span class="stat-num">51%</span>
               <span class="stat-unit">of respondents</span>
             </div>
-            <div class="stat-name" data-edit-slot="s3-slot-4" data-slot-type="metric" data-slot-label="Bullish for the next calendar year" data-slot-locked-layout="true">Bullish for the next calendar year</div>
-            <div class="stat-context" data-edit-slot="s3-slot-5" data-slot-type="metric" data-slot-label="Up from 38% last quarter as the rate path firms " data-slot-locked-layout="true">Up from 38% last quarter as the rate path firms up.</div>
+            <div class="stat-name" data-edit-slot="s3-slot-3" data-slot-type="metric" data-slot-label="Bullish for the next calendar year" data-slot-locked-layout="true">Bullish for the next calendar year</div>
+            <div class="stat-context" data-edit-slot="s3-slot-4" data-slot-type="metric" data-slot-label="Up from 38% last quarter as the rate path firms " data-slot-locked-layout="true">Up from 38% last quarter as the rate path firms up.</div>
           </div>
           <div class="stat-cell">
             <div class="stat-top">
               <span class="stat-num">60%</span>
               <span class="stat-unit">of respondents</span>
             </div>
-            <div class="stat-name" data-edit-slot="s3-slot-6" data-slot-type="metric" data-slot-label="More bullish on the economy than three months ag" data-slot-locked-layout="true">More bullish on the economy than three months ago</div>
-            <div class="stat-context" data-edit-slot="s3-slot-7" data-slot-type="metric" data-slot-label="A 22-point improvement, the largest sentiment sw" data-slot-locked-layout="true">A 22-point improvement, the largest sentiment swing in two years.</div>
+            <div class="stat-name" data-edit-slot="s3-slot-5" data-slot-type="metric" data-slot-label="More bullish on the economy than three months ag" data-slot-locked-layout="true">More bullish on the economy than three months ago</div>
+            <div class="stat-context" data-edit-slot="s3-slot-6" data-slot-type="metric" data-slot-label="A 22-point improvement, the largest sentiment sw" data-slot-locked-layout="true">A 22-point improvement, the largest sentiment swing in two years.</div>
           </div>
           <div class="stat-cell">
             <div class="stat-top">
               <span class="stat-num">53%</span>
               <span class="stat-unit">of respondents</span>
             </div>
-            <div class="stat-name" data-edit-slot="s3-slot-8" data-slot-type="metric" data-slot-label="More bullish on equities than three months ago" data-slot-locked-layout="true">More bullish on equities than three months ago</div>
-            <div class="stat-context" data-edit-slot="s3-slot-9" data-slot-type="metric" data-slot-label="Tech and financials led the upgrade; energy and " data-slot-locked-layout="true">Tech and financials led the upgrade; energy and utilities lag.</div>
+            <div class="stat-name" data-edit-slot="s3-slot-7" data-slot-type="metric" data-slot-label="More bullish on equities than three months ago" data-slot-locked-layout="true">More bullish on equities than three months ago</div>
+            <div class="stat-context" data-edit-slot="s3-slot-8" data-slot-type="metric" data-slot-label="Tech and financials led the upgrade; energy and " data-slot-locked-layout="true">Tech and financials led the upgrade; energy and utilities lag.</div>
           </div>
           <div class="stat-cell">
             <div class="stat-top">
               <span class="stat-num">3.6%</span>
               <span class="stat-unit">median</span>
             </div>
-            <div class="stat-name" data-edit-slot="s3-slot-10" data-slot-type="metric" data-slot-label="Expected inflation rate for the next two years" data-slot-locked-layout="true">Expected inflation rate for the next two years</div>
-            <div class="stat-context" data-edit-slot="s3-slot-11" data-slot-type="metric" data-slot-label="Down 0.4 pts; long-run expectations remain ancho" data-slot-locked-layout="true">Down 0.4 pts; long-run expectations remain anchored at 3.0%.</div>
+            <div class="stat-name" data-edit-slot="s3-slot-9" data-slot-type="metric" data-slot-label="Expected inflation rate for the next two years" data-slot-locked-layout="true">Expected inflation rate for the next two years</div>
+            <div class="stat-context" data-edit-slot="s3-slot-10" data-slot-type="metric" data-slot-label="Down 0.4 pts; long-run expectations remain ancho" data-slot-locked-layout="true">Down 0.4 pts; long-run expectations remain anchored at 3.0%.</div>
           </div>
           <div class="stat-cell">
             <div class="stat-top">
               <span class="stat-num">2.7%</span>
               <span class="stat-unit">median</span>
             </div>
-            <div class="stat-name" data-edit-slot="s3-slot-12" data-slot-type="metric" data-slot-label="Expected real GDP growth for the next two years" data-slot-locked-layout="true">Expected real GDP growth for the next two years</div>
-            <div class="stat-context" data-edit-slot="s3-slot-13" data-slot-type="metric" data-slot-label="A modest upgrade reflecting easing recession fea" data-slot-locked-layout="true">A modest upgrade reflecting easing recession fears.</div>
+            <div class="stat-name" data-edit-slot="s3-slot-11" data-slot-type="metric" data-slot-label="Expected real GDP growth for the next two years" data-slot-locked-layout="true">Expected real GDP growth for the next two years</div>
+            <div class="stat-context" data-edit-slot="s3-slot-12" data-slot-type="metric" data-slot-label="A modest upgrade reflecting easing recession fea" data-slot-locked-layout="true">A modest upgrade reflecting easing recession fears.</div>
           </div>
         </div>
       </div>
@@ -1735,12 +1745,12 @@
   </section>
 
 <section class="slide layout-split" id="slide-4" data-template-slide-index="5">
-      <div class="slide-header" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Investor Priorities Analysis" data-slot-locked-layout="true">
-        <h4>Investor Priorities</h4>
+      <div class="slide-header">
+        <h4 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Investor Priorities" data-slot-locked-layout="true">Investor Priorities</h4>
         <span class="tag">Analysis</span>
       </div>
       <div class="slide-content">
-        <h2>What investors want companies to focus on right now</h2>
+        <h2 data-edit-slot="s4-title-2" data-slot-type="text" data-slot-label="What investors want companies to focus on right " data-slot-locked-layout="true">What investors want companies to focus on right now</h2>
         <div class="split-body">
           <div class="split-left">
             <ul class="insight-list">
@@ -1759,18 +1769,18 @@
             <div class="mini-stat-row">
               <div class="mini-stat">
                 <div class="mini-val">63%</div>
-                <div class="mini-label" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Prioritize top-line growth" data-slot-locked-layout="true">Prioritize top-line growth</div>
+                <div class="mini-label" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Prioritize top-line growth" data-slot-locked-layout="true">Prioritize top-line growth</div>
               </div>
               <div class="mini-stat">
                 <div class="mini-val">55%</div>
-                <div class="mini-label" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Prioritize cash flow resilience" data-slot-locked-layout="true">Prioritize cash flow resilience</div>
+                <div class="mini-label" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Prioritize cash flow resilience" data-slot-locked-layout="true">Prioritize cash flow resilience</div>
               </div>
               <div class="mini-stat">
                 <div class="mini-val">33%</div>
-                <div class="mini-label" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="Prioritize supply chain stability" data-slot-locked-layout="true">Prioritize supply chain stability</div>
+                <div class="mini-label" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Prioritize supply chain stability" data-slot-locked-layout="true">Prioritize supply chain stability</div>
               </div>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0;" data-edit-slot="s4-slot-5" data-slot-type="text" data-slot-label="Notably absent from the top of the list: ESG-led" data-slot-locked-layout="true">
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin: 0;" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="Notably absent from the top of the list: ESG-led" data-slot-locked-layout="true">
               Notably absent from the top of the list: ESG-led capital allocation, which has dropped 24 points year-over-year as investors recalibrate toward returns-first mandates.
             </p>
           </div>
@@ -1781,61 +1791,61 @@
   </section>
 
 <section class="slide layout-bars" id="slide-5" data-template-slide-index="6">
-      <div class="slide-header" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Risk Factors Ranking" data-slot-locked-layout="true">
-        <h4>Risk Factors</h4>
+      <div class="slide-header">
+        <h4 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Risk Factors" data-slot-locked-layout="true">Risk Factors</h4>
         <span class="tag">Ranking</span>
       </div>
       <div class="slide-content">
-        <h2>Most important macroeconomic concerns among investors</h2>
+        <h2 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Most important macroeconomic concerns among inve" data-slot-locked-layout="true">Most important macroeconomic concerns among investors</h2>
         <div class="bars-container">
           <div class="bar-item">
             <div class="bar-label">Consumer price inflation</div>
             <div class="bar-track">
               <div class="bar-fill" style="width: 79%"></div>
             </div>
-            <div class="bar-pct" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="79%" data-slot-locked-layout="true">79%</div>
+            <div class="bar-pct" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="79%" data-slot-locked-layout="true">79%</div>
           </div>
           <div class="bar-item">
             <div class="bar-label">Interest rates &amp; central bank policy</div>
             <div class="bar-track">
               <div class="bar-fill" style="width: 69%"></div>
             </div>
-            <div class="bar-pct" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="69%" data-slot-locked-layout="true">69%</div>
+            <div class="bar-pct" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="69%" data-slot-locked-layout="true">69%</div>
           </div>
           <div class="bar-item">
             <div class="bar-label">Geopolitical risks</div>
             <div class="bar-track">
               <div class="bar-fill" style="width: 39%"></div>
             </div>
-            <div class="bar-pct" data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="39%" data-slot-locked-layout="true">39%</div>
+            <div class="bar-pct" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="39%" data-slot-locked-layout="true">39%</div>
           </div>
           <div class="bar-item">
             <div class="bar-label">Liquidity tightening in capital markets</div>
             <div class="bar-track">
               <div class="bar-fill" style="width: 37%"></div>
             </div>
-            <div class="bar-pct" data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="37%" data-slot-locked-layout="true">37%</div>
+            <div class="bar-pct" data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="37%" data-slot-locked-layout="true">37%</div>
           </div>
           <div class="bar-item">
             <div class="bar-label">Asset price volatility</div>
             <div class="bar-track">
               <div class="bar-fill" style="width: 25%"></div>
             </div>
-            <div class="bar-pct" data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="25%" data-slot-locked-layout="true">25%</div>
+            <div class="bar-pct" data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="25%" data-slot-locked-layout="true">25%</div>
           </div>
           <div class="bar-item">
             <div class="bar-label">Public-sector debt &amp; spending</div>
             <div class="bar-track">
               <div class="bar-fill" style="width: 22%"></div>
             </div>
-            <div class="bar-pct" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="22%" data-slot-locked-layout="true">22%</div>
+            <div class="bar-pct" data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="22%" data-slot-locked-layout="true">22%</div>
           </div>
           <div class="bar-item">
             <div class="bar-label">Climate &amp; ESG-related risks</div>
             <div class="bar-track">
               <div class="bar-fill" style="width: 18%"></div>
             </div>
-            <div class="bar-pct" data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="18%" data-slot-locked-layout="true">18%</div>
+            <div class="bar-pct" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="18%" data-slot-locked-layout="true">18%</div>
           </div>
         </div>
       </div>
@@ -1856,32 +1866,32 @@
   </section>
 
 <section class="slide layout-timeline" id="slide-7" data-template-slide-index="8">
-      <div class="slide-header" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Strategic Roadmap Process" data-slot-locked-layout="true">
-        <h4>Strategic Roadmap</h4>
+      <div class="slide-header">
+        <h4 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Strategic Roadmap" data-slot-locked-layout="true">Strategic Roadmap</h4>
         <span class="tag">Process</span>
       </div>
       <div class="slide-content">
-        <h2>Recommended approach to navigating the current cycle</h2>
+        <h2 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Recommended approach to navigating the current c" data-slot-locked-layout="true">Recommended approach to navigating the current cycle</h2>
         <div class="timeline-track">
           <div class="timeline-step">
             <div class="step-circle">1</div>
-            <div class="step-title" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Assess Resilience" data-slot-locked-layout="true">Assess Resilience</div>
-            <div class="step-desc" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Evaluate balance sheet strength and operational " data-slot-locked-layout="true">Evaluate balance sheet strength and operational buffers under stress scenarios.</div>
+            <div class="step-title" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Assess Resilience" data-slot-locked-layout="true">Assess Resilience</div>
+            <div class="step-desc" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Evaluate balance sheet strength and operational " data-slot-locked-layout="true">Evaluate balance sheet strength and operational buffers under stress scenarios.</div>
           </div>
           <div class="timeline-step">
             <div class="step-circle">2</div>
-            <div class="step-title" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Protect Core Revenue" data-slot-locked-layout="true">Protect Core Revenue</div>
-            <div class="step-desc" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Defend market position and pricing power in segm" data-slot-locked-layout="true">Defend market position and pricing power in segments with durable demand.</div>
+            <div class="step-title" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Protect Core Revenue" data-slot-locked-layout="true">Protect Core Revenue</div>
+            <div class="step-desc" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Defend market position and pricing power in segm" data-slot-locked-layout="true">Defend market position and pricing power in segments with durable demand.</div>
           </div>
           <div class="timeline-step">
             <div class="step-circle">3</div>
-            <div class="step-title" data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Optimize Costs" data-slot-locked-layout="true">Optimize Costs</div>
-            <div class="step-desc" data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="Streamline overhead while preserving capacity fo" data-slot-locked-layout="true">Streamline overhead while preserving capacity for high-return investments.</div>
+            <div class="step-title" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Optimize Costs" data-slot-locked-layout="true">Optimize Costs</div>
+            <div class="step-desc" data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Streamline overhead while preserving capacity fo" data-slot-locked-layout="true">Streamline overhead while preserving capacity for high-return investments.</div>
           </div>
           <div class="timeline-step">
             <div class="step-circle">4</div>
-            <div class="step-title" data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="Selective Growth" data-slot-locked-layout="true">Selective Growth</div>
-            <div class="step-desc" data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="Deploy capital toward opportunities with clear p" data-slot-locked-layout="true">Deploy capital toward opportunities with clear path to profitability.</div>
+            <div class="step-title" data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="Selective Growth" data-slot-locked-layout="true">Selective Growth</div>
+            <div class="step-desc" data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="Deploy capital toward opportunities with clear p" data-slot-locked-layout="true">Deploy capital toward opportunities with clear path to profitability.</div>
           </div>
         </div>
       </div>
@@ -1890,16 +1900,16 @@
   </section>
 
 <section class="slide layout-detail" id="slide-8" data-template-slide-index="9">
-      <div class="slide-header" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Deep Dive Detailed Analysis" data-slot-locked-layout="true">
-        <h4>Deep Dive</h4>
+      <div class="slide-header">
+        <h4 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Deep Dive" data-slot-locked-layout="true">Deep Dive</h4>
         <span class="tag">Detailed Analysis</span>
       </div>
       <div class="slide-content">
-        <h2>Changes in investment practices and valuation frameworks</h2>
+        <h2 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="Changes in investment practices and valuation fr" data-slot-locked-layout="true">Changes in investment practices and valuation frameworks</h2>
         <div class="detail-body">
           <div class="detail-col">
             <div class="detail-block">
-              <h3>Assuming higher cost of capital</h3>
+              <h3 data-edit-slot="s8-title-3" data-slot-type="text" data-slot-label="Assuming higher cost of capital" data-slot-locked-layout="true">Assuming higher cost of capital</h3>
               <ul>
                 <li>Using elevated discount rates to reflect tighter monetary conditions</li>
                 <li>Shifting hurdle rates for internal capital allocation decisions</li>
@@ -1907,7 +1917,7 @@
               </ul>
             </div>
             <div class="detail-block">
-              <h3>More conservative valuation approach</h3>
+              <h3 data-edit-slot="s8-title-4" data-slot-type="text" data-slot-label="More conservative valuation approach" data-slot-locked-layout="true">More conservative valuation approach</h3>
               <ul>
                 <li>Greater weight assigned to downside and bear-case scenarios</li>
                 <li>Reduced reliance on long-dated terminal value assumptions</li>
@@ -1915,7 +1925,7 @@
               </ul>
             </div>
             <div class="detail-block">
-              <h3>Value over growth momentum</h3>
+              <h3 data-edit-slot="s8-title-5" data-slot-type="text" data-slot-label="Value over growth momentum" data-slot-locked-layout="true">Value over growth momentum</h3>
               <ul>
                 <li>Pivoting toward earnings-supported valuations</li>
                 <li>Favoring demonstrable unit economics over scale narratives</li>
@@ -1925,7 +1935,7 @@
           </div>
           <div class="detail-col">
             <div class="detail-block">
-              <h3>Cash flow &amp; balance sheet focus</h3>
+              <h3 data-edit-slot="s8-title-6" data-slot-type="text" data-slot-label="Cash flow &amp;amp; balance sheet focus" data-slot-locked-layout="true">Cash flow &amp; balance sheet focus</h3>
               <ul>
                 <li>Prioritizing free cash flow generation as a key screening metric</li>
                 <li>Analyzing working capital needs under inflationary input costs</li>
@@ -1933,7 +1943,7 @@
               </ul>
             </div>
             <div class="detail-block">
-              <h3>Bottom-up stock selection</h3>
+              <h3 data-edit-slot="s8-title-7" data-slot-type="text" data-slot-label="Bottom-up stock selection" data-slot-locked-layout="true">Bottom-up stock selection</h3>
               <ul>
                 <li>Reducing macro-driven top-down factor exposures</li>
                 <li>Intensifying fundamental research at the security level</li>
@@ -1941,7 +1951,7 @@
               </ul>
             </div>
             <div class="detail-block">
-              <h3>Shorter-term orientation</h3>
+              <h3 data-edit-slot="s8-title-8" data-slot-type="text" data-slot-label="Shorter-term orientation" data-slot-locked-layout="true">Shorter-term orientation</h3>
               <ul>
                 <li>Narrowing forecasting windows for revenue and margin</li>
                 <li>More frequent reassessment of position sizing</li>
@@ -1959,10 +1969,10 @@
       <div class="closing-decoration"></div>
       <div class="closing-decoration-2"></div>
       <div class="accent-line" style="margin: 0 auto 1.5rem;"></div>
-      <h1 data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Thank You" data-slot-locked-layout="true">Thank You</h1>
-      <p class="closing-sub" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="For questions or a deeper discussion of these fi" data-slot-locked-layout="true">For questions or a deeper discussion of these findings, please reach out to the research team.</p>
+      <h1 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Thank You" data-slot-locked-layout="true">Thank You</h1>
+      <p class="closing-sub" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="For questions or a deeper discussion of these fi" data-slot-locked-layout="true">For questions or a deeper discussion of these findings, please reach out to the research team.</p>
       <a href="#" class="cta-btn">Download Full Report</a>
-      <p class="closing-contact" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="research@company.com &amp;nbsp;&amp;middot;&amp;nbsp; www.co" data-slot-locked-layout="true">research@company.com &nbsp;&middot;&nbsp; www.company.com</p>
+      <p class="closing-contact" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="research@company.com &amp;nbsp;&amp;middot;&amp;nbsp; www.co" data-slot-locked-layout="true">research@company.com &nbsp;&middot;&nbsp; www.company.com</p>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>

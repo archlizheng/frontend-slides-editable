@@ -589,6 +589,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1170,7 +1180,7 @@
     </div>
     <div class="win-body flex flex-col items-center justify-center" style="padding: 40px;">
       <div class="hourglass mb-3">&#x231B;</div>
-      <h1 class="pixel-font text-blue text-center" style="font-size: 24px; line-height: 1.8; margin-bottom: 28px;" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="QUARTERLY OVERVIEW" data-slot-locked-layout="true">QUARTERLY OVERVIEW</h1>
+      <h1 class="pixel-font text-blue text-center" style="font-size: 24px; line-height: 1.8; margin-bottom: 28px;" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="QUARTERLY OVERVIEW" data-slot-locked-layout="true">QUARTERLY OVERVIEW</h1>
 
       <div class="panel-sunken mb-3" style="width: 100%; max-width: 540px;">
         <div class="marquee-container">
@@ -1178,20 +1188,20 @@
         </div>
       </div>
 
-      <p class="text-sm text-gray text-center mb-3" data-edit-slot="s0-slot-5" data-slot-type="text" data-slot-label="Please wait while content loads..." data-slot-locked-layout="true">Please wait while content loads...</p>
+      <p class="text-sm text-gray text-center mb-3" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="Please wait while content loads..." data-slot-locked-layout="true">Please wait while content loads...</p>
 
       <div class="progress-bar mb-3" style="max-width: 480px;">
         <div class="progress-fill" style="width: 100%;"></div>
       </div>
 
-      <div class="flex gap-2 mt-2" data-edit-slot="s0-slot-6" data-slot-type="text" data-slot-label="OK Cancel Help" data-slot-locked-layout="true">
+      <div class="flex gap-2 mt-2" data-edit-slot="s0-slot-5" data-slot-type="text" data-slot-label="OK Cancel Help" data-slot-locked-layout="true">
         <button class="btn-retro">OK</button>
         <button class="btn-retro">Cancel</button>
         <button class="btn-retro">Help</button>
       </div>
 
       <hr class="retro" style="width: 100%; margin-top: 28px;">
-      <p class="text-xs text-gray" data-edit-slot="s0-slot-7" data-slot-type="text" data-slot-label="Version 1.0 &amp;bull; Build 2026.05.01 &amp;bull; All s" data-slot-locked-layout="true">Version 1.0 &bull; Build 2026.05.01 &bull; All systems operational</p>
+      <p class="text-xs text-gray" data-edit-slot="s0-slot-6" data-slot-type="text" data-slot-label="Version 1.0 &amp;bull; Build 2026.05.01 &amp;bull; All s" data-slot-locked-layout="true">Version 1.0 &bull; Build 2026.05.01 &bull; All systems operational</p>
     </div>
   </div>
 
@@ -1747,8 +1757,8 @@
     </div>
     <div class="win-body flex flex-col items-center justify-center" style="padding: 40px;">
       <div style="font-size: 52px; margin-bottom: 20px;">&#x1F4A4;</div>
-      <h2 class="pixel-font text-blue text-center" style="font-size: 20px; margin-bottom: 20px; line-height: 1.8;" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="THANK YOU FOR WATCHING" data-slot-locked-layout="true">THANK YOU FOR WATCHING</h2>
-      <p class="text-md text-center mb-3" style="line-height: 1.7;" data-edit-slot="s9-slot-5" data-slot-type="text" data-slot-label="Lorem ipsum dolor sit amet, consectetur adipisci" data-slot-locked-layout="true">
+      <h2 class="pixel-font text-blue text-center" style="font-size: 20px; margin-bottom: 20px; line-height: 1.8;" data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="THANK YOU FOR WATCHING" data-slot-locked-layout="true">THANK YOU FOR WATCHING</h2>
+      <p class="text-md text-center mb-3" style="line-height: 1.7;" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="Lorem ipsum dolor sit amet, consectetur adipisci" data-slot-locked-layout="true">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
         Questions and feedback are always welcome.
       </p>
@@ -1762,19 +1772,19 @@
       <div class="flex gap-4 mb-3 items-center">
         <div class="text-center"><p class="text-xs text-gray mb-1">Email</p><p class="text-sm" style="font-weight: bold;">hello@example.com</p></div>
         <div class="separator"></div>
-        <div class="text-center" data-edit-slot="s9-slot-6" data-slot-type="text" data-slot-label="Phone+1 (555) 000-0000" data-slot-locked-layout="true"><p class="text-xs text-gray mb-1">Phone</p><p class="text-sm" style="font-weight: bold;">+1 (555) 000-0000</p></div>
+        <div class="text-center" data-edit-slot="s9-slot-5" data-slot-type="text" data-slot-label="Phone+1 (555) 000-0000" data-slot-locked-layout="true"><p class="text-xs text-gray mb-1">Phone</p><p class="text-sm" style="font-weight: bold;">+1 (555) 000-0000</p></div>
         <div class="separator"></div>
-        <div class="text-center" data-edit-slot="s9-slot-7" data-slot-type="text" data-slot-label="Websitewww.example.com" data-slot-locked-layout="true"><p class="text-xs text-gray mb-1">Website</p><p class="text-sm" style="font-weight: bold;">www.example.com</p></div>
+        <div class="text-center" data-edit-slot="s9-slot-6" data-slot-type="text" data-slot-label="Websitewww.example.com" data-slot-locked-layout="true"><p class="text-xs text-gray mb-1">Website</p><p class="text-sm" style="font-weight: bold;">www.example.com</p></div>
       </div>
 
-      <div class="flex gap-2 mt-2" data-edit-slot="s9-slot-8" data-slot-type="text" data-slot-label="Restart Contact End Session" data-slot-locked-layout="true">
+      <div class="flex gap-2 mt-2" data-edit-slot="s9-slot-7" data-slot-type="text" data-slot-label="Restart Contact End Session" data-slot-locked-layout="true">
         <button class="btn-retro">Restart</button>
         <button class="btn-retro">Contact</button>
         <button class="btn-retro">End Session</button>
       </div>
 
       <hr class="retro" style="width: 100%; margin-top: 28px;">
-      <p class="text-xs text-gray" data-edit-slot="s9-slot-9" data-slot-type="text" data-slot-label="&amp;copy; 2026 Company Name &amp;bull; All rights reser" data-slot-locked-layout="true">&copy; 2026 Company Name &bull; All rights reserved &bull; Confidential &amp; Proprietary</p>
+      <p class="text-xs text-gray" data-edit-slot="s9-slot-8" data-slot-type="text" data-slot-label="&amp;copy; 2026 Company Name &amp;bull; All rights reser" data-slot-locked-layout="true">&copy; 2026 Company Name &bull; All rights reserved &bull; Confidential &amp; Proprietary</p>
     </div>
   </div>
 

@@ -601,6 +601,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1173,25 +1183,25 @@
       </div>
       <div class="sunglow" aria-hidden="true"></div>
 
-      <div class="date-rail" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="02.05—11.10.2026" data-slot-locked-layout="true">02.05—<br/>11.10.2026</div>
+      <div class="date-rail" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="02.05— 11.10.2026" data-slot-locked-layout="true">02.05—<br/>11.10.2026</div>
 
       <div class="titlewrap">
-        <h1 class="title">Aurora<br/><em>Programme</em></h1>
+        <h1 class="title" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Aurora Programme" data-slot-locked-layout="true">Aurora<br/><em>Programme</em></h1>
         <div class="caption subline">Annual Survey · Issue No. 04</div>
       </div>
 
       <div class="footer-row">
         <div>
           <div class="caption ftag">Hosted by</div>
-          <div class="caption ftxt" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="Aurora Institutefor Public Form" data-slot-locked-layout="true">Aurora Institute<br/>for Public Form</div>
+          <div class="caption ftxt" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="Aurora Institute for Public Form" data-slot-locked-layout="true">Aurora Institute<br/>for Public Form</div>
         </div>
         <div>
           <div class="caption ftag">Edition</div>
-          <div class="caption ftxt" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="Fourth annualopen programme" data-slot-locked-layout="true">Fourth annual<br/>open programme</div>
+          <div class="caption ftxt" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="Fourth annual open programme" data-slot-locked-layout="true">Fourth annual<br/>open programme</div>
         </div>
         <div>
           <div class="caption ftag">Reading</div>
-          <div class="caption ftxt" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="A field study of light,matter and atmosphere" data-slot-locked-layout="true">A field study of light,<br/>matter and atmosphere</div>
+          <div class="caption ftxt" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="A field study of light, matter and atmosphere" data-slot-locked-layout="true">A field study of light,<br/>matter and atmosphere</div>
         </div>
         <div>
           <div class="caption ftag">Notes</div>
@@ -1226,42 +1236,42 @@
         <div class="strands">
           <div class="strand">
             <div class="num">01</div>
-            <div data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Slow Atmospheres A reading room of long-form ess" data-slot-locked-layout="true">
-              <h3>Slow Atmospheres</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Slow Atmospheres" data-slot-locked-layout="true">Slow Atmospheres</h3>
               <p>A reading room of long-form essays, drawings and weather notebooks, organised around the changing yellow of late afternoon.</p>
             </div>
           </div>
           <div class="strand">
             <div class="num">02</div>
-            <div data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Public Form Three commissions in three pavilions" data-slot-locked-layout="true">
-              <h3>Public Form</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Public Form" data-slot-locked-layout="true">Public Form</h3>
               <p>Three commissions in three pavilions, each examining how a public square wears its own light over the course of a season.</p>
             </div>
           </div>
           <div class="strand">
             <div class="num">03</div>
-            <div data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Field Notes A residency programme drawing artist" data-slot-locked-layout="true">
-              <h3>Field Notes</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Field Notes" data-slot-locked-layout="true">Field Notes</h3>
               <p>A residency programme drawing artists, architects and meteorologists together for a hundred days of recording, drawing and arguing.</p>
             </div>
           </div>
           <div class="strand">
             <div class="num">04</div>
-            <div data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Quiet Editions A typographic publishing strand c" data-slot-locked-layout="true">
-              <h3>Quiet Editions</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-4" data-slot-type="text" data-slot-label="Quiet Editions" data-slot-locked-layout="true">Quiet Editions</h3>
               <p>A typographic publishing strand committed to printing only what asks to be read in daylight, on warm paper, slowly.</p>
             </div>
           </div>
           <div class="strand">
             <div class="num">05</div>
-            <div data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Open Conversations Twelve evenings of public tal" data-slot-locked-layout="true">
-              <h3>Open Conversations</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-5" data-slot-type="text" data-slot-label="Open Conversations" data-slot-locked-layout="true">Open Conversations</h3>
               <p>Twelve evenings of public talks, paired with a meal and a question: what is the weather like in your work?</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="pagenum" data-edit-slot="s2-slot-7" data-slot-type="metric" data-slot-label="03 / 08" data-slot-locked-layout="true">03 / 08</div>
+      <div class="pagenum" data-edit-slot="s2-slot-2" data-slot-type="metric" data-slot-label="03 / 08" data-slot-locked-layout="true">03 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1271,10 +1281,10 @@
       <div class="caption vrail" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="First Chapter — Slow Atmospheres" data-slot-locked-layout="true">First Chapter — Slow Atmospheres</div>
       <div class="stack">
         <div class="nm">01</div>
-        <div class="ttl" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="A reading of the season&#x27;s quietest hours" data-slot-locked-layout="true">A reading of the season's quietest hours</div>
-        <p class="lede" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="In its first chapter the Aurora Programme conven" data-slot-locked-layout="true">In its first chapter the Aurora Programme convenes around the slowest light of the year: the long minutes after the sun has gone but before the room has admitted it. We open the year in March, in three rooms, in three cities, with three lamps left burning past closing.</p>
+        <div class="ttl" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="A reading of the season&#x27;s quietest hours" data-slot-locked-layout="true">A reading of the season's quietest hours</div>
+        <p class="lede" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="In its first chapter the Aurora Programme conven" data-slot-locked-layout="true">In its first chapter the Aurora Programme convenes around the slowest light of the year: the long minutes after the sun has gone but before the room has admitted it. We open the year in March, in three rooms, in three cities, with three lamps left burning past closing.</p>
       </div>
-      <div class="pagenum" data-edit-slot="s3-slot-4" data-slot-type="metric" data-slot-label="04 / 08" data-slot-locked-layout="true">04 / 08</div>
+      <div class="pagenum" data-edit-slot="s3-slot-3" data-slot-type="metric" data-slot-label="04 / 08" data-slot-locked-layout="true">04 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1283,7 +1293,7 @@
       <div class="glow" aria-hidden="true"></div>
       <div class="frame">
         <div class="head">
-          <div class="h">Public attendance</div>
+          <div class="h" data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Public attendance" data-slot-locked-layout="true">Public attendance</div>
           <div class="caption lab" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Open programme · 2022—2026" data-slot-locked-layout="true">Open programme · 2022—2026</div>
         </div>
         <div class="col-a">
@@ -1332,62 +1342,62 @@
       <div class="glow" aria-hidden="true"></div>
       <div class="frame">
         <div class="topbar">
-          <div class="h">Public calendar</div>
+          <div class="h" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Public calendar" data-slot-locked-layout="true">Public calendar</div>
           <div class="caption lab" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Selected dates · May—October" data-slot-locked-layout="true">Selected dates · May—October</div>
         </div>
         <div class="ledger">
           <div class="row headrow"><div class="caption">Date</div><div class="caption" data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Title" data-slot-locked-layout="true">Title</div><div class="caption" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Venue" data-slot-locked-layout="true">Venue</div><div class="caption" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Length" data-slot-locked-layout="true">Length</div></div>
           <div class="row">
             <div class="caption date">02.05</div>
-            <div class="ttl" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="The Long Yellow, opening lecture" data-slot-locked-layout="true"><em>The Long Yellow</em>, opening lecture</div>
-            <div class="ven" data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Pavilion of Quiet Form, Rotterdam" data-slot-locked-layout="true">Pavilion of Quiet Form, Rotterdam</div>
-            <div class="caption dur" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="90 min" data-slot-locked-layout="true">90 min</div>
+            <div class="ttl" data-edit-slot="s6-title-2" data-slot-type="text" data-slot-label="The Long Yellow, opening lecture" data-slot-locked-layout="true"><em>The Long Yellow</em>, opening lecture</div>
+            <div class="ven" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Pavilion of Quiet Form, Rotterdam" data-slot-locked-layout="true">Pavilion of Quiet Form, Rotterdam</div>
+            <div class="caption dur" data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="90 min" data-slot-locked-layout="true">90 min</div>
           </div>
           <div class="row">
             <div class="caption date">17.05</div>
-            <div class="ttl" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="A walk through the season&#x27;s first room" data-slot-locked-layout="true">A walk through the season's first room</div>
-            <div class="ven" data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="Reading Garden, Pavilion North" data-slot-locked-layout="true">Reading Garden, Pavilion North</div>
-            <div class="caption dur" data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="2 hr" data-slot-locked-layout="true">2 hr</div>
+            <div class="ttl" data-edit-slot="s6-title-3" data-slot-type="text" data-slot-label="A walk through the season&#x27;s first room" data-slot-locked-layout="true">A walk through the season's first room</div>
+            <div class="ven" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="Reading Garden, Pavilion North" data-slot-locked-layout="true">Reading Garden, Pavilion North</div>
+            <div class="caption dur" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="2 hr" data-slot-locked-layout="true">2 hr</div>
           </div>
           <div class="row">
             <div class="caption date">06.06</div>
-            <div class="ttl" data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Public Form 01 — opening" data-slot-locked-layout="true"><em>Public Form 01</em> — opening</div>
-            <div class="ven" data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="Square of the Slow Sun, Antwerp" data-slot-locked-layout="true">Square of the Slow Sun, Antwerp</div>
-            <div class="caption dur" data-edit-slot="s6-slot-13" data-slot-type="text" data-slot-label="All day" data-slot-locked-layout="true">All day</div>
+            <div class="ttl" data-edit-slot="s6-title-4" data-slot-type="text" data-slot-label="Public Form 01 — opening" data-slot-locked-layout="true"><em>Public Form 01</em> — opening</div>
+            <div class="ven" data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="Square of the Slow Sun, Antwerp" data-slot-locked-layout="true">Square of the Slow Sun, Antwerp</div>
+            <div class="caption dur" data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="All day" data-slot-locked-layout="true">All day</div>
           </div>
           <div class="row">
             <div class="caption date">28.06</div>
-            <div class="ttl" data-edit-slot="s6-slot-14" data-slot-type="text" data-slot-label="Field Notes residency, week one supper" data-slot-locked-layout="true">Field Notes residency, week one supper</div>
-            <div class="ven" data-edit-slot="s6-slot-15" data-slot-type="text" data-slot-label="House of the Half Window" data-slot-locked-layout="true">House of the Half Window</div>
-            <div class="caption dur" data-edit-slot="s6-slot-16" data-slot-type="text" data-slot-label="3 hr" data-slot-locked-layout="true">3 hr</div>
+            <div class="ttl" data-edit-slot="s6-title-5" data-slot-type="text" data-slot-label="Field Notes residency, week one supper" data-slot-locked-layout="true">Field Notes residency, week one supper</div>
+            <div class="ven" data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="House of the Half Window" data-slot-locked-layout="true">House of the Half Window</div>
+            <div class="caption dur" data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="3 hr" data-slot-locked-layout="true">3 hr</div>
           </div>
           <div class="row">
             <div class="caption date">19.07</div>
-            <div class="ttl" data-edit-slot="s6-slot-17" data-slot-type="text" data-slot-label="A Letter to the Sun, evening reading" data-slot-locked-layout="true"><em>A Letter to the Sun</em>, evening reading</div>
-            <div class="ven" data-edit-slot="s6-slot-18" data-slot-type="text" data-slot-label="Aurora Library, room 3" data-slot-locked-layout="true">Aurora Library, room 3</div>
-            <div class="caption dur" data-edit-slot="s6-slot-19" data-slot-type="text" data-slot-label="75 min" data-slot-locked-layout="true">75 min</div>
+            <div class="ttl" data-edit-slot="s6-title-6" data-slot-type="text" data-slot-label="A Letter to the Sun, evening reading" data-slot-locked-layout="true"><em>A Letter to the Sun</em>, evening reading</div>
+            <div class="ven" data-edit-slot="s6-slot-13" data-slot-type="text" data-slot-label="Aurora Library, room 3" data-slot-locked-layout="true">Aurora Library, room 3</div>
+            <div class="caption dur" data-edit-slot="s6-slot-14" data-slot-type="text" data-slot-label="75 min" data-slot-locked-layout="true">75 min</div>
           </div>
           <div class="row">
             <div class="caption date">14.08</div>
-            <div class="ttl" data-edit-slot="s6-slot-20" data-slot-type="text" data-slot-label="Quiet Editions — print fair &amp;amp; book launch" data-slot-locked-layout="true">Quiet Editions — print fair &amp; book launch</div>
-            <div class="ven" data-edit-slot="s6-slot-21" data-slot-type="text" data-slot-label="Type Garden, Pavilion South" data-slot-locked-layout="true">Type Garden, Pavilion South</div>
-            <div class="caption dur" data-edit-slot="s6-slot-22" data-slot-type="text" data-slot-label="2 days" data-slot-locked-layout="true">2 days</div>
+            <div class="ttl" data-edit-slot="s6-title-7" data-slot-type="text" data-slot-label="Quiet Editions — print fair &amp;amp; book launch" data-slot-locked-layout="true">Quiet Editions — print fair &amp; book launch</div>
+            <div class="ven" data-edit-slot="s6-slot-15" data-slot-type="text" data-slot-label="Type Garden, Pavilion South" data-slot-locked-layout="true">Type Garden, Pavilion South</div>
+            <div class="caption dur" data-edit-slot="s6-slot-16" data-slot-type="text" data-slot-label="2 days" data-slot-locked-layout="true">2 days</div>
           </div>
           <div class="row">
             <div class="caption date">22.09</div>
-            <div class="ttl" data-edit-slot="s6-slot-23" data-slot-type="text" data-slot-label="Open Conversations · meteorology &amp;amp; drawing" data-slot-locked-layout="true">Open Conversations · meteorology &amp; drawing</div>
-            <div class="ven" data-edit-slot="s6-slot-24" data-slot-type="text" data-slot-label="Reading Room, ground floor" data-slot-locked-layout="true">Reading Room, ground floor</div>
-            <div class="caption dur" data-edit-slot="s6-slot-25" data-slot-type="text" data-slot-label="2 hr" data-slot-locked-layout="true">2 hr</div>
+            <div class="ttl" data-edit-slot="s6-title-8" data-slot-type="text" data-slot-label="Open Conversations · meteorology &amp;amp; drawing" data-slot-locked-layout="true">Open Conversations · meteorology &amp; drawing</div>
+            <div class="ven" data-edit-slot="s6-slot-17" data-slot-type="text" data-slot-label="Reading Room, ground floor" data-slot-locked-layout="true">Reading Room, ground floor</div>
+            <div class="caption dur" data-edit-slot="s6-slot-18" data-slot-type="text" data-slot-label="2 hr" data-slot-locked-layout="true">2 hr</div>
           </div>
           <div class="row">
             <div class="caption date">11.10</div>
-            <div class="ttl" data-edit-slot="s6-slot-26" data-slot-type="text" data-slot-label="The Last Window, closing performance" data-slot-locked-layout="true"><em>The Last Window</em>, closing performance</div>
-            <div class="ven" data-edit-slot="s6-slot-27" data-slot-type="text" data-slot-label="Pavilion of Quiet Form, Rotterdam" data-slot-locked-layout="true">Pavilion of Quiet Form, Rotterdam</div>
-            <div class="caption dur" data-edit-slot="s6-slot-28" data-slot-type="text" data-slot-label="60 min" data-slot-locked-layout="true">60 min</div>
+            <div class="ttl" data-edit-slot="s6-title-9" data-slot-type="text" data-slot-label="The Last Window, closing performance" data-slot-locked-layout="true"><em>The Last Window</em>, closing performance</div>
+            <div class="ven" data-edit-slot="s6-slot-19" data-slot-type="text" data-slot-label="Pavilion of Quiet Form, Rotterdam" data-slot-locked-layout="true">Pavilion of Quiet Form, Rotterdam</div>
+            <div class="caption dur" data-edit-slot="s6-slot-20" data-slot-type="text" data-slot-label="60 min" data-slot-locked-layout="true">60 min</div>
           </div>
         </div>
       </div>
-      <div class="pagenum" data-edit-slot="s6-slot-29" data-slot-type="metric" data-slot-label="07 / 08" data-slot-locked-layout="true">07 / 08</div>
+      <div class="pagenum" data-edit-slot="s6-slot-21" data-slot-type="metric" data-slot-label="07 / 08" data-slot-locked-layout="true">07 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1400,29 +1410,29 @@
 
       <div class="titlewrap">
         <div class="caption ktag">Colophon · Programme 04</div>
-        <h2 class="ttl" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="With thanksto the slowreaders." data-slot-locked-layout="true">With thanks<br/>to the slow<br/><em>readers.</em></h2>
+        <h2 class="ttl" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="With thanks to the slow readers." data-slot-locked-layout="true">With thanks<br/>to the slow<br/><em>readers.</em></h2>
       </div>
 
       <div class="colofo">
         <div>
           <div class="caption ftag">Curated by</div>
-          <div class="caption ftxt" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Idun Reijnerswith the editorial board" data-slot-locked-layout="true">Idun Reijners<br/>with the editorial board</div>
+          <div class="caption ftxt" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Idun Reijners with the editorial board" data-slot-locked-layout="true">Idun Reijners<br/>with the editorial board</div>
         </div>
         <div>
           <div class="caption ftag">Designed</div>
-          <div class="caption ftxt" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="In daylight, on warm paper,over fourteen weeks" data-slot-locked-layout="true">In daylight, on warm paper,<br/>over fourteen weeks</div>
+          <div class="caption ftxt" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="In daylight, on warm paper, over fourteen weeks" data-slot-locked-layout="true">In daylight, on warm paper,<br/>over fourteen weeks</div>
         </div>
         <div>
           <div class="caption ftag">Hosts</div>
-          <div class="caption ftxt" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Aurora InstitutePavilion of Quiet FormReading Ga" data-slot-locked-layout="true">Aurora Institute<br/>Pavilion of Quiet Form<br/>Reading Garden</div>
+          <div class="caption ftxt" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Aurora Institute Pavilion of Quiet Form Reading " data-slot-locked-layout="true">Aurora Institute<br/>Pavilion of Quiet Form<br/>Reading Garden</div>
         </div>
         <div>
           <div class="caption ftag">Until next year</div>
-          <div class="caption ftxt" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="The fifth programme opens in May 2027. Look for " data-slot-locked-layout="true">The fifth programme opens in May 2027. Look for the yellow on the door.</div>
+          <div class="caption ftxt" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="The fifth programme opens in May 2027. Look for " data-slot-locked-layout="true">The fifth programme opens in May 2027. Look for the yellow on the door.</div>
         </div>
       </div>
 
-      <div class="pagenum" data-edit-slot="s7-slot-6" data-slot-type="metric" data-slot-label="08 / 08" data-slot-locked-layout="true">08 / 08</div>
+      <div class="pagenum" data-edit-slot="s7-slot-5" data-slot-type="metric" data-slot-label="08 / 08" data-slot-locked-layout="true">08 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>

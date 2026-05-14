@@ -1135,6 +1135,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1749,7 +1759,7 @@
 <section class="slide slide-3" id="slide-2" data-template-slide-index="3">
             <div class="left-col">
                 <div class="number">03</div>
-                <div class="col-title" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="COREPILLARS" data-slot-locked-layout="true">CORE<br>PILLARS</div>
+                <div class="col-title" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="CORE PILLARS" data-slot-locked-layout="true">CORE<br>PILLARS</div>
             </div>
             <div class="right-col">
                 <div class="item">
@@ -1773,11 +1783,11 @@
             <div class="slide-header">
                 <div class="header-left">
                     <div class="section-label">02 / Performance</div>
-                    <div class="slide-title" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="GROWTH METRICS" data-slot-locked-layout="true">GROWTH METRICS</div>
+                    <div class="slide-title" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="GROWTH METRICS" data-slot-locked-layout="true">GROWTH METRICS</div>
                 </div>
                 <div class="header-right">
                     <div class="stat-number">+147%</div>
-                    <div class="stat-label" data-edit-slot="s3-slot-2" data-slot-type="metric" data-slot-label="Year Over Year" data-slot-locked-layout="true">Year Over Year</div>
+                    <div class="stat-label" data-edit-slot="s3-slot-1" data-slot-type="metric" data-slot-label="Year Over Year" data-slot-locked-layout="true">Year Over Year</div>
                 </div>
             </div>
             <div class="chart-container">
@@ -1795,15 +1805,15 @@
                 <div class="chart-sidebar">
                     <div class="sidebar-item">
                         <div class="value">2.4M</div>
-                        <div class="label" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Total Reach" data-slot-locked-layout="true">Total Reach</div>
+                        <div class="label" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Total Reach" data-slot-locked-layout="true">Total Reach</div>
                     </div>
                     <div class="sidebar-item">
                         <div class="value">89%</div>
-                        <div class="label" data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="Retention Rate" data-slot-locked-layout="true">Retention Rate</div>
+                        <div class="label" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Retention Rate" data-slot-locked-layout="true">Retention Rate</div>
                     </div>
                     <div class="sidebar-item">
                         <div class="value">156</div>
-                        <div class="label" data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="New Partners" data-slot-locked-layout="true">New Partners</div>
+                        <div class="label" data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="New Partners" data-slot-locked-layout="true">New Partners</div>
                     </div>
                 </div>
             </div>
@@ -1818,33 +1828,33 @@
             </div>
             <div class="info-bar">
                 <div class="bar-title">GLOBAL INITIATIVE 2026</div>
-                <div class="bar-meta" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Phase One / Launch Q212 Cities / 4 Continents" data-slot-locked-layout="true">Phase One / Launch Q2<br>12 Cities / 4 Continents</div>
+                <div class="bar-meta" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Phase One / Launch Q2 12 Cities / 4 Continents" data-slot-locked-layout="true">Phase One / Launch Q2<br>12 Cities / 4 Continents</div>
             </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
 
 <section class="slide slide-6" id="slide-5" data-template-slide-index="6">
-            <div class="slide-title" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="KEY OBJECTIVES" data-slot-locked-layout="true">KEY OBJECTIVES</div>
-            <div class="slide-subtitle" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Strategic priorities for the upcoming fiscal per" data-slot-locked-layout="true">Strategic priorities for the upcoming fiscal period</div>
+            <div class="slide-title" data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="KEY OBJECTIVES" data-slot-locked-layout="true">KEY OBJECTIVES</div>
+            <div class="slide-subtitle" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Strategic priorities for the upcoming fiscal per" data-slot-locked-layout="true">Strategic priorities for the upcoming fiscal period</div>
             <div class="columns-grid">
                 <div class="column-card">
                     <div class="card-icon">A</div>
-                    <div class="card-title" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="EXPAND REACH" data-slot-locked-layout="true">EXPAND REACH</div>
-                    <div class="card-text" data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Enter new markets and establish presence in emer" data-slot-locked-layout="true">Enter new markets and establish presence in emerging territories through targeted campaigns.</div>
-                    <div class="card-stat" data-edit-slot="s5-slot-5" data-slot-type="metric" data-slot-label="24" data-slot-locked-layout="true">24</div>
+                    <div class="card-title" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="EXPAND REACH" data-slot-locked-layout="true">EXPAND REACH</div>
+                    <div class="card-text" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Enter new markets and establish presence in emer" data-slot-locked-layout="true">Enter new markets and establish presence in emerging territories through targeted campaigns.</div>
+                    <div class="card-stat" data-edit-slot="s5-slot-4" data-slot-type="metric" data-slot-label="24" data-slot-locked-layout="true">24</div>
                 </div>
                 <div class="column-card">
                     <div class="card-icon">B</div>
-                    <div class="card-title" data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="DEEPEN ENGAGEMENT" data-slot-locked-layout="true">DEEPEN ENGAGEMENT</div>
-                    <div class="card-text" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Strengthen relationships with existing partners " data-slot-locked-layout="true">Strengthen relationships with existing partners through enhanced service offerings.</div>
-                    <div class="card-stat" data-edit-slot="s5-slot-8" data-slot-type="metric" data-slot-label="+45%" data-slot-locked-layout="true">+45%</div>
+                    <div class="card-title" data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="DEEPEN ENGAGEMENT" data-slot-locked-layout="true">DEEPEN ENGAGEMENT</div>
+                    <div class="card-text" data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Strengthen relationships with existing partners " data-slot-locked-layout="true">Strengthen relationships with existing partners through enhanced service offerings.</div>
+                    <div class="card-stat" data-edit-slot="s5-slot-7" data-slot-type="metric" data-slot-label="+45%" data-slot-locked-layout="true">+45%</div>
                 </div>
                 <div class="column-card">
                     <div class="card-icon">C</div>
-                    <div class="card-title" data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="OPTIMIZE FLOW" data-slot-locked-layout="true">OPTIMIZE FLOW</div>
-                    <div class="card-text" data-edit-slot="s5-slot-10" data-slot-type="text" data-slot-label="Streamline internal processes to improve deliver" data-slot-locked-layout="true">Streamline internal processes to improve delivery times and resource allocation.</div>
-                    <div class="card-stat" data-edit-slot="s5-slot-11" data-slot-type="metric" data-slot-label="3.2x" data-slot-locked-layout="true">3.2x</div>
+                    <div class="card-title" data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="OPTIMIZE FLOW" data-slot-locked-layout="true">OPTIMIZE FLOW</div>
+                    <div class="card-text" data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="Streamline internal processes to improve deliver" data-slot-locked-layout="true">Streamline internal processes to improve delivery times and resource allocation.</div>
+                    <div class="card-stat" data-edit-slot="s5-slot-10" data-slot-type="metric" data-slot-label="3.2x" data-slot-locked-layout="true">3.2x</div>
                 </div>
             </div>
 
@@ -1868,7 +1878,7 @@
 <section class="slide slide-8" id="slide-7" data-template-slide-index="8">
             <div class="slide-header">
                 <div class="section-label">03 / Roadmap</div>
-                <div class="slide-title" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="PROJECT TIMELINE" data-slot-locked-layout="true">PROJECT TIMELINE</div>
+                <div class="slide-title" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="PROJECT TIMELINE" data-slot-locked-layout="true">PROJECT TIMELINE</div>
             </div>
             <div class="timeline-container">
                 <div class="timeline-line"></div>
@@ -1877,35 +1887,35 @@
                         <div class="t-bubble">Q1</div>
                         <div class="t-info">
                             <div class="t-phase">Discovery</div>
-                            <div class="t-desc" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Research &amp;amp; planning phase with stakeholder a" data-slot-locked-layout="true">Research &amp; planning phase with stakeholder alignment</div>
+                            <div class="t-desc" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Research &amp;amp; planning phase with stakeholder a" data-slot-locked-layout="true">Research &amp; planning phase with stakeholder alignment</div>
                         </div>
                     </div>
                     <div class="t-point">
                         <div class="t-bubble">Q2</div>
                         <div class="t-info">
                             <div class="t-phase">Design</div>
-                            <div class="t-desc" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Concept development and prototype validation" data-slot-locked-layout="true">Concept development and prototype validation</div>
+                            <div class="t-desc" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Concept development and prototype validation" data-slot-locked-layout="true">Concept development and prototype validation</div>
                         </div>
                     </div>
                     <div class="t-point">
                         <div class="t-bubble">Q3</div>
                         <div class="t-info">
                             <div class="t-phase">Build</div>
-                            <div class="t-desc" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Full implementation and iterative refinement" data-slot-locked-layout="true">Full implementation and iterative refinement</div>
+                            <div class="t-desc" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Full implementation and iterative refinement" data-slot-locked-layout="true">Full implementation and iterative refinement</div>
                         </div>
                     </div>
                     <div class="t-point">
                         <div class="t-bubble">Q4</div>
                         <div class="t-info">
                             <div class="t-phase">Launch</div>
-                            <div class="t-desc" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Market release and performance monitoring" data-slot-locked-layout="true">Market release and performance monitoring</div>
+                            <div class="t-desc" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Market release and performance monitoring" data-slot-locked-layout="true">Market release and performance monitoring</div>
                         </div>
                     </div>
                     <div class="t-point">
                         <div class="t-bubble">+</div>
                         <div class="t-info">
                             <div class="t-phase">Scale</div>
-                            <div class="t-desc" data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Expansion and long-term optimization" data-slot-locked-layout="true">Expansion and long-term optimization</div>
+                            <div class="t-desc" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Expansion and long-term optimization" data-slot-locked-layout="true">Expansion and long-term optimization</div>
                         </div>
                     </div>
                 </div>
@@ -1915,28 +1925,28 @@
   </section>
 
 <section class="slide slide-9" id="slide-8" data-template-slide-index="9">
-            <div class="slide-title" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="LEADERSHIP" data-slot-locked-layout="true">LEADERSHIP</div>
-            <div class="slide-subtitle" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="The people driving our vision forward" data-slot-locked-layout="true">The people driving our vision forward</div>
+            <div class="slide-title" data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="LEADERSHIP" data-slot-locked-layout="true">LEADERSHIP</div>
+            <div class="slide-subtitle" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="The people driving our vision forward" data-slot-locked-layout="true">The people driving our vision forward</div>
             <div class="team-grid">
                 <div class="team-member">
                     <div class="member-avatar">JD</div>
-                    <div class="member-name" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Jordan Davis" data-slot-locked-layout="true">Jordan Davis</div>
-                    <div class="member-role" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Chief Executive" data-slot-locked-layout="true">Chief Executive</div>
+                    <div class="member-name" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Jordan Davis" data-slot-locked-layout="true">Jordan Davis</div>
+                    <div class="member-role" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Chief Executive" data-slot-locked-layout="true">Chief Executive</div>
                 </div>
                 <div class="team-member">
                     <div class="member-avatar">MK</div>
-                    <div class="member-name" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Morgan Kim" data-slot-locked-layout="true">Morgan Kim</div>
-                    <div class="member-role" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Head of Product" data-slot-locked-layout="true">Head of Product</div>
+                    <div class="member-name" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Morgan Kim" data-slot-locked-layout="true">Morgan Kim</div>
+                    <div class="member-role" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Head of Product" data-slot-locked-layout="true">Head of Product</div>
                 </div>
                 <div class="team-member">
                     <div class="member-avatar">SR</div>
-                    <div class="member-name" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Sam Rivera" data-slot-locked-layout="true">Sam Rivera</div>
-                    <div class="member-role" data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Creative Director" data-slot-locked-layout="true">Creative Director</div>
+                    <div class="member-name" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Sam Rivera" data-slot-locked-layout="true">Sam Rivera</div>
+                    <div class="member-role" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Creative Director" data-slot-locked-layout="true">Creative Director</div>
                 </div>
                 <div class="team-member">
                     <div class="member-avatar">TW</div>
-                    <div class="member-name" data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Taylor Wong" data-slot-locked-layout="true">Taylor Wong</div>
-                    <div class="member-role" data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="Operations Lead" data-slot-locked-layout="true">Operations Lead</div>
+                    <div class="member-name" data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Taylor Wong" data-slot-locked-layout="true">Taylor Wong</div>
+                    <div class="member-role" data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Operations Lead" data-slot-locked-layout="true">Operations Lead</div>
                 </div>
             </div>
 

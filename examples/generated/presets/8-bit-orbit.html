@@ -1164,6 +1164,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1735,9 +1745,9 @@
       <div class="pixel-particles" id="particles1"></div>
       <div class="slide-content" style="z-index:10;">
         <div class="hero-subtitle">Pixel Perfect Presentation System</div>
-        <h1 class="pixel-hero-text" style="text-align:center;" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="8-BITORBIT" data-slot-locked-layout="true">8-BIT<br>ORBIT</h1>
-        <p class="hero-tagline" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="A retro-futuristic deck engine for bold storytel" data-slot-locked-layout="true">A retro-futuristic deck engine for bold storytellers. Built for arcades, engineered for boardrooms.</p>
-        <div class="hero-badges" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="10 Slides CSS Native Zero Dependencies" data-slot-locked-layout="true">
+        <h1 class="pixel-hero-text" style="text-align:center;" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="8-BIT ORBIT" data-slot-locked-layout="true">8-BIT<br>ORBIT</h1>
+        <p class="hero-tagline" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="A retro-futuristic deck engine for bold storytel" data-slot-locked-layout="true">A retro-futuristic deck engine for bold storytellers. Built for arcades, engineered for boardrooms.</p>
+        <div class="hero-badges" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="10 Slides CSS Native Zero Dependencies" data-slot-locked-layout="true">
           <span class="hero-badge">10 Slides</span>
           <span class="hero-badge">CSS Native</span>
           <span class="hero-badge">Zero Dependencies</span>
@@ -1757,9 +1767,9 @@
               <div class="mouth"></div>
             </div>
           </div>
-          <div style="max-width: 460px;" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Mission Brief Rewiring How We Share Ideas Every " data-slot-locked-layout="true">
+          <div style="max-width: 460px;">
             <span class="pixel-label">Mission Brief</span>
-            <h2 style="color: var(--deep-navy); margin-bottom: 1.2rem; font-size: clamp(1.6rem, 3vw, 2.4rem);">Rewiring How We Share Ideas</h2>
+            <h2 style="color: var(--deep-navy); margin-bottom: 1.2rem; font-size: clamp(1.6rem, 3vw, 2.4rem);" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Rewiring How We Share Ideas" data-slot-locked-layout="true">Rewiring How We Share Ideas</h2>
             <p style="color: rgba(15,27,61,0.75); margin-bottom: 1rem;">
               Every presentation is an opportunity to transport your audience. This template fuses the tactile nostalgia of 16-bit aesthetics with modern typographic discipline.
             </p>
@@ -1777,28 +1787,28 @@
       <div class="slide-content">
         <div style="text-align: center; margin-bottom: 2.5rem;">
           <span class="pixel-label" style="background: var(--deep-navy); color: var(--neon-cyan);">Core Systems</span>
-          <h2 style="color: var(--deep-navy);">Four Engines Running</h2>
+          <h2 style="color: var(--deep-navy);" data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Four Engines Running" data-slot-locked-layout="true">Four Engines Running</h2>
         </div>
         <div class="feature-grid">
           <div class="feature-card">
             <div class="feature-icon cube"></div>
-            <h3 data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Modular Blocks" data-slot-locked-layout="true">Modular Blocks</h3>
-            <p data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Swap components without breaking the grid. Every" data-slot-locked-layout="true">Swap components without breaking the grid. Every element is containerized and responsive by default.</p>
+            <h3 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Modular Blocks" data-slot-locked-layout="true">Modular Blocks</h3>
+            <p data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Swap components without breaking the grid. Every" data-slot-locked-layout="true">Swap components without breaking the grid. Every element is containerized and responsive by default.</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon diamond"></div>
-            <h3 data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Crisp Vectors" data-slot-locked-layout="true">Crisp Vectors</h3>
-            <p data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="All visual effects are native CSS. No image asse" data-slot-locked-layout="true">All visual effects are native CSS. No image assets required for borders, shadows, or patterns.</p>
+            <h3 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Crisp Vectors" data-slot-locked-layout="true">Crisp Vectors</h3>
+            <p data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="All visual effects are native CSS. No image asse" data-slot-locked-layout="true">All visual effects are native CSS. No image assets required for borders, shadows, or patterns.</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon cross"></div>
-            <h3 data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Live Data" data-slot-locked-layout="true">Live Data</h3>
-            <p data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Chart slides accept dynamic values. Bars grow wi" data-slot-locked-layout="true">Chart slides accept dynamic values. Bars grow with CSS transitions triggered on navigation.</p>
+            <h3 data-edit-slot="s2-title-4" data-slot-type="text" data-slot-label="Live Data" data-slot-locked-layout="true">Live Data</h3>
+            <p data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Chart slides accept dynamic values. Bars grow wi" data-slot-locked-layout="true">Chart slides accept dynamic values. Bars grow with CSS transitions triggered on navigation.</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon circle"></div>
-            <h3 data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Retro Atmosphere" data-slot-locked-layout="true">Retro Atmosphere</h3>
-            <p data-edit-slot="s2-slot-8" data-slot-type="text" data-slot-label="Scanlines, CRT vignettes, starfields, and noise " data-slot-locked-layout="true">Scanlines, CRT vignettes, starfields, and noise layers create an immersive viewing environment.</p>
+            <h3 data-edit-slot="s2-title-5" data-slot-type="text" data-slot-label="Retro Atmosphere" data-slot-locked-layout="true">Retro Atmosphere</h3>
+            <p data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Scanlines, CRT vignettes, starfields, and noise " data-slot-locked-layout="true">Scanlines, CRT vignettes, starfields, and noise layers create an immersive viewing environment.</p>
           </div>
         </div>
       </div>
@@ -1812,7 +1822,7 @@
         <div class="chart-slide-layout">
           <div class="pixel-chart-title">
             <span class="pixel-label">Analytics Core</span>
-            <h2>Quarterly Growth Metrics</h2>
+            <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Quarterly Growth Metrics" data-slot-locked-layout="true">Quarterly Growth Metrics</h2>
             <p class="subtitle">Fiscal performance across four sectors &mdash; normalized index</p>
           </div>
           <div class="pixel-bar-chart" id="barChart">
@@ -1853,7 +1863,7 @@
         <div class="chart-slide-layout">
           <div class="pixel-chart-title" style="margin-bottom: 2.5rem;">
             <span class="pixel-label" style="background: var(--deep-navy); color: var(--neon-yellow);">System Load</span>
-            <h2 style="color: var(--deep-navy);">Resource Allocation</h2>
+            <h2 style="color: var(--deep-navy);" data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Resource Allocation" data-slot-locked-layout="true">Resource Allocation</h2>
             <p class="subtitle" style="color: rgba(15,27,61,0.6);">Percentage distribution across operational units</p>
           </div>
           <div class="pixel-hbar-chart" id="hbarChart">
@@ -1903,7 +1913,7 @@
       <div class="slide-content">
         <div style="text-align: center; margin-bottom: 2.5rem;">
           <span class="pixel-label">Chronology</span>
-          <h2 style="color: var(--deep-navy);">Development Roadmap</h2>
+          <h2 style="color: var(--deep-navy);" data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Development Roadmap" data-slot-locked-layout="true">Development Roadmap</h2>
         </div>
         <div class="timeline-container">
           <div class="timeline-line"></div>
@@ -1911,7 +1921,7 @@
             <div class="timeline-event">
               <div class="timeline-text">
                 <span class="date">Q1 2026</span>
-                <h4>Concept & Architecture</h4>
+                <h4 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Concept &amp; Architecture" data-slot-locked-layout="true">Concept & Architecture</h4>
                 <p>Wireframes, palette selection, and core grid system established.</p>
               </div>
               <div class="timeline-spacer">
@@ -1924,16 +1934,16 @@
               <div class="timeline-spacer">
                 <div class="timeline-node active"></div>
               </div>
-              <div class="timeline-text" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Q2 2026 Asset Generation Pixel components, icono" data-slot-locked-layout="true">
+              <div class="timeline-text">
                 <span class="date">Q2 2026</span>
-                <h4>Asset Generation</h4>
+                <h4 data-edit-slot="s5-title-3" data-slot-type="text" data-slot-label="Asset Generation" data-slot-locked-layout="true">Asset Generation</h4>
                 <p>Pixel components, iconography, and atmospheric effects coded.</p>
               </div>
             </div>
             <div class="timeline-event">
               <div class="timeline-text">
                 <span class="date">Q3 2026</span>
-                <h4>Data Integration</h4>
+                <h4 data-edit-slot="s5-title-4" data-slot-type="text" data-slot-label="Data Integration" data-slot-locked-layout="true">Data Integration</h4>
                 <p>Charting engine, animated counters, and dynamic state binding.</p>
               </div>
               <div class="timeline-spacer">
@@ -1946,9 +1956,9 @@
               <div class="timeline-spacer">
                 <div class="timeline-node"></div>
               </div>
-              <div class="timeline-text" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Q4 2026 Global Launch Public release with full d" data-slot-locked-layout="true">
+              <div class="timeline-text">
                 <span class="date">Q4 2026</span>
-                <h4>Global Launch</h4>
+                <h4 data-edit-slot="s5-title-5" data-slot-type="text" data-slot-label="Global Launch" data-slot-locked-layout="true">Global Launch</h4>
                 <p>Public release with full documentation and community support.</p>
               </div>
             </div>
@@ -1964,7 +1974,7 @@
       <div class="slide-content">
         <div style="text-align: center; margin-bottom: 2.5rem;">
           <span class="pixel-label">Live Telemetry</span>
-          <h2 style="color: var(--neon-cyan);">Platform Vitals</h2>
+          <h2 style="color: var(--neon-cyan);" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Platform Vitals" data-slot-locked-layout="true">Platform Vitals</h2>
           <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 0.5rem;">Real-time aggregate figures from active deployments</p>
         </div>
         <div class="stats-grid" id="statsGrid">
@@ -2009,7 +2019,7 @@
       <div class="slide-content">
         <div style="text-align: center; margin-bottom: 2.5rem;">
           <span class="pixel-label" style="background: var(--deep-navy); color: var(--neon-pink);">Access Tiers</span>
-          <h2 style="color: var(--deep-navy);">Choose Your Loadout</h2>
+          <h2 style="color: var(--deep-navy);" data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Choose Your Loadout" data-slot-locked-layout="true">Choose Your Loadout</h2>
         </div>
         <div class="tier-grid">
           <div class="tier-card">
@@ -2061,7 +2071,7 @@
       <div class="pixel-landscape" id="landscape10"></div>
       <div class="slide-content" style="z-index:10;">
         <div class="cta-content">
-          <h2>Ready Player<br>One?</h2>
+          <h2 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Ready Player One?" data-slot-locked-layout="true">Ready Player<br>One?</h2>
           <p>Deploy your first 8-BIT ORBIT deck in under sixty seconds. No dependencies. No friction. Just pure presentation power.</p>
           <div class="cta-buttons">
             <button class="pixel-btn">Initialize Deck</button>

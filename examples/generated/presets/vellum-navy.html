@@ -797,6 +797,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1364,14 +1374,14 @@
 
 <div id="deck" class="slides-offset stage" data-ported-template="vellum">
 <section class="slide light slide--cover" data-slide="1" style="position: relative" id="slide-0" data-template-slide-index="1">
-        <div class="cover-title" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Essay 01 · 2026 On Restraint Field notes on the " data-slot-locked-layout="true">
+        <div class="cover-title">
           <span class="kicker">Essay 01 · 2026</span>
-          <h1 class="display">On <em>Restraint</em></h1>
+          <h1 class="display" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="On Restraint" data-slot-locked-layout="true">On <em>Restraint</em></h1>
           <p class="lead" style="max-width: 70%; text-align: center; color: var(--c-fg-2)">
             Field notes on the discipline of less, written for designers who already know how to add.
           </p>
         </div>
-        <div class="pin-annotation" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="01 / 09 The Quiet Studio. Edition One." data-slot-locked-layout="true">
+        <div class="pin-annotation" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="01 / 09 The Quiet Studio. Edition One." data-slot-locked-layout="true">
           <span class="pin-note">01 / 09</span>
           <span class="pin-note">The Quiet Studio.</span>
           <span class="pin-note">Edition One.</span>
@@ -1381,13 +1391,13 @@
   </section>
 
 <section class="slide dark slide--statement" data-slide="2" style="position: relative" id="slide-1" data-template-slide-index="2">
-        <div class="slide-body" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="[The Argument] Most design problemsare removed, " data-slot-locked-layout="true">
+        <div class="slide-body">
           <span class="kicker">[The Argument]</span>
-          <h1 class="h1">
+          <h1 class="h1" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Most design problems are removed, not solved." data-slot-locked-layout="true">
             Most design problems<br />are <em>removed</em>, not solved.
           </h1>
         </div>
-        <div class="pin-annotation" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="02 / 09 Bold claim. Stand by it." data-slot-locked-layout="true">
+        <div class="pin-annotation" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="02 / 09 Bold claim. Stand by it." data-slot-locked-layout="true">
           <span class="pin-note">02 / 09</span>
           <span class="pin-note">Bold claim.</span>
           <span class="pin-note">Stand by it.</span>
@@ -1401,16 +1411,16 @@
           <span class="label" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="[Field Note 03]" data-slot-locked-layout="true">[Field Note 03]</span>
           <span class="label" data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="03" data-slot-locked-layout="true">03</span>
         </header>
-        <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: var(--gap-md); text-align: center; padding: 0 8vw" data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Observation What you remove is louderthan what y" data-slot-locked-layout="true">
+        <div class="slide-body" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: var(--gap-md); text-align: center; padding: 0 8vw">
           <span class="kicker">Observation</span>
-          <h2 class="h2">
+          <h2 class="h2" data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="What you remove is louder than what you keep." data-slot-locked-layout="true">
             What you <em>remove</em> is louder<br />than what you keep.
           </h2>
           <p class="lead" style="max-width: 64ch; color: var(--c-fg-2)">
             Subtraction creates the figure. Addition only fills the ground. Working drafts always carry more than they need; the work of editing is mostly the work of cutting.
           </p>
         </div>
-        <div class="pin-annotation" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="03 / 09 Show, don&#x27;t tell." data-slot-locked-layout="true">
+        <div class="pin-annotation" data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="03 / 09 Show, don&#x27;t tell." data-slot-locked-layout="true">
           <span class="pin-note">03 / 09</span>
           <span class="pin-note">Show, don't tell.</span>
         </div>
@@ -1424,7 +1434,7 @@
           <span class="label" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="04" data-slot-locked-layout="true">04</span>
         </header>
         <div class="slide-body">
-          <h2 class="h2" style="text-align: center">
+          <h2 class="h2" style="text-align: center" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Three findings from a year of editing." data-slot-locked-layout="true">
             Three findings from a year of <em>editing</em>.
           </h2>
           <div class="stats-row">
@@ -1459,7 +1469,7 @@
         <div class="slide-body">
           <div class="list-header">
             <span class="kicker">[Why It Matters]</span>
-            <h2 class="h2">
+            <h2 class="h2" data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Four rules that hold." data-slot-locked-layout="true">
               Four rules that <em>hold</em>.
             </h2>
           </div>
@@ -1504,7 +1514,7 @@
         <div class="slide-body">
           <div class="compare-panel left">
             <span class="compare-label" style="color: var(--c-fg-2)">Before</span>
-            <h3 class="h3">The <em>unfocused</em> draft</h3>
+            <h3 class="h3" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="The unfocused draft" data-slot-locked-layout="true">The <em>unfocused</em> draft</h3>
             <p class="lead" style="color: var(--c-fg-2)">
               Three points compete for the title slot. Two accent colors. The body copy is two paragraphs and ends mid-thought.
             </p>
@@ -1516,7 +1526,7 @@
           </div>
           <div class="compare-panel right">
             <span class="compare-label" style="color: var(--c-fg-2)">After</span>
-            <h3 class="h3">The <em>edited</em> piece</h3>
+            <h3 class="h3" data-edit-slot="s6-title-2" data-slot-type="text" data-slot-label="The edited piece" data-slot-locked-layout="true">The <em>edited</em> piece</h3>
             <p class="lead" style="color: var(--c-fg-2)">
               One claim takes the title. One accent does the work. The paragraph ends where the thought ends.
             </p>
@@ -1543,7 +1553,7 @@
         </header>
         <div class="slide-body">
           <div class="chart-header">
-            <h2 class="h2">How drafts <em>shrink</em> during editing.</h2>
+            <h2 class="h2" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="How drafts shrink during editing." data-slot-locked-layout="true">How drafts <em>shrink</em> during editing.</h2>
             <span class="label">Word count, indexed (start = 100)</span>
           </div>
           <div class="chart-wrapper">
@@ -1587,16 +1597,16 @@
   </section>
 
 <section class="slide light slide--end" data-slide="9" style="position: relative" id="slide-8" data-template-slide-index="9">
-        <div class="end-body" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="[End notes] Edit until it stopslooking edited. T" data-slot-locked-layout="true">
+        <div class="end-body">
           <span class="kicker">[End notes]</span>
-          <h1 class="h1">
+          <h1 class="h1" data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Edit until it stops looking edited." data-slot-locked-layout="true">
             Edit until it stops<br />looking <em>edited</em>.
           </h1>
           <p class="lead" style="color: var(--c-fg-2); max-width: 56ch">
             Thank you for reading. Comments, corrections, or quiet disagreement welcome at <span style="color: var(--c-emphasis)">notes@quiet-studio.com</span>.
           </p>
         </div>
-        <div class="pin-annotation" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="09 / 09 The Quiet Studio. Set in Cormorant + DM " data-slot-locked-layout="true">
+        <div class="pin-annotation" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="09 / 09 The Quiet Studio. Set in Cormorant + DM " data-slot-locked-layout="true">
           <span class="pin-note">09 / 09</span>
           <span class="pin-note">The Quiet Studio.</span>
           <span class="pin-note">Set in Cormorant + DM Sans.</span>

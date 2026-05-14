@@ -82,6 +82,20 @@ PORT_MANIFEST = [
 SLOT_TAGS = r"(h1|h2|h3|h4|p|li|td|th|figcaption|blockquote|cite|small|span|div)"
 BLOCK_TAG_RE = re.compile(r"</?(section|article|main|div|ul|ol|table|tbody|thead|tr|svg|canvas|deck-stage)\b", re.I)
 TEXT_RE = re.compile(r"[A-Za-z0-9\u4e00-\u9fff\[\]]")
+TITLE_LIKE_CLASSES = {
+    "title",
+    "ttl",
+    "headline",
+    "heading",
+    "deck-title",
+    "slide-title",
+    "stmt",
+    "h",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+}
 
 
 def load_ports() -> list[TemplatePort]:
@@ -287,6 +301,73 @@ def slot_type_for(tag: str, attrs: str) -> str:
     return "text"
 
 
+def class_tokens_from_attrs(attrs: str) -> set[str]:
+    cls_match = re.search(r'class=["\']([^"\']+)["\']', attrs, flags=re.I)
+    return set(cls_match.group(1).split()) if cls_match else set()
+
+
+def is_title_like_slot_candidate(tag: str, attrs: str) -> bool:
+    tag = tag.lower()
+    if tag in {"h1", "h2", "h3", "h4"}:
+        return True
+    return bool(class_tokens_from_attrs(attrs) & TITLE_LIKE_CLASSES)
+
+
+def slot_label_from_inner(inner: str, fallback: str) -> str:
+    text = re.sub(r"<br\s*/?>", " ", inner, flags=re.I)
+    label = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", text)).strip()[:48]
+    return label or fallback
+
+
+def should_mark_text_node(tag: str, attrs: str, inner: str) -> bool:
+    classes = " ".join(class_tokens_from_attrs(attrs)).lower()
+    if "data-edit-slot" in attrs or "aria-hidden" in attrs:
+        return False
+    if "data-edit-slot" in inner:
+        return False
+    if any(k in classes for k in ("xaxis", "yaxis", "axis", "ticks", "gridline")):
+        return False
+    if not TEXT_RE.search(re.sub(r"<[^>]+>", "", inner)):
+        return False
+    return not BLOCK_TAG_RE.search(inner)
+
+
+def mark_priority_text_slots(section: str, slide_index: int) -> str:
+    """Mark title-like inline nodes before generic slotting sees outer layout divs."""
+    slot_count = 0
+
+    def repl(match: re.Match[str]) -> str:
+        nonlocal slot_count
+        full = match.group(0)
+        tag = match.group(1).lower()
+        attrs = match.group(2) or ""
+        inner = match.group(3)
+        if not is_title_like_slot_candidate(tag, attrs):
+            return full
+        if not should_mark_text_node(tag, attrs, inner):
+            return full
+        slot_count += 1
+        slot_id = f"s{slide_index}-title-{slot_count}"
+        label = slot_label_from_inner(inner, slot_id)
+        return (
+            f'<{tag}{attrs} data-edit-slot="{slot_id}" '
+            f'data-slot-type="{slot_type_for(tag, attrs)}" '
+            f'data-slot-label="{html.escape(label, quote=True)}" '
+            'data-slot-locked-layout="true">'
+            f"{inner}</{tag}>"
+        )
+
+    heading_pattern = re.compile(r"<(h1|h2|h3|h4)\b([^>]*)>(.*?)</\1>", flags=re.S | re.I)
+    out = heading_pattern.sub(repl, section)
+    class_tokens = "|".join(re.escape(token) for token in sorted(TITLE_LIKE_CLASSES, key=len, reverse=True))
+    class_lookahead = (
+        rf'(?=[^>]*\bclass=["\']'
+        rf'(?:(?:{class_tokens})(?=\s|["\'])|[^"\']*\s(?:{class_tokens})(?=\s|["\'])))'
+    )
+    class_pattern = re.compile(rf"<(p|div|span)\b{class_lookahead}([^>]*)>(.*?)</\1>", flags=re.S | re.I)
+    return class_pattern.sub(repl, out)
+
+
 def mark_text_slots(section: str, slide_index: int) -> str:
     slot_count = 0
 
@@ -296,22 +377,12 @@ def mark_text_slots(section: str, slide_index: int) -> str:
         tag = match.group(1).lower()
         attrs = match.group(2) or ""
         inner = match.group(3)
-        cls_match = re.search(r'class=["\']([^"\']+)["\']', attrs, flags=re.I)
-        classes = cls_match.group(1).lower() if cls_match else ""
-        if "data-edit-slot" in attrs or "aria-hidden" in attrs:
-            return full
-        if "data-edit-slot" in inner:
-            return full
-        if any(k in classes for k in ("xaxis", "yaxis", "axis", "ticks", "gridline")):
-            return full
-        if not TEXT_RE.search(re.sub(r"<[^>]+>", "", inner)):
-            return full
-        if BLOCK_TAG_RE.search(inner):
+        if not should_mark_text_node(tag, attrs, inner):
             return full
         slot_count += 1
         slot_id = f"s{slide_index}-slot-{slot_count}"
         slot_type = slot_type_for(tag, attrs)
-        label = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", inner)).strip()[:48] or slot_id
+        label = slot_label_from_inner(inner, slot_id)
         return (
             f'<{tag}{attrs} data-edit-slot="{slot_id}" '
             f'data-slot-type="{slot_type}" '
@@ -380,6 +451,7 @@ def prepare_sections(sections: list[str]) -> str:
         section = ensure_slide_contract(section, i)
         section = replace_canvas_charts(section, i)
         section = mark_image_slots(section, i)
+        section = mark_priority_text_slots(section, i)
         section = mark_text_slots(section, i)
         rendered.append(section)
     return "\n\n".join(rendered)
@@ -446,6 +518,16 @@ PORT_BASE_CSS = """
     outline: 2px solid var(--deck-chrome-accent) !important;
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
+  }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
   }
   .static-chart-replacement {
     width: 100%;

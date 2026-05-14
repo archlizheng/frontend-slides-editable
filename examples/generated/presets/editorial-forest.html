@@ -659,6 +659,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1230,8 +1240,8 @@
       <span class="label">A Presentation Template</span>
       <div class="mark">01</div>
     </div>
-    <h1 data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="QuarterlyReview2026" data-slot-locked-layout="true">Quarterly<br/>Review<br/>2026</h1>
-    <div class="footline" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="Studio Placeholder Presented by Name Placeholder" data-slot-locked-layout="true">
+    <h1 data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Quarterly Review 2026" data-slot-locked-layout="true">Quarterly<br/>Review<br/>2026</h1>
+    <div class="footline" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Studio Placeholder Presented by Name Placeholder" data-slot-locked-layout="true">
       <span>Studio Placeholder</span>
       <span>Presented by Name Placeholder</span>
     </div>
@@ -1240,45 +1250,45 @@
   </section>
 
 <section class="agenda slide" data-screen-label="02 Agenda" id="slide-1" data-template-slide-index="2">
-    <div class="head" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Agenda. Five topics &amp;middot; ninety minutes" data-slot-locked-layout="true">
-      <h2>Agenda.</h2>
+    <div class="head">
+      <h2 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Agenda." data-slot-locked-layout="true">Agenda.</h2>
       <span class="label">Five topics &middot; ninety minutes</span>
     </div>
     <div class="agenda-grid">
       <div class="topic t-green">
         <div>
           <div class="num">01</div>
-          <h3 data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="Wherewe standtoday." data-slot-locked-layout="true">Where<br/>we stand<br/>today.</h3>
+          <h3 data-edit-slot="s1-title-2" data-slot-type="text" data-slot-label="Where we stand today." data-slot-locked-layout="true">Where<br/>we stand<br/>today.</h3>
         </div>
-        <div class="foot" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="Context" data-slot-locked-layout="true">Context</div>
+        <div class="foot" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Context" data-slot-locked-layout="true">Context</div>
       </div>
       <div class="topic t-pink">
         <div>
           <div class="num">02</div>
-          <h3 data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="The big shift." data-slot-locked-layout="true">The big shift.</h3>
+          <h3 data-edit-slot="s1-title-3" data-slot-type="text" data-slot-label="The big shift." data-slot-locked-layout="true">The big shift.</h3>
         </div>
-        <div class="foot" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="Insight" data-slot-locked-layout="true">Insight</div>
+        <div class="foot" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="Insight" data-slot-locked-layout="true">Insight</div>
       </div>
       <div class="topic t-cream">
         <div>
           <div class="num">03</div>
-          <h3 data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="By the numbers." data-slot-locked-layout="true">By the numbers.</h3>
+          <h3 data-edit-slot="s1-title-4" data-slot-type="text" data-slot-label="By the numbers." data-slot-locked-layout="true">By the numbers.</h3>
         </div>
-        <div class="foot" data-edit-slot="s1-slot-7" data-slot-type="text" data-slot-label="Data" data-slot-locked-layout="true">Data</div>
+        <div class="foot" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="Data" data-slot-locked-layout="true">Data</div>
       </div>
       <div class="topic t-greenLite">
         <div>
           <div class="num">04</div>
-          <h3 data-edit-slot="s1-slot-8" data-slot-type="text" data-slot-label="How we&amp;rsquo;ll get there." data-slot-locked-layout="true">How we&rsquo;ll get there.</h3>
+          <h3 data-edit-slot="s1-title-5" data-slot-type="text" data-slot-label="How we&amp;rsquo;ll get there." data-slot-locked-layout="true">How we&rsquo;ll get there.</h3>
         </div>
-        <div class="foot" data-edit-slot="s1-slot-9" data-slot-type="text" data-slot-label="Plan" data-slot-locked-layout="true">Plan</div>
+        <div class="foot" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="Plan" data-slot-locked-layout="true">Plan</div>
       </div>
       <div class="topic t-pink">
         <div>
           <div class="num">05</div>
-          <h3 data-edit-slot="s1-slot-10" data-slot-type="text" data-slot-label="What it adds up to." data-slot-locked-layout="true">What it adds up to.</h3>
+          <h3 data-edit-slot="s1-title-6" data-slot-type="text" data-slot-label="What it adds up to." data-slot-locked-layout="true">What it adds up to.</h3>
         </div>
-        <div class="foot" data-edit-slot="s1-slot-11" data-slot-type="text" data-slot-label="Outcomes" data-slot-locked-layout="true">Outcomes</div>
+        <div class="foot" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="Outcomes" data-slot-locked-layout="true">Outcomes</div>
       </div>
     </div>
 
@@ -1311,13 +1321,13 @@
     </div>
     <div class="col-text">
       <div class="eyebrow">The big shift</div>
-      <h2 data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Fewer bets, stronger commitments." data-slot-locked-layout="true">Fewer bets, stronger commitments.</h2>
-      <p data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Placeholder body copy sits here as a stand&amp;#8209" data-slot-locked-layout="true">Placeholder body copy sits here as a stand&#8209;in for the supporting narrative. Open with the point you want the audience to remember when they walk out of the room.</p>
-      <p data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="Use the second paragraph to add proof &amp;mdash; a " data-slot-locked-layout="true">Use the second paragraph to add proof &mdash; a customer, a moment in market, a number that earns the claim. Keep one idea per paragraph; trust the audience to follow.</p>
+      <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Fewer bets, stronger commitments." data-slot-locked-layout="true">Fewer bets, stronger commitments.</h2>
+      <p data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Placeholder body copy sits here as a stand&amp;#8209" data-slot-locked-layout="true">Placeholder body copy sits here as a stand&#8209;in for the supporting narrative. Open with the point you want the audience to remember when they walk out of the room.</p>
+      <p data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Use the second paragraph to add proof &amp;mdash; a " data-slot-locked-layout="true">Use the second paragraph to add proof &mdash; a customer, a moment in market, a number that earns the claim. Keep one idea per paragraph; trust the audience to follow.</p>
       <dl class="meta">
-        <div data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="OwnerTeam Placeholder" data-slot-locked-layout="true"><dt>Owner</dt><dd>Team Placeholder</dd></div>
-        <div data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="TimeframeQ2 &amp;mdash; Q4" data-slot-locked-layout="true"><dt>Timeframe</dt><dd>Q2 &mdash; Q4</dd></div>
-        <div data-edit-slot="s3-slot-7" data-slot-type="text" data-slot-label="StatusOn track" data-slot-locked-layout="true"><dt>Status</dt><dd>On track</dd></div>
+        <div data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="OwnerTeam Placeholder" data-slot-locked-layout="true"><dt>Owner</dt><dd>Team Placeholder</dd></div>
+        <div data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="TimeframeQ2 &amp;mdash; Q4" data-slot-locked-layout="true"><dt>Timeframe</dt><dd>Q2 &mdash; Q4</dd></div>
+        <div data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="StatusOn track" data-slot-locked-layout="true"><dt>Status</dt><dd>On track</dd></div>
       </dl>
     </div>
 
@@ -1328,9 +1338,9 @@
     <div class="head">
       <div>
         <div class="label">By the numbers</div>
-        <h2 data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Revenue by quarter,year over year." data-slot-locked-layout="true">Revenue by quarter,<br/>year over year.</h2>
+        <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Revenue by quarter, year over year." data-slot-locked-layout="true">Revenue by quarter,<br/>year over year.</h2>
       </div>
-      <div class="legend" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="This year Last year" data-slot-locked-layout="true">
+      <div class="legend" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="This year Last year" data-slot-locked-layout="true">
         <span><span class="sw" style="background: var(--pink);"></span>This year</span>
         <span><span class="sw" style="background: var(--cream);"></span>Last year</span>
       </div>
@@ -1344,26 +1354,26 @@
         <div class="grid-lines"></div>
         <div class="bar-group"><div class="bar-pair">
           <div class="bar a" style="height: 62%;"><span class="val">62</span></div>
-          <div class="bar b" style="height: 48%;" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="48" data-slot-locked-layout="true"><span class="val">48</span></div>
+          <div class="bar b" style="height: 48%;" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="48" data-slot-locked-layout="true"><span class="val">48</span></div>
         </div></div>
         <div class="bar-group"><div class="bar-pair">
           <div class="bar a" style="height: 74%;"><span class="val">74</span></div>
-          <div class="bar b" style="height: 55%;" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="55" data-slot-locked-layout="true"><span class="val">55</span></div>
+          <div class="bar b" style="height: 55%;" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="55" data-slot-locked-layout="true"><span class="val">55</span></div>
         </div></div>
         <div class="bar-group"><div class="bar-pair">
           <div class="bar a" style="height: 81%;"><span class="val">81</span></div>
-          <div class="bar b" style="height: 67%;" data-edit-slot="s4-slot-5" data-slot-type="text" data-slot-label="67" data-slot-locked-layout="true"><span class="val">67</span></div>
+          <div class="bar b" style="height: 67%;" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="67" data-slot-locked-layout="true"><span class="val">67</span></div>
         </div></div>
         <div class="bar-group"><div class="bar-pair">
           <div class="bar a" style="height: 88%;"><span class="val">88</span></div>
-          <div class="bar b" style="height: 72%;" data-edit-slot="s4-slot-6" data-slot-type="text" data-slot-label="72" data-slot-locked-layout="true"><span class="val">72</span></div>
+          <div class="bar b" style="height: 72%;" data-edit-slot="s4-slot-5" data-slot-type="text" data-slot-label="72" data-slot-locked-layout="true"><span class="val">72</span></div>
         </div></div>
         <div class="bar-group"><div class="bar-pair">
           <div class="bar a" style="height: 92%;"><span class="val">92</span></div>
-          <div class="bar b" style="height: 78%;" data-edit-slot="s4-slot-7" data-slot-type="text" data-slot-label="78" data-slot-locked-layout="true"><span class="val">78</span></div>
+          <div class="bar b" style="height: 78%;" data-edit-slot="s4-slot-6" data-slot-type="text" data-slot-label="78" data-slot-locked-layout="true"><span class="val">78</span></div>
         </div></div>
       </div>
-      <div class="xlabel-row" data-edit-slot="s4-slot-8" data-slot-type="text" data-slot-label="Q1 Q2 Q3 Q4 YTD" data-slot-locked-layout="true">
+      <div class="xlabel-row" data-edit-slot="s4-slot-7" data-slot-type="text" data-slot-label="Q1 Q2 Q3 Q4 YTD" data-slot-locked-layout="true">
         <span class="xlabel">Q1</span>
         <span class="xlabel">Q2</span>
         <span class="xlabel">Q3</span>
@@ -1372,7 +1382,7 @@
       </div>
     </div>
 
-    <div class="footnote" data-edit-slot="s4-slot-9" data-slot-type="text" data-slot-label="Source &amp;middot; Internal data, 2026 Indexed to p" data-slot-locked-layout="true">
+    <div class="footnote" data-edit-slot="s4-slot-8" data-slot-type="text" data-slot-label="Source &amp;middot; Internal data, 2026 Indexed to p" data-slot-locked-layout="true">
       <span>Source &middot; Internal data, 2026</span>
       <span>Indexed to plan</span>
     </div>
@@ -1385,32 +1395,32 @@
       <span class="label">How we&rsquo;ll get there</span>
       <span class="label">Four steps</span>
     </div>
-    <h2 data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="A simple plan,in four moves." data-slot-locked-layout="true">A simple plan,<br/>in four moves.</h2>
+    <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="A simple plan, in four moves." data-slot-locked-layout="true">A simple plan,<br/>in four moves.</h2>
 
     <div class="flow">
       <div class="step">
         <div class="num">Step 01</div>
-        <h3 data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Listen" data-slot-locked-layout="true">Listen</h3>
-        <p data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Open the quarter with structured conversations a" data-slot-locked-layout="true">Open the quarter with structured conversations across teams. Capture what we hear without filtering.</p>
-        <div class="marker" data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Weeks 1&amp;ndash;2Owner" data-slot-locked-layout="true"><span>Weeks 1&ndash;2</span><span>Owner</span></div>
+        <h3 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Listen" data-slot-locked-layout="true">Listen</h3>
+        <p data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Open the quarter with structured conversations a" data-slot-locked-layout="true">Open the quarter with structured conversations across teams. Capture what we hear without filtering.</p>
+        <div class="marker" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Weeks 1&amp;ndash;2Owner" data-slot-locked-layout="true"><span>Weeks 1&ndash;2</span><span>Owner</span></div>
       </div>
       <div class="step pinkfill">
         <div class="num">Step 02</div>
-        <h3 data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Align" data-slot-locked-layout="true">Align</h3>
-        <p data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Cluster signals into themes. Name them plainly s" data-slot-locked-layout="true">Cluster signals into themes. Name them plainly so everyone uses the same language in every room.</p>
-        <div class="marker" data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="Week 3Owner" data-slot-locked-layout="true"><span>Week 3</span><span>Owner</span></div>
+        <h3 data-edit-slot="s5-title-3" data-slot-type="text" data-slot-label="Align" data-slot-locked-layout="true">Align</h3>
+        <p data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Cluster signals into themes. Name them plainly s" data-slot-locked-layout="true">Cluster signals into themes. Name them plainly so everyone uses the same language in every room.</p>
+        <div class="marker" data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Week 3Owner" data-slot-locked-layout="true"><span>Week 3</span><span>Owner</span></div>
       </div>
       <div class="step fill">
         <div class="num">Step 03</div>
-        <h3 data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="Build" data-slot-locked-layout="true">Build</h3>
-        <p data-edit-slot="s5-slot-10" data-slot-type="text" data-slot-label="Translate the themes into a short list of bets. " data-slot-locked-layout="true">Translate the themes into a short list of bets. Decide what we&rsquo;re keeping, and what we&rsquo;re cutting.</p>
-        <div class="marker" data-edit-slot="s5-slot-11" data-slot-type="text" data-slot-label="Weeks 4&amp;ndash;6Owner" data-slot-locked-layout="true"><span>Weeks 4&ndash;6</span><span>Owner</span></div>
+        <h3 data-edit-slot="s5-title-4" data-slot-type="text" data-slot-label="Build" data-slot-locked-layout="true">Build</h3>
+        <p data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Translate the themes into a short list of bets. " data-slot-locked-layout="true">Translate the themes into a short list of bets. Decide what we&rsquo;re keeping, and what we&rsquo;re cutting.</p>
+        <div class="marker" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Weeks 4&amp;ndash;6Owner" data-slot-locked-layout="true"><span>Weeks 4&ndash;6</span><span>Owner</span></div>
       </div>
       <div class="step">
         <div class="num">Step 04</div>
-        <h3 data-edit-slot="s5-slot-12" data-slot-type="text" data-slot-label="Ship" data-slot-locked-layout="true">Ship</h3>
-        <p data-edit-slot="s5-slot-13" data-slot-type="text" data-slot-label="Put the work in market on a known cadence. Measu" data-slot-locked-layout="true">Put the work in market on a known cadence. Measure against the plan; adjust without losing the thread.</p>
-        <div class="marker" data-edit-slot="s5-slot-14" data-slot-type="text" data-slot-label="Weeks 7&amp;ndash;12Owner" data-slot-locked-layout="true"><span>Weeks 7&ndash;12</span><span>Owner</span></div>
+        <h3 data-edit-slot="s5-title-5" data-slot-type="text" data-slot-label="Ship" data-slot-locked-layout="true">Ship</h3>
+        <p data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="Put the work in market on a known cadence. Measu" data-slot-locked-layout="true">Put the work in market on a known cadence. Measure against the plan; adjust without losing the thread.</p>
+        <div class="marker" data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="Weeks 7&amp;ndash;12Owner" data-slot-locked-layout="true"><span>Weeks 7&ndash;12</span><span>Owner</span></div>
       </div>
     </div>
 
@@ -1422,7 +1432,7 @@
       <span class="label">What it adds up to</span>
       <span class="label">Year to date</span>
     </div>
-    <h2 data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Three numbers thattell the story." data-slot-locked-layout="true">Three numbers that<br/>tell the story.</h2>
+    <h2 data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Three numbers that tell the story." data-slot-locked-layout="true">Three numbers that<br/>tell the story.</h2>
 
     <div class="kpi-row">
       <div class="kpi">
@@ -1430,12 +1440,12 @@
         <span class="big">+42<span class="unit">%</span></span>
         <p class="desc">Year over year increase in active accounts, ahead of the plan we set in January.</p>
       </div>
-      <div class="kpi" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Retention 94% Net retention across the top custo" data-slot-locked-layout="true">
+      <div class="kpi" data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Retention 94% Net retention across the top custo" data-slot-locked-layout="true">
         <span class="tag">Retention</span>
         <span class="big">94<span class="unit">%</span></span>
         <p class="desc">Net retention across the top customer cohort, a four&#8209;point lift from last year.</p>
       </div>
-      <div class="kpi" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Reach 3.1M People served this quarter, across th" data-slot-locked-layout="true">
+      <div class="kpi" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Reach 3.1M People served this quarter, across th" data-slot-locked-layout="true">
         <span class="tag">Reach</span>
         <span class="big">3.1<span class="unit">M</span></span>
         <p class="desc">People served this quarter, across the markets we entered in the spring.</p>
@@ -1450,18 +1460,18 @@
       <span class="label">In summary</span>
       <span class="label">Thank you</span>
     </div>
-    <h2 data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Threethings to take." data-slot-locked-layout="true">Three<br/>things to take.</h2>
+    <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Three things to take." data-slot-locked-layout="true">Three<br/>things to take.</h2>
     <div class="grid-cols">
       <div>
-        <h4>One</h4>
+        <h4 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="One" data-slot-locked-layout="true">One</h4>
         <p>The strategy holds. We are doing fewer things, and the right things.</p>
       </div>
-      <div data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Two The numbers back the bets. Growth, retention" data-slot-locked-layout="true">
-        <h4>Two</h4>
+      <div>
+        <h4 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Two" data-slot-locked-layout="true">Two</h4>
         <p>The numbers back the bets. Growth, retention, and reach are all ahead of plan.</p>
       </div>
-      <div data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Three Next quarter, we keep the pace and add foc" data-slot-locked-layout="true">
-        <h4>Three</h4>
+      <div>
+        <h4 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Three" data-slot-locked-layout="true">Three</h4>
         <p>Next quarter, we keep the pace and add focus where the data points us.</p>
       </div>
     </div>

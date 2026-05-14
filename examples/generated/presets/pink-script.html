@@ -334,6 +334,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -908,7 +918,7 @@
     <div class="stage">
       <div class="pre">A Field Report on Late-Night Couture</div>
       <div class="title-wrap">
-        <div class="title">After<span class="l2">Hours.</span></div>
+        <div class="title" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="AfterHours." data-slot-locked-layout="true">After<span class="l2">Hours.</span></div>
       </div>
       <div class="sub" style="margin:0"></div>
     </div>
@@ -941,12 +951,12 @@
 <section class="slide s-toc" data-label="02 The Index" data-om-validate="false" id="slide-1" data-template-slide-index="2">
     <div class="runner" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="After HoursThe Index" data-slot-locked-layout="true"><span class="brand">After Hours</span><span>The Index</span></div>
     <div class="body">
-      <h1>The<br><span class="small">Index.</span></h1>
+      <h1 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="The Index." data-slot-locked-layout="true">The<br><span class="small">Index.</span></h1>
       <div class="rows">
         <div class="row">
           <div class="num">01</div>
           <div>
-            <div class="title">By the Numbers</div>
+            <div class="title" data-edit-slot="s1-title-2" data-slot-type="text" data-slot-label="By the Numbers" data-slot-locked-layout="true">By the Numbers</div>
             <div class="desc" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="Five figures that shape the season." data-slot-locked-layout="true">Five figures that shape the season.</div>
           </div>
           <div class="meta" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="Stats · pp. 14" data-slot-locked-layout="true">Stats · pp. 14</div>
@@ -954,7 +964,7 @@
         <div class="row cur">
           <div class="num">02</div>
           <div>
-            <div class="title">Movements</div>
+            <div class="title" data-edit-slot="s1-title-3" data-slot-type="text" data-slot-label="Movements" data-slot-locked-layout="true">Movements</div>
             <div class="desc" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="A study in cuts, color, and silhouette." data-slot-locked-layout="true">A study in cuts, color, and silhouette.</div>
           </div>
           <div class="meta" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="Section · pp. 22" data-slot-locked-layout="true">Section · pp. 22</div>
@@ -962,7 +972,7 @@
         <div class="row">
           <div class="num">03</div>
           <div>
-            <div class="title">The Curve</div>
+            <div class="title" data-edit-slot="s1-title-4" data-slot-type="text" data-slot-label="The Curve" data-slot-locked-layout="true">The Curve</div>
             <div class="desc" data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Twelve weeks of after-hours behavior." data-slot-locked-layout="true">Twelve weeks of after-hours behavior.</div>
           </div>
           <div class="meta" data-edit-slot="s1-slot-7" data-slot-type="text" data-slot-label="Chart · pp. 36" data-slot-locked-layout="true">Chart · pp. 36</div>
@@ -970,7 +980,7 @@
         <div class="row">
           <div class="num">04</div>
           <div>
-            <div class="title">The Field</div>
+            <div class="title" data-edit-slot="s1-title-5" data-slot-type="text" data-slot-label="The Field" data-slot-locked-layout="true">The Field</div>
             <div class="desc" data-edit-slot="s1-slot-8" data-slot-type="text" data-slot-label="Where we sit among the houses we admire." data-slot-locked-layout="true">Where we sit among the houses we admire.</div>
           </div>
           <div class="meta" data-edit-slot="s1-slot-9" data-slot-type="text" data-slot-label="Matrix · pp. 48" data-slot-locked-layout="true">Matrix · pp. 48</div>
@@ -978,7 +988,7 @@
         <div class="row">
           <div class="num">05</div>
           <div>
-            <div class="title">Voices &amp; Encore</div>
+            <div class="title" data-edit-slot="s1-title-6" data-slot-type="text" data-slot-label="Voices &amp;amp; Encore" data-slot-locked-layout="true">Voices &amp; Encore</div>
             <div class="desc" data-edit-slot="s1-slot-10" data-slot-type="text" data-slot-label="Critics, clients, and what comes next." data-slot-locked-layout="true">Critics, clients, and what comes next.</div>
           </div>
           <div class="meta" data-edit-slot="s1-slot-11" data-slot-type="text" data-slot-label="pp. 60–72" data-slot-locked-layout="true">pp. 60–72</div>
@@ -995,50 +1005,50 @@
     <div class="body">
       <div class="left">
         <div class="kicker">By the Numbers</div>
-        <div data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="A seasontold infive figures." data-slot-locked-layout="true">
-          <h2>A season<br>told in<br><em>five</em> figures.</h2>
+        <div>
+          <h2 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="A season told in five figures." data-slot-locked-layout="true">A season<br>told in<br><em>five</em> figures.</h2>
         </div>
-        <p data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Read top to bottom. Every figure was reported by" data-slot-locked-layout="true">Read top to bottom. Every figure was reported by atelier directors during the eight-week previewing window and represents the house ledger only.</p>
+        <p data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Read top to bottom. Every figure was reported by" data-slot-locked-layout="true">Read top to bottom. Every figure was reported by atelier directors during the eight-week previewing window and represents the house ledger only.</p>
       </div>
       <div class="right">
         <div class="stat">
           <div class="figure">42<sup>%</sup></div>
           <div class="meta">
             <div class="lab">Couture · Repeat Clients</div>
-            <div class="desc" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Patrons who returned within ninety days for a se" data-slot-locked-layout="true">Patrons who returned within ninety days for a second commission.</div>
+            <div class="desc" data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Patrons who returned within ninety days for a se" data-slot-locked-layout="true">Patrons who returned within ninety days for a second commission.</div>
           </div>
         </div>
         <div class="stat">
           <div class="figure">3.8<sup>×</sup></div>
           <div class="meta">
             <div class="lab">Atelier Throughput</div>
-            <div class="desc" data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Pieces released per machinist per week, measured" data-slot-locked-layout="true">Pieces released per machinist per week, measured against the prior Spring book.</div>
+            <div class="desc" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Pieces released per machinist per week, measured" data-slot-locked-layout="true">Pieces released per machinist per week, measured against the prior Spring book.</div>
           </div>
         </div>
         <div class="stat">
           <div class="figure">€1.4<sup>M</sup></div>
           <div class="meta">
             <div class="lab">Average Ticket · Vault</div>
-            <div class="desc" data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Mean spend per private appointment in the Vault " data-slot-locked-layout="true">Mean spend per private appointment in the Vault programme this quarter.</div>
+            <div class="desc" data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Mean spend per private appointment in the Vault " data-slot-locked-layout="true">Mean spend per private appointment in the Vault programme this quarter.</div>
           </div>
         </div>
         <div class="stat">
           <div class="figure">86<sup>%</sup></div>
           <div class="meta">
             <div class="lab">Reservation Rate</div>
-            <div class="desc" data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Show seats filled before the public window opene" data-slot-locked-layout="true">Show seats filled before the public window opened.</div>
+            <div class="desc" data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Show seats filled before the public window opene" data-slot-locked-layout="true">Show seats filled before the public window opened.</div>
           </div>
         </div>
         <div class="stat">
           <div class="figure">07</div>
           <div class="meta">
             <div class="lab">New Cities, A/W</div>
-            <div class="desc" data-edit-slot="s2-slot-8" data-slot-type="text" data-slot-label="Markets opened with a flagship boutique since th" data-slot-locked-layout="true">Markets opened with a flagship boutique since the prior season.</div>
+            <div class="desc" data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Markets opened with a flagship boutique since th" data-slot-locked-layout="true">Markets opened with a flagship boutique since the prior season.</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s2-slot-9" data-slot-type="text" data-slot-label="Source · Atelier Ledger Q103 / 09" data-slot-locked-layout="true"><span>Source · Atelier Ledger Q1</span><span class="pageno"><em>03</em> / 09</span></div>
+    <div class="footer" data-edit-slot="s2-slot-8" data-slot-type="text" data-slot-label="Source · Atelier Ledger Q103 / 09" data-slot-locked-layout="true"><span>Source · Atelier Ledger Q1</span><span class="pageno"><em>03</em> / 09</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1051,10 +1061,10 @@
     </div>
     <div class="right">
       <div class="kicker">Movements</div>
-      <h2 data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="A studyin cuts&amp;amp; color." data-slot-locked-layout="true">A study<br>in cuts<br>&amp; color.</h2>
-      <p data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="Three silhouettes carry the season — the column," data-slot-locked-layout="true">Three silhouettes carry the season — the column, the cape, and the cinch. Each is annotated in the chapters that follow.</p>
+      <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="A study in cuts &amp;amp; color." data-slot-locked-layout="true">A study<br>in cuts<br>&amp; color.</h2>
+      <p data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Three silhouettes carry the season — the column," data-slot-locked-layout="true">Three silhouettes carry the season — the column, the cape, and the cinch. Each is annotated in the chapters that follow.</p>
     </div>
-    <div class="footer" data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="Chapter 02 of 0504 / 09" data-slot-locked-layout="true"><span>Chapter 02 of 05</span><span class="pageno"><em>04</em> / 09</span></div>
+    <div class="footer" data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="Chapter 02 of 0504 / 09" data-slot-locked-layout="true"><span>Chapter 02 of 05</span><span class="pageno"><em>04</em> / 09</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1062,7 +1072,7 @@
 <section class="slide s-chart" data-label="05 The Curve" data-om-validate="false" id="slide-4" data-template-slide-index="5">
     <div class="runner" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Chapter 03The Curve" data-slot-locked-layout="true"><span class="brand">Chapter 03</span><span>The Curve</span></div>
     <div class="head">
-      <h2>Twelve weeks of <em>after-hours</em><br>behavior.</h2>
+      <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Twelve weeks of after-hours behavior." data-slot-locked-layout="true">Twelve weeks of <em>after-hours</em><br>behavior.</h2>
       <div class="legend">
         <div class="li"><i></i>House · A/W26</div>
         <div class="li b" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Sector benchmark" data-slot-locked-layout="true"><i></i>Sector benchmark</div>
@@ -1107,48 +1117,48 @@
 <section class="slide s-process" data-label="06 Process" data-om-validate="false" id="slide-5" data-template-slide-index="6">
     <div class="runner" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Chapter 04The Method" data-slot-locked-layout="true"><span class="brand">Chapter 04</span><span>The Method</span></div>
     <div class="head">
-      <h2>The<br><em>method.</em></h2>
+      <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="The method." data-slot-locked-layout="true">The<br><em>method.</em></h2>
       <div class="lead">From sketchbook to runway in five movements. The atelier's tempo is dictated by the cloth, never the calendar.</div>
     </div>
     <div class="row">
       <div class="step">
         <div class="n">01</div>
-        <h3 data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Brief" data-slot-locked-layout="true">Brief</h3>
-        <p data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="The house director and head couturier convene wi" data-slot-locked-layout="true">The house director and head couturier convene with three muses to set the season's mood.</p>
+        <h3 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Brief" data-slot-locked-layout="true">Brief</h3>
+        <p data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="The house director and head couturier convene wi" data-slot-locked-layout="true">The house director and head couturier convene with three muses to set the season's mood.</p>
         <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 5l7 7-7 7"/></svg>
       </div>
       <div class="step">
         <div class="n">02</div>
-        <h3 data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Pattern" data-slot-locked-layout="true">Pattern</h3>
-        <p data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Toiles cut in calico. Each silhouette is fitted " data-slot-locked-layout="true">Toiles cut in calico. Each silhouette is fitted three times before approval is granted on the floor.</p>
+        <h3 data-edit-slot="s5-title-3" data-slot-type="text" data-slot-label="Pattern" data-slot-locked-layout="true">Pattern</h3>
+        <p data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Toiles cut in calico. Each silhouette is fitted " data-slot-locked-layout="true">Toiles cut in calico. Each silhouette is fitted three times before approval is granted on the floor.</p>
         <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 5l7 7-7 7"/></svg>
       </div>
       <div class="step">
         <div class="n">03</div>
-        <h3 data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Atelier" data-slot-locked-layout="true">Atelier</h3>
-        <p data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Cloth is cut on the bias. Hand-stitched seams. N" data-slot-locked-layout="true">Cloth is cut on the bias. Hand-stitched seams. No piece leaves the atelier without two signatures.</p>
+        <h3 data-edit-slot="s5-title-4" data-slot-type="text" data-slot-label="Atelier" data-slot-locked-layout="true">Atelier</h3>
+        <p data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Cloth is cut on the bias. Hand-stitched seams. N" data-slot-locked-layout="true">Cloth is cut on the bias. Hand-stitched seams. No piece leaves the atelier without two signatures.</p>
         <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 5l7 7-7 7"/></svg>
       </div>
       <div class="step">
         <div class="n">04</div>
-        <h3 data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="Fitting" data-slot-locked-layout="true">Fitting</h3>
-        <p data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="Private appointments held by candlelight in the " data-slot-locked-layout="true">Private appointments held by candlelight in the Vault. Clients touch the cloth before the look is final.</p>
+        <h3 data-edit-slot="s5-title-5" data-slot-type="text" data-slot-label="Fitting" data-slot-locked-layout="true">Fitting</h3>
+        <p data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Private appointments held by candlelight in the " data-slot-locked-layout="true">Private appointments held by candlelight in the Vault. Clients touch the cloth before the look is final.</p>
         <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 5l7 7-7 7"/></svg>
       </div>
       <div class="step">
         <div class="n">05</div>
-        <h3 data-edit-slot="s5-slot-10" data-slot-type="text" data-slot-label="Runway" data-slot-locked-layout="true">Runway</h3>
-        <p data-edit-slot="s5-slot-11" data-slot-type="text" data-slot-label="Twelve looks shown. The collection is sold by ap" data-slot-locked-layout="true">Twelve looks shown. The collection is sold by appointment for ninety days before the public window opens.</p>
+        <h3 data-edit-slot="s5-title-6" data-slot-type="text" data-slot-label="Runway" data-slot-locked-layout="true">Runway</h3>
+        <p data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Twelve looks shown. The collection is sold by ap" data-slot-locked-layout="true">Twelve looks shown. The collection is sold by appointment for ninety days before the public window opens.</p>
       </div>
     </div>
-    <div class="timeline" data-edit-slot="s5-slot-12" data-slot-type="text" data-slot-label="Wk 01–02 Brief Wk 03–06 Pattern Wk 07–10 Atelier" data-slot-locked-layout="true">
+    <div class="timeline" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Wk 01–02 Brief Wk 03–06 Pattern Wk 07–10 Atelier" data-slot-locked-layout="true">
       <span>Wk 01–02 <em>Brief</em></span>
       <span>Wk 03–06 <em>Pattern</em></span>
       <span>Wk 07–10 <em>Atelier</em></span>
       <span>Wk 11–12 <em>Fitting</em></span>
       <span>Wk 13 <em>Runway</em></span>
     </div>
-    <div class="footer" data-edit-slot="s5-slot-13" data-slot-type="text" data-slot-label="Atelier Method · House Standard06 / 09" data-slot-locked-layout="true"><span>Atelier Method · House Standard</span><span class="pageno"><em>06</em> / 09</span></div>
+    <div class="footer" data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="Atelier Method · House Standard06 / 09" data-slot-locked-layout="true"><span>Atelier Method · House Standard</span><span class="pageno"><em>06</em> / 09</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1156,7 +1166,7 @@
 <section class="slide s-matrix" data-label="07 The Field" data-om-validate="false" id="slide-6" data-template-slide-index="7">
     <div class="runner" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Chapter 05The Field" data-slot-locked-layout="true"><span class="brand">Chapter 05</span><span>The Field</span></div>
     <div class="head">
-      <h2>The<br><em>field</em>, in five rows.</h2>
+      <h2 data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="The field, in five rows." data-slot-locked-layout="true">The<br><em>field</em>, in five rows.</h2>
       <div class="source">Sourced · house registers, public filings, three trade press indices · A/W 2026</div>
     </div>
     <div class="table">
@@ -1222,23 +1232,23 @@
     <div class="body">
       <div class="top">
         <div class="pre">An invitation</div>
-        <h2 data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Encore.The list opensthis Friday." data-slot-locked-layout="true"><em>Encore.</em><br>The list opens<br>this Friday.</h2>
+        <h2 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Encore. The list opens this Friday." data-slot-locked-layout="true"><em>Encore.</em><br>The list opens<br>this Friday.</h2>
       </div>
       <div class="bottom">
         <div class="step">
           <div class="n">01</div>
-          <h3 data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Reserve" data-slot-locked-layout="true">Reserve</h3>
-          <p data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Hold a Vault appointment for the week of 24 May." data-slot-locked-layout="true">Hold a Vault appointment for the week of 24 May. Couture only.</p>
+          <h3 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="Reserve" data-slot-locked-layout="true">Reserve</h3>
+          <p data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Hold a Vault appointment for the week of 24 May." data-slot-locked-layout="true">Hold a Vault appointment for the week of 24 May. Couture only.</p>
         </div>
         <div class="step">
           <div class="n">02</div>
-          <h3 data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Preview" data-slot-locked-layout="true">Preview</h3>
-          <p data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Three looks shown by candlelight in the rue Sain" data-slot-locked-layout="true">Three looks shown by candlelight in the rue Saint-Honoré room.</p>
+          <h3 data-edit-slot="s8-title-3" data-slot-type="text" data-slot-label="Preview" data-slot-locked-layout="true">Preview</h3>
+          <p data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Three looks shown by candlelight in the rue Sain" data-slot-locked-layout="true">Three looks shown by candlelight in the rue Saint-Honoré room.</p>
         </div>
         <div class="step">
           <div class="n">03</div>
-          <h3 data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Commission" data-slot-locked-layout="true">Commission</h3>
-          <p data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="One piece commissioned to your measure, delivere" data-slot-locked-layout="true">One piece commissioned to your measure, delivered before September.</p>
+          <h3 data-edit-slot="s8-title-4" data-slot-type="text" data-slot-label="Commission" data-slot-locked-layout="true">Commission</h3>
+          <p data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="One piece commissioned to your measure, delivere" data-slot-locked-layout="true">One piece commissioned to your measure, delivered before September.</p>
         </div>
         <div class="qr">
           <div class="box">
@@ -1263,12 +1273,12 @@
               </g>
             </svg>
           </div>
-          <div class="lab" data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Scan to reserve" data-slot-locked-layout="true">Scan to reserve</div>
-          <div class="url" data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="nocturne.house/aw26" data-slot-locked-layout="true">nocturne.house/aw26</div>
+          <div class="lab" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Scan to reserve" data-slot-locked-layout="true">Scan to reserve</div>
+          <div class="url" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="nocturne.house/aw26" data-slot-locked-layout="true">nocturne.house/aw26</div>
         </div>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s8-slot-11" data-slot-type="text" data-slot-label="RSVP closes 22 May · Strict09 / 09" data-slot-locked-layout="true"><span>RSVP closes 22 May · Strict</span><span class="pageno"><em>09</em> / 09</span></div>
+    <div class="footer" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="RSVP closes 22 May · Strict09 / 09" data-slot-locked-layout="true"><span>RSVP closes 22 May · Strict</span><span class="pageno"><em>09</em> / 09</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>

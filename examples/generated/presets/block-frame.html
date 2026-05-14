@@ -1130,6 +1130,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1704,11 +1714,11 @@
         <div class="corner-bracket bl"></div>
         <div class="corner-bracket br"></div>
         <div class="nb-label hero-label" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Presentation Template" data-slot-locked-layout="true">Presentation Template</div>
-        <h1 class="nb-heading-xl hero-title" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="NEO-BRUTALISMSTYLE" data-slot-locked-layout="true">NEO-<br>BRUTALISM<br>STYLE</h1>
-        <p class="hero-subtitle" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="A bold, high-contrast template designed for maxi" data-slot-locked-layout="true">A bold, high-contrast template designed for maximum visual impact and uncompromising clarity.</p>
+        <h1 class="nb-heading-xl hero-title" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="NEO- BRUTALISM STYLE" data-slot-locked-layout="true">NEO-<br>BRUTALISM<br>STYLE</h1>
+        <p class="hero-subtitle" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="A bold, high-contrast template designed for maxi" data-slot-locked-layout="true">A bold, high-contrast template designed for maximum visual impact and uncompromising clarity.</p>
         <div class="deco-pink-rect"></div>
         <div class="deco-green-circle"></div>
-        <div class="deco-yellow-bar" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="Get Started" data-slot-locked-layout="true">Get Started</div>
+        <div class="deco-yellow-bar" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="Get Started" data-slot-locked-layout="true">Get Started</div>
       </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1717,24 +1727,24 @@
 <section class="slide slide-2" id="slide-1" data-template-slide-index="2">
       <div class="col-left">
         <div class="nb-label nb-label-yellow">Overview</div>
-        <h2 class="nb-heading-lg" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="What WeDeliver" data-slot-locked-layout="true">What We<br>Deliver</h2>
-        <p class="nb-body" style="max-width: 480px;" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="Every project follows a rigorous process that ba" data-slot-locked-layout="true">Every project follows a rigorous process that balances creative exploration with systematic execution. The result is work that stands out while remaining fully functional.</p>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="12+ Years 500+ Projects" data-slot-locked-layout="true">
+        <h2 class="nb-heading-lg" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="What We Deliver" data-slot-locked-layout="true">What We<br>Deliver</h2>
+        <p class="nb-body" style="max-width: 480px;" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Every project follows a rigorous process that ba" data-slot-locked-layout="true">Every project follows a rigorous process that balances creative exploration with systematic execution. The result is work that stands out while remaining fully functional.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="12+ Years 500+ Projects" data-slot-locked-layout="true">
           <span class="stat-pill">12+ Years</span>
           <span class="stat-pill">500+ Projects</span>
         </div>
       </div>
       <div class="col-right">
         <div class="intro-card">
-          <h3>Strategy First</h3>
+          <h3 data-edit-slot="s1-title-2" data-slot-type="text" data-slot-label="Strategy First" data-slot-locked-layout="true">Strategy First</h3>
           <p>We begin with deep research and stakeholder alignment to ensure every decision is grounded in clear objectives.</p>
         </div>
-        <div class="intro-card" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="Design System A modular approach to visuals ensu" data-slot-locked-layout="true">
-          <h3>Design System</h3>
+        <div class="intro-card">
+          <h3 data-edit-slot="s1-title-3" data-slot-type="text" data-slot-label="Design System" data-slot-locked-layout="true">Design System</h3>
           <p>A modular approach to visuals ensures consistency across all touchpoints while allowing room for expression.</p>
         </div>
-        <div class="intro-card" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="Launch Ready Final deliverables are production-t" data-slot-locked-layout="true">
-          <h3>Launch Ready</h3>
+        <div class="intro-card">
+          <h3 data-edit-slot="s1-title-4" data-slot-type="text" data-slot-label="Launch Ready" data-slot-locked-layout="true">Launch Ready</h3>
           <p>Final deliverables are production-tested, documented, and handed off with a comprehensive usage guide.</p>
         </div>
       </div>
@@ -1750,20 +1760,20 @@
         <div class="feature-card">
           <div class="card-deco"></div>
           <div class="feature-icon icon-pink" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="A" data-slot-locked-layout="true">A</div>
-          <h3 data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Modular Layouts" data-slot-locked-layout="true">Modular Layouts</h3>
-          <p data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Mix and match components to build unique present" data-slot-locked-layout="true">Mix and match components to build unique presentations without starting from scratch each time.</p>
+          <h3 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Modular Layouts" data-slot-locked-layout="true">Modular Layouts</h3>
+          <p data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Mix and match components to build unique present" data-slot-locked-layout="true">Mix and match components to build unique presentations without starting from scratch each time.</p>
         </div>
         <div class="feature-card">
           <div class="card-deco"></div>
-          <div class="feature-icon icon-blue" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="B" data-slot-locked-layout="true">B</div>
-          <h3 data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Responsive Ready" data-slot-locked-layout="true">Responsive Ready</h3>
-          <p data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Adapts seamlessly to different screen sizes whil" data-slot-locked-layout="true">Adapts seamlessly to different screen sizes while maintaining the bold visual character.</p>
+          <div class="feature-icon icon-blue" data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="B" data-slot-locked-layout="true">B</div>
+          <h3 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Responsive Ready" data-slot-locked-layout="true">Responsive Ready</h3>
+          <p data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Adapts seamlessly to different screen sizes whil" data-slot-locked-layout="true">Adapts seamlessly to different screen sizes while maintaining the bold visual character.</p>
         </div>
         <div class="feature-card">
           <div class="card-deco"></div>
-          <div class="feature-icon icon-green" data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="C" data-slot-locked-layout="true">C</div>
-          <h3 data-edit-slot="s2-slot-8" data-slot-type="text" data-slot-label="Data Friendly" data-slot-locked-layout="true">Data Friendly</h3>
-          <p data-edit-slot="s2-slot-9" data-slot-type="text" data-slot-label="Built-in styles for charts, statistics, and info" data-slot-locked-layout="true">Built-in styles for charts, statistics, and information-dense slides that remain readable.</p>
+          <div class="feature-icon icon-green" data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="C" data-slot-locked-layout="true">C</div>
+          <h3 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Data Friendly" data-slot-locked-layout="true">Data Friendly</h3>
+          <p data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Built-in styles for charts, statistics, and info" data-slot-locked-layout="true">Built-in styles for charts, statistics, and information-dense slides that remain readable.</p>
         </div>
       </div>
 
@@ -1776,7 +1786,7 @@
       </div>
       <div class="chart-frame">
         <div class="chart-header">
-          <h2 class="nb-heading-md">Quarterly Growth Metrics</h2>
+          <h2 class="nb-heading-md" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Quarterly Growth Metrics" data-slot-locked-layout="true">Quarterly Growth Metrics</h2>
           <div class="chart-legend">
             <div class="legend-item"><div class="legend-swatch" style="background: var(--pink);"></div>Revenue</div>
             <div class="legend-item"><div class="legend-swatch" style="background: var(--blue);"></div>Users</div>
@@ -1872,26 +1882,26 @@
       </div>
       <div class="split-content">
         <div class="nb-label nb-label-green">Methodology</div>
-        <h2 class="nb-heading-md" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="How We StructureEvery Project" data-slot-locked-layout="true">How We Structure<br>Every Project</h2>
+        <h2 class="nb-heading-md" data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="How We Structure Every Project" data-slot-locked-layout="true">How We Structure<br>Every Project</h2>
         <ul class="content-list">
-          <li data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="01 Discovery phase to map stakeholder needs and " data-slot-locked-layout="true">
+          <li data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="01 Discovery phase to map stakeholder needs and " data-slot-locked-layout="true">
             <span class="list-num">01</span>
             <span>Discovery phase to map stakeholder needs and technical constraints before any visual work begins.</span>
           </li>
-          <li data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="02 Iterative wireframing with rapid feedback loo" data-slot-locked-layout="true">
+          <li data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="02 Iterative wireframing with rapid feedback loo" data-slot-locked-layout="true">
             <span class="list-num">02</span>
             <span>Iterative wireframing with rapid feedback loops to validate information architecture early.</span>
           </li>
-          <li data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="03 High-fidelity prototyping with real content t" data-slot-locked-layout="true">
+          <li data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="03 High-fidelity prototyping with real content t" data-slot-locked-layout="true">
             <span class="list-num">03</span>
             <span>High-fidelity prototyping with real content to test readability and visual hierarchy.</span>
           </li>
-          <li data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="04 Production handoff with annotated specificati" data-slot-locked-layout="true">
+          <li data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="04 Production handoff with annotated specificati" data-slot-locked-layout="true">
             <span class="list-num">04</span>
             <span>Production handoff with annotated specifications and a living style guide.</span>
           </li>
         </ul>
-        <div data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="View Process" data-slot-locked-layout="true"><a class="nb-btn" href="#">View Process</a></div>
+        <div data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="View Process" data-slot-locked-layout="true"><a class="nb-btn" href="#">View Process</a></div>
       </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1900,31 +1910,31 @@
 <section class="slide slide-7" id="slide-6" data-template-slide-index="7">
       <div class="slide-header">
         <div class="nb-label nb-label-cream">Roadmap</div>
-        <h2 class="nb-heading-lg" style="margin-top: 16px;" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Project Timeline" data-slot-locked-layout="true">Project Timeline</h2>
+        <h2 class="nb-heading-lg" style="margin-top: 16px;" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Project Timeline" data-slot-locked-layout="true">Project Timeline</h2>
       </div>
       <div class="timeline">
         <div class="timeline-step">
           <div class="step-connector"></div>
-          <div class="step-num" data-edit-slot="s6-slot-2" data-slot-type="metric" data-slot-label="01" data-slot-locked-layout="true">01</div>
-          <div class="step-title" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Research" data-slot-locked-layout="true">Research</div>
-          <div class="step-desc" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Market analysis, user interviews, and competitiv" data-slot-locked-layout="true">Market analysis, user interviews, and competitive audits to establish a foundation.</div>
+          <div class="step-num" data-edit-slot="s6-slot-1" data-slot-type="metric" data-slot-label="01" data-slot-locked-layout="true">01</div>
+          <div class="step-title" data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Research" data-slot-locked-layout="true">Research</div>
+          <div class="step-desc" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Market analysis, user interviews, and competitiv" data-slot-locked-layout="true">Market analysis, user interviews, and competitive audits to establish a foundation.</div>
         </div>
         <div class="timeline-step">
           <div class="step-connector"></div>
-          <div class="step-num" data-edit-slot="s6-slot-5" data-slot-type="metric" data-slot-label="02" data-slot-locked-layout="true">02</div>
-          <div class="step-title" data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Concept" data-slot-locked-layout="true">Concept</div>
-          <div class="step-desc" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="Mood boards, sketches, and directional explorati" data-slot-locked-layout="true">Mood boards, sketches, and directional explorations to define the visual language.</div>
+          <div class="step-num" data-edit-slot="s6-slot-4" data-slot-type="metric" data-slot-label="02" data-slot-locked-layout="true">02</div>
+          <div class="step-title" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Concept" data-slot-locked-layout="true">Concept</div>
+          <div class="step-desc" data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Mood boards, sketches, and directional explorati" data-slot-locked-layout="true">Mood boards, sketches, and directional explorations to define the visual language.</div>
         </div>
         <div class="timeline-step">
           <div class="step-connector"></div>
-          <div class="step-num" data-edit-slot="s6-slot-8" data-slot-type="metric" data-slot-label="03" data-slot-locked-layout="true">03</div>
-          <div class="step-title" data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="Build" data-slot-locked-layout="true">Build</div>
-          <div class="step-desc" data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="Detailed execution with weekly reviews and conti" data-slot-locked-layout="true">Detailed execution with weekly reviews and continuous stakeholder alignment.</div>
+          <div class="step-num" data-edit-slot="s6-slot-7" data-slot-type="metric" data-slot-label="03" data-slot-locked-layout="true">03</div>
+          <div class="step-title" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="Build" data-slot-locked-layout="true">Build</div>
+          <div class="step-desc" data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="Detailed execution with weekly reviews and conti" data-slot-locked-layout="true">Detailed execution with weekly reviews and continuous stakeholder alignment.</div>
         </div>
         <div class="timeline-step">
           <div class="step-num">04</div>
-          <div class="step-title" data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Launch" data-slot-locked-layout="true">Launch</div>
-          <div class="step-desc" data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="Deployment support, performance monitoring, and " data-slot-locked-layout="true">Deployment support, performance monitoring, and post-launch optimization.</div>
+          <div class="step-title" data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="Launch" data-slot-locked-layout="true">Launch</div>
+          <div class="step-desc" data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Deployment support, performance monitoring, and " data-slot-locked-layout="true">Deployment support, performance monitoring, and post-launch optimization.</div>
         </div>
       </div>
 
@@ -1934,28 +1944,28 @@
 <section class="slide slide-8" id="slide-7" data-template-slide-index="8">
       <div class="slide-header">
         <div class="nb-label nb-label-green">By The Numbers</div>
-        <h2 class="nb-heading-lg" style="margin-top: 16px;" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Impact at a Glance" data-slot-locked-layout="true">Impact at a Glance</h2>
+        <h2 class="nb-heading-lg" style="margin-top: 16px;" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Impact at a Glance" data-slot-locked-layout="true">Impact at a Glance</h2>
       </div>
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-deco" style="background: var(--pink);"></div>
-          <div class="stat-number" data-edit-slot="s7-slot-2" data-slot-type="metric" data-slot-label="98%" data-slot-locked-layout="true">98%</div>
-          <div class="stat-label" data-edit-slot="s7-slot-3" data-slot-type="metric" data-slot-label="Client Satisfaction" data-slot-locked-layout="true">Client Satisfaction</div>
+          <div class="stat-number" data-edit-slot="s7-slot-1" data-slot-type="metric" data-slot-label="98%" data-slot-locked-layout="true">98%</div>
+          <div class="stat-label" data-edit-slot="s7-slot-2" data-slot-type="metric" data-slot-label="Client Satisfaction" data-slot-locked-layout="true">Client Satisfaction</div>
         </div>
         <div class="stat-card">
           <div class="stat-deco" style="background: var(--blue);"></div>
-          <div class="stat-number" data-edit-slot="s7-slot-4" data-slot-type="metric" data-slot-label="14" data-slot-locked-layout="true">14</div>
-          <div class="stat-label" data-edit-slot="s7-slot-5" data-slot-type="metric" data-slot-label="Industry Awards" data-slot-locked-layout="true">Industry Awards</div>
+          <div class="stat-number" data-edit-slot="s7-slot-3" data-slot-type="metric" data-slot-label="14" data-slot-locked-layout="true">14</div>
+          <div class="stat-label" data-edit-slot="s7-slot-4" data-slot-type="metric" data-slot-label="Industry Awards" data-slot-locked-layout="true">Industry Awards</div>
         </div>
         <div class="stat-card">
           <div class="stat-deco" style="background: var(--green);"></div>
-          <div class="stat-number" data-edit-slot="s7-slot-6" data-slot-type="metric" data-slot-label="3.2x" data-slot-locked-layout="true">3.2x</div>
-          <div class="stat-label" data-edit-slot="s7-slot-7" data-slot-type="metric" data-slot-label="Avg. ROI Increase" data-slot-locked-layout="true">Avg. ROI Increase</div>
+          <div class="stat-number" data-edit-slot="s7-slot-5" data-slot-type="metric" data-slot-label="3.2x" data-slot-locked-layout="true">3.2x</div>
+          <div class="stat-label" data-edit-slot="s7-slot-6" data-slot-type="metric" data-slot-label="Avg. ROI Increase" data-slot-locked-layout="true">Avg. ROI Increase</div>
         </div>
         <div class="stat-card">
           <div class="stat-deco" style="background: var(--yellow);"></div>
-          <div class="stat-number" data-edit-slot="s7-slot-8" data-slot-type="metric" data-slot-label="50+" data-slot-locked-layout="true">50+</div>
-          <div class="stat-label" data-edit-slot="s7-slot-9" data-slot-type="metric" data-slot-label="Team Members" data-slot-locked-layout="true">Team Members</div>
+          <div class="stat-number" data-edit-slot="s7-slot-7" data-slot-type="metric" data-slot-label="50+" data-slot-locked-layout="true">50+</div>
+          <div class="stat-label" data-edit-slot="s7-slot-8" data-slot-type="metric" data-slot-label="Team Members" data-slot-locked-layout="true">Team Members</div>
         </div>
       </div>
 
@@ -1965,44 +1975,44 @@
 <section class="slide slide-9" id="slide-8" data-template-slide-index="9">
       <div class="slide-header">
         <div class="nb-label nb-label-pink">The Team</div>
-        <h2 class="nb-heading-lg" style="margin-top: 16px;" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Meet the Crew" data-slot-locked-layout="true">Meet the Crew</h2>
+        <h2 class="nb-heading-lg" style="margin-top: 16px;" data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Meet the Crew" data-slot-locked-layout="true">Meet the Crew</h2>
       </div>
       <div class="team-grid">
         <div class="team-card">
           <div class="team-avatar">JD</div>
-          <div class="team-name" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="J. Doe" data-slot-locked-layout="true">J. Doe</div>
-          <div class="team-role" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Creative Lead" data-slot-locked-layout="true">Creative Lead</div>
-          <div class="team-bio" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Oversees visual direction and ensures every proj" data-slot-locked-layout="true">Oversees visual direction and ensures every project maintains a coherent narrative.</div>
+          <div class="team-name" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="J. Doe" data-slot-locked-layout="true">J. Doe</div>
+          <div class="team-role" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Creative Lead" data-slot-locked-layout="true">Creative Lead</div>
+          <div class="team-bio" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Oversees visual direction and ensures every proj" data-slot-locked-layout="true">Oversees visual direction and ensures every project maintains a coherent narrative.</div>
         </div>
         <div class="team-card">
           <div class="team-avatar">AS</div>
-          <div class="team-name" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="A. Smith" data-slot-locked-layout="true">A. Smith</div>
-          <div class="team-role" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Tech Director" data-slot-locked-layout="true">Tech Director</div>
-          <div class="team-bio" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Translates design systems into scalable technica" data-slot-locked-layout="true">Translates design systems into scalable technical architectures and workflows.</div>
+          <div class="team-name" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="A. Smith" data-slot-locked-layout="true">A. Smith</div>
+          <div class="team-role" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Tech Director" data-slot-locked-layout="true">Tech Director</div>
+          <div class="team-bio" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Translates design systems into scalable technica" data-slot-locked-layout="true">Translates design systems into scalable technical architectures and workflows.</div>
         </div>
         <div class="team-card">
           <div class="team-avatar">MK</div>
-          <div class="team-name" data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="M. Kim" data-slot-locked-layout="true">M. Kim</div>
-          <div class="team-role" data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Strategist" data-slot-locked-layout="true">Strategist</div>
-          <div class="team-bio" data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="Connects business objectives to user needs throu" data-slot-locked-layout="true">Connects business objectives to user needs through research and analysis.</div>
+          <div class="team-name" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="M. Kim" data-slot-locked-layout="true">M. Kim</div>
+          <div class="team-role" data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Strategist" data-slot-locked-layout="true">Strategist</div>
+          <div class="team-bio" data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Connects business objectives to user needs throu" data-slot-locked-layout="true">Connects business objectives to user needs through research and analysis.</div>
         </div>
         <div class="team-card">
           <div class="team-avatar">RL</div>
-          <div class="team-name" data-edit-slot="s8-slot-11" data-slot-type="text" data-slot-label="R. Lee" data-slot-locked-layout="true">R. Lee</div>
-          <div class="team-role" data-edit-slot="s8-slot-12" data-slot-type="text" data-slot-label="Producer" data-slot-locked-layout="true">Producer</div>
-          <div class="team-bio" data-edit-slot="s8-slot-13" data-slot-type="text" data-slot-label="Manages timelines, budgets, and cross-functional" data-slot-locked-layout="true">Manages timelines, budgets, and cross-functional coordination for smooth delivery.</div>
+          <div class="team-name" data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="R. Lee" data-slot-locked-layout="true">R. Lee</div>
+          <div class="team-role" data-edit-slot="s8-slot-11" data-slot-type="text" data-slot-label="Producer" data-slot-locked-layout="true">Producer</div>
+          <div class="team-bio" data-edit-slot="s8-slot-12" data-slot-type="text" data-slot-label="Manages timelines, budgets, and cross-functional" data-slot-locked-layout="true">Manages timelines, budgets, and cross-functional coordination for smooth delivery.</div>
         </div>
         <div class="team-card">
           <div class="team-avatar">TP</div>
-          <div class="team-name" data-edit-slot="s8-slot-14" data-slot-type="text" data-slot-label="T. Patel" data-slot-locked-layout="true">T. Patel</div>
-          <div class="team-role" data-edit-slot="s8-slot-15" data-slot-type="text" data-slot-label="Designer" data-slot-locked-layout="true">Designer</div>
-          <div class="team-bio" data-edit-slot="s8-slot-16" data-slot-type="text" data-slot-label="Crafts interfaces and interactions with obsessiv" data-slot-locked-layout="true">Crafts interfaces and interactions with obsessive attention to detail.</div>
+          <div class="team-name" data-edit-slot="s8-slot-13" data-slot-type="text" data-slot-label="T. Patel" data-slot-locked-layout="true">T. Patel</div>
+          <div class="team-role" data-edit-slot="s8-slot-14" data-slot-type="text" data-slot-label="Designer" data-slot-locked-layout="true">Designer</div>
+          <div class="team-bio" data-edit-slot="s8-slot-15" data-slot-type="text" data-slot-label="Crafts interfaces and interactions with obsessiv" data-slot-locked-layout="true">Crafts interfaces and interactions with obsessive attention to detail.</div>
         </div>
         <div class="team-card">
           <div class="team-avatar">SC</div>
-          <div class="team-name" data-edit-slot="s8-slot-17" data-slot-type="text" data-slot-label="S. Chen" data-slot-locked-layout="true">S. Chen</div>
-          <div class="team-role" data-edit-slot="s8-slot-18" data-slot-type="text" data-slot-label="Developer" data-slot-locked-layout="true">Developer</div>
-          <div class="team-bio" data-edit-slot="s8-slot-19" data-slot-type="text" data-slot-label="Builds robust front-end systems that bring stati" data-slot-locked-layout="true">Builds robust front-end systems that bring static designs to life.</div>
+          <div class="team-name" data-edit-slot="s8-slot-16" data-slot-type="text" data-slot-label="S. Chen" data-slot-locked-layout="true">S. Chen</div>
+          <div class="team-role" data-edit-slot="s8-slot-17" data-slot-type="text" data-slot-label="Developer" data-slot-locked-layout="true">Developer</div>
+          <div class="team-bio" data-edit-slot="s8-slot-18" data-slot-type="text" data-slot-label="Builds robust front-end systems that bring stati" data-slot-locked-layout="true">Builds robust front-end systems that bring static designs to life.</div>
         </div>
       </div>
 
@@ -2013,8 +2023,8 @@
       <div class="deco-dots-bottom"></div>
       <div class="close-frame">
         <div class="deco-star"></div>
-        <h2 class="close-title" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Let&#x27;s BuildSomething Bold" data-slot-locked-layout="true">Let's Build<br>Something Bold</h2>
-        <p class="close-subtitle" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="Ready to start your next project?" data-slot-locked-layout="true">Ready to start your next project?</p>
+        <h2 class="close-title" data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Let&#x27;s Build Something Bold" data-slot-locked-layout="true">Let's Build<br>Something Bold</h2>
+        <p class="close-subtitle" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Ready to start your next project?" data-slot-locked-layout="true">Ready to start your next project?</p>
         <a class="close-btn" href="#">Get In Touch</a>
       </div>
 

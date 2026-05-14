@@ -410,6 +410,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1020,7 +1030,7 @@
     </div>
     <div class="right">
       <div>
-        <h3>An opening note</h3>
+        <h3 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="An opening note" data-slot-locked-layout="true">An opening note</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
         <p>Maecenas faucibus mollis interdum. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
         <p>Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
@@ -1036,49 +1046,49 @@
 
 <section class="s-grid slide" data-screen-label="03 Principles" id="slide-2" data-template-slide-index="3">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 24px;">
-      <h2>Eight principles, <em>loosely held.</em></h2>
+      <h2 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Eight principles, loosely held." data-slot-locked-layout="true">Eight principles, <em>loosely held.</em></h2>
       <div class="mono" style="font-size:24px; letter-spacing:0.15em; text-transform:uppercase; color: var(--burgundy);">§ 03 — Principles</div>
     </div>
     <div class="grid">
       <div class="card c1">
         <div class="num">/ 01</div>
-        <h4 data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Slow looking" data-slot-locked-layout="true">Slow looking</h4>
-        <p data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="A short paragraph describing the principle in pl" data-slot-locked-layout="true">A short paragraph describing the principle in plain language. Two sentences is plenty.</p>
+        <h4 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Slow looking" data-slot-locked-layout="true">Slow looking</h4>
+        <p data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="A short paragraph describing the principle in pl" data-slot-locked-layout="true">A short paragraph describing the principle in plain language. Two sentences is plenty.</p>
       </div>
       <div class="card c2">
         <div class="num">/ 02</div>
-        <h4 data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Open kitchen" data-slot-locked-layout="true">Open kitchen</h4>
-        <p data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Process in public. Show the seams, the sketches," data-slot-locked-layout="true">Process in public. Show the seams, the sketches, the half-formed thoughts before they harden.</p>
+        <h4 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Open kitchen" data-slot-locked-layout="true">Open kitchen</h4>
+        <p data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Process in public. Show the seams, the sketches," data-slot-locked-layout="true">Process in public. Show the seams, the sketches, the half-formed thoughts before they harden.</p>
       </div>
       <div class="card c3">
         <div class="num">/ 03</div>
-        <h4 data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Borrowed light" data-slot-locked-layout="true">Borrowed light</h4>
-        <p data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Cite generously. The best ideas always belong to" data-slot-locked-layout="true">Cite generously. The best ideas always belong to a lineage; name the room you walked into.</p>
+        <h4 data-edit-slot="s2-title-4" data-slot-type="text" data-slot-label="Borrowed light" data-slot-locked-layout="true">Borrowed light</h4>
+        <p data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Cite generously. The best ideas always belong to" data-slot-locked-layout="true">Cite generously. The best ideas always belong to a lineage; name the room you walked into.</p>
       </div>
       <div class="card c4">
         <div class="num">/ 04</div>
-        <h4 data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Quiet defaults" data-slot-locked-layout="true">Quiet defaults</h4>
-        <p data-edit-slot="s2-slot-8" data-slot-type="text" data-slot-label="Restraint as a posture. Loud only when the momen" data-slot-locked-layout="true">Restraint as a posture. Loud only when the moment earns it; otherwise, a soft shoulder.</p>
+        <h4 data-edit-slot="s2-title-5" data-slot-type="text" data-slot-label="Quiet defaults" data-slot-locked-layout="true">Quiet defaults</h4>
+        <p data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Restraint as a posture. Loud only when the momen" data-slot-locked-layout="true">Restraint as a posture. Loud only when the moment earns it; otherwise, a soft shoulder.</p>
       </div>
       <div class="card c5">
         <div class="num">/ 05</div>
-        <h4 data-edit-slot="s2-slot-9" data-slot-type="text" data-slot-label="Fewer, finer" data-slot-locked-layout="true">Fewer, finer</h4>
-        <p data-edit-slot="s2-slot-10" data-slot-type="text" data-slot-label="Pare back the pile. Three considered objects bea" data-slot-locked-layout="true">Pare back the pile. Three considered objects beat thirty hurried ones, every single time.</p>
+        <h4 data-edit-slot="s2-title-6" data-slot-type="text" data-slot-label="Fewer, finer" data-slot-locked-layout="true">Fewer, finer</h4>
+        <p data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Pare back the pile. Three considered objects bea" data-slot-locked-layout="true">Pare back the pile. Three considered objects beat thirty hurried ones, every single time.</p>
       </div>
       <div class="card c6">
         <div class="num">/ 06</div>
-        <h4 data-edit-slot="s2-slot-11" data-slot-type="text" data-slot-label="Generous edges" data-slot-locked-layout="true">Generous edges</h4>
-        <p data-edit-slot="s2-slot-12" data-slot-type="text" data-slot-label="Margins are mercy. Leave white space for the rea" data-slot-locked-layout="true">Margins are mercy. Leave white space for the reader to breathe and bring their own.</p>
+        <h4 data-edit-slot="s2-title-7" data-slot-type="text" data-slot-label="Generous edges" data-slot-locked-layout="true">Generous edges</h4>
+        <p data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Margins are mercy. Leave white space for the rea" data-slot-locked-layout="true">Margins are mercy. Leave white space for the reader to breathe and bring their own.</p>
       </div>
       <div class="card c7">
         <div class="num">/ 07</div>
-        <h4 data-edit-slot="s2-slot-13" data-slot-type="text" data-slot-label="Hand in it" data-slot-locked-layout="true">Hand in it</h4>
-        <p data-edit-slot="s2-slot-14" data-slot-type="text" data-slot-label="A trace of the maker, on purpose. Polish should " data-slot-locked-layout="true">A trace of the maker, on purpose. Polish should never quite hide the fingerprints.</p>
+        <h4 data-edit-slot="s2-title-8" data-slot-type="text" data-slot-label="Hand in it" data-slot-locked-layout="true">Hand in it</h4>
+        <p data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="A trace of the maker, on purpose. Polish should " data-slot-locked-layout="true">A trace of the maker, on purpose. Polish should never quite hide the fingerprints.</p>
       </div>
       <div class="card c8">
         <div class="num">/ 08</div>
-        <h4 data-edit-slot="s2-slot-15" data-slot-type="text" data-slot-label="To be added" data-slot-locked-layout="true">To be added</h4>
-        <p data-edit-slot="s2-slot-16" data-slot-type="text" data-slot-label="A placeholder principle, awaiting the next conve" data-slot-locked-layout="true">A placeholder principle, awaiting the next conversation. The list is not yet finished.</p>
+        <h4 data-edit-slot="s2-title-9" data-slot-type="text" data-slot-label="To be added" data-slot-locked-layout="true">To be added</h4>
+        <p data-edit-slot="s2-slot-8" data-slot-type="text" data-slot-label="A placeholder principle, awaiting the next conve" data-slot-locked-layout="true">A placeholder principle, awaiting the next conversation. The list is not yet finished.</p>
       </div>
     </div>
 
@@ -1137,7 +1147,7 @@
 
 <section class="s-timeline slide" data-screen-label="05 Trajectory" id="slide-4" data-template-slide-index="5">
     <div class="head">
-      <h2>A short trajectory, <em>told in five stops.</em></h2>
+      <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="A short trajectory, told in five stops." data-slot-locked-layout="true">A short trajectory, <em>told in five stops.</em></h2>
       <div class="meta">
         § 05 — Trajectory<br/>
         <span style="opacity:0.5;">2019 → present</span>
@@ -1192,19 +1202,19 @@
 <section class="s-chart slide" data-screen-label="06 Composition" id="slide-5" data-template-slide-index="6">
     <div class="l">
       <div class="label" style="color:var(--butter); margin-bottom: 20px;">§ 06 — Composition</div>
-      <h2 data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="How the days arrange themselves." data-slot-locked-layout="true">How the days <em>arrange themselves.</em></h2>
-      <p class="lede" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="A placeholder description for the chart on the r" data-slot-locked-layout="true">A placeholder description for the chart on the right. Speak to the shape of the data — what rises, what plateaus — not the precise figures. Methodology and a one-line caveat live at the bottom.</p>
+      <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="How the days arrange themselves." data-slot-locked-layout="true">How the days <em>arrange themselves.</em></h2>
+      <p class="lede" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="A placeholder description for the chart on the r" data-slot-locked-layout="true">A placeholder description for the chart on the right. Speak to the shape of the data — what rises, what plateaus — not the precise figures. Methodology and a one-line caveat live at the bottom.</p>
       <div class="legend">
         <div class="item"><i style="background:var(--pink); border:1px solid var(--burgundy);"></i> Studio hours, deep work <span class="cat">Series A</span></div>
-        <div class="item" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Salon &amp;amp; conversation Series B" data-slot-locked-layout="true"><i style="background:var(--butter); border:2px solid var(--burgundy); border-radius:999px;"></i> Salon &amp; conversation <span class="cat">Series B</span></div>
-        <div class="item" data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Reading, drift, walking Series C" data-slot-locked-layout="true"><i style="background:var(--burgundy);"></i> Reading, drift, walking <span class="cat">Series C</span></div>
-        <div class="item" data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Correspondence, admin Series D" data-slot-locked-layout="true"><i style="background:transparent; border-top: 3px dotted var(--butter); border-radius:0; height: 0;"></i> Correspondence, admin <span class="cat">Series D</span></div>
+        <div class="item" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Salon &amp;amp; conversation Series B" data-slot-locked-layout="true"><i style="background:var(--butter); border:2px solid var(--burgundy); border-radius:999px;"></i> Salon &amp; conversation <span class="cat">Series B</span></div>
+        <div class="item" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Reading, drift, walking Series C" data-slot-locked-layout="true"><i style="background:var(--burgundy);"></i> Reading, drift, walking <span class="cat">Series C</span></div>
+        <div class="item" data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Correspondence, admin Series D" data-slot-locked-layout="true"><i style="background:transparent; border-top: 3px dotted var(--butter); border-radius:0; height: 0;"></i> Correspondence, admin <span class="cat">Series D</span></div>
       </div>
-      <div class="mono" style="margin-top: 40px; font-size:24px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.5;" data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Source: internal logs · self-reported · n = 24 w" data-slot-locked-layout="true">Source: internal logs · self-reported · n = 24 weeks</div>
+      <div class="mono" style="margin-top: 40px; font-size:24px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.5;" data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Source: internal logs · self-reported · n = 24 w" data-slot-locked-layout="true">Source: internal logs · self-reported · n = 24 weeks</div>
     </div>
     <div class="r">
       <div class="head">
-        <span class="ttl">Hours per week, by mode</span>
+        <span class="ttl" data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Hours per week, by mode" data-slot-locked-layout="true">Hours per week, by mode</span>
         <span class="unit">Hrs / wk</span>
       </div>
       <svg class="chart" viewBox="0 0 720 380" preserveAspectRatio="none">
@@ -1257,7 +1267,7 @@
         <path d="M 90 350 L 200 345 L 310 348 L 420 338 L 530 340 L 640 332"
               fill="none" stroke="#7A1F35" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" stroke-opacity="0.6"/>
       </svg>
-      <div class="xax" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="W·01W·05W·09W·13W·17W·24" data-slot-locked-layout="true">
+      <div class="xax" data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="W·01W·05W·09W·13W·17W·24" data-slot-locked-layout="true">
         <span>W·01</span><span>W·05</span><span>W·09</span><span>W·13</span><span>W·17</span><span>W·24</span>
       </div>
     </div>
@@ -1284,7 +1294,7 @@
     </div>
     <div class="r">
       <div class="label" style="color: var(--butter);">Three short reads</div>
-      <h3 data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Voices, lightly edited &amp;mdash; from the readersh" data-slot-locked-layout="true">Voices, lightly edited &mdash; from the readership.</h3>
+      <h3 data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Voices, lightly edited &amp;mdash; from the readersh" data-slot-locked-layout="true">Voices, lightly edited &mdash; from the readership.</h3>
       <div class="endorsements">
         <div class="row">
           <span class="num">i.</span>

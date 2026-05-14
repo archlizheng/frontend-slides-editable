@@ -794,6 +794,16 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1365,15 +1375,15 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
     <svg class="pin-2" viewBox="0 0 360 130"><use href="#pin-open"/></svg>
     <div class="stage">
       <div class="super">A field guide · Vol. I</div>
-      <h1 data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Keptthings." data-slot-locked-layout="true">Kept<br/><em>things.</em></h1>
+      <h1 data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Kept things." data-slot-locked-layout="true">Kept<br/><em>things.</em></h1>
       <div class="row">
         <div class="who">Presented by <span class="underline-thin">A. Speaker</span>
           <small>Role · Team · Spring 2026</small>
         </div>
-        <div class="date" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="29 · IV · 2026" data-slot-locked-layout="true">29 · IV · 2026</div>
+        <div class="date" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="29 · IV · 2026" data-slot-locked-layout="true">29 · IV · 2026</div>
       </div>
     </div>
-    <div class="handwritten" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="For: the room. Two pages. One ask." data-slot-locked-layout="true">
+    <div class="handwritten" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="For: the room. Two pages. One ask." data-slot-locked-layout="true">
       <span class="underline">For:</span> the room.<br/>
       Two pages. One ask.
     </div>
@@ -1386,7 +1396,7 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
       <span class="lockup"><svg><use href="#mark"/></svg> Pin &amp; Paper</span>
       <span class="meta"><span>North Field Office</span><span>Phase I</span></span>
     </div>
-    <h2 data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="What&#x27;sinside." data-slot-locked-layout="true">What's<br/><em>inside.</em></h2>
+    <h2 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="What&#x27;s inside." data-slot-locked-layout="true">What's<br/><em>inside.</em></h2>
     <div class="list">
       <div class="row">
         <span class="num">01</span>
@@ -1413,7 +1423,7 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
         <span class="meta">Decisions · 8 min</span>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="North Field Office02 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>02 / 11</span></div>
+    <div class="footer" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="North Field Office02 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>02 / 11</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1424,28 +1434,28 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
       <span class="meta"><span>North Field Office</span><span>Phase II</span></span>
     </div>
     <div class="head">
-      <h2>Three rules we're <em>keeping.</em></h2>
+      <h2 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Three rules we&#x27;re keeping." data-slot-locked-layout="true">Three rules we're <em>keeping.</em></h2>
       <div class="sub">Pinned to the wall above every desk. We refer back to them when a decision feels too big to make from the seat we're in.</div>
     </div>
     <div class="grid">
       <div class="card">
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
         <span class="num">Rule · 01</span>
-        <h3>Write the<br/>real sentence.</h3>
+        <h3 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Write the real sentence." data-slot-locked-layout="true">Write the<br/>real sentence.</h3>
         <p>If a customer wouldn't read the email, the email is not the work. Plain words, signed by a person, sent on a Tuesday.</p>
         <div class="scribble">— write it <span class="underline">by hand</span> first.</div>
       </div>
       <div class="card alt">
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
         <span class="num">Rule · 02</span>
-        <h3>Earn the<br/>second look.</h3>
+        <h3 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Earn the second look." data-slot-locked-layout="true">Earn the<br/>second look.</h3>
         <p>Every interaction in the first 72 hours is doing four times the work of one in week three. Spend accordingly.</p>
         <div class="scribble">no autoresponder, ever.</div>
       </div>
       <div class="card alt2">
         <svg class="pin" viewBox="0 0 360 130"><use href="#pin-open"/></svg>
         <span class="num">Rule · 03</span>
-        <h3>Keep the<br/>handwriting.</h3>
+        <h3 data-edit-slot="s2-title-4" data-slot-type="text" data-slot-label="Keep the handwriting." data-slot-locked-layout="true">Keep the<br/>handwriting.</h3>
         <p>The system is allowed to grow, but the voice on the other end stays small enough to know who you wrote to last week.</p>
         <div class="scribble">200 names, max.</div>
       </div>
@@ -1457,11 +1467,11 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
 
 <section class="slide s-sec ink" data-screen-label="04 Section · Direction" data-om-validate="false" id="slide-3" data-template-slide-index="4">
     <div class="marker" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Section II" data-slot-locked-layout="true">Section II</div>
-    <div class="label" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Direction&amp;amp; doctrine" data-slot-locked-layout="true">Direction<br/>&amp; doctrine</div>
+    <div class="label" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Direction &amp;amp; doctrine" data-slot-locked-layout="true">Direction<br/>&amp; doctrine</div>
     <svg class="pin-big" viewBox="0 0 360 110"><use href="#pin"/></svg>
-    <h2 data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Where weare going,and why." data-slot-locked-layout="true">Where we<br/>are going,<br/><em>and why.</em></h2>
-    <div class="scribble" data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="— turn the page —" data-slot-locked-layout="true">— turn the page —</div>
-    <div class="footer" data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="North Field Office04 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>04 / 11</span></div>
+    <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Where we are going, and why." data-slot-locked-layout="true">Where we<br/>are going,<br/><em>and why.</em></h2>
+    <div class="scribble" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="— turn the page —" data-slot-locked-layout="true">— turn the page —</div>
+    <div class="footer" data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="North Field Office04 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>04 / 11</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1473,11 +1483,11 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
     </div>
     <div class="head">
       <div class="pre">Notice · 05<br/>Action title</div>
-      <h2 data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="The trust gap is built in the first 72 hours, no" data-slot-locked-layout="true">The trust gap is built in the first 72 hours, <em>not</em> the first 7 days — and the cost compounds for the rest of the lifecycle.</h2>
+      <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="The trust gap is built in the first 72 hours, no" data-slot-locked-layout="true">The trust gap is built in the first 72 hours, <em>not</em> the first 7 days — and the cost compounds for the rest of the lifecycle.</h2>
     </div>
     <div class="grid">
       <div class="col">
-        <h3>What we found</h3>
+        <h3 data-edit-slot="s4-title-2" data-slot-type="text" data-slot-label="What we found" data-slot-locked-layout="true">What we found</h3>
         <p><strong>Three behavioural signals</strong> in the first 72 hours predict 18-month retention better than any feature-usage metric we tracked.</p>
         <ul>
           <li><strong>Email open #2</strong> — opening the second lifecycle email lifts D90 retention by 19 points.</li>
@@ -1487,14 +1497,14 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
         <div class="src">N = 14,200 · Q1 2026</div>
       </div>
       <div class="col b">
-        <h3>Why it matters</h3>
+        <h3 data-edit-slot="s4-title-3" data-slot-type="text" data-slot-label="Why it matters" data-slot-locked-layout="true">Why it matters</h3>
         <div class="meta">$4.1M projected retained ARR — current cohort.</div>
-        <p data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="The first three days are the only window where c" data-slot-locked-layout="true">The first three days are the only window where customers are both paying attention and willing to write back. Every interaction here does the work of roughly four interactions in week three.</p>
-        <p data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="The cost of getting this wrong is not refunds — " data-slot-locked-layout="true">The cost of getting this wrong is not refunds — it is the long, quiet churn of an account that never returns to the inbox.</p>
-        <div class="src" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="Modelled on FY24 cohort behaviour" data-slot-locked-layout="true">Modelled on FY24 cohort behaviour</div>
+        <p data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="The first three days are the only window where c" data-slot-locked-layout="true">The first three days are the only window where customers are both paying attention and willing to write back. Every interaction here does the work of roughly four interactions in week three.</p>
+        <p data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="The cost of getting this wrong is not refunds — " data-slot-locked-layout="true">The cost of getting this wrong is not refunds — it is the long, quiet churn of an account that never returns to the inbox.</p>
+        <div class="src" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Modelled on FY24 cohort behaviour" data-slot-locked-layout="true">Modelled on FY24 cohort behaviour</div>
       </div>
       <div class="col">
-        <h3>What to do</h3>
+        <h3 data-edit-slot="s4-title-4" data-slot-type="text" data-slot-label="What to do" data-slot-locked-layout="true">What to do</h3>
         <ul>
           <li><strong>Rewrite emails 1–3</strong> in human voice; ship behind a 50/50 holdout. Owner: lifecycle. Due: May 17.</li>
           <li><strong>Route every signup</strong> to a named human for one personal reply within 24h, capped at the top 200 accounts/day. Owner: success. Due: May 24.</li>
@@ -1503,7 +1513,7 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
         <div class="src">Pilot scope: top-decile signups</div>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s4-slot-5" data-slot-type="text" data-slot-label="North Field Office05 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>05 / 11</span></div>
+    <div class="footer" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="North Field Office05 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>05 / 11</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1515,7 +1525,7 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
     </div>
     <svg class="pin-deco" viewBox="0 0 360 130"><use href="#pin-open"/></svg>
     <div class="left">
-      <h2>Curve<br/>bends at<br/><em>day three.</em></h2>
+      <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Curve bends at day three." data-slot-locked-layout="true">Curve<br/>bends at<br/><em>day three.</em></h2>
       <p>Cohorts that received a written welcome and a human reply within 24 hours retain at roughly 2× the rate of the templated cohort, and the gap holds steady for ninety days.</p>
       <div class="legend">
         <div class="li"><i style="background:rgba(239,229,106,.5)"></i> Templated welcome (control)</div>
@@ -1557,53 +1567,53 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
       <span class="meta"><span>North Field Office</span><span>Phase IV</span></span>
     </div>
     <div class="head">
-      <h2>From <em>insight</em><br/>to default,<br/>in five moves.</h2>
+      <h2 data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="From insight to default, in five moves." data-slot-locked-layout="true">From <em>insight</em><br/>to default,<br/>in five moves.</h2>
       <div class="sub">A repeatable path each pilot follows, end to end, before it is allowed to graduate to the default experience for every customer.</div>
     </div>
     <div class="flow">
       <div class="node">
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
         <div class="n">1</div>
-        <h3 data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Frame" data-slot-locked-layout="true">Frame</h3>
-        <p data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Translate the insight into a single behavioural " data-slot-locked-layout="true">Translate the insight into a single behavioural hypothesis we can falsify in a sprint.</p>
+        <h3 data-edit-slot="s6-title-2" data-slot-type="text" data-slot-label="Frame" data-slot-locked-layout="true">Frame</h3>
+        <p data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Translate the insight into a single behavioural " data-slot-locked-layout="true">Translate the insight into a single behavioural hypothesis we can falsify in a sprint.</p>
         <svg class="arr" viewBox="0 0 32 32"><use href="#arr"/></svg>
       </div>
       <div class="node alt">
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
         <div class="n">2</div>
-        <h3 data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
-        <p data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Smallest end-to-end change that lets the hypothe" data-slot-locked-layout="true">Smallest end-to-end change that lets the hypothesis be tested cleanly in one cycle.</p>
+        <h3 data-edit-slot="s6-title-3" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
+        <p data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Smallest end-to-end change that lets the hypothe" data-slot-locked-layout="true">Smallest end-to-end change that lets the hypothesis be tested cleanly in one cycle.</p>
         <svg class="arr" viewBox="0 0 32 32"><use href="#arr"/></svg>
       </div>
       <div class="node alt2">
         <svg class="pin" viewBox="0 0 360 130"><use href="#pin-open"/></svg>
         <div class="n">3</div>
-        <h3 data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Pilot" data-slot-locked-layout="true">Pilot</h3>
-        <p data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Ship to a 50/50 holdout in one segment. Hold the" data-slot-locked-layout="true">Ship to a 50/50 holdout in one segment. Hold the line for two cycles before reading.</p>
+        <h3 data-edit-slot="s6-title-4" data-slot-type="text" data-slot-label="Pilot" data-slot-locked-layout="true">Pilot</h3>
+        <p data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Ship to a 50/50 holdout in one segment. Hold the" data-slot-locked-layout="true">Ship to a 50/50 holdout in one segment. Hold the line for two cycles before reading.</p>
         <svg class="arr" viewBox="0 0 32 32"><use href="#arr"/></svg>
       </div>
       <div class="node alt">
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
         <div class="n">4</div>
-        <h3 data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="Read" data-slot-locked-layout="true">Read</h3>
-        <p data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="Pre-registered metrics only. Kill, scale, or ext" data-slot-locked-layout="true">Pre-registered metrics only. Kill, scale, or extend — not three of three.</p>
+        <h3 data-edit-slot="s6-title-5" data-slot-type="text" data-slot-label="Read" data-slot-locked-layout="true">Read</h3>
+        <p data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Pre-registered metrics only. Kill, scale, or ext" data-slot-locked-layout="true">Pre-registered metrics only. Kill, scale, or extend — not three of three.</p>
         <svg class="arr" viewBox="0 0 32 32"><use href="#arr"/></svg>
       </div>
       <div class="node">
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
         <div class="n">5</div>
-        <h3 data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="Default" data-slot-locked-layout="true">Default</h3>
-        <p data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="Promote to the default surface and retire the le" data-slot-locked-layout="true">Promote to the default surface and retire the legacy path inside the same release.</p>
+        <h3 data-edit-slot="s6-title-6" data-slot-type="text" data-slot-label="Default" data-slot-locked-layout="true">Default</h3>
+        <p data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Promote to the default surface and retire the le" data-slot-locked-layout="true">Promote to the default surface and retire the legacy path inside the same release.</p>
       </div>
     </div>
-    <div class="timeline" data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Week 1 · Frame Week 2–3 · Design Week 3–6 · Pilo" data-slot-locked-layout="true">
+    <div class="timeline" data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Week 1 · Frame Week 2–3 · Design Week 3–6 · Pilo" data-slot-locked-layout="true">
       <span>Week 1 · Frame</span>
       <span>Week 2–3 · Design</span>
       <span>Week 3–6 · Pilot</span>
       <span>Week 7 · Read</span>
       <span>Week 8 · Default</span>
     </div>
-    <div class="footer" data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="North Field Office07 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>07 / 11</span></div>
+    <div class="footer" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="North Field Office07 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>07 / 11</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1614,7 +1624,7 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
       <span class="meta"><span>North Field Office</span><span>Phase IV</span></span>
     </div>
     <div class="head">
-      <h2>Where each<br/><em>pilot</em> earns<br/>its keep.</h2>
+      <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Where each pilot earns its keep." data-slot-locked-layout="true">Where each<br/><em>pilot</em> earns<br/>its keep.</h2>
       <div class="sub">Scored against the four levers that matter most this cycle. We will only carry forward bets that win on at least two.</div>
     </div>
     <div class="table">
@@ -1654,30 +1664,30 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
       <span class="meta"><span>Phase III</span><span>Evidence</span></span>
     </div>
     <div class="head">
-      <h2>The case,<br/><em>by the numbers.</em></h2>
+      <h2 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="The case, by the numbers." data-slot-locked-layout="true">The case,<br/><em>by the numbers.</em></h2>
       <div class="sub">Three figures we will report against every cycle. If one of these stops moving, the bet is over.</div>
     </div>
     <div class="grid">
       <div class="stat">
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
         <div class="big">2.4<small>×</small></div>
-        <h3 data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Retentionmultiple" data-slot-locked-layout="true">Retention<br/>multiple</h3>
-        <p data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Cohort with written welcome + human reply, vs. t" data-slot-locked-layout="true">Cohort with written welcome + human reply, vs. templated control. Sustained through D90.</p>
+        <h3 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="Retention multiple" data-slot-locked-layout="true">Retention<br/>multiple</h3>
+        <p data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Cohort with written welcome + human reply, vs. t" data-slot-locked-layout="true">Cohort with written welcome + human reply, vs. templated control. Sustained through D90.</p>
       </div>
       <div class="stat alt">
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
         <div class="big">$4.1<small>M</small></div>
-        <h3 data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Projectedretained ARR" data-slot-locked-layout="true">Projected<br/>retained ARR</h3>
-        <p data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Modelled on the current quarter&#x27;s signup cohort," data-slot-locked-layout="true">Modelled on the current quarter's signup cohort, holding all other inputs constant.</p>
+        <h3 data-edit-slot="s8-title-3" data-slot-type="text" data-slot-label="Projected retained ARR" data-slot-locked-layout="true">Projected<br/>retained ARR</h3>
+        <p data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Modelled on the current quarter&#x27;s signup cohort," data-slot-locked-layout="true">Modelled on the current quarter's signup cohort, holding all other inputs constant.</p>
       </div>
       <div class="stat alt2">
         <svg class="pin" viewBox="0 0 360 130"><use href="#pin-open"/></svg>
         <div class="big">72<small>hr</small></div>
-        <h3 data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="The windowthat matters" data-slot-locked-layout="true">The window<br/>that matters</h3>
-        <p data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Behaviour after the first 72 hours predicts 18-m" data-slot-locked-layout="true">Behaviour after the first 72 hours predicts 18-month retention better than any feature metric.</p>
+        <h3 data-edit-slot="s8-title-4" data-slot-type="text" data-slot-label="The window that matters" data-slot-locked-layout="true">The window<br/>that matters</h3>
+        <p data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Behaviour after the first 72 hours predicts 18-m" data-slot-locked-layout="true">Behaviour after the first 72 hours predicts 18-month retention better than any feature metric.</p>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="North Field Office09 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>09 / 11</span></div>
+    <div class="footer" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="North Field Office09 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>09 / 11</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1710,36 +1720,36 @@ section.slide.ink .footer { color: var(--paper); opacity: .75; }
     <div class="stage">
       <div class="pane l">
         <div class="super">From here</div>
-        <h2 data-edit-slot="s10-slot-1" data-slot-type="text" data-slot-label="Pick thethreebets." data-slot-locked-layout="true">Pick the<br/>three<br/><em>bets.</em></h2>
-        <p data-edit-slot="s10-slot-2" data-slot-type="text" data-slot-label="Three pilots in eight weeks. We&#x27;ll bring back ev" data-slot-locked-layout="true">Three pilots in eight weeks. We'll bring back evidence the quarter after, and the question won't be whether to ship — it'll be which two to default.</p>
+        <h2 data-edit-slot="s10-title-1" data-slot-type="text" data-slot-label="Pick the three bets." data-slot-locked-layout="true">Pick the<br/>three<br/><em>bets.</em></h2>
+        <p data-edit-slot="s10-slot-1" data-slot-type="text" data-slot-label="Three pilots in eight weeks. We&#x27;ll bring back ev" data-slot-locked-layout="true">Three pilots in eight weeks. We'll bring back evidence the quarter after, and the question won't be whether to ship — it'll be which two to default.</p>
         <svg class="pin" viewBox="0 0 360 110"><use href="#pin"/></svg>
       </div>
       <div class="pane r">
-        <h3>How we move this week</h3>
+        <h3 data-edit-slot="s10-title-2" data-slot-type="text" data-slot-label="How we move this week" data-slot-locked-layout="true">How we move this week</h3>
         <div class="step">
           <div class="n">1</div>
-          <div data-edit-slot="s10-slot-3" data-slot-type="text" data-slot-label="Pick the pilots Confirm two of three by Friday. " data-slot-locked-layout="true">
-            <h4>Pick the pilots</h4>
+          <div>
+            <h4 data-edit-slot="s10-title-3" data-slot-type="text" data-slot-label="Pick the pilots" data-slot-locked-layout="true">Pick the pilots</h4>
             <p>Confirm two of three by Friday. Owners named in the same conversation; calendars cleared.</p>
           </div>
         </div>
         <div class="step">
           <div class="n">2</div>
-          <div data-edit-slot="s10-slot-4" data-slot-type="text" data-slot-label="Pre-register the read Lock the metric, the holdo" data-slot-locked-layout="true">
-            <h4>Pre-register the read</h4>
+          <div>
+            <h4 data-edit-slot="s10-title-4" data-slot-type="text" data-slot-label="Pre-register the read" data-slot-locked-layout="true">Pre-register the read</h4>
             <p>Lock the metric, the holdout, and the kill criteria before any code ships. Analytics writes it; both sides sign.</p>
           </div>
         </div>
         <div class="step">
           <div class="n">3</div>
-          <div data-edit-slot="s10-slot-5" data-slot-type="text" data-slot-label="Stand a Friday review One slide each pilot, ever" data-slot-locked-layout="true">
-            <h4>Stand a Friday review</h4>
+          <div>
+            <h4 data-edit-slot="s10-title-5" data-slot-type="text" data-slot-label="Stand a Friday review" data-slot-locked-layout="true">Stand a Friday review</h4>
             <p>One slide each pilot, every Friday, until the bet defaults or dies. No exceptions, no makeup decks.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s10-slot-6" data-slot-type="text" data-slot-label="North Field Office11 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>11 / 11</span></div>
+    <div class="footer" data-edit-slot="s10-slot-2" data-slot-type="text" data-slot-label="North Field Office11 / 11" data-slot-locked-layout="true"><span>North Field Office</span><span>11 / 11</span></div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>

@@ -1051,6 +1051,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1682,10 +1692,10 @@
       <div class="blob b-green"  aria-hidden="true"></div>
       <div class="blob b-blue"   aria-hidden="true"></div>
       <div class="blob b-pink"   aria-hidden="true"></div>
-      <div class="stmt-wrap" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="We make small analog things for the people who k" data-slot-locked-layout="true">
-        <h1 class="stmt">We make small <em>analog</em> things for the people who keep tape recorders on their desks.</h1>
+      <div class="stmt-wrap">
+        <h1 class="stmt" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="We make small analog things for the people who k" data-slot-locked-layout="true">We make small <em>analog</em> things for the people who keep tape recorders on their desks.</h1>
       </div>
-      <div class="pagenum" data-edit-slot="s1-slot-3" data-slot-type="metric" data-slot-label="02 / 08" data-slot-locked-layout="true">02 / 08</div>
+      <div class="pagenum" data-edit-slot="s1-slot-2" data-slot-type="metric" data-slot-label="02 / 08" data-slot-locked-layout="true">02 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1693,7 +1703,7 @@
 <section class="slide s-catalogue" id="slide-2" data-template-slide-index="3">
       <div class="frame">
         <div class="topbar">
-          <div class="ttl">The 2026 <em>Catalogue</em></div>
+          <div class="ttl" data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="The 2026 Catalogue" data-slot-locked-layout="true">The 2026 <em>Catalogue</em></div>
           <div class="lab caption" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Four products · spring &amp;amp; summer release" data-slot-locked-layout="true">Four products · spring &amp; summer release</div>
         </div>
         <div class="grid">
@@ -1782,10 +1792,10 @@
       </div>
       <div class="quote-wrap">
         <div class="qkicker caption">A note pinned above the workbench</div>
-        <h2 class="qbody" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Build the thing first, then write the spec sheet" data-slot-locked-layout="true">Build the <em>thing</em> first, then write the spec sheet.</h2>
-        <div class="qattr caption" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="— Ren Kobayashi · founder · 2024" data-slot-locked-layout="true">— Ren Kobayashi · founder · 2024</div>
+        <h2 class="qbody" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Build the thing first, then write the spec sheet" data-slot-locked-layout="true">Build the <em>thing</em> first, then write the spec sheet.</h2>
+        <div class="qattr caption" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="— Ren Kobayashi · founder · 2024" data-slot-locked-layout="true">— Ren Kobayashi · founder · 2024</div>
       </div>
-      <div class="pagenum" data-edit-slot="s3-slot-3" data-slot-type="metric" data-slot-label="04 / 08" data-slot-locked-layout="true">04 / 08</div>
+      <div class="pagenum" data-edit-slot="s3-slot-2" data-slot-type="metric" data-slot-label="04 / 08" data-slot-locked-layout="true">04 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1793,7 +1803,7 @@
 <section class="slide s-data" id="slide-4" data-template-slide-index="5">
       <div class="frame">
         <div class="topbar">
-          <div class="ttl">Output, by year</div>
+          <div class="ttl" data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Output, by year" data-slot-locked-layout="true">Output, by year</div>
           <div class="lab caption" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Units shipped · 2019—2026 · Q3 estimate" data-slot-locked-layout="true">Units shipped · 2019—2026 · Q3 estimate</div>
         </div>
         <div class="body">
@@ -1888,7 +1898,7 @@
 <section class="slide s-cal" id="slide-6" data-template-slide-index="7">
       <div class="frame">
         <div class="topbar">
-          <div class="ttl">Release schedule</div>
+          <div class="ttl" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Release schedule" data-slot-locked-layout="true">Release schedule</div>
           <div class="lab caption" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Spring &amp;amp; summer · 2026" data-slot-locked-layout="true">Spring &amp; summer · 2026</div>
         </div>
         <div class="ledger">
@@ -1978,25 +1988,25 @@
 
       <div class="titlewrap">
         <div class="ktag caption">Colophon · Catalogue No. 7</div>
-        <h2 class="ttl" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="See you in volume eight." data-slot-locked-layout="true">See you in <em>volume eight.</em></h2>
+        <h2 class="ttl" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="See you in volume eight." data-slot-locked-layout="true">See you in <em>volume eight.</em></h2>
       </div>
 
       <div class="col-footer">
         <div>
           <div class="ftag caption">Studio</div>
-          <div class="ftxt" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Tape Garden · Matsumotoest. 2018" data-slot-locked-layout="true">Tape Garden · Matsumoto<br/>est. 2018</div>
+          <div class="ftxt" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Tape Garden · Matsumoto est. 2018" data-slot-locked-layout="true">Tape Garden · Matsumoto<br/>est. 2018</div>
         </div>
         <div>
           <div class="ftag caption">Designed</div>
-          <div class="ftxt" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="In a small room beside thetape archive · over si" data-slot-locked-layout="true">In a small room beside the<br/>tape archive · over six months</div>
+          <div class="ftxt" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="In a small room beside the tape archive · over s" data-slot-locked-layout="true">In a small room beside the<br/>tape archive · over six months</div>
         </div>
         <div>
           <div class="ftag caption">Until next year</div>
-          <div class="ftxt" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Catalogue No. 8 ships January 2027. Mailing list" data-slot-locked-layout="true">Catalogue No. 8 ships January 2027. Mailing list opens with the snow.</div>
+          <div class="ftxt" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Catalogue No. 8 ships January 2027. Mailing list" data-slot-locked-layout="true">Catalogue No. 8 ships January 2027. Mailing list opens with the snow.</div>
         </div>
       </div>
 
-      <div class="pagenum" data-edit-slot="s7-slot-6" data-slot-type="metric" data-slot-label="08 / 08" data-slot-locked-layout="true">08 / 08</div>
+      <div class="pagenum" data-edit-slot="s7-slot-5" data-slot-type="metric" data-slot-label="08 / 08" data-slot-locked-layout="true">08 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>

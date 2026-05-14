@@ -855,6 +855,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1430,10 +1440,10 @@
     </div>
     <div class="stack">
       <div class="kicker">A research debrief, vol. iii</div>
-      <h1 data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="What we learned this&amp;nbsp;quarter." data-slot-locked-layout="true">What we learned <em>this&nbsp;quarter.</em></h1>
-      <div class="lede" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="A short, honest look at what our customers told " data-slot-locked-layout="true">A short, honest look at what our customers told us between January and March — what's working, what's quietly broken, and what we want to try next.</div>
+      <h1 data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="What we learned this&amp;nbsp;quarter." data-slot-locked-layout="true">What we learned <em>this&nbsp;quarter.</em></h1>
+      <div class="lede" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="A short, honest look at what our customers told " data-slot-locked-layout="true">A short, honest look at what our customers told us between January and March — what's working, what's quietly broken, and what we want to try next.</div>
     </div>
-    <div class="footer" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+    <div class="footer" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
       <span>April 29, 2026</span>
       <span>Field Notes · Vol. III</span>
     </div>
@@ -1467,34 +1477,34 @@
     <div class="grid">
       <div class="step pink">
         <div class="n">i.</div>
-        <div data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Listen Twenty-eight long-form conversations with" data-slot-locked-layout="true">
-          <h3>Listen</h3>
+        <div>
+          <h3 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Listen" data-slot-locked-layout="true">Listen</h3>
           <p>Twenty-eight long-form conversations with customers across four segments and three regions.</p>
         </div>
       </div>
       <div class="step lemon">
         <div class="n">ii.</div>
-        <div data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Watch Nine on-site shadowing sessions during pea" data-slot-locked-layout="true">
-          <h3>Watch</h3>
+        <div>
+          <h3 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Watch" data-slot-locked-layout="true">Watch</h3>
           <p>Nine on-site shadowing sessions during peak workflows. We took notes, not video.</p>
         </div>
       </div>
       <div class="step blush">
         <div class="n">iii.</div>
-        <div data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Read Ten days inside the support inbox, tagging " data-slot-locked-layout="true">
-          <h3>Read</h3>
+        <div>
+          <h3 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Read" data-slot-locked-layout="true">Read</h3>
           <p>Ten days inside the support inbox, tagging every message by intent and emotional tone.</p>
         </div>
       </div>
       <div class="step sage">
         <div class="n">iv.</div>
-        <div data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Distill Three rounds of thematic clustering with" data-slot-locked-layout="true">
-          <h3>Distill</h3>
+        <div>
+          <h3 data-edit-slot="s2-title-4" data-slot-type="text" data-slot-label="Distill" data-slot-locked-layout="true">Distill</h3>
           <p>Three rounds of thematic clustering with the design and policy teams, ending in eight themes.</p>
         </div>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+    <div class="footer" data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
       <span>April 29, 2026</span>
       <span>Field Notes · Vol. III</span>
     </div>
@@ -1508,21 +1518,21 @@
     <div class="row">
       <div class="card pink">
         <div class="head">
-          <h3 class="serif">Insight #1</h3>
+          <h3 class="serif" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Insight #1" data-slot-locked-layout="true">Insight #1</h3>
           <div class="sub">Trust is the onboarding</div>
         </div>
         <p data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Customers don&#x27;t churn on day one because the pro" data-slot-locked-layout="true">Customers don't churn on day one because the product is hard. They churn because the first three emails feel like a stranger.</p>
       </div>
       <div class="card lemon">
         <div class="head">
-          <h3 class="serif">Insight #2</h3>
+          <h3 class="serif" data-edit-slot="s3-title-2" data-slot-type="text" data-slot-label="Insight #2" data-slot-locked-layout="true">Insight #2</h3>
           <div class="sub">Power users dread upgrades</div>
         </div>
         <p data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="The people we asked to love new features the mos" data-slot-locked-layout="true">The people we asked to love new features the most quietly resent them. They want fewer surprises, not bigger ones.</p>
       </div>
       <div class="card blush">
         <div class="head">
-          <h3 class="serif">Insight #3</h3>
+          <h3 class="serif" data-edit-slot="s3-title-3" data-slot-type="text" data-slot-label="Insight #3" data-slot-locked-layout="true">Insight #3</h3>
           <div class="sub">Support is product</div>
         </div>
         <p data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="Half of &quot;feature requests&quot; in the inbox are exis" data-slot-locked-layout="true">Half of "feature requests" in the inbox are existing features that customers couldn't find. We have a discovery problem dressed as a roadmap problem.</p>
@@ -1541,10 +1551,10 @@
     <div class="pagedot" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="v" data-slot-locked-layout="true">v</div>
     <div class="center">
       <div class="marker">on insight #1</div>
-      <h2 data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Trust is the onboarding." data-slot-locked-layout="true">Trust is the <em>onboarding.</em></h2>
-      <p data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="The product can be perfect on day one, but if th" data-slot-locked-layout="true">The product can be perfect on day one, but if the welcome email reads like a contract, half of new accounts will never log in twice. The fix is small and writerly, not technical.</p>
+      <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Trust is the onboarding." data-slot-locked-layout="true">Trust is the <em>onboarding.</em></h2>
+      <p data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="The product can be perfect on day one, but if th" data-slot-locked-layout="true">The product can be perfect on day one, but if the welcome email reads like a contract, half of new accounts will never log in twice. The fix is small and writerly, not technical.</p>
     </div>
-    <div class="footer" data-edit-slot="s4-slot-5" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+    <div class="footer" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
       <span>April 29, 2026</span>
       <span>Field Notes · Vol. III</span>
     </div>
@@ -1601,34 +1611,34 @@
     <div class="pagedot" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="viii" data-slot-locked-layout="true">viii</div>
     <div class="grid">
       <div class="panel l">
-        <h2>Three small <em>moves,</em><br/>before the next debrief.</h2>
+        <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Three small moves, before the next debrief." data-slot-locked-layout="true">Three small <em>moves,</em><br/>before the next debrief.</h2>
         <p>Each one is small enough to ship inside a sprint, and structured so we can tell, six weeks from now, whether it moved the dial.</p>
       </div>
       <div class="panel r">
         <div class="item pink">
           <div class="n">i.</div>
-          <div data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Rewrite the first three emails From templated to" data-slot-locked-layout="true">
-            <h3>Rewrite the first three emails</h3>
+          <div>
+            <h3 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Rewrite the first three emails" data-slot-locked-layout="true">Rewrite the first three emails</h3>
             <p>From templated to written. Owner: lifecycle. By: May 17.</p>
           </div>
         </div>
         <div class="item lemon">
           <div class="n">ii.</div>
-          <div data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Quiet upgrades by default Opt-in for power users" data-slot-locked-layout="true">
-            <h3>Quiet upgrades by default</h3>
+          <div>
+            <h3 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Quiet upgrades by default" data-slot-locked-layout="true">Quiet upgrades by default</h3>
             <p>Opt-in for power users; soft rollout for everyone else. Owner: product. By: June 1.</p>
           </div>
         </div>
         <div class="item blush">
           <div class="n">iii.</div>
-          <div data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Make the inbox a search bar Surface in-product h" data-slot-locked-layout="true">
-            <h3>Make the inbox a search bar</h3>
+          <div>
+            <h3 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Make the inbox a search bar" data-slot-locked-layout="true">Make the inbox a search bar</h3>
             <p>Surface in-product help when a request matches a feature. Owner: support × product. By: June 14.</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+    <div class="footer" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
       <span>April 29, 2026</span>
       <span>Field Notes · Vol. III</span>
     </div>
@@ -1641,11 +1651,11 @@
     <div class="pagedot" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="ix" data-slot-locked-layout="true">ix</div>
     <div class="action">
       <div class="tag">Action title</div>
-      <h2 data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="The trust gap is built in the first 72 hours, no" data-slot-locked-layout="true">The trust gap is built in the first 72 hours, not the first 7 days — and the cost compounds for the rest of the lifecycle.</h2>
+      <h2 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="The trust gap is built in the first 72 hours, no" data-slot-locked-layout="true">The trust gap is built in the first 72 hours, not the first 7 days — and the cost compounds for the rest of the lifecycle.</h2>
     </div>
     <div class="body">
       <div class="col">
-        <h3>What we found</h3>
+        <h3 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="What we found" data-slot-locked-layout="true">What we found</h3>
         <p><strong style="color:var(--ink); font-weight:500">Three behavioral signals</strong> in the first 72 hours predict 18-month retention better than any feature-usage metric we tracked.</p>
         <ul>
           <li><strong>Email open #2</strong> — opening the second lifecycle email lifts D90 retention by 19 points.</li>
@@ -1655,14 +1665,14 @@
         <div class="source">Source: 14,200 cohorted accounts, Jan–Mar 2026.</div>
       </div>
       <div class="col">
-        <h3>Why it matters</h3>
+        <h3 data-edit-slot="s8-title-3" data-slot-type="text" data-slot-label="Why it matters" data-slot-locked-layout="true">Why it matters</h3>
         <div class="meta">$4.1M in projected retained ARR, on the current cohort alone.</div>
-        <p data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="The first three days are the only window where c" data-slot-locked-layout="true">The first three days are the only window where customers are both paying attention and willing to write back. Every interaction during this window does the work of roughly four interactions in week three.</p>
-        <p data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="The cost of getting this wrong is not refunds — " data-slot-locked-layout="true">The cost of getting this wrong is not refunds — it is the long, quiet churn of an account that never returns to the inbox.</p>
-        <div class="source" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Modelled on FY24 cohort behaviour." data-slot-locked-layout="true">Modelled on FY24 cohort behaviour.</div>
+        <p data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="The first three days are the only window where c" data-slot-locked-layout="true">The first three days are the only window where customers are both paying attention and willing to write back. Every interaction during this window does the work of roughly four interactions in week three.</p>
+        <p data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="The cost of getting this wrong is not refunds — " data-slot-locked-layout="true">The cost of getting this wrong is not refunds — it is the long, quiet churn of an account that never returns to the inbox.</p>
+        <div class="source" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Modelled on FY24 cohort behaviour." data-slot-locked-layout="true">Modelled on FY24 cohort behaviour.</div>
       </div>
       <div class="col">
-        <h3>What to do</h3>
+        <h3 data-edit-slot="s8-title-4" data-slot-type="text" data-slot-label="What to do" data-slot-locked-layout="true">What to do</h3>
         <ul>
           <li><strong>Rewrite emails 1–3</strong> in human voice; ship behind a 50/50 holdout. Owner: lifecycle. By: May 17.</li>
           <li><strong>Route every signup</strong> to a named human for one personal reply within 24h, capped at the top 200 accounts/day. Owner: success. By: May 24.</li>
@@ -1671,7 +1681,7 @@
         <div class="source">Pilot scope: top-decile signups by ICP score.</div>
       </div>
     </div>
-    <div class="footer" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+    <div class="footer" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
       <span>April 29, 2026</span>
       <span>Field Notes · Vol. III</span>
     </div>
@@ -1683,7 +1693,7 @@
     <div class="eyebrow" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Retention, by cohort" data-slot-locked-layout="true">Retention, by cohort</div>
     <div class="pagedot" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="x" data-slot-locked-layout="true">x</div>
     <div class="left">
-      <h2>The curve <em>bends</em><br/>around day three.</h2>
+      <h2 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="The curve bends around day three." data-slot-locked-layout="true">The curve <em>bends</em><br/>around day three.</h2>
       <p>Cohorts that received a written welcome and a human reply within 24 hours retain at roughly 2× the rate of the templated cohort, and the gap holds steady for the first ninety days.</p>
       <div class="legend">
         <div class="li"><i style="background:var(--pink)"></i> Templated welcome (control)</div>
@@ -1726,44 +1736,44 @@
     <div class="eyebrow" data-edit-slot="s10-slot-1" data-slot-type="text" data-slot-label="How we&#x27;ll work" data-slot-locked-layout="true">How we'll work</div>
     <div class="pagedot" data-edit-slot="s10-slot-2" data-slot-type="text" data-slot-label="xi" data-slot-locked-layout="true">xi</div>
     <div class="head">
-      <h2>From <em>insight</em><br/>to shipped change.</h2>
+      <h2 data-edit-slot="s10-title-1" data-slot-type="text" data-slot-label="From insight to shipped change." data-slot-locked-layout="true">From <em>insight</em><br/>to shipped change.</h2>
       <div class="sub">A five-step path each pilot follows, end to end, before it is allowed to graduate to the default experience.</div>
     </div>
     <div class="flow">
       <div class="node n1">
         <div class="n">i.</div>
-        <h3 data-edit-slot="s10-slot-3" data-slot-type="text" data-slot-label="Frame" data-slot-locked-layout="true">Frame</h3>
-        <p data-edit-slot="s10-slot-4" data-slot-type="text" data-slot-label="Translate the insight into a single behavioural " data-slot-locked-layout="true">Translate the insight into a single behavioural hypothesis we can falsify.</p>
+        <h3 data-edit-slot="s10-title-2" data-slot-type="text" data-slot-label="Frame" data-slot-locked-layout="true">Frame</h3>
+        <p data-edit-slot="s10-slot-3" data-slot-type="text" data-slot-label="Translate the insight into a single behavioural " data-slot-locked-layout="true">Translate the insight into a single behavioural hypothesis we can falsify.</p>
         <svg class="arrow" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node n2">
         <div class="n">ii.</div>
-        <h3 data-edit-slot="s10-slot-5" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
-        <p data-edit-slot="s10-slot-6" data-slot-type="text" data-slot-label="Sketch the smallest end-to-end change that lets " data-slot-locked-layout="true">Sketch the smallest end-to-end change that lets the hypothesis be tested in one sprint.</p>
+        <h3 data-edit-slot="s10-title-3" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
+        <p data-edit-slot="s10-slot-4" data-slot-type="text" data-slot-label="Sketch the smallest end-to-end change that lets " data-slot-locked-layout="true">Sketch the smallest end-to-end change that lets the hypothesis be tested in one sprint.</p>
         <svg class="arrow" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node n3">
         <div class="n">iii.</div>
-        <h3 data-edit-slot="s10-slot-7" data-slot-type="text" data-slot-label="Pilot" data-slot-locked-layout="true">Pilot</h3>
-        <p data-edit-slot="s10-slot-8" data-slot-type="text" data-slot-label="Ship to a 50/50 holdout in a single segment. Hol" data-slot-locked-layout="true">Ship to a 50/50 holdout in a single segment. Hold the line for two full cycles.</p>
+        <h3 data-edit-slot="s10-title-4" data-slot-type="text" data-slot-label="Pilot" data-slot-locked-layout="true">Pilot</h3>
+        <p data-edit-slot="s10-slot-5" data-slot-type="text" data-slot-label="Ship to a 50/50 holdout in a single segment. Hol" data-slot-locked-layout="true">Ship to a 50/50 holdout in a single segment. Hold the line for two full cycles.</p>
         <svg class="arrow" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node n4">
         <div class="n">iv.</div>
-        <h3 data-edit-slot="s10-slot-9" data-slot-type="text" data-slot-label="Read" data-slot-locked-layout="true">Read</h3>
-        <p data-edit-slot="s10-slot-10" data-slot-type="text" data-slot-label="Review the cohort against pre-registered metrics" data-slot-locked-layout="true">Review the cohort against pre-registered metrics. Decide kill, scale, or extend.</p>
+        <h3 data-edit-slot="s10-title-5" data-slot-type="text" data-slot-label="Read" data-slot-locked-layout="true">Read</h3>
+        <p data-edit-slot="s10-slot-6" data-slot-type="text" data-slot-label="Review the cohort against pre-registered metrics" data-slot-locked-layout="true">Review the cohort against pre-registered metrics. Decide kill, scale, or extend.</p>
         <svg class="arrow" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node n5">
         <div class="n">v.</div>
-        <h3 data-edit-slot="s10-slot-11" data-slot-type="text" data-slot-label="Default" data-slot-locked-layout="true">Default</h3>
-        <p data-edit-slot="s10-slot-12" data-slot-type="text" data-slot-label="Graduate the change to the default surface. Reti" data-slot-locked-layout="true">Graduate the change to the default surface. Retire the legacy path inside the same release.</p>
+        <h3 data-edit-slot="s10-title-6" data-slot-type="text" data-slot-label="Default" data-slot-locked-layout="true">Default</h3>
+        <p data-edit-slot="s10-slot-7" data-slot-type="text" data-slot-label="Graduate the change to the default surface. Reti" data-slot-locked-layout="true">Graduate the change to the default surface. Retire the legacy path inside the same release.</p>
       </div>
     </div>
-    <div class="timeline" data-edit-slot="s10-slot-13" data-slot-type="text" data-slot-label="Week 1Weeks 2–3Weeks 3–6Week 7Week 8" data-slot-locked-layout="true">
+    <div class="timeline" data-edit-slot="s10-slot-8" data-slot-type="text" data-slot-label="Week 1Weeks 2–3Weeks 3–6Week 7Week 8" data-slot-locked-layout="true">
       <span>Week 1</span><span>Weeks 2–3</span><span>Weeks 3–6</span><span>Week 7</span><span>Week 8</span>
     </div>
-    <div class="footer" data-edit-slot="s10-slot-14" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
+    <div class="footer" data-edit-slot="s10-slot-9" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
       <span>April 29, 2026</span>
       <span>Field Notes · Vol. III</span>
     </div>
@@ -1775,7 +1785,7 @@
     <div class="eyebrow" data-edit-slot="s11-slot-1" data-slot-type="text" data-slot-label="The three pilots, side by side" data-slot-locked-layout="true">The three pilots, side by side</div>
     <div class="pagedot" data-edit-slot="s11-slot-2" data-slot-type="text" data-slot-label="xii" data-slot-locked-layout="true">xii</div>
     <div class="head">
-      <h2>Where each <em>pilot</em><br/>earns its keep.</h2>
+      <h2 data-edit-slot="s11-title-1" data-slot-type="text" data-slot-label="Where each pilot earns its keep." data-slot-locked-layout="true">Where each <em>pilot</em><br/>earns its keep.</h2>
       <div class="sub">Scored against the four levers that matter most this cycle. We will only carry forward bets that win on at least two.</div>
     </div>
     <div class="table">

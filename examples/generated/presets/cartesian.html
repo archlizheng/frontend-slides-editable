@@ -775,6 +775,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1345,8 +1355,8 @@
             <div class="geo-decoration"></div>
             <div class="content">
                 <div class="label">Presentation Template</div>
-                <h1 data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Cartesian" data-slot-locked-layout="true">Cartesian</h1>
-                <p class="subtitle" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="A minimalist framework for strategic narratives." data-slot-locked-layout="true">A minimalist framework for strategic narratives. Clean geometry meets editorial refinement.</p>
+                <h1 data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Cartesian" data-slot-locked-layout="true">Cartesian</h1>
+                <p class="subtitle" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="A minimalist framework for strategic narratives." data-slot-locked-layout="true">A minimalist framework for strategic narratives. Clean geometry meets editorial refinement.</p>
             </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1356,8 +1366,8 @@
             <div class="content">
                 <div class="left-col">
                     <div class="label">Overview</div>
-                    <h2 data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Session Agenda" data-slot-locked-layout="true">Session Agenda</h2>
-                    <p data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="An outline of key discussion points structured t" data-slot-locked-layout="true">An outline of key discussion points structured to guide our strategic conversation forward.</p>
+                    <h2 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Session Agenda" data-slot-locked-layout="true">Session Agenda</h2>
+                    <p data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="An outline of key discussion points structured t" data-slot-locked-layout="true">An outline of key discussion points structured to guide our strategic conversation forward.</p>
                 </div>
                 <div class="right-col">
                     <ul class="agenda-list">
@@ -1375,7 +1385,7 @@
 <section class="slide slide-statement" id="slide-2" data-template-slide-index="3">
             <div class="content">
                 <span class="quote-mark">"</span>
-                <h2>Precision in approach defines the boundary between noise and signal.</h2>
+                <h2 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Precision in approach defines the boundary betwe" data-slot-locked-layout="true">Precision in approach defines the boundary between noise and signal.</h2>
                 <div class="attribution">Guiding Principle</div>
             </div>
             <div class="geo-decoration" style="left: -10vw; top: 10vh; width: 40vw; height: 40vw; opacity: 0.2;"></div>
@@ -1387,8 +1397,8 @@
             <div class="content">
                 <div class="left-col">
                     <div class="label">Performance Data</div>
-                    <h2 data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Quarterly Metrics" data-slot-locked-layout="true">Quarterly Metrics</h2>
-                    <p data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Comparative analysis across key business indicat" data-slot-locked-layout="true">Comparative analysis across key business indicators demonstrating sustained momentum and operational efficiency.</p>
+                    <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Quarterly Metrics" data-slot-locked-layout="true">Quarterly Metrics</h2>
+                    <p data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Comparative analysis across key business indicat" data-slot-locked-layout="true">Comparative analysis across key business indicators demonstrating sustained momentum and operational efficiency.</p>
                 </div>
                 <div class="right-col">
                     <div class="chart-container">
@@ -1417,20 +1427,20 @@
                 </div>
                 <div class="right-col">
                     <div class="label">Case Study</div>
-                    <h2 data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Structural Overview" data-slot-locked-layout="true">Structural Overview</h2>
-                    <p data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="A comprehensive examination of foundational elem" data-slot-locked-layout="true">A comprehensive examination of foundational elements that define our operational framework and strategic positioning within the market landscape.</p>
-                    <p data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Through iterative refinement and measured adapta" data-slot-locked-layout="true">Through iterative refinement and measured adaptation, the methodology ensures alignment with evolving objectives and stakeholder expectations.</p>
+                    <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Structural Overview" data-slot-locked-layout="true">Structural Overview</h2>
+                    <p data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="A comprehensive examination of foundational elem" data-slot-locked-layout="true">A comprehensive examination of foundational elements that define our operational framework and strategic positioning within the market landscape.</p>
+                    <p data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Through iterative refinement and measured adapta" data-slot-locked-layout="true">Through iterative refinement and measured adaptation, the methodology ensures alignment with evolving objectives and stakeholder expectations.</p>
                     <div class="stats">
                         <div class="stat-item">
-                            <h4>47%</h4>
+                            <h4 data-edit-slot="s4-title-2" data-slot-type="text" data-slot-label="47%" data-slot-locked-layout="true">47%</h4>
                             <span>Efficiency Gain</span>
                         </div>
-                        <div class="stat-item" data-edit-slot="s4-slot-4" data-slot-type="metric" data-slot-label="12x Scale Factor" data-slot-locked-layout="true">
-                            <h4>12x</h4>
+                        <div class="stat-item">
+                            <h4 data-edit-slot="s4-title-3" data-slot-type="text" data-slot-label="12x" data-slot-locked-layout="true">12x</h4>
                             <span>Scale Factor</span>
                         </div>
-                        <div class="stat-item" data-edit-slot="s4-slot-5" data-slot-type="metric" data-slot-label="3.2M Revenue Impact" data-slot-locked-layout="true">
-                            <h4>3.2M</h4>
+                        <div class="stat-item">
+                            <h4 data-edit-slot="s4-title-4" data-slot-type="text" data-slot-label="3.2M" data-slot-locked-layout="true">3.2M</h4>
                             <span>Revenue Impact</span>
                         </div>
                     </div>
@@ -1444,23 +1454,23 @@
             <div class="content">
                 <div class="header">
                     <div class="label">Capabilities</div>
-                    <h2 data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Core Competencies" data-slot-locked-layout="true">Core Competencies</h2>
+                    <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Core Competencies" data-slot-locked-layout="true">Core Competencies</h2>
                 </div>
                 <div class="cards-grid">
                     <div class="card">
                         <div class="card-icon">I</div>
-                        <h3 data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Analytical Depth" data-slot-locked-layout="true">Analytical Depth</h3>
-                        <p data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Rigorous data-driven methodologies that transfor" data-slot-locked-layout="true">Rigorous data-driven methodologies that transform raw information into actionable strategic intelligence.</p>
+                        <h3 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Analytical Depth" data-slot-locked-layout="true">Analytical Depth</h3>
+                        <p data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Rigorous data-driven methodologies that transfor" data-slot-locked-layout="true">Rigorous data-driven methodologies that transform raw information into actionable strategic intelligence.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon">II</div>
-                        <h3 data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Operational Scale" data-slot-locked-layout="true">Operational Scale</h3>
-                        <p data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Streamlined processes designed to expand seamles" data-slot-locked-layout="true">Streamlined processes designed to expand seamlessly while maintaining quality and consistency.</p>
+                        <h3 data-edit-slot="s5-title-3" data-slot-type="text" data-slot-label="Operational Scale" data-slot-locked-layout="true">Operational Scale</h3>
+                        <p data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Streamlined processes designed to expand seamles" data-slot-locked-layout="true">Streamlined processes designed to expand seamlessly while maintaining quality and consistency.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon">III</div>
-                        <h3 data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Adaptive Design" data-slot-locked-layout="true">Adaptive Design</h3>
-                        <p data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Flexible frameworks that evolve with changing co" data-slot-locked-layout="true">Flexible frameworks that evolve with changing conditions and emerging opportunities.</p>
+                        <h3 data-edit-slot="s5-title-4" data-slot-type="text" data-slot-label="Adaptive Design" data-slot-locked-layout="true">Adaptive Design</h3>
+                        <p data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Flexible frameworks that evolve with changing co" data-slot-locked-layout="true">Flexible frameworks that evolve with changing conditions and emerging opportunities.</p>
                     </div>
                 </div>
             </div>
@@ -1473,9 +1483,9 @@
                 <div class="header">
                     <div>
                         <div class="label">Trend Analysis</div>
-                        <h2 data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Growth Projection" data-slot-locked-layout="true">Growth Projection</h2>
+                        <h2 data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Growth Projection" data-slot-locked-layout="true">Growth Projection</h2>
                     </div>
-                    <p style="max-width: 25vw; text-align: right;" data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Multi-year trajectory illustrating compound grow" data-slot-locked-layout="true">Multi-year trajectory illustrating compound growth patterns and market penetration metrics.</p>
+                    <p style="max-width: 25vw; text-align: right;" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Multi-year trajectory illustrating compound grow" data-slot-locked-layout="true">Multi-year trajectory illustrating compound growth patterns and market penetration metrics.</p>
                 </div>
                 <div class="chart-wrapper">
                     <div class="static-chart-replacement" role="img" aria-label="Static chart replacement for lineChart">
@@ -1497,28 +1507,28 @@
             <div class="content">
                 <div class="header">
                     <div class="label">Roadmap</div>
-                    <h2 data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Implementation Phases" data-slot-locked-layout="true">Implementation Phases</h2>
+                    <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Implementation Phases" data-slot-locked-layout="true">Implementation Phases</h2>
                 </div>
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="year">Phase One</div>
-                        <h4 data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Discovery" data-slot-locked-layout="true">Discovery</h4>
-                        <p data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Initial assessment and comprehensive audit of ex" data-slot-locked-layout="true">Initial assessment and comprehensive audit of existing systems and processes.</p>
+                        <h4 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Discovery" data-slot-locked-layout="true">Discovery</h4>
+                        <p data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Initial assessment and comprehensive audit of ex" data-slot-locked-layout="true">Initial assessment and comprehensive audit of existing systems and processes.</p>
                     </div>
                     <div class="timeline-item">
                         <div class="year">Phase Two</div>
-                        <h4 data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Strategy" data-slot-locked-layout="true">Strategy</h4>
-                        <p data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Development of tailored frameworks aligned with " data-slot-locked-layout="true">Development of tailored frameworks aligned with organizational objectives.</p>
+                        <h4 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Strategy" data-slot-locked-layout="true">Strategy</h4>
+                        <p data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Development of tailored frameworks aligned with " data-slot-locked-layout="true">Development of tailored frameworks aligned with organizational objectives.</p>
                     </div>
                     <div class="timeline-item">
                         <div class="year">Phase Three</div>
-                        <h4 data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Execution" data-slot-locked-layout="true">Execution</h4>
-                        <p data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="Phased rollout with continuous monitoring and it" data-slot-locked-layout="true">Phased rollout with continuous monitoring and iterative optimization.</p>
+                        <h4 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Execution" data-slot-locked-layout="true">Execution</h4>
+                        <p data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Phased rollout with continuous monitoring and it" data-slot-locked-layout="true">Phased rollout with continuous monitoring and iterative optimization.</p>
                     </div>
                     <div class="timeline-item">
                         <div class="year">Phase Four</div>
-                        <h4 data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="Scale" data-slot-locked-layout="true">Scale</h4>
-                        <p data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="Expansion of proven methodologies across all ope" data-slot-locked-layout="true">Expansion of proven methodologies across all operational units.</p>
+                        <h4 data-edit-slot="s7-title-5" data-slot-type="text" data-slot-label="Scale" data-slot-locked-layout="true">Scale</h4>
+                        <p data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Expansion of proven methodologies across all ope" data-slot-locked-layout="true">Expansion of proven methodologies across all operational units.</p>
                     </div>
                 </div>
             </div>
@@ -1530,28 +1540,28 @@
             <div class="content">
                 <div class="header">
                     <div class="label">Leadership</div>
-                    <h2 data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Key Contributors" data-slot-locked-layout="true">Key Contributors</h2>
+                    <h2 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Key Contributors" data-slot-locked-layout="true">Key Contributors</h2>
                 </div>
                 <div class="team-grid">
                     <div class="team-member">
                         <div class="member-photo">A</div>
-                        <h4 data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Alex Morgan" data-slot-locked-layout="true">Alex Morgan</h4>
-                        <span data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Strategy Director" data-slot-locked-layout="true">Strategy Director</span>
+                        <h4 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="Alex Morgan" data-slot-locked-layout="true">Alex Morgan</h4>
+                        <span data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Strategy Director" data-slot-locked-layout="true">Strategy Director</span>
                     </div>
                     <div class="team-member">
                         <div class="member-photo">J</div>
-                        <h4 data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Jordan Lee" data-slot-locked-layout="true">Jordan Lee</h4>
-                        <span data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Operations Lead" data-slot-locked-layout="true">Operations Lead</span>
+                        <h4 data-edit-slot="s8-title-3" data-slot-type="text" data-slot-label="Jordan Lee" data-slot-locked-layout="true">Jordan Lee</h4>
+                        <span data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Operations Lead" data-slot-locked-layout="true">Operations Lead</span>
                     </div>
                     <div class="team-member">
                         <div class="member-photo">S</div>
-                        <h4 data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Sam Taylor" data-slot-locked-layout="true">Sam Taylor</h4>
-                        <span data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Research Head" data-slot-locked-layout="true">Research Head</span>
+                        <h4 data-edit-slot="s8-title-4" data-slot-type="text" data-slot-label="Sam Taylor" data-slot-locked-layout="true">Sam Taylor</h4>
+                        <span data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Research Head" data-slot-locked-layout="true">Research Head</span>
                     </div>
                     <div class="team-member">
                         <div class="member-photo">R</div>
-                        <h4 data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Reese Park" data-slot-locked-layout="true">Reese Park</h4>
-                        <span data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Design Principal" data-slot-locked-layout="true">Design Principal</span>
+                        <h4 data-edit-slot="s8-title-5" data-slot-type="text" data-slot-label="Reese Park" data-slot-locked-layout="true">Reese Park</h4>
+                        <span data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Design Principal" data-slot-locked-layout="true">Design Principal</span>
                     </div>
                 </div>
             </div>
@@ -1563,9 +1573,9 @@
             <div class="geo-ring"></div>
             <div class="content">
                 <div class="label">Conclusion</div>
-                <h1 data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Thank You" data-slot-locked-layout="true">Thank You</h1>
-                <p data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="Questions &amp; Discussion" data-slot-locked-layout="true">Questions & Discussion</p>
-                <div style="margin-top: 4vh; font-size: 0.85rem; color: var(--accent);" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="contact@example.com" data-slot-locked-layout="true">
+                <h1 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Thank You" data-slot-locked-layout="true">Thank You</h1>
+                <p data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Questions &amp; Discussion" data-slot-locked-layout="true">Questions & Discussion</p>
+                <div style="margin-top: 4vh; font-size: 0.85rem; color: var(--accent);" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="contact@example.com" data-slot-locked-layout="true">
                     contact@example.com
                 </div>
             </div>

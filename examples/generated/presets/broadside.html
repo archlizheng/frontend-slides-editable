@@ -1374,6 +1374,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1952,13 +1962,13 @@
         </div>
 
         <!-- Main content: fills the slide, anchored to bottom -->
-        <div class="cover-body" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="this is the broadside style Protest poster meets" data-slot-locked-layout="true">
+        <div class="cover-body">
           <h1
             class="display"
             data-anim="fade-up"
             data-delay="1"
             style="max-width: 95%"
-          >
+           data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="this is the broadside style" data-slot-locked-layout="true">
             this is the broadside style
           </h1>
           <p
@@ -1973,7 +1983,7 @@
         </div>
 
         <!-- Bottom meta: author left, date right -->
-        <div class="cover-meta" data-anim="fade-in" data-delay="3" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="[[Author Name]] [Year] · Context" data-slot-locked-layout="true">
+        <div class="cover-meta" data-anim="fade-in" data-delay="3" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="[[Author Name]] [Year] · Context" data-slot-locked-layout="true">
           <span class="broadside-num">[[Author Name]]</span>
           <span class="broadside-num">[Year] · Context</span>
         </div>
@@ -1992,7 +2002,7 @@
           02 / Chapter
         </div>
 
-        <h2 class="h1" data-anim="fade-up" data-delay="1" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="the next chapter begins here" data-slot-locked-layout="true">
+        <h2 class="h1" data-anim="fade-up" data-delay="1" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="the next chapter begins here" data-slot-locked-layout="true">
           the next chapter begins here
         </h2>
 
@@ -2001,7 +2011,7 @@
           data-anim="fade-up"
           data-delay="2"
           style="max-width: 50%; margin-top: var(--gap-md); opacity: 0.65"
-         data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="One optional sentence that frames what this sect" data-slot-locked-layout="true">
+         data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="One optional sentence that frames what this sect" data-slot-locked-layout="true">
           One optional sentence that frames what this section is about.
         </p>
 
@@ -2028,14 +2038,14 @@
             data-anim="fade-up"
             data-delay="2"
             style="max-width: 75%"
-           data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="orange is not an accent. it is the room." data-slot-locked-layout="true">
+           data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="orange is not an accent. it is the room." data-slot-locked-layout="true">
             orange is not an accent. it is the room.
           </h2>
         </div>
 
         <footer class="slide-foot">
-          <span class="label muted" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
-          <span class="label muted" data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+          <span class="label muted" data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="label muted" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
         </footer>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -2056,7 +2066,7 @@
               data-delay="1"
               style="margin: 1.5vh 0"
             ></div>
-            <h2 class="h2" data-anim="fade-up" data-delay="2" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="when content needs image support" data-slot-locked-layout="true">
+            <h2 class="h2" data-anim="fade-up" data-delay="2" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="when content needs image support" data-slot-locked-layout="true">
               when content needs image support
             </h2>
             <p
@@ -2064,27 +2074,27 @@
               data-anim="fade-up"
               data-delay="3"
               style="max-width: 90%"
-             data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="One or two sentences of supporting context. Shor" data-slot-locked-layout="true">
+             data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="One or two sentences of supporting context. Shor" data-slot-locked-layout="true">
               One or two sentences of supporting context. Short. Dense. No
               padding.
             </p>
             <!-- Broadside list: max 3 items, forward-slash bullet -->
             <ul class="bullet-list" data-anim="fade-up" data-delay="4">
-              <li data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="First key supporting point" data-slot-locked-layout="true">First key supporting point</li>
-              <li data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Second point, equally direct" data-slot-locked-layout="true">Second point, equally direct</li>
-              <li data-edit-slot="s3-slot-7" data-slot-type="text" data-slot-label="Third and final — end strong" data-slot-locked-layout="true">Third and final — end strong</li>
+              <li data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="First key supporting point" data-slot-locked-layout="true">First key supporting point</li>
+              <li data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="Second point, equally direct" data-slot-locked-layout="true">Second point, equally direct</li>
+              <li data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Third and final — end strong" data-slot-locked-layout="true">Third and final — end strong</li>
             </ul>
           </div>
 
           <div class="split-image" data-anim="reveal-right" data-delay="2">
             <div class="img-placeholder" data-edit-slot="s3-image-1" data-slot-type="image" data-slot-label="Image" data-slot-locked-layout="true">Image Placeholder</div>
-            <p class="img-caption" data-edit-slot="s3-slot-8" data-slot-type="text" data-slot-label="Image caption or source · Year" data-slot-locked-layout="true">Image caption or source · Year</p>
+            <p class="img-caption" data-edit-slot="s3-slot-7" data-slot-type="text" data-slot-label="Image caption or source · Year" data-slot-locked-layout="true">Image caption or source · Year</p>
           </div>
         </div>
 
         <footer class="slide-foot">
-          <span class="label muted" data-edit-slot="s3-slot-9" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
-          <span class="label muted" data-edit-slot="s3-slot-10" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+          <span class="label muted" data-edit-slot="s3-slot-8" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="label muted" data-edit-slot="s3-slot-9" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
         </footer>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -2145,7 +2155,7 @@
             <span class="fadelist-item">After</span>
           </div>
         </div>
-        <div class="fadelist-title" data-anim="fade-up" data-delay="2" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="thesession" data-slot-locked-layout="true">
+        <div class="fadelist-title" data-anim="fade-up" data-delay="2" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="the session" data-slot-locked-layout="true">
           the<br />session
         </div>
         <div
@@ -2174,7 +2184,7 @@
         <div class="slide-body">
           <div class="list-head">
             <p class="kicker" data-anim="fade-in" data-delay="0">Four rules</p>
-            <h2 class="h2" data-anim="fade-up" data-delay="1">
+            <h2 class="h2" data-anim="fade-up" data-delay="1" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="what separates signal from noise" data-slot-locked-layout="true">
               what separates<br />signal from noise
             </h2>
           </div>
@@ -2230,10 +2240,10 @@
             <div class="compare-label" data-anim="fade-in" data-delay="0">
               Before
             </div>
-            <h3 class="h3" data-anim="fade-up" data-delay="1" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="six-month build cycles" data-slot-locked-layout="true">
+            <h3 class="h3" data-anim="fade-up" data-delay="1" data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="six-month build cycles" data-slot-locked-layout="true">
               six-month build cycles
             </h3>
-            <p class="lead muted" data-anim="fade-up" data-delay="2" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Teams planned for months before shipping anythin" data-slot-locked-layout="true">
+            <p class="lead muted" data-anim="fade-up" data-delay="2" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Teams planned for months before shipping anythin" data-slot-locked-layout="true">
               Teams planned for months before shipping anything. By launch, the
               market had moved.
             </p>
@@ -2243,9 +2253,9 @@
               data-delay="3"
               style="--sz-lead: 1.2vw"
             >
-              <li data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Waterfall planning, quarterly roadmaps" data-slot-locked-layout="true">Waterfall planning, quarterly roadmaps</li>
-              <li data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="User testing at the end, not the start" data-slot-locked-layout="true">User testing at the end, not the start</li>
-              <li data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Success measured by features shipped" data-slot-locked-layout="true">Success measured by features shipped</li>
+              <li data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Waterfall planning, quarterly roadmaps" data-slot-locked-layout="true">Waterfall planning, quarterly roadmaps</li>
+              <li data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="User testing at the end, not the start" data-slot-locked-layout="true">User testing at the end, not the start</li>
+              <li data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Success measured by features shipped" data-slot-locked-layout="true">Success measured by features shipped</li>
             </ul>
           </div>
           <div class="compare-panel panel-orange">
@@ -2257,7 +2267,7 @@
               data-anim="fade-up"
               data-delay="1"
               style="color: #111"
-             data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="two-week iteration loops" data-slot-locked-layout="true">
+             data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="two-week iteration loops" data-slot-locked-layout="true">
               two-week iteration loops
             </h3>
             <p
@@ -2265,7 +2275,7 @@
               data-anim="fade-up"
               data-delay="2"
               style="color: rgba(17, 17, 17, 0.65)"
-             data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Ship a rough version. Watch what users actually " data-slot-locked-layout="true">
+             data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Ship a rough version. Watch what users actually " data-slot-locked-layout="true">
               Ship a rough version. Watch what users actually do. Rebuild. Ship
               again.
             </p>
@@ -2275,15 +2285,15 @@
               data-delay="3"
               style="--sz-lead: 1.2vw"
             >
-              <li data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="Weekly user sessions, continuous discovery" data-slot-locked-layout="true">Weekly user sessions, continuous discovery</li>
-              <li data-edit-slot="s8-slot-11" data-slot-type="text" data-slot-label="Metrics reviewed daily, not quarterly" data-slot-locked-layout="true">Metrics reviewed daily, not quarterly</li>
-              <li data-edit-slot="s8-slot-12" data-slot-type="text" data-slot-label="Success measured by behavior change" data-slot-locked-layout="true">Success measured by behavior change</li>
+              <li data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Weekly user sessions, continuous discovery" data-slot-locked-layout="true">Weekly user sessions, continuous discovery</li>
+              <li data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Metrics reviewed daily, not quarterly" data-slot-locked-layout="true">Metrics reviewed daily, not quarterly</li>
+              <li data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="Success measured by behavior change" data-slot-locked-layout="true">Success measured by behavior change</li>
             </ul>
           </div>
         </div>
         <footer class="slide-foot">
-          <span class="label muted" data-edit-slot="s8-slot-13" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
-          <span class="label muted" data-edit-slot="s8-slot-14" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
+          <span class="label muted" data-edit-slot="s8-slot-11" data-slot-type="text" data-slot-label="Broadside" data-slot-locked-layout="true">Broadside</span>
+          <span class="label muted" data-edit-slot="s8-slot-12" data-slot-type="text" data-slot-label="[Author Name]" data-slot-locked-layout="true">[Author Name]</span>
         </footer>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -2296,7 +2306,7 @@
         </header>
         <div class="slide-body">
           <div class="chart-header">
-            <h2 class="h2" data-anim="fade-up" data-delay="0">
+            <h2 class="h2" data-anim="fade-up" data-delay="0" data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="revenue by quarter" data-slot-locked-layout="true">
               revenue by quarter
             </h2>
             <span class="caption muted" data-anim="fade-in" data-delay="1"
@@ -2351,7 +2361,7 @@
             style="color: #111; letter-spacing: -0.02em"
             data-anim="fade-up"
             data-delay="0"
-          >
+           data-edit-slot="s10-title-1" data-slot-type="text" data-slot-label="how it works" data-slot-locked-layout="true">
             how it works
           </h2>
           <div class="flow" data-anim="fade-up" data-delay="1">
@@ -2411,7 +2421,7 @@
             data-anim="fade-up"
             data-delay="0"
             style="font-weight: 900"
-          >
+           data-edit-slot="s11-title-1" data-slot-type="text" data-slot-label="where the market sits" data-slot-locked-layout="true">
             where the market sits
           </h2>
           <div class="pie-row" data-anim="fade-up" data-delay="1">
@@ -2477,7 +2487,7 @@
             data-anim="fade-up"
             data-delay="0"
             style="font-weight: 900"
-          >
+           data-edit-slot="s12-title-1" data-slot-type="text" data-slot-label="what actually matters" data-slot-locked-layout="true">
             what actually matters
           </h2>
           <div class="pyramid" data-anim="fade-up" data-delay="1">
@@ -2576,7 +2586,7 @@
             data-anim="fade-up"
             data-delay="0"
             style="font-weight: 900"
-          >
+           data-edit-slot="s14-title-1" data-slot-type="text" data-slot-label="build · measure · learn" data-slot-locked-layout="true">
             build · measure · learn
           </h2>
           <div class="cycle-grid" data-anim="fade-up" data-delay="1">
@@ -2646,14 +2656,14 @@
             line-height: 0.9;
             letter-spacing: -0.04em;
           "
-         data-edit-slot="s15-slot-2" data-slot-type="text" data-slot-label="let&#x27;stalk." data-slot-locked-layout="true">
+         data-edit-slot="s15-title-1" data-slot-type="text" data-slot-label="let&#x27;s talk." data-slot-locked-layout="true">
           let's<br />talk.
         </h1>
         <div
           style="display: flex; flex-direction: column; gap: var(--gap-sm)"
           data-anim="fade-up"
           data-delay="2"
-         data-edit-slot="s15-slot-3" data-slot-type="text" data-slot-label="[hello@company.com] · [@handle] · [company.com]" data-slot-locked-layout="true">
+         data-edit-slot="s15-slot-2" data-slot-type="text" data-slot-label="[hello@company.com] · [@handle] · [company.com]" data-slot-locked-layout="true">
           <p class="lead" style="color: rgba(17, 17, 17, 0.65); max-width: 45%">
             [hello@company.com] · [@handle] · [company.com]
           </p>
@@ -2667,7 +2677,7 @@
             padding-top: var(--gap-sm);
             border-top: 1px solid rgba(17, 17, 17, 0.15);
           "
-         data-edit-slot="s15-slot-4" data-slot-type="text" data-slot-label="[Author Name] [Year]" data-slot-locked-layout="true">
+         data-edit-slot="s15-slot-3" data-slot-type="text" data-slot-label="[Author Name] [Year]" data-slot-locked-layout="true">
           <span class="broadside-num" style="opacity: 0.4">[Author Name]</span>
           <span class="broadside-num" style="opacity: 0.4">[Year]</span>
         </div>

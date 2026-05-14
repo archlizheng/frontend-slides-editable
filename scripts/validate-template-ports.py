@@ -10,12 +10,27 @@ from __future__ import annotations
 import importlib.util
 import re
 import sys
+from html.parser import HTMLParser
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 PRESETS_DIR = ROOT / "examples" / "generated" / "presets"
 LEGACY_PRESET_COUNT = 12
+TITLE_LIKE_CLASSES = {
+    "title",
+    "ttl",
+    "headline",
+    "heading",
+    "deck-title",
+    "slide-title",
+    "stmt",
+    "h",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+}
 
 
 def load_builder_ports():
@@ -35,6 +50,100 @@ def find_slide_ids(source: str) -> list[str]:
         id_match = re.search(r'\bid=["\']([^"\']+)["\']', match.group(0), flags=re.I)
         ids.append(id_match.group(1) if id_match else "")
     return ids
+
+
+def deck_markup_only(source: str) -> str:
+    deck_match = re.search(r'<div\b[^>]*\bid=["\']deck["\'][^>]*>', source, flags=re.I)
+    if not deck_match:
+        return source
+    script_pos = source.find("<script", deck_match.end())
+    return source[deck_match.start() :] if script_pos < 0 else source[deck_match.start() : script_pos]
+
+
+def class_tokens_from_value(value: str | None) -> set[str]:
+    return set((value or "").split())
+
+
+def is_title_like_node(tag: str, classes: set[str]) -> bool:
+    tag = tag.lower()
+    if tag in {"h1", "h2", "h3", "h4"}:
+        return True
+    if classes & TITLE_LIKE_CLASSES:
+        return True
+    return False
+
+
+class TitleSlotAuditParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.stack: list[dict] = []
+        self.in_deck = False
+        self.issues: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs_list) -> None:
+        tag = tag.lower()
+        attrs = {name.lower(): value for name, value in attrs_list}
+        if tag == "div" and attrs.get("id") == "deck":
+            self.in_deck = True
+
+        parent_slot_context = any(frame["slot_context"] for frame in self.stack)
+        has_slot = "data-edit-slot" in attrs
+        if has_slot:
+            for frame in self.stack:
+                frame["has_slot_descendant"] = True
+
+        classes = class_tokens_from_value(attrs.get("class"))
+        frame = {
+            "tag": tag,
+            "classes": classes,
+            "aria_hidden": "aria-hidden" in attrs,
+            "slot_context": parent_slot_context or has_slot,
+            "has_slot_descendant": False,
+            "title_like": self.in_deck and is_title_like_node(tag, classes),
+            "text": [],
+            "deck_root": self.in_deck and tag == "div" and attrs.get("id") == "deck",
+        }
+        self.stack.append(frame)
+
+    def handle_data(self, data: str) -> None:
+        if not self.in_deck:
+            return
+        for frame in self.stack:
+            if frame["title_like"]:
+                frame["text"].append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if not self.stack:
+            return
+        index = None
+        for i in range(len(self.stack) - 1, -1, -1):
+            if self.stack[i]["tag"] == tag:
+                index = i
+                break
+        if index is None:
+            return
+        closing = self.stack[index:]
+        self.stack = self.stack[:index]
+        for frame in reversed(closing):
+            if frame["title_like"]:
+                text = re.sub(r"\s+", " ", " ".join(frame["text"])).strip()
+                if (
+                    text
+                    and not frame["aria_hidden"]
+                    and not frame["slot_context"]
+                    and not frame["has_slot_descendant"]
+                ):
+                    cls = " ".join(sorted(frame["classes"])) or "-"
+                    self.issues.append(f"<{frame['tag']} class=\"{cls}\"> {text[:64]}")
+            if frame["deck_root"]:
+                self.in_deck = False
+
+
+def find_uneditable_title_like_nodes(source: str) -> list[str]:
+    parser = TitleSlotAuditParser()
+    parser.feed(deck_markup_only(source))
+    return parser.issues
 
 
 def fail(errors: list[str], rel: str, message: str) -> None:
@@ -64,12 +173,21 @@ def validate_common(path: Path, source: str, errors: list[str]) -> None:
 
 def validate_port(path: Path, source: str, port, errors: list[str]) -> None:
     rel = str(path.relative_to(ROOT))
+    deck_only = deck_markup_only(source)
     slide_ids = find_slide_ids(source)
     if "data-template-source=" not in source or "data-ported-template=" not in source:
         fail(errors, rel, "missing ported-template source metadata")
     slot_count = source.count("data-edit-slot=")
     if slot_count <= 0:
         fail(errors, rel, "ported template has no editable slots")
+    if ".filmstrip-thumb-host .slide" not in source:
+        fail(errors, rel, "missing filmstrip thumbnail slide visibility override")
+    uneditable_titles = find_uneditable_title_like_nodes(source)
+    if uneditable_titles:
+        sample = "; ".join(uneditable_titles[:4])
+        fail(errors, rel, f"title-like authored text is not slot-editable: {sample}")
+    if re.search(r'<button\b(?=[^>]*\bclass=["\'][^"\']*\bslide-object-resize\b)(?![^>]*\bdata-resize-handle\b)[^>]*>', deck_only, flags=re.I | re.S):
+        fail(errors, rel, "contains bare .slide-object-resize markup; resize handles must be generated by runtime with data-resize-handle")
     if re.search(r"<script\b[^>]*\bsrc=", source, flags=re.I):
         fail(errors, rel, "contains external <script src>; ported decks must be single-file")
     if re.search(r"chart\.js|new\s+Chart\s*\(", source, flags=re.I):

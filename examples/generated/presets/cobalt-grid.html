@@ -833,6 +833,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1401,7 +1411,7 @@
 <div id="deck" class="slides-offset stage" data-ported-template="cobalt-grid">
 <section class="slide s-cover hairlines active" id="slide-0" data-template-slide-index="1">
       <div class="titlewrap">
-        <h1 class="title">Index<br/>2026</h1>
+        <h1 class="title" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Index 2026" data-slot-locked-layout="true">Index<br/>2026</h1>
         <div class="subkicker">
           <div class="l caption">Field Office Quarterly · Volume IV</div>
           <div class="ed" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="A field report on the state of things." data-slot-locked-layout="true">A field report on the state of things.</div>
@@ -1453,7 +1463,7 @@
 
 <section class="slide s-manifesto hairlines" id="slide-1" data-template-slide-index="2">
       <div class="stmt-wrap">
-        <p class="stmt">A trend is a quiet question that several rooms started asking <span class="roman">at roughly the same time.</span></p>
+        <p class="stmt" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="A trend is a quiet question that several rooms s" data-slot-locked-layout="true">A trend is a quiet question that several rooms started asking <span class="roman">at roughly the same time.</span></p>
         <div class="attr">
           <div class="who caption">From the editor's note</div>
           <div class="meta-tag caption" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Index 2026 · opening pages" data-slot-locked-layout="true">Index 2026 · opening pages</div>
@@ -1467,55 +1477,55 @@
 <section class="slide s-index hairlines" id="slide-2" data-template-slide-index="3">
       <div class="frame">
         <div class="topbar">
-          <div class="h">The index, in six entries.</div>
+          <div class="h" data-edit-slot="s2-title-7" data-slot-type="text" data-slot-label="The index, in six entries." data-slot-locked-layout="true">The index, in six entries.</div>
           <div class="lab-tag caption" data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Spring 2026 · selected trends" data-slot-locked-layout="true">Spring 2026 · selected trends</div>
         </div>
         <div class="list">
           <div class="row">
             <div class="num-tag caption">01.</div>
-            <div data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Slow software Tools that opt out of the urgency " data-slot-locked-layout="true">
-              <h3>Slow software</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Slow software" data-slot-locked-layout="true">Slow software</h3>
               <p>Tools that opt out of the urgency contest and instead promise to be quiet, considered, and on by default.</p>
             </div>
           </div>
           <div class="row">
             <div class="num-tag caption">02.</div>
-            <div data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Domestic interfaces Screens designed to live in " data-slot-locked-layout="true">
-              <h3>Domestic interfaces</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Domestic interfaces" data-slot-locked-layout="true">Domestic interfaces</h3>
               <p>Screens designed to live in living rooms — softer typography, warmer colour, and a willingness to be ignored.</p>
             </div>
           </div>
           <div class="row">
             <div class="num-tag caption">03.</div>
-            <div data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Hand-set print again A return to letterpress, ri" data-slot-locked-layout="true">
-              <h3>Hand-set print again</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Hand-set print again" data-slot-locked-layout="true">Hand-set print again</h3>
               <p>A return to letterpress, risograph, and small-edition print, often paired with the most digital-feeling clients.</p>
             </div>
           </div>
           <div class="row">
             <div class="num-tag caption">04.</div>
-            <div data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Quietly weird type Display type with one slightl" data-slot-locked-layout="true">
-              <h3>Quietly weird type</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-4" data-slot-type="text" data-slot-label="Quietly weird type" data-slot-locked-layout="true">Quietly weird type</h3>
               <p>Display type with one slightly off detail — a tilted ear, a long tail — that keeps a reader looking twice.</p>
             </div>
           </div>
           <div class="row">
             <div class="num-tag caption">05.</div>
-            <div data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Receipts and ledgers Information designed to be " data-slot-locked-layout="true">
-              <h3>Receipts and ledgers</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-5" data-slot-type="text" data-slot-label="Receipts and ledgers" data-slot-locked-layout="true">Receipts and ledgers</h3>
               <p>Information designed to be filed, not consumed. Tabular layouts, dotted leaders, the page returning the favour.</p>
             </div>
           </div>
           <div class="row">
             <div class="num-tag caption">06.</div>
-            <div data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Public weather Brand and product writing that in" data-slot-locked-layout="true">
-              <h3>Public weather</h3>
+            <div>
+              <h3 data-edit-slot="s2-title-6" data-slot-type="text" data-slot-label="Public weather" data-slot-locked-layout="true">Public weather</h3>
               <p>Brand and product writing that includes the actual weather of the day, the mood of the team, the unfinished thought.</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="pagenum" data-edit-slot="s2-slot-8" data-slot-type="metric" data-slot-label="03 / 08" data-slot-locked-layout="true">03 / 08</div>
+      <div class="pagenum" data-edit-slot="s2-slot-2" data-slot-type="metric" data-slot-label="03 / 08" data-slot-locked-layout="true">03 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1541,11 +1551,11 @@
 
       <div class="frame">
         <div class="nm-tag caption">Chapter one — the case for slow software</div>
-        <h2 class="ttl" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Software is a room, and rooms are designed to be" data-slot-locked-layout="true">Software is a room, and rooms are designed to be lived in slowly.</h2>
-        <p class="lede" data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="In its first chapter the Index follows the studi" data-slot-locked-layout="true">In its first chapter the Index follows the studios, products, and quiet middleware projects that are walking back the urgency the last decade trained us into. Less push. More return. The tools that do not page you, on principle, are the ones we have chosen to read first.</p>
+        <h2 class="ttl" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Software is a room, and rooms are designed to be" data-slot-locked-layout="true">Software is a room, and rooms are designed to be lived in slowly.</h2>
+        <p class="lede" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="In its first chapter the Index follows the studi" data-slot-locked-layout="true">In its first chapter the Index follows the studios, products, and quiet middleware projects that are walking back the urgency the last decade trained us into. Less push. More return. The tools that do not page you, on principle, are the ones we have chosen to read first.</p>
       </div>
 
-      <div class="pagenum" data-edit-slot="s3-slot-3" data-slot-type="metric" data-slot-label="04 / 08" data-slot-locked-layout="true">04 / 08</div>
+      <div class="pagenum" data-edit-slot="s3-slot-2" data-slot-type="metric" data-slot-label="04 / 08" data-slot-locked-layout="true">04 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1553,7 +1563,7 @@
 <section class="slide s-data hairlines" id="slide-4" data-template-slide-index="5">
       <div class="frame">
         <div class="topbar">
-          <div class="h">Reader response, by quarter.</div>
+          <div class="h" data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Reader response, by quarter." data-slot-locked-layout="true">Reader response, by quarter.</div>
           <div class="lab-tag caption" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Newsletter opens · 2024 Q1 — 2026 Q1" data-slot-locked-layout="true">Newsletter opens · 2024 Q1 — 2026 Q1</div>
         </div>
         <div class="body">
@@ -1658,7 +1668,7 @@
 <section class="slide s-table hairlines" id="slide-6" data-template-slide-index="7">
       <div class="frame">
         <div class="topbar">
-          <div class="h">Trend ledger, in long.</div>
+          <div class="h" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Trend ledger, in long." data-slot-locked-layout="true">Trend ledger, in long.</div>
           <div class="lab-tag caption" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="All ten · with our reading on each" data-slot-locked-layout="true">All ten · with our reading on each</div>
         </div>
         <div class="ledger">
@@ -1764,29 +1774,29 @@
 
       <div class="titlewrap">
         <div class="ktag caption">Colophon · Index 2026</div>
-        <h2 class="ttl" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="See you in theautumn issue." data-slot-locked-layout="true">See you in the<br/>autumn issue.</h2>
+        <h2 class="ttl" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="See you in the autumn issue." data-slot-locked-layout="true">See you in the<br/>autumn issue.</h2>
       </div>
 
       <div class="col-footer">
         <div>
           <div class="ftag caption">Editors</div>
-          <div class="ftxt" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Lin Ito &amp;amp; Anya Mehrotrawith the field-office" data-slot-locked-layout="true">Lin Ito &amp; Anya Mehrotra<br/>with the field-office collective</div>
+          <div class="ftxt" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Lin Ito &amp;amp; Anya Mehrotra with the field-offic" data-slot-locked-layout="true">Lin Ito &amp; Anya Mehrotra<br/>with the field-office collective</div>
         </div>
         <div>
           <div class="ftag caption">Designed</div>
-          <div class="ftxt" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="In Newsreader, Hanken Grotesk&amp;amp; DM Mono · cob" data-slot-locked-layout="true">In Newsreader, Hanken Grotesk<br/>&amp; DM Mono · cobalt on cream</div>
+          <div class="ftxt" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="In Newsreader, Hanken Grotesk &amp;amp; DM Mono · co" data-slot-locked-layout="true">In Newsreader, Hanken Grotesk<br/>&amp; DM Mono · cobalt on cream</div>
         </div>
         <div>
           <div class="ftag caption">Subscribed</div>
-          <div class="ftxt" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="field-office.co · twice a yearquiet, paid, and r" data-slot-locked-layout="true">field-office.co · twice a year<br/>quiet, paid, and read slowly</div>
+          <div class="ftxt" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="field-office.co · twice a year quiet, paid, and " data-slot-locked-layout="true">field-office.co · twice a year<br/>quiet, paid, and read slowly</div>
         </div>
         <div>
           <div class="ftag caption">Until autumn</div>
-          <div class="ftxt" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="The next issue ships October 2026. Look for the " data-slot-locked-layout="true">The next issue ships October 2026. Look for the cobalt envelope on a Monday morning.</div>
+          <div class="ftxt" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="The next issue ships October 2026. Look for the " data-slot-locked-layout="true">The next issue ships October 2026. Look for the cobalt envelope on a Monday morning.</div>
         </div>
       </div>
 
-      <div class="pagenum" data-edit-slot="s7-slot-6" data-slot-type="metric" data-slot-label="08 / 08" data-slot-locked-layout="true">08 / 08</div>
+      <div class="pagenum" data-edit-slot="s7-slot-5" data-slot-type="metric" data-slot-label="08 / 08" data-slot-locked-layout="true">08 / 08</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>

@@ -934,6 +934,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1504,7 +1514,7 @@
             <div class="slide-content">
                 <div class="title-cluster">
                     <div class="post-it post-it-yellow main-title-postit pin">
-                        <h1>Scatterbrain</h1>
+                        <h1 data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Scatterbrain" data-slot-locked-layout="true">Scatterbrain</h1>
                         <p class="handwritten" style="margin-top: 0.5rem; color: var(--ink-light);">A Post-it Inspired Template</p>
                     </div>
                     <div class="post-it post-it-blue title-accent-1 pin-blue" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Remember this!" data-slot-locked-layout="true">Remember this!</div>
@@ -1527,7 +1537,7 @@
             <div class="slide-content">
                 <div class="statement-layout">
                     <div class="post-it post-it-yellow statement-postit pin tape">
-                        <h2>"The best ideas start as scattered thoughts on sticky corners."</h2>
+                        <h2 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="&quot;The best ideas start as scattered thoughts on s" data-slot-locked-layout="true">"The best ideas start as scattered thoughts on sticky corners."</h2>
                         <p style="margin-top: 1.5rem; font-style: italic;">Every great project begins with a single note, a fleeting thought, a moment of inspiration captured before it drifts away.</p>
                         <p class="handwritten" style="margin-top: 1rem; text-align: right;">— The Creative Process</p>
                     </div>
@@ -1548,7 +1558,7 @@
                 <div class="two-col-layout">
                     <div class="post-it post-it-blue col-postit pin-blue" style="transform: rotate(-2deg);">
                         <span class="label">01 / Discovery</span>
-                        <h3 style="margin-top: 1rem;">Finding the Problem</h3>
+                        <h3 style="margin-top: 1rem;" data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Finding the Problem" data-slot-locked-layout="true">Finding the Problem</h3>
                         <p>Every solution starts with understanding. We dive deep into research, interviews, and observation to uncover what truly matters.</p>
                         <ul style="margin-top: 1rem;">
                             <li>User research sessions</li>
@@ -1559,7 +1569,7 @@
                     </div>
                     <div class="post-it post-it-yellow col-postit pin-gold" style="transform: rotate(1deg); margin-top: 3rem;">
                         <span class="label">02 / Solution</span>
-                        <h3 style="margin-top: 1rem;">Crafting the Answer</h3>
+                        <h3 style="margin-top: 1rem;" data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Crafting the Answer" data-slot-locked-layout="true">Crafting the Answer</h3>
                         <p>With clarity comes creativity. We synthesize findings into actionable strategies and tangible designs.</p>
                         <ul style="margin-top: 1rem;">
                             <li>Ideation workshops</li>
@@ -1583,7 +1593,7 @@
             <div class="slide-content">
                 <div class="chart-layout">
                     <div class="chart-container pin tape">
-                        <h3 style="text-align: center; margin-bottom: 2rem;">Quarterly Growth</h3>
+                        <h3 style="text-align: center; margin-bottom: 2rem;" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Quarterly Growth" data-slot-locked-layout="true">Quarterly Growth</h3>
                         <svg class="sketch-chart" viewBox="0 0 400 250" style="max-height: 300px;">
                             <!-- Grid lines -->
                             <line x1="50" y1="200" x2="380" y2="200" stroke="#c9b8a0" stroke-width="1" stroke-dasharray="4"/>
@@ -1615,7 +1625,7 @@
                         </svg>
                     </div>
                     <div class="chart-legend post-it post-it-green pin-green">
-                        <h3>Key Metrics</h3>
+                        <h3 data-edit-slot="s3-title-2" data-slot-type="text" data-slot-label="Key Metrics" data-slot-locked-layout="true">Key Metrics</h3>
                         <div class="legend-item">
                             <div class="legend-swatch" style="background: var(--yellow);"></div>
                             <span data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="Revenue Streams" data-slot-locked-layout="true">Revenue Streams</span>
@@ -1645,18 +1655,18 @@
                 <div class="three-col-layout">
                     <div class="post-it post-it-yellow feature-postit pin">
                         <div class="feature-icon">A</div>
-                        <h3 data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Strategy" data-slot-locked-layout="true">Strategy</h3>
-                        <p data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Map out your vision with clarity and purpose. De" data-slot-locked-layout="true">Map out your vision with clarity and purpose. Define objectives, set milestones, and align your team.</p>
+                        <h3 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Strategy" data-slot-locked-layout="true">Strategy</h3>
+                        <p data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Map out your vision with clarity and purpose. De" data-slot-locked-layout="true">Map out your vision with clarity and purpose. Define objectives, set milestones, and align your team.</p>
                     </div>
                     <div class="post-it post-it-blue feature-postit pin-blue">
                         <div class="feature-icon">B</div>
-                        <h3 data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
-                        <p data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="Craft experiences that resonate. From wireframes" data-slot-locked-layout="true">Craft experiences that resonate. From wireframes to polished interfaces, every pixel serves a function.</p>
+                        <h3 data-edit-slot="s4-title-2" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
+                        <p data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Craft experiences that resonate. From wireframes" data-slot-locked-layout="true">Craft experiences that resonate. From wireframes to polished interfaces, every pixel serves a function.</p>
                     </div>
                     <div class="post-it post-it-pink feature-postit pin">
                         <div class="feature-icon">C</div>
-                        <h3 data-edit-slot="s4-slot-5" data-slot-type="text" data-slot-label="Launch" data-slot-locked-layout="true">Launch</h3>
-                        <p data-edit-slot="s4-slot-6" data-slot-type="text" data-slot-label="Ship with confidence. Test, iterate, and release" data-slot-locked-layout="true">Ship with confidence. Test, iterate, and release products that users genuinely love and remember.</p>
+                        <h3 data-edit-slot="s4-title-3" data-slot-type="text" data-slot-label="Launch" data-slot-locked-layout="true">Launch</h3>
+                        <p data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Ship with confidence. Test, iterate, and release" data-slot-locked-layout="true">Ship with confidence. Test, iterate, and release products that users genuinely love and remember.</p>
                     </div>
                 </div>
             </div>
@@ -1675,7 +1685,7 @@
                 <div class="timeline-layout">
                     <div class="timeline-row">
                         <div class="post-it post-it-yellow timeline-node pin">
-                            <h3>Phase One</h3>
+                            <h3 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Phase One" data-slot-locked-layout="true">Phase One</h3>
                             <p class="phase-label">Foundation</p>
                         </div>
                         <div class="timeline-connector">
@@ -1690,7 +1700,7 @@
                     </div>
                     <div class="timeline-row">
                         <div class="post-it post-it-blue timeline-node pin-blue">
-                            <h3>Phase Two</h3>
+                            <h3 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Phase Two" data-slot-locked-layout="true">Phase Two</h3>
                             <p class="phase-label">Creation</p>
                         </div>
                         <div class="timeline-connector">
@@ -1705,7 +1715,7 @@
                     </div>
                     <div class="timeline-row">
                         <div class="post-it post-it-green timeline-node pin-green">
-                            <h3>Phase Three</h3>
+                            <h3 data-edit-slot="s5-title-3" data-slot-type="text" data-slot-label="Phase Three" data-slot-locked-layout="true">Phase Three</h3>
                             <p class="phase-label">Delivery</p>
                         </div>
                         <div class="timeline-connector">
@@ -1735,7 +1745,7 @@
                     <div class="text-cluster">
                         <div class="post-it post-it-pink main-text-postit pin">
                             <span class="label">Spotlight</span>
-                            <h3 style="margin-top: 1rem;">Capturing the Moment</h3>
+                            <h3 style="margin-top: 1rem;" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Capturing the Moment" data-slot-locked-layout="true">Capturing the Moment</h3>
                             <p>Visual storytelling transforms abstract concepts into tangible understanding. A single image can communicate what paragraphs struggle to explain.</p>
                             <p style="margin-top: 1rem;">We believe in the power of imagery to bridge gaps, evoke emotion, and create lasting impressions that words alone cannot achieve.</p>
                         </div>
@@ -1756,7 +1766,7 @@
             <div class="slide-content">
                 <div class="diagram-layout">
                     <div class="diagram-canvas pin tape">
-                        <h3>Distribution Overview</h3>
+                        <h3 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Distribution Overview" data-slot-locked-layout="true">Distribution Overview</h3>
                         <svg viewBox="0 0 280 200" style="max-width: 280px;">
                             <!-- Pie chart -->
                             <circle cx="100" cy="100" r="80" fill="#ffe066" stroke="#2d2a26" stroke-width="2"/>
@@ -1787,7 +1797,7 @@
                         </svg>
                     </div>
                     <div class="diagram-note post-it post-it-yellow pin">
-                        <h3>Key Statistics</h3>
+                        <h3 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Key Statistics" data-slot-locked-layout="true">Key Statistics</h3>
                         <div class="stat-row">
                             <span class="stat-label">Total Reach</span>
                             <span class="stat-value">128K</span>
@@ -1819,7 +1829,7 @@
             <div class="slide-content">
                 <div class="compare-layout">
                     <div class="post-it post-it-blue compare-postit left pin-blue">
-                        <h3>Before</h3>
+                        <h3 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Before" data-slot-locked-layout="true">Before</h3>
                         <ul class="compare-list">
                             <li>Scattered documentation</li>
                             <li>Unclear ownership</li>
@@ -1830,7 +1840,7 @@
                     </div>
                     <div class="compare-vs" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="vs" data-slot-locked-layout="true">vs</div>
                     <div class="post-it post-it-yellow compare-postit right pin-gold">
-                        <h3>After</h3>
+                        <h3 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="After" data-slot-locked-layout="true">After</h3>
                         <ul class="compare-list">
                             <li>Centralized knowledge base</li>
                             <li>Defined responsibilities</li>
@@ -1852,7 +1862,7 @@
             <div class="slide-content">
                 <div class="closing-cluster">
                     <div class="post-it post-it-yellow closing-main pin">
-                        <h2>Thanks for Sticking Around</h2>
+                        <h2 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Thanks for Sticking Around" data-slot-locked-layout="true">Thanks for Sticking Around</h2>
                         <p class="handwritten" style="margin-top: 1rem;">Every great idea starts with a little note.</p>
                     </div>
                     <div class="post-it post-it-blue closing-accent-1 pin-blue" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Keep the ideas flowing!" data-slot-locked-layout="true">

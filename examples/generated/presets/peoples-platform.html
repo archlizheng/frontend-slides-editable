@@ -546,6 +546,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1121,7 +1131,7 @@
   </div>
 
   <div class="center">
-    <div class="title">QUARTERLY<br/>REVIEW</div>
+    <div class="title" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="QUARTERLY REVIEW" data-slot-locked-layout="true">QUARTERLY<br/>REVIEW</div>
     <div class="row2">
       <div class="for">a</div>
       <div class="sub" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="PRESENTATION TEMPLATE" data-slot-locked-layout="true">PRESENTATION TEMPLATE</div>
@@ -1141,7 +1151,7 @@
 
 <section class="s-toc grain slide" data-screen-label="02 Contents" id="slide-1" data-template-slide-index="2">
   <div class="head">
-    <h2>WHAT'S<br/>INSIDE.</h2>
+    <h2 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="WHAT&#x27;S INSIDE." data-slot-locked-layout="true">WHAT'S<br/>INSIDE.</h2>
     <div class="meta">
       <div class="big">CONTENTS</div>
       <div data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="SECTION GUIDE" data-slot-locked-layout="true">SECTION GUIDE</div>
@@ -1170,7 +1180,7 @@
   </div>
   <div class="body">
     <div class="kicker">★ ★ ★&nbsp;&nbsp;OUR THESIS&nbsp;&nbsp;★ ★ ★</div>
-    <h1 data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="The product gets simpler as the team gets braver" data-slot-locked-layout="true">
+    <h1 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="The product gets simpler as the team gets braver" data-slot-locked-layout="true">
       The product gets <span class="scriptline">simpler</span><br/>
       as the team gets <span class="y">braver</span> —<br/>
       not the other way around.
@@ -1179,7 +1189,7 @@
   </div>
   <div class="footrow">
     <div>— PARAGRAPH 01 —</div>
-    <div data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="SET IN ALFA SLAB" data-slot-locked-layout="true">SET IN ALFA SLAB</div>
+    <div data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="SET IN ALFA SLAB" data-slot-locked-layout="true">SET IN ALFA SLAB</div>
   </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1187,27 +1197,27 @@
 
 <section class="s-pillars grain slide" data-screen-label="04 Pillars" id="slide-3" data-template-slide-index="4">
   <div class="head">
-    <h2>THREE<br/>PRIORITIES.</h2>
+    <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="THREE PRIORITIES." data-slot-locked-layout="true">THREE<br/>PRIORITIES.</h2>
     <div class="lede">The work falls into three buckets this quarter. Each has a clear owner, a clear deliverable, and a clear way to know we are done.</div>
   </div>
   <div class="grid">
     <div class="col">
       <div class="num">01</div>
       <div class="tag" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="— FOCUS —" data-slot-locked-layout="true">— FOCUS —</div>
-      <h3 data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Ship thecore flow." data-slot-locked-layout="true">Ship the<br/>core flow.</h3>
-      <p data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Cut three legacy paths and double down on the on" data-slot-locked-layout="true">Cut three legacy paths and double down on the one that drives ninety percent of activations.</p>
+      <h3 data-edit-slot="s3-title-2" data-slot-type="text" data-slot-label="Ship the core flow." data-slot-locked-layout="true">Ship the<br/>core flow.</h3>
+      <p data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Cut three legacy paths and double down on the on" data-slot-locked-layout="true">Cut three legacy paths and double down on the one that drives ninety percent of activations.</p>
     </div>
     <div class="col alt">
       <div class="num">02</div>
-      <div class="tag" data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="— LEARN —" data-slot-locked-layout="true">— LEARN —</div>
-      <h3 data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="Talk toten teams." data-slot-locked-layout="true">Talk to<br/>ten teams.</h3>
-      <p data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Standing weekly research with target customers. " data-slot-locked-layout="true">Standing weekly research with target customers. Findings briefed every Friday in a one-page memo.</p>
+      <div class="tag" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="— LEARN —" data-slot-locked-layout="true">— LEARN —</div>
+      <h3 data-edit-slot="s3-title-3" data-slot-type="text" data-slot-label="Talk to ten teams." data-slot-locked-layout="true">Talk to<br/>ten teams.</h3>
+      <p data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="Standing weekly research with target customers. " data-slot-locked-layout="true">Standing weekly research with target customers. Findings briefed every Friday in a one-page memo.</p>
     </div>
     <div class="col">
       <div class="num">03</div>
-      <div class="tag" data-edit-slot="s3-slot-7" data-slot-type="text" data-slot-label="— SHIP —" data-slot-locked-layout="true">— SHIP —</div>
-      <h3 data-edit-slot="s3-slot-8" data-slot-type="text" data-slot-label="One launch,not five." data-slot-locked-layout="true">One launch,<br/>not five.</h3>
-      <p data-edit-slot="s3-slot-9" data-slot-type="text" data-slot-label="Combine the four small drops on the calendar int" data-slot-locked-layout="true">Combine the four small drops on the calendar into a single, well-told release with shared positioning.</p>
+      <div class="tag" data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="— SHIP —" data-slot-locked-layout="true">— SHIP —</div>
+      <h3 data-edit-slot="s3-title-4" data-slot-type="text" data-slot-label="One launch, not five." data-slot-locked-layout="true">One launch,<br/>not five.</h3>
+      <p data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Combine the four small drops on the calendar int" data-slot-locked-layout="true">Combine the four small drops on the calendar into a single, well-told release with shared positioning.</p>
     </div>
   </div>
 
@@ -1223,7 +1233,7 @@
   <div class="stat">
     <div class="num">63<sup>%</sup></div>
     <div class="desc">
-      <h3>of customers<br/><span class="accent">recommend us</span> after onboarding.</h3>
+      <h3 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="of customers recommend us after onboarding." data-slot-locked-layout="true">of customers<br/><span class="accent">recommend us</span> after onboarding.</h3>
       <p>Net promoter scores climbed eighteen points after we shipped the redesigned first-run experience in March, the largest single-quarter jump on record for the product.</p>
       <div class="source">SOURCE — INTERNAL NPS, Q1 2026</div>
     </div>
@@ -1242,63 +1252,63 @@
 
 <section class="s-platform grain slide" data-screen-label="06 Plan" id="slide-5" data-template-slide-index="6">
   <div class="head">
-    <h2>THE FULL<br/>PLAN.</h2>
+    <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="THE FULL PLAN." data-slot-locked-layout="true">THE FULL<br/>PLAN.</h2>
     <div class="lede">Eight workstreams, costed and owned. Each links to a longer brief in the appendix; team leads are listed in the back of the book.</div>
   </div>
   <div class="body">
     <div class="item">
       <div class="n">01</div>
-      <div data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Onboarding refresh Rebuild the first-run experie" data-slot-locked-layout="true">
-        <h4>Onboarding refresh</h4>
+      <div>
+        <h4 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Onboarding refresh" data-slot-locked-layout="true">Onboarding refresh</h4>
         <p>Rebuild the first-run experience with progressive disclosure and a single primary action per screen.</p>
       </div>
     </div>
     <div class="item">
       <div class="n">02</div>
-      <div data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Pricing simplification Collapse the seven plans " data-slot-locked-layout="true">
-        <h4>Pricing simplification</h4>
+      <div>
+        <h4 data-edit-slot="s5-title-3" data-slot-type="text" data-slot-label="Pricing simplification" data-slot-locked-layout="true">Pricing simplification</h4>
         <p>Collapse the seven plans into three. Move add-ons behind a clearer feature matrix.</p>
       </div>
     </div>
     <div class="item">
       <div class="n">03</div>
-      <div data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Mobile parity Bring the four most-used desktop f" data-slot-locked-layout="true">
-        <h4>Mobile parity</h4>
+      <div>
+        <h4 data-edit-slot="s5-title-4" data-slot-type="text" data-slot-label="Mobile parity" data-slot-locked-layout="true">Mobile parity</h4>
         <p>Bring the four most-used desktop flows to mobile by end of quarter, including offline drafts.</p>
       </div>
     </div>
     <div class="item">
       <div class="n">04</div>
-      <div data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Self-serve setup Reduce time-to-first-value from" data-slot-locked-layout="true">
-        <h4>Self-serve setup</h4>
+      <div>
+        <h4 data-edit-slot="s5-title-5" data-slot-type="text" data-slot-label="Self-serve setup" data-slot-locked-layout="true">Self-serve setup</h4>
         <p>Reduce time-to-first-value from three days to thirty minutes for teams under fifty seats.</p>
       </div>
     </div>
     <div class="item">
       <div class="n">05</div>
-      <div data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Trust &amp;amp; security Ship audit logs, role-based" data-slot-locked-layout="true">
-        <h4>Trust &amp; security</h4>
+      <div>
+        <h4 data-edit-slot="s5-title-6" data-slot-type="text" data-slot-label="Trust &amp;amp; security" data-slot-locked-layout="true">Trust &amp; security</h4>
         <p>Ship audit logs, role-based access, and SSO for all paid tiers. SOC 2 Type II by year-end.</p>
       </div>
     </div>
     <div class="item">
       <div class="n">06</div>
-      <div data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Performance budget Cut median page load by forty" data-slot-locked-layout="true">
-        <h4>Performance budget</h4>
+      <div>
+        <h4 data-edit-slot="s5-title-7" data-slot-type="text" data-slot-label="Performance budget" data-slot-locked-layout="true">Performance budget</h4>
         <p>Cut median page load by forty percent. Set a hard ceiling and wire it into the release pipeline.</p>
       </div>
     </div>
     <div class="item">
       <div class="n">07</div>
-      <div data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Integrations push Native connectors for the top " data-slot-locked-layout="true">
-        <h4>Integrations push</h4>
+      <div>
+        <h4 data-edit-slot="s5-title-8" data-slot-type="text" data-slot-label="Integrations push" data-slot-locked-layout="true">Integrations push</h4>
         <p>Native connectors for the top five tools customers ask for, plus a public API for the long tail.</p>
       </div>
     </div>
     <div class="item">
       <div class="n">08</div>
-      <div data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="Brand refresh New marketing site, sharper catego" data-slot-locked-layout="true">
-        <h4>Brand refresh</h4>
+      <div>
+        <h4 data-edit-slot="s5-title-9" data-slot-type="text" data-slot-label="Brand refresh" data-slot-locked-layout="true">Brand refresh</h4>
         <p>New marketing site, sharper category positioning, and a unified visual system across surfaces.</p>
       </div>
     </div>
@@ -1330,7 +1340,7 @@
 
 <section class="s-timeline grain slide" data-screen-label="08 Roadmap" id="slide-7" data-template-slide-index="8">
   <div class="head">
-    <h2>THE<br/>ROADMAP.</h2>
+    <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="THE ROADMAP." data-slot-locked-layout="true">THE<br/>ROADMAP.</h2>
     <div class="sub">— a plan, on a clock —</div>
   </div>
   <div class="track"></div>
@@ -1338,40 +1348,40 @@
     <div class="node">
       <div class="dot"></div>
       <div class="when" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="MAY" data-slot-locked-layout="true">MAY</div>
-      <h4 data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Kickoff" data-slot-locked-layout="true">Kickoff</h4>
-      <p data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Charter the workstreams, lock owners, and publis" data-slot-locked-layout="true">Charter the workstreams, lock owners, and publish the shared scorecard.</p>
+      <h4 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Kickoff" data-slot-locked-layout="true">Kickoff</h4>
+      <p data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Charter the workstreams, lock owners, and publis" data-slot-locked-layout="true">Charter the workstreams, lock owners, and publish the shared scorecard.</p>
     </div>
     <div class="node alt">
       <div class="dot"></div>
-      <div class="when" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="JUNE" data-slot-locked-layout="true">JUNE</div>
-      <h4 data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Beta opens" data-slot-locked-layout="true">Beta opens</h4>
-      <p data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Onboard the first ten design partners on the new" data-slot-locked-layout="true">Onboard the first ten design partners on the new core flow.</p>
+      <div class="when" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="JUNE" data-slot-locked-layout="true">JUNE</div>
+      <h4 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Beta opens" data-slot-locked-layout="true">Beta opens</h4>
+      <p data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Onboard the first ten design partners on the new" data-slot-locked-layout="true">Onboard the first ten design partners on the new core flow.</p>
     </div>
     <div class="node">
       <div class="dot"></div>
-      <div class="when" data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="AUGUST" data-slot-locked-layout="true">AUGUST</div>
-      <h4 data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="Launch" data-slot-locked-layout="true">Launch</h4>
-      <p data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="Public release, marketing site refresh, and sale" data-slot-locked-layout="true">Public release, marketing site refresh, and sales enablement complete.</p>
+      <div class="when" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="AUGUST" data-slot-locked-layout="true">AUGUST</div>
+      <h4 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Launch" data-slot-locked-layout="true">Launch</h4>
+      <p data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Public release, marketing site refresh, and sale" data-slot-locked-layout="true">Public release, marketing site refresh, and sales enablement complete.</p>
     </div>
     <div class="node alt">
       <div class="dot"></div>
-      <div class="when" data-edit-slot="s7-slot-10" data-slot-type="text" data-slot-label="OCTOBER" data-slot-locked-layout="true">OCTOBER</div>
-      <h4 data-edit-slot="s7-slot-11" data-slot-type="text" data-slot-label="Scale" data-slot-locked-layout="true">Scale</h4>
-      <p data-edit-slot="s7-slot-12" data-slot-type="text" data-slot-label="Roll the changes to the long tail and retire the" data-slot-locked-layout="true">Roll the changes to the long tail and retire the legacy paths for good.</p>
+      <div class="when" data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="OCTOBER" data-slot-locked-layout="true">OCTOBER</div>
+      <h4 data-edit-slot="s7-title-5" data-slot-type="text" data-slot-label="Scale" data-slot-locked-layout="true">Scale</h4>
+      <p data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="Roll the changes to the long tail and retire the" data-slot-locked-layout="true">Roll the changes to the long tail and retire the legacy paths for good.</p>
     </div>
   </div>
   <div class="below">
     <div class="kpi">
       <div class="label">— TIME-TO-VALUE —</div>
-      <div class="v" data-edit-slot="s7-slot-13" data-slot-type="text" data-slot-label="30m" data-slot-locked-layout="true">30m</div>
+      <div class="v" data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="30m" data-slot-locked-layout="true">30m</div>
     </div>
     <div class="kpi alt">
       <div class="label">— ACTIVATION RATE —</div>
-      <div class="v" data-edit-slot="s7-slot-14" data-slot-type="text" data-slot-label="+24%" data-slot-locked-layout="true">+24%</div>
+      <div class="v" data-edit-slot="s7-slot-10" data-slot-type="text" data-slot-label="+24%" data-slot-locked-layout="true">+24%</div>
     </div>
     <div class="kpi">
       <div class="label">— REVENUE LIFT —</div>
-      <div class="v" data-edit-slot="s7-slot-15" data-slot-type="text" data-slot-label="$1.4M" data-slot-locked-layout="true">$1.4M</div>
+      <div class="v" data-edit-slot="s7-slot-11" data-slot-type="text" data-slot-label="$1.4M" data-slot-locked-layout="true">$1.4M</div>
     </div>
   </div>
 
@@ -1380,28 +1390,28 @@
 
 <section class="s-compare grain slide" data-screen-label="09 Compare" id="slide-8" data-template-slide-index="9">
   <div class="head">
-    <h2>WHERE<br/>WE LAND.</h2>
+    <h2 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="WHERE WE LAND." data-slot-locked-layout="true">WHERE<br/>WE LAND.</h2>
     <div class="sub">A side-by-side of where the product is today and where this plan takes us by the end of the year.</div>
   </div>
   <div class="grid">
     <div class="side left">
       <div class="label">— TODAY —</div>
-      <h3 data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Capable, but cluttered." data-slot-locked-layout="true">Capable, but cluttered.</h3>
+      <h3 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="Capable, but cluttered." data-slot-locked-layout="true">Capable, but cluttered.</h3>
       <ul>
-        <li data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Three-day median time-to-value for new teams." data-slot-locked-layout="true">Three-day median time-to-value for new teams.</li>
-        <li data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Seven pricing plans with overlapping feature set" data-slot-locked-layout="true">Seven pricing plans with overlapping feature sets.</li>
-        <li data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Mobile parity at sixty percent of desktop flows." data-slot-locked-layout="true">Mobile parity at sixty percent of desktop flows.</li>
-        <li data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Onboarding NPS sits at forty-five points." data-slot-locked-layout="true">Onboarding NPS sits at forty-five points.</li>
+        <li data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Three-day median time-to-value for new teams." data-slot-locked-layout="true">Three-day median time-to-value for new teams.</li>
+        <li data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Seven pricing plans with overlapping feature set" data-slot-locked-layout="true">Seven pricing plans with overlapping feature sets.</li>
+        <li data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Mobile parity at sixty percent of desktop flows." data-slot-locked-layout="true">Mobile parity at sixty percent of desktop flows.</li>
+        <li data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Onboarding NPS sits at forty-five points." data-slot-locked-layout="true">Onboarding NPS sits at forty-five points.</li>
       </ul>
     </div>
     <div class="side right">
       <div class="label">— END OF YEAR —</div>
-      <h3 data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Sharper, faster, fewer." data-slot-locked-layout="true">Sharper, faster, fewer.</h3>
+      <h3 data-edit-slot="s8-title-3" data-slot-type="text" data-slot-label="Sharper, faster, fewer." data-slot-locked-layout="true">Sharper, faster, fewer.</h3>
       <ul>
-        <li data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Thirty-minute self-serve setup, no human require" data-slot-locked-layout="true">Thirty-minute self-serve setup, no human required.</li>
-        <li data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Three pricing plans with a clear feature matrix." data-slot-locked-layout="true">Three pricing plans with a clear feature matrix.</li>
-        <li data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Full mobile parity, plus offline drafts." data-slot-locked-layout="true">Full mobile parity, plus offline drafts.</li>
-        <li data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="Onboarding NPS targeted at sixty-three points." data-slot-locked-layout="true">Onboarding NPS targeted at sixty-three points.</li>
+        <li data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Thirty-minute self-serve setup, no human require" data-slot-locked-layout="true">Thirty-minute self-serve setup, no human required.</li>
+        <li data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Three pricing plans with a clear feature matrix." data-slot-locked-layout="true">Three pricing plans with a clear feature matrix.</li>
+        <li data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Full mobile parity, plus offline drafts." data-slot-locked-layout="true">Full mobile parity, plus offline drafts.</li>
+        <li data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Onboarding NPS targeted at sixty-three points." data-slot-locked-layout="true">Onboarding NPS targeted at sixty-three points.</li>
       </ul>
     </div>
   </div>
@@ -1418,10 +1428,10 @@
   </div>
   <div class="center">
     <div class="pre">over to you —</div>
-    <h1 style="font-size: 230px" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="QUESTIONS?" data-slot-locked-layout="true">QUESTIONS?</h1>
+    <h1 style="font-size: 230px" data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="QUESTIONS?" data-slot-locked-layout="true">QUESTIONS?</h1>
     <div class="row">
       <div class="cta">LET'S TALK</div>
-      <div class="url" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="team@company.com" data-slot-locked-layout="true">team@company.com</div>
+      <div class="url" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="team@company.com" data-slot-locked-layout="true">team@company.com</div>
     </div>
   </div>
   <div class="footrow">
@@ -1431,7 +1441,7 @@
     </div>
     <div class="stamp">
       <div class="big">END</div>
-      <div class="small" data-edit-slot="s9-slot-5" data-slot-type="text" data-slot-label="— V. 01 —" data-slot-locked-layout="true">— V. 01 —</div>
+      <div class="small" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="— V. 01 —" data-slot-locked-layout="true">— V. 01 —</div>
     </div>
   </div>
 

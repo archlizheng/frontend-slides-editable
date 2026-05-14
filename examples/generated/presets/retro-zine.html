@@ -817,6 +817,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1385,7 +1395,7 @@
 <div id="deck" class="slides-offset stage" data-ported-template="retro-zine">
 <section class="slide slide-hero active" data-index="0" id="slide-0" data-template-slide-index="1">
       <div class="hero-label" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Q3 Strategic Overview" data-slot-locked-layout="true">Q3 Strategic Overview</div>
-      <div class="hero-title" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="NEXUSVENTURES" data-slot-locked-layout="true">NEXUS<br>VENTURES</div>
+      <div class="hero-title" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="NEXUS VENTURES" data-slot-locked-layout="true">NEXUS<br>VENTURES</div>
       <svg class="hero-illustration" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="110" cy="120" rx="60" ry="45" fill="#1A1A1A" stroke="#1A1A1A" stroke-width="3"/>
         <circle cx="110" cy="120" r="18" fill="#C8B99A" stroke="#1A1A1A" stroke-width="2"/>
@@ -1410,7 +1420,7 @@
 <section class="slide slide-split" data-index="1" id="slide-1" data-template-slide-index="2">
       <div class="split-left">
         <div class="split-label">Our Mission</div>
-        <div class="split-heading" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="BuildingTomorrow" data-slot-locked-layout="true">Building<br>Tomorrow</div>
+        <div class="split-heading" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Building Tomorrow" data-slot-locked-layout="true">Building<br>Tomorrow</div>
         <div class="split-body" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="We partner with ambitious teams to turn complex " data-slot-locked-layout="true">
           We partner with ambitious teams to turn complex challenges into scalable solutions.
           Through disciplined strategy and creative execution, we help organizations
@@ -1427,7 +1437,7 @@
 
 <section class="slide slide-statement" data-index="2" id="slide-2" data-template-slide-index="3">
       <div class="statement-line-top"></div>
-      <div class="statement-quote" data-edit-slot="s2-slot-1" data-slot-type="metric" data-slot-label="&quot;The companies that thriveare not the ones that " data-slot-locked-layout="true">
+      <div class="statement-quote" data-edit-slot="s2-slot-1" data-slot-type="metric" data-slot-label="&quot;The companies that thrive are not the ones that" data-slot-locked-layout="true">
         "The companies that thrive<br>are not the ones that predict<br>the future. They are the ones<br>that build it."
       </div>
       <div class="statement-line-bottom"></div>
@@ -1474,18 +1484,18 @@
           <path d="M200 40 Q240 120 320 200 Q240 280 200 360 Q160 280 80 200 Q160 120 200 40" stroke="#008F4D" stroke-width="3" fill="none" opacity="0.2"/>
         </svg>
       </div>
-      <div class="visual-overlay stamp" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Q3Target $18M ARR by December" data-slot-locked-layout="true">
-        <h2>Q3<br>Target</h2>
+      <div class="visual-overlay stamp">
+        <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Q3 Target" data-slot-locked-layout="true">Q3<br>Target</h2>
         <p>$18M ARR by December</p>
       </div>
-      <div class="visual-caption" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Fiscal year ending March 2027" data-slot-locked-layout="true">Fiscal year ending March 2027</div>
+      <div class="visual-caption" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Fiscal year ending March 2027" data-slot-locked-layout="true">Fiscal year ending March 2027</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
 
 <section class="slide slide-editorial" data-index="5" id="slide-5" data-template-slide-index="6">
       <div class="ed-header">
-        <h2>Product<br>Roadmap</h2>
+        <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Product Roadmap" data-slot-locked-layout="true">Product<br>Roadmap</h2>
         <div class="ed-issue">FY 2026 / 2027</div>
       </div>
       <div class="ed-columns">
@@ -1546,20 +1556,20 @@
         <div class="tape" style="bottom: 20%; left: 24%; transform: rotate(15deg);"></div>
         <div class="tape" style="bottom: 18%; right: 28%; transform: rotate(-40deg);"></div>
 
-        <div class="collage-piece piece-1" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Strategy Market analysis, competitive positionin" data-slot-locked-layout="true">
-          <h3>Strategy</h3>
+        <div class="collage-piece piece-1">
+          <h3 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Strategy" data-slot-locked-layout="true">Strategy</h3>
           <p>Market analysis, competitive positioning, and roadmaps that bridge ambition with execution.</p>
         </div>
-        <div class="collage-piece piece-2" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Design Product design, brand systems, and user e" data-slot-locked-layout="true">
-          <h3>Design</h3>
+        <div class="collage-piece piece-2">
+          <h3 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
           <p>Product design, brand systems, and user experiences that make complexity feel effortless.</p>
         </div>
-        <div class="collage-piece piece-3" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Engineering Scalable architecture, robust APIs, " data-slot-locked-layout="true">
-          <h3>Engineering</h3>
+        <div class="collage-piece piece-3">
+          <h3 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Engineering" data-slot-locked-layout="true">Engineering</h3>
           <p>Scalable architecture, robust APIs, and infrastructure that grows with your demand.</p>
         </div>
-        <div class="collage-piece piece-4" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Growth Go-to-market planning, partner programs, " data-slot-locked-layout="true">
-          <h3>Growth</h3>
+        <div class="collage-piece piece-4">
+          <h3 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Growth" data-slot-locked-layout="true">Growth</h3>
           <p>Go-to-market planning, partner programs, and revenue operations that accelerate traction.</p>
         </div>
       </div>
@@ -1597,7 +1607,7 @@
 
 <section class="slide slide-closing" data-index="9" id="slide-9" data-template-slide-index="10">
       <div class="closing-label" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Thank You" data-slot-locked-layout="true">Thank You</div>
-      <div class="closing-title" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="Let&#x27;s BuildTogether" data-slot-locked-layout="true">Let's Build<br>Together</div>
+      <div class="closing-title" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="Let&#x27;s Build Together" data-slot-locked-layout="true">Let's Build<br>Together</div>
       <div class="closing-divider"></div>
       <div class="closing-hand" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="hello@nexusventures.co &amp;mdash; San Francisco &amp;md" data-slot-locked-layout="true">hello@nexusventures.co &mdash; San Francisco &mdash; Worldwide</div>
       <div class="closing-social" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="LinkedIn Contact Careers" data-slot-locked-layout="true">

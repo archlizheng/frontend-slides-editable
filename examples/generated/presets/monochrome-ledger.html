@@ -1623,6 +1623,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -2214,7 +2224,7 @@
 
         <div class="cover-body">
           <!-- Display headline: weight 200, two lines -->
-          <h1 class="display" data-anim="fade-up" data-delay="2">
+          <h1 class="display" data-anim="fade-up" data-delay="2" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="User Research Synthesis" data-slot-locked-layout="true">
             User Research<br />Synthesis
           </h1>
 
@@ -2263,7 +2273,7 @@
         <div class="chapter-rule" data-anim="reveal-right" data-delay="2"></div>
 
         <!-- Chapter headline: weight 200, very large -->
-        <h2 class="h1" data-anim="fade-up" data-delay="3" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="Why we went backto users" data-slot-locked-layout="true">
+        <h2 class="h1" data-anim="fade-up" data-delay="3" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Why we went back to users" data-slot-locked-layout="true">
           Why we went back<br />to users
         </h2>
 
@@ -2277,7 +2287,7 @@
           "
           data-anim="fade-up"
           data-delay="4"
-         data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="Three months after launch, retention numbers tol" data-slot-locked-layout="true">
+         data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="Three months after launch, retention numbers tol" data-slot-locked-layout="true">
           Three months after launch, retention numbers told us something the
           metrics couldn't.
         </p>
@@ -2312,7 +2322,7 @@
             data-anim="fade-up"
             data-delay="2"
             style="max-width: 65%"
-          >
+           data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Users don&#x27;t leave because they lose interest. Th" data-slot-locked-layout="true">
             Users don't leave because they lose interest. They leave because
             they don't know what to do next.
           </h2>
@@ -2352,7 +2362,7 @@
           <!-- Left: text content -->
           <div class="split-text">
             <p class="kicker" data-anim="fade-in" data-delay="1">The Pattern</p>
-            <h2 class="h2" data-anim="fade-up" data-delay="2">
+            <h2 class="h2" data-anim="fade-up" data-delay="2" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="The first 48 hours determine everything" data-slot-locked-layout="true">
               The first 48 hours determine everything
             </h2>
             <p class="lead muted" data-anim="fade-up" data-delay="3">
@@ -2404,7 +2414,7 @@
 
         <!-- Stats body: headline + three-col stat grid -->
         <div class="slide-body">
-          <h2 class="h2" data-anim="fade-up" data-delay="1">
+          <h2 class="h2" data-anim="fade-up" data-delay="1" data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="What the data showed" data-slot-locked-layout="true">
             What the data showed
           </h2>
 
@@ -2468,7 +2478,7 @@
         <div class="slide-body">
           <div class="list-head">
             <p class="kicker" data-anim="fade-in" data-delay="1">What to fix</p>
-            <h2 class="h2" data-anim="fade-up" data-delay="2">
+            <h2 class="h2" data-anim="fade-up" data-delay="2" data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Five changes, ordered by impact" data-slot-locked-layout="true">
               Five changes, ordered by impact
             </h2>
             <p class="body muted" data-anim="fade-up" data-delay="3">
@@ -2517,37 +2527,37 @@
           <!-- Left panel: current state -->
           <div class="compare-panel left" data-anim="fade-up" data-delay="1">
             <div class="compare-label">Current Onboarding</div>
-            <h3 class="h3" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="9-step setup, any order" data-slot-locked-layout="true">9-step setup, any order</h3>
-            <p class="lead muted" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Users choose their own path through setup. Most " data-slot-locked-layout="true">
+            <h3 class="h3" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="9-step setup, any order" data-slot-locked-layout="true">9-step setup, any order</h3>
+            <p class="lead muted" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Users choose their own path through setup. Most " data-slot-locked-layout="true">
               Users choose their own path through setup. Most choose wrong.
             </p>
             <ul class="bullet-list" style="font-size: var(--sz-body)">
-              <li data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Average 3.2 minutes to first value" data-slot-locked-layout="true">Average 3.2 minutes to first value</li>
-              <li data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="Step 6 is where 41% abandon" data-slot-locked-layout="true">Step 6 is where 41% abandon</li>
-              <li data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="No adaptive logic based on user type" data-slot-locked-layout="true">No adaptive logic based on user type</li>
+              <li data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Average 3.2 minutes to first value" data-slot-locked-layout="true">Average 3.2 minutes to first value</li>
+              <li data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Step 6 is where 41% abandon" data-slot-locked-layout="true">Step 6 is where 41% abandon</li>
+              <li data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="No adaptive logic based on user type" data-slot-locked-layout="true">No adaptive logic based on user type</li>
             </ul>
           </div>
 
           <!-- Right panel: proposed state -->
           <div class="compare-panel right" data-anim="fade-up" data-delay="2">
             <div class="compare-label after">Proposed Flow</div>
-            <h3 class="h3" data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="3-step guided path, adaptive" data-slot-locked-layout="true">3-step guided path, adaptive</h3>
-            <p class="lead muted" data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="User type detected at signup. Path adjusts. Firs" data-slot-locked-layout="true">
+            <h3 class="h3" data-edit-slot="s6-title-2" data-slot-type="text" data-slot-label="3-step guided path, adaptive" data-slot-locked-layout="true">3-step guided path, adaptive</h3>
+            <p class="lead muted" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="User type detected at signup. Path adjusts. Firs" data-slot-locked-layout="true">
               User type detected at signup. Path adjusts. First value in under
               90 seconds.
             </p>
             <ul class="bullet-list" style="font-size: var(--sz-body)">
-              <li data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Target: 90 seconds to first value" data-slot-locked-layout="true">Target: 90 seconds to first value</li>
-              <li data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="Eliminate decision paralysis at step entry" data-slot-locked-layout="true">Eliminate decision paralysis at step entry</li>
-              <li data-edit-slot="s6-slot-13" data-slot-type="text" data-slot-label="Inline help triggered at abandonment signals" data-slot-locked-layout="true">Inline help triggered at abandonment signals</li>
+              <li data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="Target: 90 seconds to first value" data-slot-locked-layout="true">Target: 90 seconds to first value</li>
+              <li data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="Eliminate decision paralysis at step entry" data-slot-locked-layout="true">Eliminate decision paralysis at step entry</li>
+              <li data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Inline help triggered at abandonment signals" data-slot-locked-layout="true">Inline help triggered at abandonment signals</li>
             </ul>
           </div>
         </div>
 
         <!-- Footer -->
         <footer class="slide-foot">
-          <span class="label muted" data-edit-slot="s6-slot-14" data-slot-type="text" data-slot-label="User Research Synthesis" data-slot-locked-layout="true">User Research Synthesis</span>
-          <span class="label muted" data-edit-slot="s6-slot-15" data-slot-type="text" data-slot-label="Research Team" data-slot-locked-layout="true">Research Team</span>
+          <span class="label muted" data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="User Research Synthesis" data-slot-locked-layout="true">User Research Synthesis</span>
+          <span class="label muted" data-edit-slot="s6-slot-13" data-slot-type="text" data-slot-label="Research Team" data-slot-locked-layout="true">Research Team</span>
         </footer>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -2597,7 +2607,7 @@
         </header>
 
         <!-- Dense headline -->
-        <h2 class="dense-hl" data-anim="fade-up" data-delay="1" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Why onboarding problems compound over time" data-slot-locked-layout="true">
+        <h2 class="dense-hl" data-anim="fade-up" data-delay="1" data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Why onboarding problems compound over time" data-slot-locked-layout="true">
           Why onboarding problems compound over time
         </h2>
 
@@ -2606,7 +2616,7 @@
           <div class="dense-cols" data-anim="fade-up" data-delay="2">
             <!-- Left column: The Activation Trap -->
             <div class="dense-col">
-              <h4>The Activation Trap</h4>
+              <h4 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="The Activation Trap" data-slot-locked-layout="true">The Activation Trap</h4>
               <p>
                 Activation is the moment a user experiences the core value of a
                 product for the first time. When that moment is delayed or never
@@ -2631,8 +2641,8 @@
             </div>
 
             <!-- Right column: The Network Effect Delay -->
-            <div class="dense-col" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="The Network Effect Delay Collaboration products " data-slot-locked-layout="true">
-              <h4>The Network Effect Delay</h4>
+            <div class="dense-col">
+              <h4 data-edit-slot="s8-title-3" data-slot-type="text" data-slot-label="The Network Effect Delay" data-slot-locked-layout="true">The Network Effect Delay</h4>
               <p>
                 Collaboration products face a compounding problem: the value of
                 the product increases with each additional teammate, but users
@@ -2658,8 +2668,8 @@
 
         <!-- Footer -->
         <footer class="slide-foot">
-          <span class="label muted" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="User Research Synthesis" data-slot-locked-layout="true">User Research Synthesis</span>
-          <span class="label muted" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Research Team" data-slot-locked-layout="true">Research Team</span>
+          <span class="label muted" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="User Research Synthesis" data-slot-locked-layout="true">User Research Synthesis</span>
+          <span class="label muted" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Research Team" data-slot-locked-layout="true">Research Team</span>
         </footer>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -2677,7 +2687,7 @@
               style="font-weight: 200"
               data-anim="fade-up"
               data-delay="0"
-            >
+             data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="90-day retention by onboarding cohort" data-slot-locked-layout="true">
               90-day retention by onboarding cohort
             </h2>
             <span class="caption muted" data-anim="fade-in" data-delay="1"
@@ -2733,7 +2743,7 @@
             style="font-weight: 200"
             data-anim="fade-up"
             data-delay="0"
-          >
+           data-edit-slot="s10-title-1" data-slot-type="text" data-slot-label="How this research was conducted" data-slot-locked-layout="true">
             How this research was conducted
           </h2>
           <div class="flow" data-anim="fade-up" data-delay="1">
@@ -2796,7 +2806,7 @@
             style="font-weight: 200"
             data-anim="fade-up"
             data-delay="1"
-          >
+           data-edit-slot="s11-title-1" data-slot-type="text" data-slot-label="Who we spoke with" data-slot-locked-layout="true">
             Who we spoke with
           </h2>
 
@@ -2886,7 +2896,7 @@
           <span class="label muted" data-edit-slot="s12-slot-3" data-slot-type="text" data-slot-label="14" data-slot-locked-layout="true">14</span>
         </header>
 
-        <h2 class="vt-hl" data-anim="fade-up" data-delay="1" data-edit-slot="s12-slot-4" data-slot-type="text" data-slot-label="From research to recommendation" data-slot-locked-layout="true">
+        <h2 class="vt-hl" data-anim="fade-up" data-delay="1" data-edit-slot="s12-title-1" data-slot-type="text" data-slot-label="From research to recommendation" data-slot-locked-layout="true">
           From research to recommendation
         </h2>
 
@@ -2897,37 +2907,37 @@
             <div class="vt-spine"></div>
             <div class="vt-content">
               <div class="vt-title">Recruitment</div>
-              <p class="vt-body" data-edit-slot="s12-slot-5" data-slot-type="text" data-slot-label="Screened [N]+ applicants, selected [N] participa" data-slot-locked-layout="true">
+              <p class="vt-body" data-edit-slot="s12-slot-4" data-slot-type="text" data-slot-label="Screened [N]+ applicants, selected [N] participa" data-slot-locked-layout="true">
                 Screened [N]+ applicants, selected [N] participants across user
                 segments.
               </p>
             </div>
             <!-- Row 2 -->
-            <div class="vt-date" data-edit-slot="s12-slot-6" data-slot-type="text" data-slot-label="[Week 2–3]" data-slot-locked-layout="true">[Week 2–3]</div>
+            <div class="vt-date" data-edit-slot="s12-slot-5" data-slot-type="text" data-slot-label="[Week 2–3]" data-slot-locked-layout="true">[Week 2–3]</div>
             <div class="vt-spine"></div>
             <div class="vt-content">
               <div class="vt-title">Fieldwork</div>
-              <p class="vt-body" data-edit-slot="s12-slot-7" data-slot-type="text" data-slot-label="[N] moderated sessions. Think-aloud protocol. Al" data-slot-locked-layout="true">
+              <p class="vt-body" data-edit-slot="s12-slot-6" data-slot-type="text" data-slot-label="[N] moderated sessions. Think-aloud protocol. Al" data-slot-locked-layout="true">
                 [N] moderated sessions. Think-aloud protocol. All sessions
                 recorded and transcribed.
               </p>
             </div>
             <!-- Row 3 -->
-            <div class="vt-date" data-edit-slot="s12-slot-8" data-slot-type="text" data-slot-label="[Week 4]" data-slot-locked-layout="true">[Week 4]</div>
+            <div class="vt-date" data-edit-slot="s12-slot-7" data-slot-type="text" data-slot-label="[Week 4]" data-slot-locked-layout="true">[Week 4]</div>
             <div class="vt-spine"></div>
             <div class="vt-content">
               <div class="vt-title">Synthesis</div>
-              <p class="vt-body" data-edit-slot="s12-slot-9" data-slot-type="text" data-slot-label="Affinity mapping across [N]+ observations. Patte" data-slot-locked-layout="true">
+              <p class="vt-body" data-edit-slot="s12-slot-8" data-slot-type="text" data-slot-label="Affinity mapping across [N]+ observations. Patte" data-slot-locked-layout="true">
                 Affinity mapping across [N]+ observations. Pattern clustering by
                 behaviour type.
               </p>
             </div>
             <!-- Row 4 -->
-            <div class="vt-date" data-edit-slot="s12-slot-10" data-slot-type="text" data-slot-label="[Week 5]" data-slot-locked-layout="true">[Week 5]</div>
+            <div class="vt-date" data-edit-slot="s12-slot-9" data-slot-type="text" data-slot-label="[Week 5]" data-slot-locked-layout="true">[Week 5]</div>
             <div class="vt-spine"></div>
             <div class="vt-content">
               <div class="vt-title">Validation</div>
-              <p class="vt-body" data-edit-slot="s12-slot-11" data-slot-type="text" data-slot-label="Findings stress-tested against [analytics tool] " data-slot-locked-layout="true">
+              <p class="vt-body" data-edit-slot="s12-slot-10" data-slot-type="text" data-slot-label="Findings stress-tested against [analytics tool] " data-slot-locked-layout="true">
                 Findings stress-tested against [analytics tool] data and [N]
                 support ticket samples.
               </p>
@@ -2936,8 +2946,8 @@
         </div>
 
         <footer class="slide-foot">
-          <span class="label muted" data-edit-slot="s12-slot-12" data-slot-type="text" data-slot-label="[Research Team] · [Month, Year]" data-slot-locked-layout="true">[Research Team] · [Month, Year]</span>
-          <span class="label muted" data-edit-slot="s12-slot-13" data-slot-type="text" data-slot-label="14" data-slot-locked-layout="true">14</span>
+          <span class="label muted" data-edit-slot="s12-slot-11" data-slot-type="text" data-slot-label="[Research Team] · [Month, Year]" data-slot-locked-layout="true">[Research Team] · [Month, Year]</span>
+          <span class="label muted" data-edit-slot="s12-slot-12" data-slot-type="text" data-slot-label="14" data-slot-locked-layout="true">14</span>
         </footer>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -2960,7 +2970,7 @@
             style="font-weight: 200"
             data-anim="fade-up"
             data-delay="1"
-          >
+           data-edit-slot="s13-title-1" data-slot-type="text" data-slot-label="The design thinking cycle" data-slot-locked-layout="true">
             The design thinking cycle
           </h2>
 
@@ -3038,7 +3048,7 @@
             Research Framework
           </p>
 
-          <h2 class="h2" data-anim="fade-up" data-delay="2">
+          <h2 class="h2" data-anim="fade-up" data-delay="2" data-edit-slot="s14-title-1" data-slot-type="text" data-slot-label="Analysis Hierarchy" data-slot-locked-layout="true">
             Analysis Hierarchy
           </h2>
 
@@ -3087,7 +3097,7 @@
           data-anim="fade-up"
           data-delay="3"
           style="max-width: 55%"
-         data-edit-slot="s15-slot-3" data-slot-type="text" data-slot-label="Questions, feedback, and next steps" data-slot-locked-layout="true">
+         data-edit-slot="s15-title-1" data-slot-type="text" data-slot-label="Questions, feedback, and next steps" data-slot-locked-layout="true">
           Questions, feedback, and next steps
         </h2>
 
@@ -3097,7 +3107,7 @@
           data-anim="fade-up"
           data-delay="4"
           style="max-width: 42%; margin-top: var(--gap-md)"
-         data-edit-slot="s15-slot-4" data-slot-type="text" data-slot-label="[research@org.com] · [Slack #research] · Full re" data-slot-locked-layout="true">
+         data-edit-slot="s15-slot-3" data-slot-type="text" data-slot-label="[research@org.com] · [Slack #research] · Full re" data-slot-locked-layout="true">
           [research@org.com] · [Slack #research] · Full report at [link]
         </p>
 

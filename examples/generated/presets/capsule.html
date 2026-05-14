@@ -1110,6 +1110,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1687,7 +1697,7 @@
       <div class="deco-pill pill-violet" style="width:90px;height:90px;border-radius:50%;top:75%;left:5%;transform:rotate(0deg);font-size:0.7rem;" data-edit-slot="s0-slot-6" data-slot-type="text" data-slot-label="Next" data-slot-locked-layout="true">Next</div>
     </div>
     <div class="title-pill" data-edit-slot="s0-slot-7" data-slot-type="text" data-slot-label="Presentation Template" data-slot-locked-layout="true">Presentation Template</div>
-    <h1 class="main-title" data-edit-slot="s0-slot-8" data-slot-type="text" data-slot-label="CAPSULE A Framework for Bold Ideas" data-slot-locked-layout="true">
+    <h1 class="main-title" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="CAPSULE A Framework for Bold Ideas" data-slot-locked-layout="true">
       CAPSULE
       <span class="subtitle">A Framework for Bold Ideas</span>
     </h1>
@@ -1699,18 +1709,18 @@
     <div class="slide-inner">
       <div class="left-content">
         <div class="accent-line"></div>
-        <h2 data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Every Great Endeavor Begins with a Single Though" data-slot-locked-layout="true">Every Great Endeavor Begins with a Single Thought</h2>
-        <p data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="We believe in the power of structured creativity" data-slot-locked-layout="true">We believe in the power of structured creativity. By combining rigorous methodology with unbounded imagination, teams can transform abstract concepts into tangible outcomes that resonate deeply with their audience.</p>
-        <p data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="This template exists to give shape to your bolde" data-slot-locked-layout="true">This template exists to give shape to your boldest visions. It is a starting point, a scaffold, and a catalyst for the work that matters most.</p>
+        <h2 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Every Great Endeavor Begins with a Single Though" data-slot-locked-layout="true">Every Great Endeavor Begins with a Single Thought</h2>
+        <p data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="We believe in the power of structured creativity" data-slot-locked-layout="true">We believe in the power of structured creativity. By combining rigorous methodology with unbounded imagination, teams can transform abstract concepts into tangible outcomes that resonate deeply with their audience.</p>
+        <p data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="This template exists to give shape to your bolde" data-slot-locked-layout="true">This template exists to give shape to your boldest visions. It is a starting point, a scaffold, and a catalyst for the work that matters most.</p>
       </div>
       <div class="right-visual">
         <div class="orbit-center">01</div>
-        <div class="orbit-pill pill-coral" style="width:90px;height:42px;top:10%;left:20%;transform:rotate(-20deg);" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="Research" data-slot-locked-layout="true">Research</div>
-        <div class="orbit-pill pill-lime" style="width:100px;height:45px;top:5%;right:15%;transform:rotate(15deg);" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="Ideation" data-slot-locked-layout="true">Ideation</div>
-        <div class="orbit-pill pill-sky" style="width:95px;height:42px;bottom:15%;left:10%;transform:rotate(10deg);" data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Prototype" data-slot-locked-layout="true">Prototype</div>
-        <div class="orbit-pill pill-lavender" style="width:110px;height:48px;bottom:10%;right:10%;transform:rotate(-12deg);" data-edit-slot="s1-slot-7" data-slot-type="text" data-slot-label="Iterate" data-slot-locked-layout="true">Iterate</div>
-        <div class="orbit-pill pill-yellow" style="width:80px;height:38px;top:40%;left:0%;transform:rotate(25deg);font-size:0.65rem;" data-edit-slot="s1-slot-8" data-slot-type="text" data-slot-label="Launch" data-slot-locked-layout="true">Launch</div>
-        <div class="orbit-pill pill-violet" style="width:85px;height:40px;top:45%;right:0%;transform:rotate(-18deg);font-size:0.65rem;" data-edit-slot="s1-slot-9" data-slot-type="text" data-slot-label="Scale" data-slot-locked-layout="true">Scale</div>
+        <div class="orbit-pill pill-coral" style="width:90px;height:42px;top:10%;left:20%;transform:rotate(-20deg);" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="Research" data-slot-locked-layout="true">Research</div>
+        <div class="orbit-pill pill-lime" style="width:100px;height:45px;top:5%;right:15%;transform:rotate(15deg);" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="Ideation" data-slot-locked-layout="true">Ideation</div>
+        <div class="orbit-pill pill-sky" style="width:95px;height:42px;bottom:15%;left:10%;transform:rotate(10deg);" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="Prototype" data-slot-locked-layout="true">Prototype</div>
+        <div class="orbit-pill pill-lavender" style="width:110px;height:48px;bottom:10%;right:10%;transform:rotate(-12deg);" data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Iterate" data-slot-locked-layout="true">Iterate</div>
+        <div class="orbit-pill pill-yellow" style="width:80px;height:38px;top:40%;left:0%;transform:rotate(25deg);font-size:0.65rem;" data-edit-slot="s1-slot-7" data-slot-type="text" data-slot-label="Launch" data-slot-locked-layout="true">Launch</div>
+        <div class="orbit-pill pill-violet" style="width:85px;height:40px;top:45%;right:0%;transform:rotate(-18deg);font-size:0.65rem;" data-edit-slot="s1-slot-8" data-slot-type="text" data-slot-label="Scale" data-slot-locked-layout="true">Scale</div>
       </div>
     </div>
 
@@ -1721,23 +1731,23 @@
     <div class="slide-inner">
       <div class="slide-header">
         <div class="header-pill">Core Principles</div>
-        <h2 data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="The Foundation of Every Decision" data-slot-locked-layout="true">The Foundation of Every Decision</h2>
+        <h2 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="The Foundation of Every Decision" data-slot-locked-layout="true">The Foundation of Every Decision</h2>
       </div>
       <div class="cards-grid">
         <div class="pillar-card">
           <div class="card-icon pill-coral">I</div>
-          <h3 data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Clarity of Purpose" data-slot-locked-layout="true">Clarity of Purpose</h3>
-          <p data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Before any action is taken, define the north sta" data-slot-locked-layout="true">Before any action is taken, define the north star that guides every subsequent choice. A well-articulated objective eliminates ambiguity and aligns stakeholders toward a unified destination.</p>
+          <h3 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Clarity of Purpose" data-slot-locked-layout="true">Clarity of Purpose</h3>
+          <p data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Before any action is taken, define the north sta" data-slot-locked-layout="true">Before any action is taken, define the north star that guides every subsequent choice. A well-articulated objective eliminates ambiguity and aligns stakeholders toward a unified destination.</p>
         </div>
         <div class="pillar-card">
           <div class="card-icon pill-lime">II</div>
-          <h3 data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Structured Flexibility" data-slot-locked-layout="true">Structured Flexibility</h3>
-          <p data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Rigorous frameworks need not constrain creativit" data-slot-locked-layout="true">Rigorous frameworks need not constrain creativity. The most effective systems provide scaffolding while leaving ample room for improvisation, adaptation, and unexpected breakthroughs.</p>
+          <h3 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Structured Flexibility" data-slot-locked-layout="true">Structured Flexibility</h3>
+          <p data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="Rigorous frameworks need not constrain creativit" data-slot-locked-layout="true">Rigorous frameworks need not constrain creativity. The most effective systems provide scaffolding while leaving ample room for improvisation, adaptation, and unexpected breakthroughs.</p>
         </div>
         <div class="pillar-card">
           <div class="card-icon pill-sky">III</div>
-          <h3 data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Measured Impact" data-slot-locked-layout="true">Measured Impact</h3>
-          <p data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Success is not a feeling but a quantity. Establi" data-slot-locked-layout="true">Success is not a feeling but a quantity. Establish clear metrics early, track them honestly, and allow data to inform the evolution of your approach without dictating it entirely.</p>
+          <h3 data-edit-slot="s2-title-4" data-slot-type="text" data-slot-label="Measured Impact" data-slot-locked-layout="true">Measured Impact</h3>
+          <p data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Success is not a feeling but a quantity. Establi" data-slot-locked-layout="true">Success is not a feeling but a quantity. Establish clear metrics early, track them honestly, and allow data to inform the evolution of your approach without dictating it entirely.</p>
         </div>
       </div>
     </div>
@@ -1748,7 +1758,7 @@
 <section class="slide slide-4" data-slide="4" id="slide-3" data-template-slide-index="4">
     <div class="slide-inner">
       <div class="slide-header">
-        <h2>Performance Indicators</h2>
+        <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Performance Indicators" data-slot-locked-layout="true">Performance Indicators</h2>
       </div>
       <div class="chart-container">
         <div class="chart-row">
@@ -1815,7 +1825,7 @@
 <section class="slide slide-6" data-slide="6" id="slide-5" data-template-slide-index="6">
     <div class="slide-inner">
       <div class="slide-header">
-        <h2>Phased Implementation</h2>
+        <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Phased Implementation" data-slot-locked-layout="true">Phased Implementation</h2>
       </div>
       <div class="timeline">
         <div class="timeline-track"></div>
@@ -1853,27 +1863,27 @@
 <section class="slide slide-7" data-slide="7" id="slide-6" data-template-slide-index="7">
     <div class="slide-inner">
       <div class="slide-header">
-        <h2>Key Metrics at a Glance</h2>
+        <h2 data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Key Metrics at a Glance" data-slot-locked-layout="true">Key Metrics at a Glance</h2>
       </div>
       <div class="stats-grid">
         <div class="stat-pill">
           <div class="stat-number" style="color: var(--coral);">340%</div>
-          <div class="stat-label" data-edit-slot="s6-slot-1" data-slot-type="metric" data-slot-label="Growth inActive Users" data-slot-locked-layout="true">Growth in<br>Active Users</div>
+          <div class="stat-label" data-edit-slot="s6-slot-1" data-slot-type="metric" data-slot-label="Growth in Active Users" data-slot-locked-layout="true">Growth in<br>Active Users</div>
           <div class="stat-bar pill-coral"></div>
         </div>
         <div class="stat-pill">
           <div class="stat-number" style="color: var(--lime);">12.4M</div>
-          <div class="stat-label" data-edit-slot="s6-slot-2" data-slot-type="metric" data-slot-label="Total ReachAcross Channels" data-slot-locked-layout="true">Total Reach<br>Across Channels</div>
+          <div class="stat-label" data-edit-slot="s6-slot-2" data-slot-type="metric" data-slot-label="Total Reach Across Channels" data-slot-locked-layout="true">Total Reach<br>Across Channels</div>
           <div class="stat-bar pill-lime"></div>
         </div>
         <div class="stat-pill">
           <div class="stat-number" style="color: var(--sky);">98.2%</div>
-          <div class="stat-label" data-edit-slot="s6-slot-3" data-slot-type="metric" data-slot-label="SystemUptime Record" data-slot-locked-layout="true">System<br>Uptime Record</div>
+          <div class="stat-label" data-edit-slot="s6-slot-3" data-slot-type="metric" data-slot-label="System Uptime Record" data-slot-locked-layout="true">System<br>Uptime Record</div>
           <div class="stat-bar pill-sky"></div>
         </div>
         <div class="stat-pill">
           <div class="stat-number" style="color: var(--violet);">4.9</div>
-          <div class="stat-label" data-edit-slot="s6-slot-4" data-slot-type="metric" data-slot-label="Average UserSatisfaction Score" data-slot-locked-layout="true">Average User<br>Satisfaction Score</div>
+          <div class="stat-label" data-edit-slot="s6-slot-4" data-slot-type="metric" data-slot-label="Average User Satisfaction Score" data-slot-locked-layout="true">Average User<br>Satisfaction Score</div>
           <div class="stat-bar pill-violet"></div>
         </div>
       </div>
@@ -1885,7 +1895,7 @@
 <section class="slide slide-8" data-slide="8" id="slide-7" data-template-slide-index="8">
     <div class="slide-inner">
       <div class="slide-header">
-        <h2>System Architecture Overview</h2>
+        <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="System Architecture Overview" data-slot-locked-layout="true">System Architecture Overview</h2>
       </div>
       <div class="diagram-container">
         <div class="diagram-node pill-white" style="min-width:120px;">Input Layer</div>
@@ -1926,7 +1936,7 @@
         </div>
       </div>
       <div class="text-side">
-        <h2>Where Vision Meets Execution</h2>
+        <h2 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Where Vision Meets Execution" data-slot-locked-layout="true">Where Vision Meets Execution</h2>
         <p>Great ideas deserve more than good intentions. They demand rigorous craft, thoughtful iteration, and an unwavering commitment to the user experience at every touchpoint.</p>
         <p>Our methodology bridges the gap between aspiration and reality. By grounding creative instinct in empirical insight, we produce work that is simultaneously daring and dependable.</p>
         <div class="text-pills">
@@ -1954,9 +1964,9 @@
     </div>
     <div class="closing-content">
       <div class="closing-pill">The Journey Continues</div>
-      <h2 data-edit-slot="s9-slot-7" data-slot-type="text" data-slot-label="Thank You for Your Attention" data-slot-locked-layout="true">Thank You for Your Attention</h2>
+      <h2 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Thank You for Your Attention" data-slot-locked-layout="true">Thank You for Your Attention</h2>
       <div class="closing-line"></div>
-      <div class="closing-sub" data-edit-slot="s9-slot-8" data-slot-type="text" data-slot-label="Questions and conversation welcome" data-slot-locked-layout="true">Questions and conversation welcome</div>
+      <div class="closing-sub" data-edit-slot="s9-slot-7" data-slot-type="text" data-slot-label="Questions and conversation welcome" data-slot-locked-layout="true">Questions and conversation welcome</div>
     </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>

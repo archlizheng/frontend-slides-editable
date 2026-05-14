@@ -934,6 +934,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1505,11 +1515,11 @@
         data-slide="1"
         style="position: relative"
        id="slide-0" data-template-slide-index="1">
-        <div class="cover-headline" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="[Studio Name] · 2026 CraftMatters" data-slot-locked-layout="true">
+        <div class="cover-headline">
           <span class="kicker">[Studio Name] · 2026</span>
-          <h1 class="display" style="color: var(--c-fg)">Craft<br />Matters</h1>
+          <h1 class="display" style="color: var(--c-fg)" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Craft Matters" data-slot-locked-layout="true">Craft<br />Matters</h1>
         </div>
-        <div class="cover-copy" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="Designed for the hands that build things. [A one" data-slot-locked-layout="true">
+        <div class="cover-copy" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Designed for the hands that build things. [A one" data-slot-locked-layout="true">
           <p class="lead" style="color: var(--c-fg-2); max-width: 90%">
             Designed for the hands that build things. [A one-line description of
             what this product does.]
@@ -1523,11 +1533,11 @@
             <div class="info-card-heading">
               Designed by [Studio Name],<br />the precision studio tools lab.
             </div>
-            <div class="info-card-body" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="[The world&#x27;s most carefully considered [product " data-slot-locked-layout="true">
+            <div class="info-card-body" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="[The world&#x27;s most carefully considered [product " data-slot-locked-layout="true">
               [The world's most carefully considered [product category].]
             </div>
           </div>
-          <span class="label muted" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="Product Design · April 2026" data-slot-locked-layout="true">Product Design · April 2026</span>
+          <span class="label muted" data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="Product Design · April 2026" data-slot-locked-layout="true">Product Design · April 2026</span>
         </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1541,7 +1551,7 @@
         <div class="slide-body">
           <div class="stmt-headline">
             <span class="kicker">Design Principle</span>
-            <h2 class="h1" style="color: var(--c-fg)">
+            <h2 class="h1" style="color: var(--c-fg)" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Every surface is a decision." data-slot-locked-layout="true">
               Every surface is a decision.
             </h2>
           </div>
@@ -1578,7 +1588,7 @@
         <div class="slide-body">
           <div class="split-left">
             <span class="kicker">Material Detail</span>
-            <h2 class="h2" style="color: var(--c-fg)">
+            <h2 class="h2" style="color: var(--c-fg)" data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="[A one-line description of what this product doe" data-slot-locked-layout="true">
               [A one-line description of what this product does.]
             </h2>
             <p class="lead muted">
@@ -1616,7 +1626,7 @@
           <h2
             class="h2"
             style="color: var(--c-fg); margin-bottom: var(--gap-lg)"
-          >
+           data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="The numbers that define the [product category]." data-slot-locked-layout="true">
             The numbers that define the [product category].
           </h2>
           <!-- Three stat cells — vertical borders between them -->
@@ -1676,7 +1686,7 @@
         <div class="slide-body">
           <div class="list-head">
             <span class="kicker">The Case</span>
-            <h2 class="h2" style="color: var(--c-fg-light)">
+            <h2 class="h2" style="color: var(--c-fg-light)" data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="What a studio tool should do for the maker." data-slot-locked-layout="true">
               What a studio tool should do for the maker.
             </h2>
             <p class="lead" style="color: var(--c-fg-light-2)">
@@ -1722,42 +1732,42 @@
         <div class="slide-body">
           <div class="compare-panel left">
             <div class="compare-label">The Old Way</div>
-            <h3 class="h3" style="color: var(--c-fg)" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Generic [product category] from a supply catalog" data-slot-locked-layout="true">
+            <h3 class="h3" style="color: var(--c-fg)" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Generic [product category] from a supply catalog" data-slot-locked-layout="true">
               Generic [product category] from a supply catalog.
             </h3>
-            <p class="lead muted" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Works until it does not. Warps in heat, discolor" data-slot-locked-layout="true">
+            <p class="lead muted" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Works until it does not. Warps in heat, discolor" data-slot-locked-layout="true">
               Works until it does not. Warps in heat, discolors with use, and
               feels like an afterthought.
             </p>
             <ul class="bullet-list" style="--sz-lead: 1.05vw">
-              <li data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Slips on polished surfaces without a grip layer" data-slot-locked-layout="true">Slips on polished surfaces without a grip layer</li>
-              <li data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Grooves deepen and skew precision over time" data-slot-locked-layout="true">Grooves deepen and skew precision over time</li>
-              <li data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="Replaced every six months on average" data-slot-locked-layout="true">Replaced every six months on average</li>
+              <li data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Slips on polished surfaces without a grip layer" data-slot-locked-layout="true">Slips on polished surfaces without a grip layer</li>
+              <li data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Grooves deepen and skew precision over time" data-slot-locked-layout="true">Grooves deepen and skew precision over time</li>
+              <li data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Replaced every six months on average" data-slot-locked-layout="true">Replaced every six months on average</li>
             </ul>
           </div>
           <!-- The 1px vertical divider — a CSS column, not a border -->
           <div class="compare-divider-line"></div>
           <div class="compare-panel right">
             <div class="compare-label after">The New Way</div>
-            <h3 class="h3" style="color: var(--c-fg)" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="[Product Name], purpose-built." data-slot-locked-layout="true">
+            <h3 class="h3" style="color: var(--c-fg)" data-edit-slot="s6-title-2" data-slot-type="text" data-slot-label="[Product Name], purpose-built." data-slot-locked-layout="true">
               [Product Name], purpose-built.
             </h3>
-            <p class="lead muted" data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="A surface that gets better with use. The materia" data-slot-locked-layout="true">
+            <p class="lead muted" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="A surface that gets better with use. The materia" data-slot-locked-layout="true">
               A surface that gets better with use. The material compresses and
               recovers, keeping edges clean.
             </p>
             <ul class="bullet-list" style="--sz-lead: 1.05vw">
-              <li data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="Self-heals around use lines, keeping the surface" data-slot-locked-layout="true">Self-heals around use lines, keeping the surface flat</li>
-              <li data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Grip base holds any workbench without adhesives" data-slot-locked-layout="true">Grip base holds any workbench without adhesives</li>
-              <li data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="3000-use tested lifespan — typically 2 to 3 year" data-slot-locked-layout="true">
+              <li data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="Self-heals around use lines, keeping the surface" data-slot-locked-layout="true">Self-heals around use lines, keeping the surface flat</li>
+              <li data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="Grip base holds any workbench without adhesives" data-slot-locked-layout="true">Grip base holds any workbench without adhesives</li>
+              <li data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="3000-use tested lifespan — typically 2 to 3 year" data-slot-locked-layout="true">
                 3000-use tested lifespan — typically 2 to 3 years in daily use
               </li>
             </ul>
           </div>
         </div>
         <footer class="slide-foot">
-          <span class="label muted" data-edit-slot="s6-slot-13" data-slot-type="text" data-slot-label="[Studio Name] · Product Brief" data-slot-locked-layout="true">[Studio Name] · Product Brief</span>
-          <span class="label muted" data-edit-slot="s6-slot-14" data-slot-type="text" data-slot-label="Design Studio" data-slot-locked-layout="true">Design Studio</span>
+          <span class="label muted" data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="[Studio Name] · Product Brief" data-slot-locked-layout="true">[Studio Name] · Product Brief</span>
+          <span class="label muted" data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="Design Studio" data-slot-locked-layout="true">Design Studio</span>
         </footer>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1770,7 +1780,7 @@
         </header>
         <div class="slide-body">
           <div class="chart-header">
-            <h2 class="h2" style="color: var(--c-fg)">
+            <h2 class="h2" style="color: var(--c-fg)" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Lifespan by material category." data-slot-locked-layout="true">
               Lifespan by material category.
             </h2>
             <span class="label muted">Units: months of daily studio use</span>
@@ -1827,9 +1837,9 @@
         data-slide="9"
         style="position: relative"
        id="slide-8" data-template-slide-index="9">
-        <div class="end-main" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="Ready to Build Start with the right surface. Ord" data-slot-locked-layout="true">
+        <div class="end-main">
           <span class="kicker">Ready to Build</span>
-          <h2 class="h1" style="color: var(--c-fg)">
+          <h2 class="h1" style="color: var(--c-fg)" data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Start with the right surface." data-slot-locked-layout="true">
             Start with the right surface.
           </h2>
           <p class="lead muted" style="max-width: 85%">
@@ -1840,14 +1850,14 @@
         <div class="end-side">
           <div class="info-card">
             <div class="info-card-heading">Get in touch.</div>
-            <div class="info-card-body" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="hello@[studio-website.com] @[studio] on all plat" data-slot-locked-layout="true">
+            <div class="info-card-body" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="hello@[studio-website.com] @[studio] on all plat" data-slot-locked-layout="true">
               hello@[studio-website.com]<br />
               @[studio] on all platforms<br />
               Available in 40+ countries
             </div>
           </div>
         </div>
-        <div class="end-foot" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="[Studio Name] · 2026 [studio-website.com]" data-slot-locked-layout="true">
+        <div class="end-foot" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="[Studio Name] · 2026 [studio-website.com]" data-slot-locked-layout="true">
           <span class="label muted">[Studio Name] · 2026</span>
           <span class="label muted">[studio-website.com]</span>
         </div>

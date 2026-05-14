@@ -892,6 +892,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1493,7 +1503,7 @@
             style="max-width: 55%; margin-top: var(--gap-md)"
             data-anim="fade-up"
             data-delay="3"
-           data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="[Presentation Title Goes Here]" data-slot-locked-layout="true">
+           data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="[Presentation Title Goes Here]" data-slot-locked-layout="true">
             [Presentation Title Goes <em>Here</em>]
           </h1>
           <!-- Lead subtitle: Jost 300, muted, generous line-height -->
@@ -1502,7 +1512,7 @@
             style="max-width: 40%; margin-top: var(--gap-md)"
             data-anim="fade-up"
             data-delay="4"
-           data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="A [type of work] for [audience or occasion]. [Mo" data-slot-locked-layout="true">
+           data-edit-slot="s0-slot-3" data-slot-type="text" data-slot-label="A [type of work] for [audience or occasion]. [Mo" data-slot-locked-layout="true">
             A [type of work] for [audience or occasion]. [Month, Year].
           </p>
         </div>
@@ -1517,7 +1527,7 @@
           "
           data-anim="fade-in"
           data-delay="5"
-         data-edit-slot="s0-slot-5" data-slot-type="text" data-slot-label="[Prepared by] [Confidential]" data-slot-locked-layout="true">
+         data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="[Prepared by] [Confidential]" data-slot-locked-layout="true">
           <span class="label muted">[Prepared by]</span>
           <span class="label muted">[Confidential]</span>
         </div>
@@ -1540,7 +1550,7 @@
           style="max-width: 62%; margin-bottom: var(--gap-md)"
           data-anim="fade-up"
           data-delay="2"
-         data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="The landscape has shifted. Now we must decide wh" data-slot-locked-layout="true">
+         data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="The landscape has shifted. Now we must decide wh" data-slot-locked-layout="true">
           The landscape has shifted. Now we must decide where to <em>stand</em>.
         </h1>
         <!-- Supporting line: Jost 300 muted -->
@@ -1549,7 +1559,7 @@
           style="max-width: 48%"
           data-anim="fade-up"
           data-delay="3"
-         data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="An honest assessment of where the market is, and" data-slot-locked-layout="true">
+         data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="An honest assessment of where the market is, and" data-slot-locked-layout="true">
           An honest assessment of where the market is, and where the opportunity
           lies.
         </p>
@@ -1580,7 +1590,7 @@
               style="max-width: 62%"
               data-anim="fade-up"
               data-delay="3"
-             data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="The brands that will lead the next decade are no" data-slot-locked-layout="true">
+             data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="The brands that will lead the next decade are no" data-slot-locked-layout="true">
               The brands that will lead the next decade are not the ones with
               the best product. They are the ones with the deepest
               <em>understanding</em>.
@@ -1588,7 +1598,7 @@
           </div>
         </div>
 
-        <div class="slide-foot" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="03 / 12" data-slot-locked-layout="true">
+        <div class="slide-foot" data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="03 / 12" data-slot-locked-layout="true">
           <span class="label muted"></span>
           <span class="label muted">03 / 12</span>
         </div>
@@ -1619,20 +1629,20 @@
           <!-- Left: text content -->
           <div class="split-text" data-anim="fade-up" data-delay="1">
             <div class="kicker">What We Found</div>
-            <h2 class="h2" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Audiences have outgrown the stories being told a" data-slot-locked-layout="true">
+            <h2 class="h2" data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Audiences have outgrown the stories being told a" data-slot-locked-layout="true">
               Audiences have outgrown the stories being told about <em>them</em>
             </h2>
-            <p class="lead" style="color: var(--c-fg-light-2)" data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="Three years of primary research across six marke" data-slot-locked-layout="true">
+            <p class="lead" style="color: var(--c-fg-light-2)" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Three years of primary research across six marke" data-slot-locked-layout="true">
               Three years of primary research across six markets revealed a
               consistent pattern: the gap between how brands communicate and how
               people actually live is widening.
             </p>
             <ul class="bullet-list" style="color: var(--c-fg-light)">
-              <li data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="Authenticity is valued over aspiration in all ca" data-slot-locked-layout="true">
+              <li data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="Authenticity is valued over aspiration in all ca" data-slot-locked-layout="true">
                 Authenticity is valued over aspiration in all categories tested
               </li>
-              <li data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Trust is earned through consistency, not campaig" data-slot-locked-layout="true">Trust is earned through consistency, not campaigns</li>
-              <li data-edit-slot="s3-slot-7" data-slot-type="text" data-slot-label="Communities form around shared values, not produ" data-slot-locked-layout="true">
+              <li data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="Trust is earned through consistency, not campaig" data-slot-locked-layout="true">Trust is earned through consistency, not campaigns</li>
+              <li data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Communities form around shared values, not produ" data-slot-locked-layout="true">
                 Communities form around shared values, not product features
               </li>
             </ul>
@@ -1657,13 +1667,13 @@
                 font-family: var(--f-mono);
                 letter-spacing: 0.08em;
               "
-             data-edit-slot="s3-slot-8" data-slot-type="text" data-slot-label="[Caption: research context or visual annotation]" data-slot-locked-layout="true">
+             data-edit-slot="s3-slot-7" data-slot-type="text" data-slot-label="[Caption: research context or visual annotation]" data-slot-locked-layout="true">
               [Caption: research context or visual annotation]
             </p>
           </div>
         </div>
 
-        <div class="slide-foot" data-edit-slot="s3-slot-9" data-slot-type="text" data-slot-label="04 / 12" data-slot-locked-layout="true">
+        <div class="slide-foot" data-edit-slot="s3-slot-8" data-slot-type="text" data-slot-label="04 / 12" data-slot-locked-layout="true">
           <span class="label" style="color: var(--c-fg-light-2)"></span>
           <span class="label" style="color: var(--c-fg-light-2)">04 / 12</span>
         </div>
@@ -1682,7 +1692,7 @@
 
         <div class="slide-body">
           <!-- Section headline above stats -->
-          <h2 class="h2" data-anim="fade-up" data-delay="1">
+          <h2 class="h2" data-anim="fade-up" data-delay="1" data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Three numbers that define the opportunity" data-slot-locked-layout="true">
             Three numbers that define the <em>opportunity</em>
           </h2>
 
@@ -1752,10 +1762,10 @@
           <!-- Left: heading and intro -->
           <div class="list-head" data-anim="fade-up" data-delay="1">
             <div class="kicker">What Changes</div>
-            <h2 class="h2" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Five principles that reframe how we think about " data-slot-locked-layout="true">
+            <h2 class="h2" data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Five principles that reframe how we think about " data-slot-locked-layout="true">
               Five principles that <em>reframe</em> how we think about brand
             </h2>
-            <p class="body" style="color: var(--c-fg-light-2)" data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="These are not tactics. They are the underlying c" data-slot-locked-layout="true">
+            <p class="body" style="color: var(--c-fg-light-2)" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="These are not tactics. They are the underlying c" data-slot-locked-layout="true">
               These are not tactics. They are the underlying commitments that
               make everything else possible.
             </p>
@@ -1768,27 +1778,27 @@
             data-anim="fade-up"
             data-delay="2"
           >
-            <li data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Start with the community, not the product — earn" data-slot-locked-layout="true">
+            <li data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Start with the community, not the product — earn" data-slot-locked-layout="true">
               Start with the community, not the product — earn presence before
               claiming it
             </li>
-            <li data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Replace broadcast with conversation — listen bef" data-slot-locked-layout="true">
+            <li data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Replace broadcast with conversation — listen bef" data-slot-locked-layout="true">
               Replace broadcast with conversation — listen before speaking
             </li>
-            <li data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Make the values visible in operations, not just " data-slot-locked-layout="true">
+            <li data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Make the values visible in operations, not just " data-slot-locked-layout="true">
               Make the values visible in operations, not just in messaging
             </li>
-            <li data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="Treat long-term relationship as the primary metr" data-slot-locked-layout="true">
+            <li data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Treat long-term relationship as the primary metr" data-slot-locked-layout="true">
               Treat long-term relationship as the primary metric, not reach
             </li>
-            <li data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="Give audiences ownership of the narrative — part" data-slot-locked-layout="true">
+            <li data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="Give audiences ownership of the narrative — part" data-slot-locked-layout="true">
               Give audiences ownership of the narrative — participation over
               performance
             </li>
           </ul>
         </div>
 
-        <div class="slide-foot" data-edit-slot="s5-slot-10" data-slot-type="text" data-slot-label="06 / 12" data-slot-locked-layout="true">
+        <div class="slide-foot" data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="06 / 12" data-slot-locked-layout="true">
           <span class="label" style="color: var(--c-fg-light-2)"></span>
           <span class="label" style="color: var(--c-fg-light-2)">06 / 12</span>
         </div>
@@ -1840,8 +1850,8 @@
             <div class="compare-label" style="color: var(--c-fg-light-2)">
               The Old Model
             </div>
-            <h3 class="h3" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Brand as broadcaster — pushing messages outward" data-slot-locked-layout="true">Brand as broadcaster — pushing messages outward</h3>
-            <p class="lead" style="color: var(--c-fg-light-2)" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="The organization speaks. The audience receives. " data-slot-locked-layout="true">
+            <h3 class="h3" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Brand as broadcaster — pushing messages outward" data-slot-locked-layout="true">Brand as broadcaster — pushing messages outward</h3>
+            <p class="lead" style="color: var(--c-fg-light-2)" data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="The organization speaks. The audience receives. " data-slot-locked-layout="true">
               The organization speaks. The audience receives. Feedback is
               collected in annual surveys and processed into next year's
               messaging brief.
@@ -1850,19 +1860,19 @@
               class="bullet-list"
               style="font-size: var(--sz-body); color: var(--c-fg-light)"
             >
-              <li data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Campaigns replace conversations" data-slot-locked-layout="true">Campaigns replace conversations</li>
-              <li data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Reach is the primary metric" data-slot-locked-layout="true">Reach is the primary metric</li>
-              <li data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="Community is a distribution channel" data-slot-locked-layout="true">Community is a distribution channel</li>
+              <li data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Campaigns replace conversations" data-slot-locked-layout="true">Campaigns replace conversations</li>
+              <li data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Reach is the primary metric" data-slot-locked-layout="true">Reach is the primary metric</li>
+              <li data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Community is a distribution channel" data-slot-locked-layout="true">Community is a distribution channel</li>
             </ul>
           </div>
 
           <!-- Right panel: the new way — coral label, italic emphasis -->
           <div class="compare-panel right" data-anim="fade-up" data-delay="2">
             <div class="compare-label after">The New Model</div>
-            <h3 class="h3" data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="Brand as participant — embedded in the community" data-slot-locked-layout="true">
+            <h3 class="h3" data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Brand as participant — embedded in the community" data-slot-locked-layout="true">
               Brand as participant — embedded in the <em>community</em>
             </h3>
-            <p class="lead" style="color: var(--c-fg-light-2)" data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="The organization listens first and speaks in res" data-slot-locked-layout="true">
+            <p class="lead" style="color: var(--c-fg-light-2)" data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="The organization listens first and speaks in res" data-slot-locked-layout="true">
               The organization listens first and speaks in response. Feedback is
               constant, not a project. The community owns the story as much as
               the brand does.
@@ -1871,14 +1881,14 @@
               class="bullet-list"
               style="font-size: var(--sz-body); color: var(--c-fg-light)"
             >
-              <li data-edit-slot="s7-slot-10" data-slot-type="text" data-slot-label="Relationships replace campaigns" data-slot-locked-layout="true">Relationships replace campaigns</li>
-              <li data-edit-slot="s7-slot-11" data-slot-type="text" data-slot-label="Trust is the primary metric" data-slot-locked-layout="true">Trust is the primary metric</li>
-              <li data-edit-slot="s7-slot-12" data-slot-type="text" data-slot-label="Community is the source of strategy" data-slot-locked-layout="true">Community is the source of strategy</li>
+              <li data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="Relationships replace campaigns" data-slot-locked-layout="true">Relationships replace campaigns</li>
+              <li data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="Trust is the primary metric" data-slot-locked-layout="true">Trust is the primary metric</li>
+              <li data-edit-slot="s7-slot-10" data-slot-type="text" data-slot-label="Community is the source of strategy" data-slot-locked-layout="true">Community is the source of strategy</li>
             </ul>
           </div>
         </div>
 
-        <div class="slide-foot" data-edit-slot="s7-slot-13" data-slot-type="text" data-slot-label="08 / 12" data-slot-locked-layout="true">
+        <div class="slide-foot" data-edit-slot="s7-slot-11" data-slot-type="text" data-slot-label="08 / 12" data-slot-locked-layout="true">
           <span class="label" style="color: var(--c-fg-light-2)"></span>
           <span class="label" style="color: var(--c-fg-light-2)">08 / 12</span>
         </div>
@@ -1898,7 +1908,7 @@
           style="max-width: 58%; margin-bottom: var(--gap-md)"
           data-anim="fade-up"
           data-delay="2"
-         data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="What we propose — and why we believe it will wor" data-slot-locked-layout="true">
+         data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="What we propose — and why we believe it will wor" data-slot-locked-layout="true">
           What we propose — and why we believe it will <em>work</em>
         </h1>
         <p
@@ -1906,7 +1916,7 @@
           style="max-width: 45%"
           data-anim="fade-up"
           data-delay="3"
-         data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="A practical framework built on the evidence, wit" data-slot-locked-layout="true">
+         data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="A practical framework built on the evidence, wit" data-slot-locked-layout="true">
           A practical framework built on the evidence, with clear priorities and
           measurable outcomes.
         </p>
@@ -1945,7 +1955,7 @@
               style="max-width: 65%; color: var(--c-fg-light)"
               data-anim="fade-up"
               data-delay="3"
-             data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="Stop managing perception. Start deserving it." data-slot-locked-layout="true">
+             data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Stop managing perception. Start deserving it." data-slot-locked-layout="true">
               Stop managing perception. Start <em>deserving</em> it.
             </h1>
             <p
@@ -1957,7 +1967,7 @@
               "
               data-anim="fade-up"
               data-delay="4"
-             data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="The organizations that win the next decade will " data-slot-locked-layout="true">
+             data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="The organizations that win the next decade will " data-slot-locked-layout="true">
               The organizations that win the next decade will earn trust slowly,
               through consistent action — not through the perfection of their
               messaging.
@@ -1965,7 +1975,7 @@
           </div>
         </div>
 
-        <div class="slide-foot" data-edit-slot="s9-slot-5" data-slot-type="text" data-slot-label="10 / 12" data-slot-locked-layout="true">
+        <div class="slide-foot" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="10 / 12" data-slot-locked-layout="true">
           <span class="label" style="color: var(--c-fg-light-2)"></span>
           <span class="label" style="color: var(--c-fg-light-2)">10 / 12</span>
         </div>
@@ -1985,7 +1995,7 @@
         <div class="slide-body">
           <!-- Chart header: headline left, unit annotation right -->
           <div class="chart-header">
-            <h2 class="h2" data-anim="fade-up" data-delay="1">
+            <h2 class="h2" data-anim="fade-up" data-delay="1" data-edit-slot="s10-title-1" data-slot-type="text" data-slot-label="Consumer trust by category" data-slot-locked-layout="true">
               Consumer trust by <em>category</em>
             </h2>
             <span class="caption muted" data-anim="fade-in" data-delay="1"
@@ -2059,7 +2069,7 @@
           style="max-width: 55%"
           data-anim="fade-up"
           data-delay="2"
-         data-edit-slot="s11-slot-3" data-slot-type="text" data-slot-label="The work begins when the presentation ends." data-slot-locked-layout="true">
+         data-edit-slot="s11-title-1" data-slot-type="text" data-slot-label="The work begins when the presentation ends." data-slot-locked-layout="true">
           The work begins when the presentation <em>ends</em>.
         </h1>
 
@@ -2069,7 +2079,7 @@
           style="max-width: 45%"
           data-anim="fade-up"
           data-delay="3"
-         data-edit-slot="s11-slot-4" data-slot-type="text" data-slot-label="[Author Name] · [author@organization.com] · [org" data-slot-locked-layout="true">
+         data-edit-slot="s11-slot-3" data-slot-type="text" data-slot-label="[Author Name] · [author@organization.com] · [org" data-slot-locked-layout="true">
           [Author Name] · [author@organization.com] · [organization.com]
         </p>
 
@@ -2079,7 +2089,7 @@
           style="margin-top: var(--gap-lg)"
           data-anim="fade-in"
           data-delay="4"
-         data-edit-slot="s11-slot-5" data-slot-type="text" data-slot-label="[Deck version] · [Date] · [Confidentiality note]" data-slot-locked-layout="true">
+         data-edit-slot="s11-slot-4" data-slot-type="text" data-slot-label="[Deck version] · [Date] · [Confidentiality note]" data-slot-locked-layout="true">
           [Deck version] · [Date] · [Confidentiality note]
         </p>
 

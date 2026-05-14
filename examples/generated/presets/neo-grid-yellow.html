@@ -471,6 +471,16 @@
     outline-offset: 3px;
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--deck-chrome-accent) 16%, transparent) !important;
   }
+  .filmstrip-thumb-host .slide {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    position: relative !important;
+    inset: auto !important;
+  }
+  .filmstrip-thumb-host .slide-edit-layer {
+    pointer-events: none !important;
+  }
   .static-chart-replacement {
     width: 100%;
     min-height: min(42vh, 360px);
@@ -1053,7 +1063,7 @@
       </div>
       <div class="panel-titletile">
         <div class="title-block">
-          <h1 class="title">The future of<br />data-driven<br />finance</h1>
+          <h1 class="title" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="The future of data-driven finance" data-slot-locked-layout="true">The future of<br />data-driven<br />finance</h1>
         </div>
         <div class="blockmark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
       </div>
@@ -1074,53 +1084,53 @@
 <section class="slide s-toc" data-label="02 Contents" data-om-validate="false" id="slide-1" data-template-slide-index="2">
     <div class="frame">
       <div class="head card">
-        <h1>Contents</h1>
+        <h1 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Contents" data-slot-locked-layout="true">Contents</h1>
         <div class="corner-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
       </div>
       <div class="row card">
         <div class="num">01 / Introduction</div>
-        <div data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Digits in numbers Where we are and what the plat" data-slot-locked-layout="true">
-          <h3>Digits in numbers</h3>
+        <div>
+          <h3 data-edit-slot="s1-title-2" data-slot-type="text" data-slot-label="Digits in numbers" data-slot-locked-layout="true">Digits in numbers</h3>
           <p>Where we are and what the platform handles today.</p>
         </div>
       </div>
       <div class="row card lemon">
         <div class="num">02 / Product</div>
-        <div data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="Key features Three primitives that power decisio" data-slot-locked-layout="true">
-          <h3>Key features</h3>
+        <div>
+          <h3 data-edit-slot="s1-title-3" data-slot-type="text" data-slot-label="Key features" data-slot-locked-layout="true">Key features</h3>
           <p>Three primitives that power decision-making at scale.</p>
         </div>
       </div>
       <div class="row card">
         <div class="num">03 / Market</div>
-        <div data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="Penetration &amp;amp; growth Where we are gaining gr" data-slot-locked-layout="true">
-          <h3>Penetration &amp; growth</h3>
+        <div>
+          <h3 data-edit-slot="s1-title-4" data-slot-type="text" data-slot-label="Penetration &amp;amp; growth" data-slot-locked-layout="true">Penetration &amp; growth</h3>
           <p>Where we are gaining ground, and where we are next.</p>
         </div>
       </div>
       <div class="row card">
         <div class="num">04 / Vision</div>
-        <div data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="What comes next The roadmap for the next four qu" data-slot-locked-layout="true">
-          <h3>What comes next</h3>
+        <div>
+          <h3 data-edit-slot="s1-title-5" data-slot-type="text" data-slot-label="What comes next" data-slot-locked-layout="true">What comes next</h3>
           <p>The roadmap for the next four quarters.</p>
         </div>
       </div>
       <div class="row card ink">
         <div class="num" style="opacity:.75">05 / Voice</div>
-        <div data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="From our partners Why teams are choosing the pla" data-slot-locked-layout="true">
-          <h3>From our partners</h3>
+        <div>
+          <h3 data-edit-slot="s1-title-6" data-slot-type="text" data-slot-label="From our partners" data-slot-locked-layout="true">From our partners</h3>
           <p style="opacity:.85">Why teams are choosing the platform.</p>
         </div>
       </div>
       <div class="row card lemon">
         <div class="num">06 / Action</div>
-        <div data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Next steps Three things to take away from today." data-slot-locked-layout="true">
-          <h3>Next steps</h3>
+        <div>
+          <h3 data-edit-slot="s1-title-7" data-slot-type="text" data-slot-label="Next steps" data-slot-locked-layout="true">Next steps</h3>
           <p>Three things to take away from today.</p>
         </div>
       </div>
     </div>
-    <div class="pagenum" data-edit-slot="s1-slot-7" data-slot-type="metric" data-slot-label="02 / 12" data-slot-locked-layout="true">02 / 12</div>
+    <div class="pagenum" data-edit-slot="s1-slot-1" data-slot-type="metric" data-slot-label="02 / 12" data-slot-locked-layout="true">02 / 12</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1133,7 +1143,7 @@
         <div class="corner-mark" style="top:auto; bottom:22px; right:22px; color:var(--ink)" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
       </div>
       <div class="copy">
-        <h2>Digits<br />in <mark>numbers</mark></h2>
+        <h2 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Digits in numbers" data-slot-locked-layout="true">Digits<br />in <mark>numbers</mark></h2>
         <p>Empowering businesses with data-driven financial insights. With over 10 million users and 75 million data points analyzed, the platform is reshaping real-time financial decision-making across markets.</p>
         <div style="margin-top:auto" class="label">Snapshot · Q1 2026</div>
       </div>
@@ -1165,26 +1175,26 @@
 <section class="slide s-features" data-label="04 Key Features" data-om-validate="false" id="slide-3" data-template-slide-index="4">
     <div class="frame">
       <div class="head">
-        <h2>Key features</h2>
+        <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Key features" data-slot-locked-layout="true">Key features</h2>
         <div class="label">Three primitives</div>
       </div>
       <div class="feat">
         <div class="pic"><div class="ph" data-edit-slot="s3-image-1" data-slot-type="image" data-slot-label="Image" data-slot-locked-layout="true"></div><div class="tag" data-edit-slot="s3-slot-1" data-slot-type="text" data-slot-label="01" data-slot-locked-layout="true">01</div></div>
-        <h3 data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Seamless transactions" data-slot-locked-layout="true">Seamless transactions</h3>
-        <p data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="Effortless and secure digital payments with real" data-slot-locked-layout="true">Effortless and secure digital payments with real-time processing, ensuring a smooth experience for every user across every channel.</p>
+        <h3 data-edit-slot="s3-title-2" data-slot-type="text" data-slot-label="Seamless transactions" data-slot-locked-layout="true">Seamless transactions</h3>
+        <p data-edit-slot="s3-slot-2" data-slot-type="text" data-slot-label="Effortless and secure digital payments with real" data-slot-locked-layout="true">Effortless and secure digital payments with real-time processing, ensuring a smooth experience for every user across every channel.</p>
       </div>
       <div class="feat">
-        <div class="pic"><div class="ph" data-edit-slot="s3-image-2" data-slot-type="image" data-slot-label="Image" data-slot-locked-layout="true"></div><div class="tag" data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="02" data-slot-locked-layout="true">02</div></div>
-        <h3 data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="Data insights" data-slot-locked-layout="true">Data insights</h3>
-        <p data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Leverage advanced analytics to uncover patterns," data-slot-locked-layout="true">Leverage advanced analytics to uncover patterns, surface anomalies, and unlock new opportunities for the business.</p>
+        <div class="pic"><div class="ph" data-edit-slot="s3-image-2" data-slot-type="image" data-slot-label="Image" data-slot-locked-layout="true"></div><div class="tag" data-edit-slot="s3-slot-3" data-slot-type="text" data-slot-label="02" data-slot-locked-layout="true">02</div></div>
+        <h3 data-edit-slot="s3-title-3" data-slot-type="text" data-slot-label="Data insights" data-slot-locked-layout="true">Data insights</h3>
+        <p data-edit-slot="s3-slot-4" data-slot-type="text" data-slot-label="Leverage advanced analytics to uncover patterns," data-slot-locked-layout="true">Leverage advanced analytics to uncover patterns, surface anomalies, and unlock new opportunities for the business.</p>
       </div>
       <div class="feat">
-        <div class="pic"><div class="ph" data-edit-slot="s3-image-3" data-slot-type="image" data-slot-label="Image" data-slot-locked-layout="true"></div><div class="tag" data-edit-slot="s3-slot-7" data-slot-type="text" data-slot-label="03" data-slot-locked-layout="true">03</div></div>
-        <h3 data-edit-slot="s3-slot-8" data-slot-type="text" data-slot-label="Risk modelling" data-slot-locked-layout="true">Risk modelling</h3>
-        <p data-edit-slot="s3-slot-9" data-slot-type="text" data-slot-label="Predictive models tuned on billions of events sc" data-slot-locked-layout="true">Predictive models tuned on billions of events score risk in milliseconds, so teams can act before exposure compounds.</p>
+        <div class="pic"><div class="ph" data-edit-slot="s3-image-3" data-slot-type="image" data-slot-label="Image" data-slot-locked-layout="true"></div><div class="tag" data-edit-slot="s3-slot-5" data-slot-type="text" data-slot-label="03" data-slot-locked-layout="true">03</div></div>
+        <h3 data-edit-slot="s3-title-4" data-slot-type="text" data-slot-label="Risk modelling" data-slot-locked-layout="true">Risk modelling</h3>
+        <p data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Predictive models tuned on billions of events sc" data-slot-locked-layout="true">Predictive models tuned on billions of events score risk in milliseconds, so teams can act before exposure compounds.</p>
       </div>
     </div>
-    <div class="pagenum" data-edit-slot="s3-slot-10" data-slot-type="metric" data-slot-label="04 / 12" data-slot-locked-layout="true">04 / 12</div>
+    <div class="pagenum" data-edit-slot="s3-slot-7" data-slot-type="metric" data-slot-label="04 / 12" data-slot-locked-layout="true">04 / 12</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1194,15 +1204,15 @@
       <div class="pane-l">
         <div>
           <div class="label" style="opacity:.7; color:var(--paper); margin-bottom:24px">Section 03 / Market</div>
-          <h2 data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Marketpenetrationdoubled." data-slot-locked-layout="true">Market<br />penetration<br /><em>doubled.</em></h2>
+          <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Market penetration doubled." data-slot-locked-layout="true">Market<br />penetration<br /><em>doubled.</em></h2>
         </div>
-        <p data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Year-on-year reach across our six largest region" data-slot-locked-layout="true">Year-on-year reach across our six largest regions. The platform now touches roughly one in three small-business accounts in core markets.</p>
-        <div class="yearlabel" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="FY24 vs FY25 · Indexed (FY23 = 100)" data-slot-locked-layout="true">FY24 vs FY25 · Indexed (FY23 = 100)</div>
+        <p data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Year-on-year reach across our six largest region" data-slot-locked-layout="true">Year-on-year reach across our six largest regions. The platform now touches roughly one in three small-business accounts in core markets.</p>
+        <div class="yearlabel" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="FY24 vs FY25 · Indexed (FY23 = 100)" data-slot-locked-layout="true">FY24 vs FY25 · Indexed (FY23 = 100)</div>
       </div>
       <div class="pane-r">
         <div class="legend">
           <div class="li"><i></i> FY24</div>
-          <div class="li b" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="FY25" data-slot-locked-layout="true"><i></i> FY25</div>
+          <div class="li b" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="FY25" data-slot-locked-layout="true"><i></i> FY25</div>
         </div>
         <div class="bars">
           <div class="bar"><div class="a" style="height:42%"></div><div class="b" style="height:78%"></div></div>
@@ -1217,7 +1227,7 @@
         </div>
       </div>
     </div>
-    <div class="pagenum invert" data-edit-slot="s4-slot-5" data-slot-type="metric" data-slot-label="05 / 12" data-slot-locked-layout="true">05 / 12</div>
+    <div class="pagenum invert" data-edit-slot="s4-slot-4" data-slot-type="metric" data-slot-label="05 / 12" data-slot-locked-layout="true">05 / 12</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1231,11 +1241,11 @@
       </div>
       <div class="pane-title">
         <div class="label" style="color:var(--paper); opacity:.7">What comes next</div>
-        <h2 data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Build theengine ofmodern&amp;nbsp;money." data-slot-locked-layout="true">Build the<br />engine of<br /><mark>modern&nbsp;money.</mark></h2>
-        <p data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="We are betting that the next decade of finance i" data-slot-locked-layout="true">We are betting that the next decade of finance is owned by platforms that can model the world in real time, then act on it without a human in the loop.</p>
+        <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Build the engine of modern&amp;nbsp;money." data-slot-locked-layout="true">Build the<br />engine of<br /><mark>modern&nbsp;money.</mark></h2>
+        <p data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="We are betting that the next decade of finance i" data-slot-locked-layout="true">We are betting that the next decade of finance is owned by platforms that can model the world in real time, then act on it without a human in the loop.</p>
       </div>
     </div>
-    <div class="pagenum lemon" data-edit-slot="s5-slot-4" data-slot-type="metric" data-slot-label="06 / 12" data-slot-locked-layout="true">06 / 12</div>
+    <div class="pagenum lemon" data-edit-slot="s5-slot-3" data-slot-type="metric" data-slot-label="06 / 12" data-slot-locked-layout="true">06 / 12</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1267,7 +1277,7 @@
     <div class="frame">
       <div class="head">
         <div class="lab">Take three things away</div>
-        <h2 data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Nextsteps" data-slot-locked-layout="true">Next<br />steps</h2>
+        <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Next steps" data-slot-locked-layout="true">Next<br />steps</h2>
       </div>
       <div class="qr">
         <svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true">
@@ -1285,26 +1295,26 @@
       </div>
       <div class="step a">
         <div class="num">01 · Today</div>
-        <h3 data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Pilot one workflow" data-slot-locked-layout="true">Pilot one workflow</h3>
-        <p data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Pick a single decision your team makes weekly. W" data-slot-locked-layout="true">Pick a single decision your team makes weekly. Wire it through the platform and benchmark against the current process.</p>
-        <div class="label" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="≈ 2 weeks" data-slot-locked-layout="true">≈ 2 weeks</div>
+        <h3 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Pilot one workflow" data-slot-locked-layout="true">Pilot one workflow</h3>
+        <p data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="Pick a single decision your team makes weekly. W" data-slot-locked-layout="true">Pick a single decision your team makes weekly. Wire it through the platform and benchmark against the current process.</p>
+        <div class="label" data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="≈ 2 weeks" data-slot-locked-layout="true">≈ 2 weeks</div>
       </div>
       <div class="step b">
         <div class="num">02 · Next month</div>
-        <h3 data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Scale the wedge" data-slot-locked-layout="true">Scale the wedge</h3>
-        <p data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Expand the pilot to two adjacent workflows. Use " data-slot-locked-layout="true">Expand the pilot to two adjacent workflows. Use the playbook the integrations team will share by Friday.</p>
-        <div class="label" data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="≈ 6 weeks" data-slot-locked-layout="true">≈ 6 weeks</div>
+        <h3 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Scale the wedge" data-slot-locked-layout="true">Scale the wedge</h3>
+        <p data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Expand the pilot to two adjacent workflows. Use " data-slot-locked-layout="true">Expand the pilot to two adjacent workflows. Use the playbook the integrations team will share by Friday.</p>
+        <div class="label" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="≈ 6 weeks" data-slot-locked-layout="true">≈ 6 weeks</div>
       </div>
       <div class="step c">
         <div class="num" style="opacity:.7">03 · This quarter</div>
-        <h3 data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="Make it the default" data-slot-locked-layout="true">Make it the default</h3>
-        <p style="opacity:.85" data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="Retire the legacy stack for that domain. Move th" data-slot-locked-layout="true">Retire the legacy stack for that domain. Move the freed-up budget into the next bet.</p>
+        <h3 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Make it the default" data-slot-locked-layout="true">Make it the default</h3>
+        <p style="opacity:.85" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Retire the legacy stack for that domain. Move th" data-slot-locked-layout="true">Retire the legacy stack for that domain. Move the freed-up budget into the next bet.</p>
         <div class="arrow" aria-hidden="true">
           <svg viewBox="0 0 64 64" fill="none" stroke="#E6FF3D" stroke-width="4"><path d="M8 32 H56 M40 16 L56 32 L40 48"/></svg>
         </div>
       </div>
     </div>
-    <div class="pagenum" data-edit-slot="s7-slot-10" data-slot-type="metric" data-slot-label="08 / 12" data-slot-locked-layout="true">08 / 12</div>
+    <div class="pagenum" data-edit-slot="s7-slot-6" data-slot-type="metric" data-slot-label="08 / 12" data-slot-locked-layout="true">08 / 12</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1313,10 +1323,10 @@
     <div class="frame">
       <div class="head">
         <div class="tag">Action title · 09</div>
-        <h2 data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="The trust gap is built in the first 72 hours, no" data-slot-locked-layout="true">The trust gap is built in the first 72 hours, not the first 7 days — and the cost compounds for the rest of the lifecycle.</h2>
+        <h2 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="The trust gap is built in the first 72 hours, no" data-slot-locked-layout="true">The trust gap is built in the first 72 hours, not the first 7 days — and the cost compounds for the rest of the lifecycle.</h2>
       </div>
       <div class="col a">
-        <h3>What we found</h3>
+        <h3 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="What we found" data-slot-locked-layout="true">What we found</h3>
         <div class="col-body">
           <p><strong>Three behavioural signals</strong> in the first 72 hours predict 18-month retention better than any feature-usage metric we tracked.</p>
           <ul>
@@ -1326,20 +1336,20 @@
             <li><strong>Mobile-first session</strong> — a same-day mobile sign-in doubled the chance of a second-week return visit.</li>
           </ul>
         </div>
-        <div class="src" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="N = 14,200 · Q1 2026" data-slot-locked-layout="true">N = 14,200 · Q1 2026</div>
+        <div class="src" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="N = 14,200 · Q1 2026" data-slot-locked-layout="true">N = 14,200 · Q1 2026</div>
       </div>
       <div class="col b">
-        <h3>Why it matters</h3>
+        <h3 data-edit-slot="s8-title-3" data-slot-type="text" data-slot-label="Why it matters" data-slot-locked-layout="true">Why it matters</h3>
         <div class="col-body">
           <div class="meta">$4.1M projected retained ARR — current cohort.</div>
-          <p data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="The first three days are the only window where c" data-slot-locked-layout="true">The first three days are the only window where customers are both paying attention and willing to write back. Every interaction here does the work of roughly four interactions in week three.</p>
-          <p data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="The cost of getting this wrong is not refunds — " data-slot-locked-layout="true">The cost of getting this wrong is not refunds — it is the long, quiet churn of an account that never returns to the inbox, never opens another email, never sees the product again.</p>
-          <p data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Replicated on three independent cohorts. The sig" data-slot-locked-layout="true">Replicated on three independent cohorts. The signal is the same in every segment we have tested.</p>
+          <p data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="The first three days are the only window where c" data-slot-locked-layout="true">The first three days are the only window where customers are both paying attention and willing to write back. Every interaction here does the work of roughly four interactions in week three.</p>
+          <p data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="The cost of getting this wrong is not refunds — " data-slot-locked-layout="true">The cost of getting this wrong is not refunds — it is the long, quiet churn of an account that never returns to the inbox, never opens another email, never sees the product again.</p>
+          <p data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Replicated on three independent cohorts. The sig" data-slot-locked-layout="true">Replicated on three independent cohorts. The signal is the same in every segment we have tested.</p>
         </div>
-        <div class="src" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Modelled on FY24 cohort behaviour" data-slot-locked-layout="true">Modelled on FY24 cohort behaviour</div>
+        <div class="src" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Modelled on FY24 cohort behaviour" data-slot-locked-layout="true">Modelled on FY24 cohort behaviour</div>
       </div>
       <div class="col c">
-        <h3>What to do</h3>
+        <h3 data-edit-slot="s8-title-4" data-slot-type="text" data-slot-label="What to do" data-slot-locked-layout="true">What to do</h3>
         <div class="col-body">
           <ul>
             <li><strong>Rewrite emails 1–3</strong> in human voice; ship behind a 50/50 holdout. Owner: lifecycle. Due: May 17.</li>
@@ -1348,10 +1358,10 @@
             <li><strong>Run a quarterly teardown</strong> of the bottom decile — the cohorts that never made it to email #2 — to find the next lever. Owner: research. Due: June 30.</li>
           </ul>
         </div>
-        <div class="src" data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Pilot scope: top-decile signups" data-slot-locked-layout="true">Pilot scope: top-decile signups</div>
+        <div class="src" data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Pilot scope: top-decile signups" data-slot-locked-layout="true">Pilot scope: top-decile signups</div>
       </div>
     </div>
-    <div class="pagenum" data-edit-slot="s8-slot-8" data-slot-type="metric" data-slot-label="09 / 12" data-slot-locked-layout="true">09 / 12</div>
+    <div class="pagenum" data-edit-slot="s8-slot-7" data-slot-type="metric" data-slot-label="09 / 12" data-slot-locked-layout="true">09 / 12</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1361,13 +1371,13 @@
       <div class="pane-l">
         <div>
           <div class="label" style="margin-bottom:18px">Section · Evidence</div>
-          <h2 data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="The curvebends atday three." data-slot-locked-layout="true">The curve<br/>bends at<br/>day three.</h2>
+          <h2 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="The curve bends at day three." data-slot-locked-layout="true">The curve<br/>bends at<br/>day three.</h2>
         </div>
-        <p data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="Cohorts that received a written welcome and a hu" data-slot-locked-layout="true">Cohorts that received a written welcome and a human reply within 24 hours retain at roughly 2× the rate of the templated cohort, and the gap holds for ninety days.</p>
+        <p data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Cohorts that received a written welcome and a hu" data-slot-locked-layout="true">Cohorts that received a written welcome and a human reply within 24 hours retain at roughly 2× the rate of the templated cohort, and the gap holds for ninety days.</p>
         <div class="legend">
           <div class="li"><i style="background:var(--ink); height:2px"></i> Templated welcome (control)</div>
-          <div class="li" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="Written welcome" data-slot-locked-layout="true"><i style="background:var(--ink); height:5px"></i> Written welcome</div>
-          <div class="li" data-edit-slot="s9-slot-4" data-slot-type="text" data-slot-label="Written + human reply" data-slot-locked-layout="true"><i style="background:var(--ink); height:8px"></i> Written + human reply</div>
+          <div class="li" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="Written welcome" data-slot-locked-layout="true"><i style="background:var(--ink); height:5px"></i> Written welcome</div>
+          <div class="li" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="Written + human reply" data-slot-locked-layout="true"><i style="background:var(--ink); height:8px"></i> Written + human reply</div>
         </div>
       </div>
       <div class="pane-r">
@@ -1395,7 +1405,7 @@
         </div>
       </div>
     </div>
-    <div class="pagenum lemon" data-edit-slot="s9-slot-5" data-slot-type="metric" data-slot-label="10 / 12" data-slot-locked-layout="true">10 / 12</div>
+    <div class="pagenum lemon" data-edit-slot="s9-slot-4" data-slot-type="metric" data-slot-label="10 / 12" data-slot-locked-layout="true">10 / 12</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1403,45 +1413,45 @@
 <section class="slide s-process2" data-label="11 Process" data-om-validate="false" id="slide-10" data-template-slide-index="11">
     <div class="frame">
       <div class="head">
-        <h2>From insight<br/>to default,<br/>in five moves.</h2>
+        <h2 data-edit-slot="s10-title-1" data-slot-type="text" data-slot-label="From insight to default, in five moves." data-slot-locked-layout="true">From insight<br/>to default,<br/>in five moves.</h2>
         <div class="sub">A repeatable path each pilot follows end-to-end before it is allowed to graduate to the default experience for every customer.</div>
       </div>
       <div class="node n1">
         <div class="n">01 · Frame</div>
-        <h3 data-edit-slot="s10-slot-1" data-slot-type="text" data-slot-label="Hypothesise" data-slot-locked-layout="true">Hypothesise</h3>
-        <p data-edit-slot="s10-slot-2" data-slot-type="text" data-slot-label="Translate the insight into a single behavioural " data-slot-locked-layout="true">Translate the insight into a single behavioural hypothesis we can falsify within a sprint.</p>
+        <h3 data-edit-slot="s10-title-2" data-slot-type="text" data-slot-label="Hypothesise" data-slot-locked-layout="true">Hypothesise</h3>
+        <p data-edit-slot="s10-slot-1" data-slot-type="text" data-slot-label="Translate the insight into a single behavioural " data-slot-locked-layout="true">Translate the insight into a single behavioural hypothesis we can falsify within a sprint.</p>
         <svg class="arr" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node n2">
         <div class="n">02 · Design</div>
-        <h3 data-edit-slot="s10-slot-3" data-slot-type="text" data-slot-label="Sketch" data-slot-locked-layout="true">Sketch</h3>
-        <p data-edit-slot="s10-slot-4" data-slot-type="text" data-slot-label="Smallest end-to-end change that lets the hypothe" data-slot-locked-layout="true">Smallest end-to-end change that lets the hypothesis be tested cleanly.</p>
+        <h3 data-edit-slot="s10-title-3" data-slot-type="text" data-slot-label="Sketch" data-slot-locked-layout="true">Sketch</h3>
+        <p data-edit-slot="s10-slot-2" data-slot-type="text" data-slot-label="Smallest end-to-end change that lets the hypothe" data-slot-locked-layout="true">Smallest end-to-end change that lets the hypothesis be tested cleanly.</p>
         <svg class="arr" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node n3">
         <div class="n">03 · Pilot</div>
-        <h3 data-edit-slot="s10-slot-5" data-slot-type="text" data-slot-label="Ship 50/50" data-slot-locked-layout="true">Ship 50/50</h3>
-        <p data-edit-slot="s10-slot-6" data-slot-type="text" data-slot-label="Holdout in one segment. Hold the line for two cy" data-slot-locked-layout="true">Holdout in one segment. Hold the line for two cycles before reading.</p>
+        <h3 data-edit-slot="s10-title-4" data-slot-type="text" data-slot-label="Ship 50/50" data-slot-locked-layout="true">Ship 50/50</h3>
+        <p data-edit-slot="s10-slot-3" data-slot-type="text" data-slot-label="Holdout in one segment. Hold the line for two cy" data-slot-locked-layout="true">Holdout in one segment. Hold the line for two cycles before reading.</p>
         <svg class="arr" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node n4">
         <div class="n">04 · Read</div>
-        <h3 data-edit-slot="s10-slot-7" data-slot-type="text" data-slot-label="Decide" data-slot-locked-layout="true">Decide</h3>
-        <p data-edit-slot="s10-slot-8" data-slot-type="text" data-slot-label="Pre-registered metrics only. Kill, scale, or ext" data-slot-locked-layout="true">Pre-registered metrics only. Kill, scale, or extend — not three of three.</p>
+        <h3 data-edit-slot="s10-title-5" data-slot-type="text" data-slot-label="Decide" data-slot-locked-layout="true">Decide</h3>
+        <p data-edit-slot="s10-slot-4" data-slot-type="text" data-slot-label="Pre-registered metrics only. Kill, scale, or ext" data-slot-locked-layout="true">Pre-registered metrics only. Kill, scale, or extend — not three of three.</p>
         <svg class="arr" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node n5">
         <div class="n">05 · Default</div>
-        <h3 data-edit-slot="s10-slot-9" data-slot-type="text" data-slot-label="Graduate" data-slot-locked-layout="true">Graduate</h3>
-        <p data-edit-slot="s10-slot-10" data-slot-type="text" data-slot-label="Promote to the default surface and retire the le" data-slot-locked-layout="true">Promote to the default surface and retire the legacy path inside the same release.</p>
+        <h3 data-edit-slot="s10-title-6" data-slot-type="text" data-slot-label="Graduate" data-slot-locked-layout="true">Graduate</h3>
+        <p data-edit-slot="s10-slot-5" data-slot-type="text" data-slot-label="Promote to the default surface and retire the le" data-slot-locked-layout="true">Promote to the default surface and retire the legacy path inside the same release.</p>
         <svg class="arr" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 16 H26 M20 9 L26 16 L20 23"/></svg>
       </div>
       <div class="node out">
         <div class="n" style="opacity:.7">Outcome</div>
-        <h3 data-edit-slot="s10-slot-11" data-slot-type="text" data-slot-label="New default" data-slot-locked-layout="true">New default</h3>
-        <p style="opacity:.85" data-edit-slot="s10-slot-12" data-slot-type="text" data-slot-label="A change every customer feels — backed by a resu" data-slot-locked-layout="true">A change every customer feels — backed by a result we can show.</p>
+        <h3 data-edit-slot="s10-title-7" data-slot-type="text" data-slot-label="New default" data-slot-locked-layout="true">New default</h3>
+        <p style="opacity:.85" data-edit-slot="s10-slot-6" data-slot-type="text" data-slot-label="A change every customer feels — backed by a resu" data-slot-locked-layout="true">A change every customer feels — backed by a result we can show.</p>
       </div>
-      <div class="timeline" data-edit-slot="s10-slot-13" data-slot-type="text" data-slot-label="Week 1 · Frame Week 2–3 · Design Week 3–6 · Pilo" data-slot-locked-layout="true">
+      <div class="timeline" data-edit-slot="s10-slot-7" data-slot-type="text" data-slot-label="Week 1 · Frame Week 2–3 · Design Week 3–6 · Pilo" data-slot-locked-layout="true">
         <span>Week 1 · Frame</span>
         <span>Week 2–3 · Design</span>
         <span>Week 3–6 · Pilot</span>
@@ -1450,7 +1460,7 @@
         <span style="border-right:0">Total · 8 weeks</span>
       </div>
     </div>
-    <div class="pagenum" data-edit-slot="s10-slot-14" data-slot-type="metric" data-slot-label="11 / 12" data-slot-locked-layout="true">11 / 12</div>
+    <div class="pagenum" data-edit-slot="s10-slot-8" data-slot-type="metric" data-slot-label="11 / 12" data-slot-locked-layout="true">11 / 12</div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
   </section>
@@ -1458,7 +1468,7 @@
 <section class="slide s-matrix2" data-label="12 Comparison" data-om-validate="false" id="slide-11" data-template-slide-index="12">
     <div class="frame">
       <div class="head">
-        <h2>Where each<br/>pilot earns<br/>its keep.</h2>
+        <h2 data-edit-slot="s11-title-1" data-slot-type="text" data-slot-label="Where each pilot earns its keep." data-slot-locked-layout="true">Where each<br/>pilot earns<br/>its keep.</h2>
         <div class="sub">Scored against the four levers that matter most this cycle. We will only carry forward bets that win on at least two.</div>
       </div>
       <div class="table">
