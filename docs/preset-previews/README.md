@@ -21,6 +21,10 @@ python3 scripts/capture-preset-previews.py
 BEAUTIFUL_TEMPLATES_DIR=./beautiful-html-templates python3 scripts/build-template-port-decks.py
 python3 scripts/capture-template-port-previews.py
 python3 scripts/validate-template-ports.py
+python3 scripts/validate-editable-decks.py
+python3 scripts/test-editable-contract-fixtures.py
+python3 scripts/validate-skill-workflow.py
+python3 scripts/smoke-editable-decks.py
 ```
 
 Requires **Chrome** or **Chromium** with headless mode. On macOS, Chrome is auto-detected; elsewhere set:

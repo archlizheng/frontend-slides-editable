@@ -21,6 +21,13 @@ REFERENCE = ROOT / "examples" / "editable-deck-reference.html"
 EXPECTED_PRESET_COUNT = 46
 
 
+def display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 TITLE_LIKE_CLASSES = {
     "title",
     "ttl",
@@ -187,6 +194,23 @@ def validate_source(path: Path, source: str, errors: list[str], *, generated: bo
 def main() -> int:
     started = time.perf_counter()
     errors: list[str] = []
+    if len(sys.argv) == 3 and sys.argv[1] == "--file":
+        path = Path(sys.argv[2])
+        if not path.is_file():
+            print(f"missing {path}", file=sys.stderr)
+            return 1
+        validate_source(path, path.read_text(encoding="utf-8"), errors, generated=True)
+        if errors:
+            print("Editable deck validation failed:")
+            for error in errors:
+                print(f"- {error}")
+            return 2
+        elapsed = time.perf_counter() - started
+        print(f"Validated editable runtime contract for {display_path(path)} in {elapsed:.2f}s.")
+        return 0
+    if len(sys.argv) != 1:
+        print("Usage: validate-editable-decks.py [--file path/to/deck.html]", file=sys.stderr)
+        return 1
     if not REFERENCE.is_file():
         errors.append(f"missing {REFERENCE.relative_to(ROOT)}")
     else:
@@ -213,9 +237,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-def display_path(path: Path) -> str:
-    try:
-        return str(path.relative_to(ROOT))
-    except ValueError:
-        return str(path)
-

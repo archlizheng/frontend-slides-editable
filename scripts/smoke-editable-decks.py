@@ -59,9 +59,11 @@ def chrome_eval(chrome: str, html_path: Path, width: int, height: int, script: s
         tmp_dir = Path(tmp)
         harness = tmp_dir / html_path.name
         source = html_path.read_text(encoding="utf-8")
-        injected = f"""
+        test_script_json = json.dumps(script)
+        timeout_ms = TIMEOUT_SECONDS * 1000 - 1000
+        injected = """
 <script id="editable-smoke-harness">
-const testScript = {json.dumps(script)};
+const testScript = __TEST_SCRIPT__;
 function finish(payload) {{
   document.body.setAttribute('data-result', JSON.stringify(payload));
   document.title = 'RESULT:' + JSON.stringify(payload);
@@ -70,16 +72,16 @@ window.addEventListener('load', () => {{
   document.documentElement.setAttribute('data-mobile-adaptation', 'enabled');
   setTimeout(() => {{
     try {{
-      const fn = new Function(testScript);
-      Promise.resolve(fn()).then((payload) => finish(payload)).catch((err) => finish({{ok:false,error:String(err && err.message || err)}}));
+      const fn = new Function('return (async () => {\\n' + testScript + '\\n})()');
+      Promise.resolve(fn()).then((payload) => finish(payload)).catch((err) => finish({ok:false,error:String(err && err.message || err)}));
     }} catch (err) {{
-      finish({{ok:false,error:String(err && err.message || err)}});
+      finish({ok:false,error:String(err && err.message || err)});
     }}
   }}, 250);
 }});
-setTimeout(() => finish({{ok:false,error:'timeout'}}), {TIMEOUT_SECONDS * 1000 - 1000});
+setTimeout(() => finish({ok:false,error:'timeout'}), __TIMEOUT_MS__);
 </script>
-"""
+""".replace("__TEST_SCRIPT__", test_script_json).replace("__TIMEOUT_MS__", str(timeout_ms))
         if "</body>" in source:
             source = source.replace("</body>", injected + "\n</body>", 1)
         else:
@@ -114,6 +116,8 @@ if (!pages || !sidebar) throw new Error('missing Pages sidebar');
 pages.click();
 const root = document.querySelector('.slides-offset');
 const before = root.querySelectorAll(':scope > section.slide').length;
+const storageKey = 'editable-deck:' + (document.documentElement.getAttribute('data-deck-id') || 'default');
+localStorage.removeItem(storageKey);
 const firstCopy = document.querySelector('[data-filmstrip-action="copy"]');
 if (!firstCopy) throw new Error('missing copy button');
 firstCopy.click();
@@ -129,7 +133,48 @@ const uniqueOids = new Set(oids).size === oids.length;
 const undo = document.getElementById('btnUndo');
 if (undo) undo.click();
 const afterUndo = root.querySelectorAll(':scope > section.slide').length;
-return {ok: afterCopy === before + 1 && afterNew === before + 2 && afterUndo === before + 1 && uniqueIds && uniqueOids, before, afterCopy, afterNew, afterUndo, uniqueIds, uniqueOids};
+let exportedHtml = '';
+const originalCreateObjectURL = URL.createObjectURL;
+URL.createObjectURL = (blob) => {
+  if (blob && typeof blob.text === 'function') {
+    blob.text().then((text) => { exportedHtml = text; });
+  }
+  return 'blob:editable-smoke';
+};
+URL.revokeObjectURL = () => {};
+const originalClick = HTMLAnchorElement.prototype.click;
+HTMLAnchorElement.prototype.click = function () {};
+const save = document.getElementById('btnSave');
+if (!save) throw new Error('missing Save button');
+save.click();
+const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+const savedCount = saved.deckHtml ? (saved.deckHtml.match(/<section\b[^>]*\bclass="[^"]*\bslide\b/g) || []).length : 0;
+const exportButton = document.getElementById('btnExport');
+if (!exportButton) throw new Error('missing Export button');
+exportButton.click();
+await new Promise((resolve) => setTimeout(resolve, 80));
+URL.createObjectURL = originalCreateObjectURL;
+HTMLAnchorElement.prototype.click = originalClick;
+const exportedDoc = new DOMParser().parseFromString(exportedHtml, 'text/html');
+const exportChecks = {
+  hasDoctype: exportedHtml.includes('<!DOCTYPE html>'),
+  noEditMode: !exportedDoc.body.classList.contains('deck-edit-mode'),
+  noSidebarOpen: !exportedDoc.body.classList.contains('deck-sidebar-open'),
+  noSelected: !exportedDoc.querySelector('.slide-object.is-selected'),
+  noMediaFileInput: !exportedDoc.querySelector('.slide-object-media-file, input[type="file"]'),
+  emptyFilmstrip: !exportedDoc.querySelector('#filmstripList') || exportedDoc.querySelector('#filmstripList').children.length === 0
+};
+const exportClean = Object.values(exportChecks).every(Boolean);
+const originalHtml = root.innerHTML;
+root.innerHTML = '<section class="slide" id="temporary-slide"></section>';
+root.innerHTML = saved.deckHtml || '';
+const afterLoad = root.querySelectorAll(':scope > section.slide').length;
+root.innerHTML = originalHtml;
+return {
+  ok: afterCopy === before + 1 && afterNew === before + 2 && afterUndo === before + 1 &&
+    uniqueIds && uniqueOids && savedCount === afterUndo && afterLoad === afterUndo && exportClean,
+  before, afterCopy, afterNew, afterUndo, savedCount, afterLoad, uniqueIds, uniqueOids, exportClean, exportChecks
+};
 """
 
 OVERFLOW_SCRIPT = r"""

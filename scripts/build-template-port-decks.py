@@ -12,6 +12,7 @@ import html
 import json
 import os
 import re
+import time
 from urllib.parse import unquote, urlparse
 from dataclasses import dataclass
 from pathlib import Path
@@ -21,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "examples" / "generated" / "presets"
 DEFAULT_TEMPLATE_DIR = ROOT / "beautiful-html-templates"
 REFERENCE = ROOT / "examples" / "editable-deck-reference.html"
+_REFERENCE_EDITOR_PARTS: tuple[str, str, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -700,6 +702,9 @@ SLOT_ADAPTER_JS = r"""
 
 
 def extract_reference_editor_parts() -> tuple[str, str, str]:
+    global _REFERENCE_EDITOR_PARTS
+    if _REFERENCE_EDITOR_PARTS is not None:
+        return _REFERENCE_EDITOR_PARTS
     reference = REFERENCE.read_text(encoding="utf-8")
     style_match = re.search(r"<style>(.*?)</style>", reference, flags=re.S)
     if not style_match:
@@ -716,7 +721,12 @@ def extract_reference_editor_parts() -> tuple[str, str, str]:
     script_start = reference.index("<script>\n(function () {", chrome_end)
     script_end = reference.index("</script>", script_start) + len("</script>")
     js = reference[script_start:script_end]
-    return f"<style id=\"swiss-edit-runtime-css\">\n{editor_css}\n</style>", chrome, patch_reference_runtime_js(js)
+    _REFERENCE_EDITOR_PARTS = (
+        f"<style id=\"swiss-edit-runtime-css\">\n{editor_css}\n</style>",
+        chrome,
+        patch_reference_runtime_js(js),
+    )
+    return _REFERENCE_EDITOR_PARTS
 
 
 def patch_reference_runtime_js(js: str) -> str:
@@ -775,6 +785,7 @@ def render(port: TemplatePort, head: str, sections_html: str) -> str:
 
 
 def main() -> int:
+    started = time.perf_counter()
     source_root = template_root()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for port in PORTS:
@@ -789,6 +800,8 @@ def main() -> int:
         out_path.write_text(out, encoding="utf-8")
         slot_count = sections_html.count("data-edit-slot=")
         print(f"{out_path.relative_to(ROOT)} slides={len(sections)} slots={slot_count} source={port.source_slug}")
+    elapsed = time.perf_counter() - started
+    print(f"Built {len(PORTS)} template-port decks in {OUT_DIR} in {elapsed:.2f}s")
     return 0
 
 

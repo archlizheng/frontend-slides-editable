@@ -2487,6 +2487,7 @@ p{font-size:clamp(.95rem,1.3vw,1.15rem);line-height:1.6}
         });
         document.removeEventListener('pointermove', move);
         document.removeEventListener('pointerup', up);
+        document.removeEventListener('pointercancel', up);
         if (this._dragFilm) {
           const { fromIndex, targetIndex, before } = this._dragFilm;
           this._dragFilm = null;
@@ -2497,6 +2498,7 @@ p{font-size:clamp(.95rem,1.3vw,1.15rem);line-height:1.6}
       };
       document.addEventListener('pointermove', move);
       document.addEventListener('pointerup', up);
+      document.addEventListener('pointercancel', up);
     }
 
     _reorderFilmstrip(fromIndex, targetIndex, before) {

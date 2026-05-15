@@ -447,6 +447,10 @@ python3 scripts/capture-preset-previews.py
 BEAUTIFUL_TEMPLATES_DIR=./beautiful-html-templates python3 scripts/build-template-port-decks.py
 python3 scripts/capture-template-port-previews.py
 python3 scripts/validate-template-ports.py
+python3 scripts/validate-editable-decks.py
+python3 scripts/test-editable-contract-fixtures.py
+python3 scripts/validate-skill-workflow.py
+python3 scripts/smoke-editable-decks.py
 ```
 
 详见 [`docs/preset-previews/README.md`](docs/preset-previews/README.md)。维护说明与 `CHROME_PATH`、`PREVIEW_VIEWPORT` 见该文件。
@@ -711,6 +715,10 @@ python3 scripts/validate-template-ports.py
 | `docs/preset-previews/*.png` | legacy 首页图 + ported 三图图库 / Legacy cover PNGs plus ported cover/mid/later gallery |
 | `scripts/build-preset-decks.py` | 生成 19 个 legacy runtime smoke + visual preview 样例 / Build the 19 legacy runtime smoke + visual preview samples |
 | `scripts/build-template-port-decks.py` | 从本地 `beautiful-html-templates` 生成 34 个 Swiss runtime + locked slot 真实模板 port / Build 34 Swiss-runtime + locked-slot real-template ports from local `beautiful-html-templates` |
+| `scripts/validate-editable-decks.py` | 全量静态验证可编辑 runtime 契约 / Static validation for editable runtime contracts |
+| `scripts/test-editable-contract-fixtures.py` | 确认坏 fixture 会被 validator 抓到 / Negative fixture tests for validator coverage |
+| `scripts/validate-skill-workflow.py` | 验证 skill workflow 文档包含移动端必问与 runtime 入口 / Validate workflow docs for mobile and runtime decisions |
+| `scripts/smoke-editable-decks.py` | Chrome 抽样验证 Pages、保存、导出与移动端横向溢出 / Sampled Chrome smoke for Pages, save/export, and mobile horizontal overflow |
 | `scripts/capture-preset-previews.py` | 用无头 Chrome 生成 legacy/全量 `*-cover.png` / Headless Chrome capture for legacy/all `*-cover.png` |
 | `scripts/capture-template-port-previews.py` | 用无头 Chrome 生成 34 套 ported `*-cover.png`、`*-mid.png`、`*-later.png` / Headless Chrome capture for 34 ported cover/mid/later PNGs |
 

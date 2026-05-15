@@ -3028,6 +3028,7 @@
         });
         document.removeEventListener('pointermove', move);
         document.removeEventListener('pointerup', up);
+        document.removeEventListener('pointercancel', up);
         if (this._dragFilm) {
           const { fromIndex, targetIndex, before } = this._dragFilm;
           this._dragFilm = null;
@@ -3038,6 +3039,7 @@
       };
       document.addEventListener('pointermove', move);
       document.addEventListener('pointerup', up);
+      document.addEventListener('pointercancel', up);
     }
 
     _reorderFilmstrip(fromIndex, targetIndex, before) {

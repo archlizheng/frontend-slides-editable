@@ -8,6 +8,7 @@ Chinese-first voice while preserving preset-specific layout identity.
 from __future__ import annotations
 
 import re
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -2026,6 +2027,7 @@ def patch_slides(text: str, slides_html: str) -> str:
 
 
 def main() -> None:
+    started = time.perf_counter()
     reference = REF.read_text(encoding="utf-8")
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -2048,7 +2050,8 @@ def main() -> None:
         out_path.write_text(html, encoding="utf-8")
         print(out_path.name, len(html))
 
-    print(f"Built {len(PRESETS)} preset decks in {OUT_DIR}")
+    elapsed = time.perf_counter() - started
+    print(f"Built {len(PRESETS)} preset decks in {OUT_DIR} in {elapsed:.2f}s")
 
 
 if __name__ == "__main__":
