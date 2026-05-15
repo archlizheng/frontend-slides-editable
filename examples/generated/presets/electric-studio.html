@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hans" data-deck-id="preset-electric-studio">
+<html lang="zh-Hans" data-deck-id="preset-electric-studio" data-mobile-adaptation="desktop-default">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -665,12 +665,60 @@
     .filmstrip-item.drop-after .filmstrip-drop-line-after { display: block; }
     .filmstrip-thumb-host { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; background: #020617; }
     .filmstrip-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; gap: 4px; }
+    .filmstrip-actions-group { display: inline-flex; align-items: center; gap: 4px; }
     .filmstrip-actions button {
       font-size: 11px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--deck-chrome-border);
       background: var(--deck-chrome-surface); color: var(--deck-chrome-text); cursor: pointer;
     }
     .filmstrip-actions button:hover { filter: brightness(1.12); }
+    .filmstrip-copy {
+      opacity: 0; transform: translateY(2px);
+      transition: opacity 0.16s ease, transform 0.16s ease;
+    }
+    .filmstrip-item:hover .filmstrip-copy,
+    .filmstrip-item:focus-within .filmstrip-copy {
+      opacity: 1; transform: translateY(0);
+    }
     .filmstrip-num { font-size: 11px; color: var(--deck-chrome-muted); }
+
+    /* === optional mobile adaptation hooks === */
+    @media (max-width: 700px) and (orientation: portrait) {
+      html[data-mobile-adaptation="enabled"],
+      html[data-mobile-adaptation="enabled"] body {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      html[data-mobile-adaptation="enabled"] .slides-offset,
+      html[data-mobile-adaptation="enabled"] .slide {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden !important;
+        contain: layout paint;
+      }
+      html[data-mobile-adaptation="enabled"] .slide > * {
+        max-width: 100vw;
+      }
+      html[data-mobile-adaptation="enabled"] .slide-sidebar { width: min(82vw, 320px); }
+      html[data-mobile-adaptation="enabled"] body.deck-sidebar-open .slides-offset { padding-right: 0; }
+      html[data-mobile-adaptation="enabled"] .deck-left-hover-anchor { transform: scale(0.92); transform-origin: top left; }
+      html[data-mobile-adaptation="enabled"] .slide-object { max-width: 92vw; }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      html[data-mobile-adaptation="enabled"],
+      html[data-mobile-adaptation="enabled"] body,
+      html[data-mobile-adaptation="enabled"] .slides-offset,
+      html[data-mobile-adaptation="enabled"] .slide {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden !important;
+      }
+      html[data-mobile-adaptation="enabled"] .slide-sidebar { width: min(42vw, 260px); padding: 6px; }
+      html[data-mobile-adaptation="enabled"] body.deck-sidebar-open .slides-offset { padding-right: min(42vw, 260px); }
+      html[data-mobile-adaptation="enabled"] .filmstrip-list { gap: 5px; }
+      html[data-mobile-adaptation="enabled"] .filmstrip-actions button { padding: 3px 6px; }
+    }
 
     /* === slide edit layer & objects === */
     .slide-edit-layer {
@@ -950,6 +998,7 @@
   <div class="filmstrip-list" id="filmstripList"></div>
   <div class="filmstrip-actions" style="margin-top:auto;">
     <button type="button" id="btnExport">Export HTML</button>
+    <button type="button" id="btnNewPage">+New Page</button>
   </div>
 </aside>
 
@@ -1192,6 +1241,98 @@
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
       node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
       node.closest('.deck-edit-chrome') || node.closest('[data-deck-chrome-surface]'));
+  }
+
+  function cssEscapeIdent(value) {
+    if (window.CSS && CSS.escape) return CSS.escape(value);
+    return String(value).replace(/[^a-zA-Z0-9_-]/g, '\\$&');
+  }
+
+  function deckRoot() {
+    return document.querySelector('.slides-offset');
+  }
+
+  function renumberDeckSlides(root) {
+    const scope = root || deckRoot();
+    if (!scope) return [];
+    const slides = Array.from(scope.querySelectorAll(':scope > section.slide'));
+    slides.forEach((slide, index) => {
+      slide.id = 'slide-' + index;
+      slide.classList.toggle('visible', index === 0 || slide.classList.contains('visible'));
+    });
+    return slides;
+  }
+
+  function renumberDeckObjects(root) {
+    const scope = root || deckRoot() || document;
+    const seen = new Set();
+    let counter = 0;
+    scope.querySelectorAll('[data-slide-object]').forEach((obj) => {
+      let oid = obj.getAttribute('data-oid');
+      if (oid && !seen.has(oid)) {
+        seen.add(oid);
+        return;
+      }
+      do {
+        oid = 'deck-o' + counter++;
+      } while (seen.has(oid));
+      obj.setAttribute('data-oid', oid);
+      seen.add(oid);
+    });
+  }
+
+  function normalizeInsertedSlide(slide, index) {
+    if (!slide) return null;
+    slide.id = 'slide-' + index;
+    slide.classList.remove('visible', 'is-active');
+    slide.querySelectorAll('[contenteditable]').forEach((el) => el.setAttribute('contenteditable', 'false'));
+    slide.querySelectorAll('.is-selected').forEach((el) => el.classList.remove('is-selected'));
+    ensureObjectControls(slide);
+    return slide;
+  }
+
+  function createBlankSlideFromPreset(currentSlide) {
+    const blank = document.createElement('section');
+    blank.className = currentSlide ? currentSlide.className : 'slide';
+    blank.classList.remove('visible', 'is-active');
+    blank.setAttribute('data-generated-page', 'blank');
+    if (currentSlide) {
+      Array.from(currentSlide.attributes).forEach((attr) => {
+        if (attr.name === 'id' || attr.name === 'class') return;
+        if (attr.name.startsWith('data-template-slide-index')) return;
+        blank.setAttribute(attr.name, attr.value);
+      });
+    }
+    const bg = currentSlide && currentSlide.querySelector(':scope > .slide-bg');
+    if (bg) blank.appendChild(bg.cloneNode(true));
+    const layer = document.createElement('div');
+    layer.className = 'slide-edit-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    const obj = document.createElement('div');
+    obj.className = 'slide-object blank-page-title';
+    obj.setAttribute('data-slide-object', '');
+    obj.setAttribute('data-object-type', 'text');
+    obj.style.cssText = 'left:10%;top:14%;width:72%;min-height:3rem;';
+    const move = document.createElement('button');
+    move.type = 'button';
+    move.className = 'slide-object-move';
+    move.setAttribute('aria-label', 'Move');
+    move.textContent = '\u283f';
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'slide-object-delete';
+    del.setAttribute('aria-label', 'Delete object');
+    del.textContent = '\u00d7';
+    const text = document.createElement('div');
+    text.className = 'slide-object-text';
+    text.setAttribute('contenteditable', 'false');
+    text.textContent = 'New Page';
+    obj.appendChild(move);
+    obj.appendChild(del);
+    obj.appendChild(text);
+    layer.appendChild(obj);
+    blank.appendChild(layer);
+    return blank;
   }
 
   /* ---------- History ---------- */
@@ -2333,6 +2474,19 @@
         const num = document.createElement('span');
         num.className = 'filmstrip-num';
         num.textContent = 'Slide ' + (idx + 1);
+        const actionGroup = document.createElement('span');
+        actionGroup.className = 'filmstrip-actions-group';
+        const copy = document.createElement('button');
+        copy.type = 'button';
+        copy.className = 'filmstrip-copy';
+        copy.textContent = 'Copy';
+        copy.setAttribute('aria-label', 'Copy slide');
+        copy.setAttribute('data-filmstrip-action', 'copy');
+        copy.title = 'Copy slide';
+        copy.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          this._copySlide(idx);
+        });
         const del = document.createElement('button');
         del.type = 'button';
         del.textContent = '\u00d7';
@@ -2342,8 +2496,10 @@
           ev.stopPropagation();
           this._deleteSlide(idx);
         });
+        actionGroup.appendChild(copy);
+        actionGroup.appendChild(del);
         actions.appendChild(num);
-        actions.appendChild(del);
+        actions.appendChild(actionGroup);
 
         item.appendChild(lineTop);
         item.appendChild(host);
@@ -2486,6 +2642,63 @@
       const frag = document.createDocumentFragment();
       ids.forEach((id) => { if (map[id]) frag.appendChild(map[id]); });
       parent.appendChild(frag);
+    }
+
+    _insertSlideAfter(index, slide, historyLabel) {
+      this.deck.refreshSlides();
+      const slides = this.deck.slides;
+      const parent = slides[0] && slides[0].parentNode;
+      if (!parent || !slide) return;
+      const insertAfter = slides[Math.max(0, Math.min(index, slides.length - 1))];
+      parent.insertBefore(slide, insertAfter ? insertAfter.nextSibling : null);
+      renumberDeckSlides(parent);
+      renumberDeckObjects(parent);
+      ensureObjectControls(parent);
+      this.deck.refreshSlides();
+      const insertedId = slide.id;
+      this.history.push({
+        undo: () => {
+          const el = parent.querySelector('#' + cssEscapeIdent(insertedId));
+          if (el && el.parentNode) el.parentNode.removeChild(el);
+          renumberDeckSlides(parent);
+          renumberDeckObjects(parent);
+          this.deck.refreshSlides();
+          this.deck._updateChrome();
+          this.refresh();
+        },
+        redo: () => {
+          const currentSlides = Array.from(parent.querySelectorAll(':scope > section.slide'));
+          const ref = currentSlides[Math.max(0, Math.min(index, currentSlides.length - 1))];
+          parent.insertBefore(slide, ref ? ref.nextSibling : null);
+          renumberDeckSlides(parent);
+          renumberDeckObjects(parent);
+          ensureObjectControls(parent);
+          this.deck.refreshSlides();
+          this.deck._updateChrome();
+          this.refresh();
+        },
+        label: historyLabel || 'insertSlide'
+      });
+      this.deck.goTo(index + 1);
+      this.refresh();
+    }
+
+    _copySlide(index) {
+      this.deck.refreshSlides();
+      const source = this.deck.slides[index];
+      if (!source) return;
+      const copy = source.cloneNode(true);
+      normalizeInsertedSlide(copy, index + 1);
+      this._insertSlideAfter(index, copy, 'copySlide');
+    }
+
+    _newPageAfterCurrent() {
+      this.deck.refreshSlides();
+      const index = Math.max(0, Math.min(this.deck.current, this.deck.slides.length - 1));
+      const source = this.deck.slides[index];
+      const blank = createBlankSlideFromPreset(source);
+      normalizeInsertedSlide(blank, index + 1);
+      this._insertSlideAfter(index, blank, 'newPage');
     }
 
     _deleteSlide(index) {
@@ -3074,6 +3287,8 @@
   });
 
   if (btnSave) btnSave.addEventListener('click', saveState);
+  const btnNewPage = document.getElementById('btnNewPage');
+  if (btnNewPage) btnNewPage.addEventListener('click', () => sidebar._newPageAfterCurrent());
   document.getElementById('btnExport').addEventListener('click', exportHtml);
 
   document.addEventListener('keydown', (e) => {

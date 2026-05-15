@@ -4,7 +4,7 @@ PNG files here are screenshots of the editable preset sample decks in `examples/
 
 The generated decks are both **runtime smoke tests** and **visual previews**. There are now two build layers:
 
-- `scripts/build-preset-decks.py` builds the 12 legacy preview decks. These still use one shared editable runtime with explicit preset/family archetypes for layout variety.
+- `scripts/build-preset-decks.py` builds the 19 legacy preview decks. These still use one shared editable runtime with explicit preset/family archetypes for layout variety; same-name outputs are replaced by ported decks in the final 46-file gallery.
 - `scripts/build-template-port-decks.py` builds the 34 ported decks from local `beautiful-html-templates/templates/{source_slug}/template.html`. These preserve upstream CSS, fonts, slide-level classes, and decorative DOM, then inject the shared Swiss/reference editor with a locked slot adapter.
 
 Ported decks use a **Swiss runtime + locked slots** model: text, metric, image, and table-cell slots are editable through the same RTE, Undo/Redo, Save, Pages, Add element, and Export chrome as `swiss-modern.html`; decorative grids, hairlines, paper textures, pixel/glitch treatments, and authored layout containers are not `data-slide-object` boxes. User-added objects still live in `.slide-edit-layer` and can be dragged/resized.

@@ -363,7 +363,7 @@ When using the **frontend-slides-editable** skill, every generated deck **must**
 ### Authoritative references
 
 1. **[editor-runtime.md](editor-runtime.md)** — DOM contract (`section.slide#id`, `.slide-edit-layer`, `[data-slide-object][data-oid]`, `data-object-type`), undo command types, snap rules, generator checklist.
-2. **[examples/editable-deck-reference.html](examples/editable-deck-reference.html)** — Single-file **working implementation**: `SlideDeck` (scroll, snap, dots, progress), `SlideObjectEditor` (edit mode, **Ctrl+click** multi-select, drag + snap guides, RTE toolbar, delete objects), `SlideSidebar` (thumbnails via clone+scale, drag reorder, delete slide), `HistoryStack`, full-deck localStorage persistence, and sanitized HTML export.
+2. **[examples/editable-deck-reference.html](examples/editable-deck-reference.html)** — Single-file **working implementation**: `SlideDeck` (scroll, snap, dots, progress), `SlideObjectEditor` (edit mode, **Ctrl+click** multi-select, drag + snap guides, RTE toolbar, delete objects), `SlideSidebar` (thumbnails via clone+scale, drag reorder, copy slide, new blank page, delete slide), `HistoryStack`, full-deck localStorage persistence, and sanitized HTML export.
 
 ### Integration steps (Phase 3)
 
@@ -375,6 +375,7 @@ When using the **frontend-slides-editable** skill, every generated deck **must**
 6. For each slide, add `.slide-edit-layer` and place all movable blocks as `.slide-object` nodes per **editor-runtime.md** (move + resize handles + text/graphic structure).
 7. Copy **JavaScript** from the reference `<script>` block; keep `STORAGE_KEY` based on `<html data-deck-id="…">` or document title. Persist the whole `.slides-offset` structure, not just individual slide bodies, so reorder/delete survives reload.
 8. Wire **Edit** / **Pages** / **#deckEditChrome** (Done, Undo, Redo) and hotzone using the **JS hover pattern** documented below (no CSS `~` for toggle visibility).
+9. Set `data-mobile-adaptation="desktop-default"` on `<html>` unless the required Phase 1 mobile answer says to support phones; then set `enabled` and include portrait + landscape media rules.
 
 ### Regression guard (slide list / filmstrip)
 
@@ -391,6 +392,7 @@ Same hotzone + **400ms** delayed hide as in **§ Hover reveal for edit controls*
 - **`#deckLeftHover`** — fixed **top-left** wrapper; hover reveals **Edit**, **Pages**, **`#btnSave`** (edit mode only), and **`#deckEditChrome`** (**Undo**, **Redo**, **Done**) (see reference). No separate bottom-right save bar.
 - **`#pagesToggle`** next to `#editToggle` for the slide sidebar.
 - **`aside.slide-sidebar`** with `#filmstripList` and export control.
+- Thumbnail rows expose a hover/focus **Copy** button (`data-filmstrip-action="copy"`), and the sidebar footer includes **Export HTML** plus **+New Page** (`#btnNewPage`).
 - **`#rteToolbar`** for bold/italic/font family/font size when a `.slide-object-text` is focused (caret or selection).
 
 ### Reduced motion

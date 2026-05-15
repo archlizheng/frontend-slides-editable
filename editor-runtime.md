@@ -120,6 +120,8 @@ Controls are grouped in a **fixed top-left** container. **Opacity / pointer-even
 | `deleteGroup` | `{ snapshots: [{ parentSelector, index, outerHTML }] }` | Re-insert nodes |
 | `reorderSlides` | `{ fromIndex, toIndex }` | Move slide section back |
 | `deleteSlide` | `{ index, outerHTML, nextSiblingId }` | Re-insert section |
+| `copySlide` | cloned slide inserted after source index | Remove cloned slide |
+| `newPage` | blank preset-matched slide inserted after current index | Remove inserted slide |
 
 The reference implementation uses a **command stack** with `undo()` / `redo()` applying inverse operations. **`push()` clears the redo stack** and invokes an `onChange` callback (use it to sync undo/redo button `disabled` state).
 
@@ -156,6 +158,8 @@ The reference implementation uses a **command stack** with `undo()` / `redo()` a
 | Bold / italic / font / size | Floating `#rteToolbar` when text is focused |
 | Save to localStorage | `Ctrl+S` saves the full `.slides-offset` structure, not just per-slide inner HTML |
 | Export HTML | Sidebar button in reference; export should strip edit-mode / selected-state classes |
+| Copy slide | Hover a Pages thumbnail, click **Copy**; insert the duplicate immediately after that slide, regenerate slide ids / duplicate object ids, and make the operation undoable |
+| New Page | Sidebar **+New Page** button beside **Export HTML**; insert a blank preset-matched page after the current slide, using the current slide’s background/style skeleton where possible |
 | Delete slide | Pages filmstrip **×** — confirms with `Delete slide?`; at least one slide must remain (`Keep at least one slide.`) |
 
 ## Text editing `focusout` / history
@@ -172,6 +176,7 @@ The reference implementation uses a **command stack** with `undo()` / `redo()` a
 5. Define **slide theme** and **`--deck-chrome-*`** on `:root`; chrome CSS uses variables only.
 6. Copy **deck runtime** from `examples/editable-deck-reference.html` (CSS + JS) or inline equivalent — keep `STORAGE_KEY` / deck id meta consistent if user needs multiple files.
 7. After generating, verify at 1280×720: no slide overflow, handles visible only in edit mode.
+8. Set `<html data-mobile-adaptation="desktop-default">` unless Phase 1 explicitly selected phone support; for phone support set `enabled` and include portrait + landscape media rules from the reference runtime.
 
 ## Files
 

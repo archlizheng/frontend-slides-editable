@@ -63,6 +63,7 @@ Models often jump straight to generating HTML. **For Mode A (new deck) and Mode 
 | 4 | **Style direction** | Phase 1 style preference cluster **or** a **named** preset from [STYLE_PRESETS.md](STYLE_PRESETS.md) **or** explicit delegation (“you choose”) — if only “you choose”, **Phase 2** still runs to narrow via recommendations/previews unless the user also explicitly skips previews |
 | 5 | **Editing** | Confirm **full editable runtime** (this skill’s default) **or** explicit switch to parent **read-only** `frontend-slides` |
 | 6 | **Images** | No / yes / unsure; if **yes**, files may arrive later, but intent is explicit |
+| 7 | **Mobile** | Required answer: **Desktop-first only** (default) or **Adapt for phone portrait + landscape**; do not infer this silently |
 | — | **Language / locale** | When prose is audience-facing and not already stated: monolingual / bilingual / per-locale files — **ask in Phase 1** |
 
 **Images vs outline:** **Co-design outline ↔ images** (Step 1.2) only **after** the user has real assets or links to evaluate. Do **not** skip Phase 1 dimensions just because images are pending; capture “yes, will provide” in Phase 1, then run image evaluation when files exist.
@@ -201,6 +202,9 @@ Confirm the user wants the **full editable runtime** (default for this skill): o
 **Question 6 — Assets / images** (header: "Images"):
 Will this deck use image files you will provide (folder, uploads, or links)? Options: **No images** (CSS/graphics only) / **Yes — I will provide images** / **Unsure — recommend**
 
+**Question 7 — Mobile adaptation** (header: "Mobile"):
+Should this editable deck be adapted for phone use in both portrait and landscape? Options: **Desktop-first only** (recommended; keeps the deck optimized for presenting/editing on desktop) / **Adapt for phone portrait + landscape** (adds mobile-specific CSS hooks, sidebar behavior, and extra viewport verification). This is a required Phase 1 answer for new decks and for PPT/PDF conversions after extraction.
+
 **Language / locale (include in the same grouped message when relevant):** If the deliverable must be monolingual, bilingual, or localized (e.g. CN/EN on the same slides vs two files), ask once here when the user has not already stated it.
 
 If the user has draft content (bullets, doc, outline), ask them to **paste or attach** it in the same turn or immediately after Phase 1.
@@ -327,6 +331,7 @@ If images were provided, the slide outline already incorporates them from Step 1
 - **Ported preset fidelity:** For the 34 ported presets, preserve the upstream template DOM/CSS/classes and make authored content slot-editable. Prefer locked native layout + editable `data-edit-slot` content over making every native element draggable.
 - **Every slide** `section.slide` must have a stable `id`; movable content lives in `.slide-edit-layer` as `[data-slide-object][data-oid]` per [editor-runtime.md](editor-runtime.md)
 - **Deck slide list:** Never use a global `querySelectorAll('section.slide')` when a filmstrip clones slides — use only slides under the deck wrapper (e.g. `.slides-offset` + `:scope > section.slide`). See [html-template.md](html-template.md) §Regression guard.
+- **Mobile adaptation:** If Phase 1 selected phone support, set `data-mobile-adaptation="enabled"` on `<html>` and include portrait + landscape media rules for the deck chrome, sidebar, and slide objects. If not selected, set `data-mobile-adaptation="desktop-default"` so validation can distinguish an explicit desktop-first choice from an omitted decision.
 - Embed the **editable deck runtime** (from the reference example): `SlideDeck`, object editor (select / drag / snap / RTE toolbar), `SlideSidebar`, `HistoryStack`, save/export
 - Use fonts from Fontshare or Google Fonts — never system fonts
 - Add detailed comments explaining each section
@@ -355,13 +360,13 @@ When converting **PowerPoint** (`.pptx`) or **PDF** (`.pdf`) files:
 Phase 5: Delivery
 
 1. **Clean up** — Delete the temporary slide-previews folder (see Phase 2) if it exists
-2. **Smoke check (quick)** — Before handing off: open the file once; confirm **no in-slide scrolling** at ~1280×720; in edit mode, open **Pages**, reorder one slide and refresh — **no duplicate slides** (regression guard); **Export HTML** opens and runs standalone
+2. **Smoke check (quick)** — Before handing off: open the file once; confirm **no in-slide scrolling** at ~1280×720; if mobile support was selected, also check ~390×844 portrait and ~844×390 landscape; in edit mode, open **Pages**, reorder one slide, **Copy** one slide, add **+New Page**, and refresh — **no duplicate slides or object ids** (regression guard); **Export HTML** opens and runs standalone
 3. **Open** — Launch in default browser: **macOS** `open [filename].html`; **Linux** `xdg-open [filename].html`; **Windows** `start [filename].html`
 4. **Summarize** — Tell the user:
    - File location, style name, slide count
    - Navigation: Arrow keys, Space, scroll/wheel (wheel disabled while edit mode on), click nav dots
    - **Edit mode:** `E` enters edit mode. **Hover the top-left** to reveal **Edit**, **Pages**, and (while editing) **Undo** / **Redo** / **Done**; controls hide after the pointer leaves (~400ms). **Done** (same cluster) exits edit mode — the **Edit** button label stays **Edit**. **Esc** blurs text first, then exits edit mode when not typing in a text box
-   - **Pages** sidebar for thumbnails, reorder (drag rows), delete slides
+   - **Pages** sidebar for thumbnails, reorder (drag rows), hover **Copy** on a thumbnail to duplicate that page, delete slides, and use **+New Page** beside **Export HTML** to insert a blank style-matched page after the current slide
    - **Objects:** drag **⠿** to move; hover **×** on an object or use **Delete/Backspace** to remove (multi-select confirms in English); drag **corner resize** on selected objects to change width/height (text reflows); **Ctrl+click** multi-select (macOS: **Control** key)
    - **Add element:** **Add element** (top-left with Edit/Pages in edit mode) opens a menu: **Text**, **Image** (URL or placeholder), **Video** (URL + controls)
    - **Snap:** aligns to **slide center** and **other objects** — not to the outer slide edges

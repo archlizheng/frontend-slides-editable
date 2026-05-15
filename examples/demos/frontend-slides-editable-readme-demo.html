@@ -51,14 +51,15 @@
 
     /* 4. ALL typography uses clamp() for responsive scaling */
     :root {
-      --title-size: clamp(1.5rem, 5vw, 4rem);
-      --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
-      --h3-size: clamp(1rem, 2.5vw, 1.75rem);
-      --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
-      --small-size: clamp(0.65rem, 1vw, 0.875rem);
-      --slide-padding: clamp(1rem, 4vw, 4rem);
-      --content-gap: clamp(0.5rem, 2vw, 2rem);
-      --element-gap: clamp(0.25rem, 1vw, 1rem);
+      /* min(vw,vh)：窄屏宽、矮屏高都能压住字号，避免只跟 vw 导致手机上取下限过大 */
+      --title-size: clamp(1.1rem, min(4.2vw, 5.2vh), 3.5rem);
+      --h2-size: clamp(1rem, min(3.4vw, 4vh), 2.35rem);
+      --h3-size: clamp(0.92rem, min(2.6vw, 3.2vh), 1.65rem);
+      --body-size: clamp(0.72rem, min(2.2vw, 2.6vh), 1.05rem);
+      --small-size: clamp(0.62rem, min(1.6vw, 2vh), 0.85rem);
+      --slide-padding: clamp(0.65rem, min(3.2vw, 2.4vh), 3.25rem);
+      --content-gap: clamp(0.4rem, min(1.6vw, 2vh), 1.75rem);
+      --element-gap: clamp(0.22rem, min(1vw, 1.4vh), 0.95rem);
       --font-display: 'Archivo', sans-serif;
       --font-body: 'Nunito', sans-serif;
       /* Slide theme (override per STYLE_PRESETS) */
@@ -116,19 +117,19 @@
 
     @media (max-height: 700px) {
       :root {
-        --slide-padding: clamp(0.75rem, 3vw, 2rem);
-        --content-gap: clamp(0.4rem, 1.5vw, 1rem);
-        --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
-        --h2-size: clamp(1rem, 3vw, 1.75rem);
+        --slide-padding: clamp(0.65rem, min(2.8vw, 2.2vh), 1.85rem);
+        --content-gap: clamp(0.35rem, min(1.4vw, 1.6vh), 0.95rem);
+        --title-size: clamp(1.05rem, min(3.8vw, 4.5vh), 2.35rem);
+        --h2-size: clamp(0.95rem, min(3vw, 3.6vh), 1.55rem);
       }
     }
 
     @media (max-height: 600px) {
       :root {
-        --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
-        --content-gap: clamp(0.3rem, 1vw, 0.75rem);
-        --title-size: clamp(1.1rem, 4vw, 2rem);
-        --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+        --slide-padding: clamp(0.48rem, min(2.2vw, 1.6vh), 1.35rem);
+        --content-gap: clamp(0.28rem, min(1.1vw, 1.2vh), 0.65rem);
+        --title-size: clamp(0.98rem, min(3.2vw, 4vh), 1.95rem);
+        --body-size: clamp(0.66rem, min(1.8vw, 2.2vh), 0.92rem);
       }
 
       .nav-dots, .keyboard-hint, .decorative {
@@ -138,16 +139,22 @@
 
     @media (max-height: 500px) {
       :root {
-        --slide-padding: clamp(0.4rem, 2vw, 1rem);
-        --title-size: clamp(1rem, 3.5vw, 1.5rem);
-        --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
-        --body-size: clamp(0.65rem, 1vw, 0.85rem);
+        --slide-padding: clamp(0.4rem, min(1.8vw, 1.2vh), 0.95rem);
+        --title-size: clamp(0.92rem, min(2.8vw, 3.5vh), 1.45rem);
+        --h2-size: clamp(0.85rem, min(2.2vw, 2.8vh), 1.15rem);
+        --body-size: clamp(0.62rem, min(1.5vw, 1.8vh), 0.82rem);
       }
     }
 
     @media (max-width: 600px) {
       :root {
-        --title-size: clamp(1.25rem, 7vw, 2.5rem);
+        --title-size: clamp(1.02rem, min(5.5vw, 4.8vh), 2.15rem);
+        --h2-size: clamp(0.95rem, min(4.5vw, 4vh), 1.85rem);
+        --h3-size: clamp(0.88rem, min(3.6vw, 3.2vh), 1.45rem);
+        --body-size: clamp(0.68rem, min(3.1vw, 2.5vh), 0.98rem);
+        --small-size: clamp(0.6rem, min(2.6vw, 2.2vh), 0.82rem);
+        --slide-padding: clamp(0.5rem, min(3.5vw, 2vh), 1.1rem);
+        --content-gap: clamp(0.32rem, min(2.2vw, 1.6vh), 0.75rem);
       }
 
       .grid {
@@ -226,7 +233,7 @@
     }
     .kicker .slide-object-text,
     .section-number .slide-object-text {
-      font-size: clamp(0.68rem, 0.95vw, 0.88rem);
+      font-size: clamp(0.58rem, min(1.8vw, 2.2vh), 0.82rem);
       text-transform: uppercase;
       letter-spacing: 0.16em;
       font-weight: 700;
@@ -241,23 +248,23 @@
       line-height: 0.92;
     }
     .hero-title .slide-object-text {
-      font-size: clamp(2.7rem, 7.2vw, 6rem);
-      max-width: 7.5ch;
+      font-size: clamp(1.28rem, min(7.2vw, 8.5vh), 5.25rem);
+      max-width: min(100%, 12ch);
     }
     .section-title .slide-object-text {
-      font-size: clamp(2rem, 4.3vw, 4rem);
-      max-width: 11ch;
+      font-size: clamp(1.02rem, min(4.3vw, 5.5vh), 3.65rem);
+      max-width: min(100%, 14ch);
     }
     .closing-title .slide-object-text {
-      font-size: clamp(2.3rem, 5vw, 4.8rem);
-      max-width: 11ch;
+      font-size: clamp(1.08rem, min(4.9vw, 6vh), 4.1rem);
+      max-width: min(100%, 14ch);
     }
     .hero-copy .slide-object-text,
     .section-copy .slide-object-text,
     .closing-copy .slide-object-text,
     .note-strip .slide-object-text {
-      font-size: clamp(0.95rem, 1.4vw, 1.16rem);
-      line-height: 1.5;
+      font-size: clamp(0.78rem, min(2.6vw, 2.8vh), 1.08rem);
+      line-height: 1.45;
       color: var(--text-secondary);
     }
     .hero-metrics .slide-object-text {
@@ -268,8 +275,8 @@
     .hero-metrics .metric,
     .note-strip .pill {
       border-top: 4px solid var(--accent);
-      padding-top: clamp(0.45rem, 0.8vw, 0.7rem);
-      font-size: clamp(0.72rem, 1vw, 0.88rem);
+      padding-top: clamp(0.32rem, min(1.2vw, 1.4vh), 0.65rem);
+      font-size: clamp(0.62rem, min(2.2vw, 2vh), 0.82rem);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--text-secondary);
@@ -278,7 +285,7 @@
     .stat-figure {
       display: block;
       font-family: var(--font-display);
-      font-size: clamp(1.1rem, 1.8vw, 1.7rem);
+      font-size: clamp(0.88rem, min(3.4vw, 3.6vh), 1.55rem);
       color: var(--text-primary);
       letter-spacing: -0.04em;
     }
@@ -305,16 +312,18 @@
     .summary-card .slide-object-text {
       display: flex;
       flex-direction: column;
-      gap: clamp(0.38rem, 0.8vw, 0.72rem);
+      gap: clamp(0.28rem, min(1.1vw, 1.2vh), 0.65rem);
       height: 100%;
-      padding: clamp(0.9rem, 1.5vw, 1.3rem);
+      min-height: 0;
+      overflow: hidden;
+      padding: clamp(0.5rem, min(2.4vw, 2vh), 1.15rem);
       background: rgba(255, 255, 255, 0.82);
       border: 1px solid rgba(16, 16, 16, 0.12);
       box-shadow: 0 18px 36px rgba(16, 16, 16, 0.08);
       backdrop-filter: blur(6px);
     }
     .card-label {
-      font-size: clamp(0.66rem, 0.9vw, 0.8rem);
+      font-size: clamp(0.55rem, min(1.8vw, 2vh), 0.76rem);
       letter-spacing: 0.14em;
       text-transform: uppercase;
       font-weight: 700;
@@ -322,14 +331,17 @@
     }
     .card-title {
       font-family: var(--font-display);
-      font-size: clamp(1.15rem, 1.95vw, 1.8rem);
-      line-height: 1;
+      font-size: clamp(0.82rem, min(3.4vw, 3vh), 1.65rem);
+      line-height: 1.05;
       letter-spacing: -0.04em;
     }
     .card-body {
-      font-size: clamp(0.82rem, 1.1vw, 0.98rem);
-      line-height: 1.48;
+      font-size: clamp(0.68rem, min(2.5vw, 2.4vh), 0.94rem);
+      line-height: 1.4;
       color: var(--text-secondary);
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
     }
     .compare-card .card-body strong,
     .summary-card .card-body strong,
@@ -338,7 +350,7 @@
     }
     .workflow-card .step-index {
       font-family: var(--font-display);
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-size: clamp(0.95rem, min(4vw, 4.5vh), 2.05rem);
       color: var(--accent);
       line-height: 1;
       letter-spacing: -0.05em;
@@ -346,7 +358,7 @@
     .runtime-card .card-title,
     .doc-card .card-title,
     .contract-card .card-title {
-      font-size: clamp(1.04rem, 1.65vw, 1.45rem);
+      font-size: clamp(0.78rem, min(3.1vw, 2.8vh), 1.38rem);
     }
     .note-strip .slide-object-text {
       display: flex;
@@ -366,7 +378,7 @@
       background: linear-gradient(90deg, var(--accent), rgba(255, 51, 0, 0.14));
     }
     .closing-badge .slide-object-text {
-      font-size: clamp(0.82rem, 1vw, 0.92rem);
+      font-size: clamp(0.72rem, min(2.4vw, 2.4vh), 0.88rem);
       line-height: 1.45;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -376,6 +388,34 @@
     }
     .slide-close .summary-card .slide-object-text {
       background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* 窄屏：三栏指标与横条 pill 改为纵排，避免与绝对定位卡片抢空间导致叠字 */
+    @media (max-width: 720px) {
+      .hero-metrics .slide-object-text {
+        grid-template-columns: 1fr;
+        gap: clamp(0.28rem, 2vw, 0.5rem);
+      }
+      .hero-metrics .metric {
+        border-top-width: 3px;
+      }
+      .note-strip .slide-object-text {
+        flex-direction: column;
+        align-items: stretch;
+        gap: clamp(0.35rem, 2vw, 0.55rem);
+      }
+      .note-strip .pill {
+        padding-block: clamp(0.35rem, 1.5vw, 0.5rem);
+      }
+      .hero-shape .slide-object-graphic {
+        gap: clamp(0.22rem, 2vw, 0.55rem);
+      }
+      .hero-shape .block:nth-child(2) {
+        transform: translateY(clamp(0.35rem, 2.5vw, 1.1rem));
+      }
+      .hero-shape .block:nth-child(3) {
+        transform: translateY(clamp(0.5rem, 4vw, 1.75rem));
+      }
     }
 
     /* === deck chrome (fixed UI) === */
@@ -576,7 +616,11 @@
       position: absolute; box-sizing: border-box; pointer-events: auto;
       outline: 1px dashed transparent; border-radius: 4px;
     }
-    body.deck-edit-mode .slide-object { outline-color: color-mix(in srgb, var(--deck-chrome-muted) 40%, transparent); }
+    body.deck-edit-mode .slide-object {
+      outline-color: color-mix(in srgb, var(--deck-chrome-muted) 40%, transparent);
+      /* 避免浏览器把拖动手势当成页面滚动 / 中断 pointer 序列（尤其长距离拖动） */
+      touch-action: none;
+    }
     .slide-object.is-selected {
       outline: 2px solid var(--deck-chrome-accent);
       box-shadow: 0 0 0 1px color-mix(in srgb, var(--deck-chrome-accent) 25%, transparent);
@@ -1640,16 +1684,19 @@
         slide,
         sr,
         moving: starts,
-        startX: e.clientX,
-        startY: e.clientY,
+        /** 相对当前幻灯片内容区域的指针位置（px），随页面滚动用 getBoundingClientRect 补偿 */
+        fingerLocalX0: e.clientX - sr.left,
+        fingerLocalY0: e.clientY - sr.top,
         primary: primary
       };
       this._clearSnap();
 
-      document.addEventListener('pointermove', this._onDocPointerMove);
+      document.addEventListener('pointermove', this._onDocPointerMove, { passive: false });
       document.addEventListener('pointerup', this._onDocPointerUp);
       document.addEventListener('pointercancel', this._onDocPointerUp);
-      try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+      try {
+        (primary.setPointerCapture ? primary : e.target).setPointerCapture(e.pointerId);
+      } catch (_) {}
     }
 
     _startResize(e, obj, mode) {
@@ -1664,8 +1711,8 @@
         el: obj,
         sr,
         mode: mode === 'e' || mode === 's' ? mode : 'se',
-        startX: e.clientX,
-        startY: e.clientY,
+        fingerLocalX0: e.clientX - sr.left,
+        fingerLocalY0: e.clientY - sr.top,
         startW: r.width,
         startH: r.height,
         beforeW: obj.style.width,
@@ -1673,7 +1720,7 @@
         hadWidthPct: wPct != null,
         hadHeightPct: hPct != null
       };
-      document.addEventListener('pointermove', this._onResizeMove);
+      document.addEventListener('pointermove', this._onResizeMove, { passive: false });
       document.addEventListener('pointerup', this._onResizeUp);
       document.addEventListener('pointercancel', this._onResizeUp);
       try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
@@ -1681,10 +1728,11 @@
 
     _onResizeMove(e) {
       if (!this._resizeState) return;
+      e.preventDefault();
       const st = this._resizeState;
-      const sr = st.sr;
-      const dx = e.clientX - st.startX;
-      const dy = e.clientY - st.startY;
+      const sr = this._slideRect(st.slide);
+      const dx = (e.clientX - sr.left) - st.fingerLocalX0;
+      const dy = (e.clientY - sr.top) - st.fingerLocalY0;
       const minPx = Math.min(sr.width, sr.height) * RESIZE_MIN_FRAC;
       const mode = st.mode || 'se';
       let nw = st.startW;
@@ -1717,7 +1765,7 @@
         });
       }
       this._resizeState = null;
-      document.removeEventListener('pointermove', this._onResizeMove);
+      document.removeEventListener('pointermove', this._onResizeMove, { passive: false });
       document.removeEventListener('pointerup', this._onResizeUp);
       document.removeEventListener('pointercancel', this._onResizeUp);
     }
@@ -1810,10 +1858,12 @@
 
     _onDocPointerMove(e) {
       if (!this._dragState) return;
+      e.preventDefault();
       const st = this._dragState;
-      const sr = st.sr;
-      let dx = e.clientX - st.startX;
-      let dy = e.clientY - st.startY;
+      const sr = this._slideRect(st.slide);
+      st.sr = sr;
+      let dx = (e.clientX - sr.left) - st.fingerLocalX0;
+      let dy = (e.clientY - sr.top) - st.fingerLocalY0;
 
       const primaryStart = st.moving.find((m) => m.el === st.primary) || st.moving[0];
       const snapped = this._applySnap(dx, dy, primaryStart, st);
@@ -1856,7 +1906,7 @@
 
       this._dragState = null;
       this._clearSnap();
-      document.removeEventListener('pointermove', this._onDocPointerMove);
+      document.removeEventListener('pointermove', this._onDocPointerMove, { passive: false });
       document.removeEventListener('pointerup', this._onDocPointerUp);
       document.removeEventListener('pointercancel', this._onDocPointerUp);
     }

@@ -756,7 +756,7 @@ def patch_reference_runtime_js(js: str) -> str:
 def render(port: TemplatePort, head: str, sections_html: str) -> str:
     runtime_css, runtime_chrome, runtime_js = extract_reference_editor_parts()
     return f"""<!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-{port.out_slug}" data-template-source="{port.source_slug}">
+<html lang="zh-Hans" data-deck-id="ported-{port.out_slug}" data-template-source="{port.source_slug}" data-mobile-adaptation="desktop-default">
 <head>
 {head}
 <title>{html.escape(port.title)} · Slot Editable Template Port</title>

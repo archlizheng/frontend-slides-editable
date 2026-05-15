@@ -2035,8 +2035,8 @@ def main() -> None:
         html = patch_root(html, preset)
         html = patch_theme_section(html, preset)
         html = html.replace(
-            '<html lang="en" data-deck-id="editable-deck-reference">',
-            f'<html lang="zh-Hans" data-deck-id="preset-{preset.slug}">',
+            '<html lang="en" data-deck-id="editable-deck-reference" data-mobile-adaptation="desktop-default">',
+            f'<html lang="zh-Hans" data-deck-id="preset-{preset.slug}" data-mobile-adaptation="desktop-default">',
         )
         html = html.replace(
             "<title>Editable Deck Reference</title>",
