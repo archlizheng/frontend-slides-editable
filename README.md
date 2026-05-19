@@ -154,38 +154,51 @@ Use **frontend-slides** when you want:
 
 仓库地址：**https://github.com/archlizheng/frontend-slides-editable**
 
-### 方式一：把下面这段话发给 AI（推荐） / Option A: paste this prompt to an AI agent
+前置要求：需要先安装 **Node.js**（建议 LTS，Node 18+）；`npx` 会随 Node.js 一起安装。
 
-把下面整段复制给 **Claude Code / Cursor / 任何有 shell 权限的 AI Agent**，由它执行命令完成安装。
+Prerequisite: install **Node.js** first (LTS recommended, Node 18+); `npx` is included with Node.js.
 
-Paste the block below to **Claude Code / Cursor / any AI agent with shell access** so it can run the install for you.
-
-```text
-帮我安装 frontend-slides-editable 这个 Claude Code / Codex skill。请按下面步骤做：
-
-【Claude Code】
-- 确保 ~/.claude/skills/ 目录存在（不存在就创建）
-- 若 ~/.claude/skills/frontend-slides-editable 已存在且是旧副本，先删掉该目录或改用 git pull 更新
-- 执行：git clone https://github.com/archlizheng/frontend-slides-editable.git ~/.claude/skills/frontend-slides-editable
-- 验证：ls ~/.claude/skills/frontend-slides-editable/ 应至少能看到 SKILL.md、examples/、STYLE_PRESETS.md
-
-【Codex】
-- 确保 ~/.codex/skills/ 目录存在（不存在就创建）
-- 若 ~/.codex/skills/frontend-slides-editable 已存在且是旧副本，先删掉该目录或改用 git pull 更新
-- 执行：git clone https://github.com/archlizheng/frontend-slides-editable.git ~/.codex/skills/frontend-slides-editable
-- 验证：ls ~/.codex/skills/frontend-slides-editable/ 应至少能看到 SKILL.md、examples/、STYLE_PRESETS.md
-
-只帮我装我实际用的那一套（Claude Code 或 Codex），装好后告诉我已完成；之后我说「做单文件可编辑 HTML 演示」「把 pptx / pdf 转成可继续在浏览器里改的幻灯片」等需求应能触发这个 skill。
-```
-
-### 方式二：手动命令行 / Option B: manual shell
-
-**Claude Code**
+### 一条命令（推荐） / One command (recommended)
 
 ```bash
-mkdir -p ~/.claude/skills
-git clone https://github.com/archlizheng/frontend-slides-editable.git ~/.claude/skills/frontend-slides-editable
+npx skills add archlizheng/frontend-slides-editable
 ```
+
+如果你的环境里 `skills` CLI 版本支持 URL，也可以用：
+
+If your `skills` CLI supports URL sources, you can also run:
+
+```bash
+npx skills add https://github.com/archlizheng/frontend-slides-editable
+```
+
+如果仓库里未来包含多个 skill，可指定名称安装：
+
+If this repo contains multiple skills in the future, install by name:
+
+```bash
+npx skills add https://github.com/archlizheng/frontend-slides-editable --skill frontend-slides-editable
+```
+
+### 验证安装 / Verify installation
+
+安装后请确认本地 skill 目录中出现 `frontend-slides-editable`，并包含 `SKILL.md`、`STYLE_PRESETS.md`、`examples/`。
+
+After installation, confirm `frontend-slides-editable` exists in your local skills directory and contains `SKILL.md`, `STYLE_PRESETS.md`, and `examples/`.
+
+然后在对话中直接调用：
+
+Then invoke it in chat:
+
+```text
+/frontend-slides-editable
+```
+
+### 方式二：手动命令行（备用） / Option B: manual shell (fallback)
+
+当 `npx skills add` 不可用时，可用手动安装。
+
+If `npx skills add` is unavailable, install manually.
 
 **Codex**
 
@@ -194,31 +207,22 @@ mkdir -p ~/.codex/skills
 git clone https://github.com/archlizheng/frontend-slides-editable.git ~/.codex/skills/frontend-slides-editable
 ```
 
-若目标目录已存在，请先删除旧目录或进入该目录用 `git pull` 更新，再执行 `git clone`。
-
-If the target folder already exists, remove the old tree or `git pull` inside it before cloning again.
-
-### 本地已有源码时 / When you already have a git clone
-
-在仓库的**父目录**执行（把路径换成你的实际位置）：
-
-From the **parent directory** of your clone (adjust the path):
+**Claude Code**
 
 ```bash
-cp -r ./frontend-slides-editable ~/.claude/skills/
-# 或 / or
-cp -r ./frontend-slides-editable ~/.codex/skills/
+mkdir -p ~/.claude/skills
+git clone https://github.com/archlizheng/frontend-slides-editable.git ~/.claude/skills/frontend-slides-editable
 ```
 
-### 调用 / Invoke
+若目标目录已存在，请先删除旧目录，或进入目录执行 `git pull` 更新。
 
-安装完成后在对话里使用：
+If the target folder already exists, remove it first or run `git pull` inside that folder.
 
-Then invoke with:
+### 升级 / Upgrade
 
-```text
-/frontend-slides-editable
-```
+仓库更新后，重新执行安装命令即可；必要时先删除旧目录再安装。
+
+When updates are available, re-run the install command; if needed, remove the old folder first.
 
 <a id="toc-usage"></a>
 ## 用法 / Usage
