@@ -45,6 +45,22 @@ Slide **content** theme uses separate tokens (e.g. `--slide-bg-deep`, `--slide-b
 - CSS: `position: absolute; inset: 0; z-index: 5; pointer-events: none;`
 - In **edit mode**, children with `pointer-events: auto` receive clicks; the layer itself stays `pointer-events: none` so clicks pass through empty areas to a **slide hit target** (optional full-size transparent child) only if you need “click empty to deselect” — the reference uses the layer with `pointer-events: none` and listens on `section.slide` for background hits.
 
+### Ported template slots (`data-edit-slot`)
+
+Beautiful template ports use a locked-layout slot model. Native template content that should remain in the upstream visual system gets `data-edit-slot`, `data-slot-type="text|image|metric|table-cell"`, and `data-slot-locked-layout="true"`. These slots are content-editable in edit mode and participate in RTE, undo/redo, save, and export cleanup, but they do **not** become draggable/resizable slide objects.
+
+Use `[data-slide-object][data-oid]` only for freeform objects in `.slide-edit-layer`, including user-added text/image/video elements. Keeping these two contracts separate preserves template fidelity while still allowing continued content editing.
+
+### Template edit modes and Unlock layout
+
+Ported decks must declare `data-template-edit-mode="slots"` or `data-template-edit-mode="components"` on `<html>`.
+
+- `slots` is the default: native template content uses `data-edit-slot`; the template's layout and decorative DOM stay locked.
+- `components` is an optional generation path for semantic blocks that can safely become `[data-slide-object]`.
+- The runtime's **Unlock layout** action componentizes only the current slide. It creates movable copies of editable slots inside `.slide-edit-layer`, marks them with `data-component-source-slot`, keeps the original template DOM intact, and pushes one undoable history record.
+
+Unlock layout is intentionally not a full-DOM conversion. Decorative layers, layout wrappers, grid/axis/tick marks, SVG internals, texture/glitch layers, and animation helper nodes should stay locked.
+
 ### Slide objects (`data-slide-object`)
 
 Every independently movable / selectable block **must** include a move handle and a resize handle. The reference injects missing controls via **`ensureObjectControls()`** on load, when entering edit mode, after undo restores objects, and after loading from `localStorage`. That helper adds **`.slide-object-resize`** and **`.slide-object-delete`** (×) when absent.

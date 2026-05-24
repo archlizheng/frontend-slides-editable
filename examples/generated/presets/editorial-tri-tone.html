@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-editorial-tri-tone" data-template-source="editorial-tri-tone" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-editorial-tri-tone" data-template-source="editorial-tri-tone" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
 <meta charset="utf-8" />
@@ -955,6 +955,7 @@
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1069,7 +1070,7 @@
 <section class="s-manifesto slide" data-screen-label="02 Manifesto" id="slide-1" data-template-slide-index="2">
     <div class="left">
       <div>
-        <div class="label" style="margin-bottom:32px; color: var(--burgundy);">Chapter One · Manifesto</div>
+        <div class="label" style="margin-bottom:32px; color: var(--burgundy);" data-edit-slot="s1-slot-8" data-slot-type="text" data-slot-label="Chapter One · Manifesto" data-slot-locked-layout="true">Chapter One · Manifesto</div>
         <div class="chapter" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="01" data-slot-locked-layout="true">01<sup></sup></div>
       </div>
       <div class="lede" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="Placeholder lede sets the tone for the whole doc" data-slot-locked-layout="true">
@@ -1080,9 +1081,9 @@
     <div class="right">
       <div>
         <h3 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="An opening note" data-slot-locked-layout="true">An opening note</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-        <p>Maecenas faucibus mollis interdum. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
-        <p>Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+        <p data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="Lorem ipsum dolor sit amet, consectetur adipisci" data-slot-locked-layout="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+        <p data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Maecenas faucibus mollis interdum. Nullam quis r" data-slot-locked-layout="true">Maecenas faucibus mollis interdum. Nullam quis risus eget urna mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
+        <p data-edit-slot="s1-slot-7" data-slot-type="text" data-slot-label="Vestibulum id ligula porta felis euismod semper." data-slot-locked-layout="true">Vestibulum id ligula porta felis euismod semper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
       </div>
       <div>
         <div class="signature">— with warmth,</div>
@@ -1250,7 +1251,7 @@
 
 <section class="s-chart slide" data-screen-label="06 Composition" id="slide-5" data-template-slide-index="6">
     <div class="l">
-      <div class="label" style="color:var(--butter); margin-bottom: 20px;">§ 06 — Composition</div>
+      <div class="label" style="color:var(--butter); margin-bottom: 20px;" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="§ 06 — Composition" data-slot-locked-layout="true">§ 06 — Composition</div>
       <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="How the days arrange themselves." data-slot-locked-layout="true">How the days <em>arrange themselves.</em></h2>
       <p class="lede" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="A placeholder description for the chart on the r" data-slot-locked-layout="true">A placeholder description for the chart on the right. Speak to the shape of the data — what rises, what plateaus — not the precise figures. Methodology and a one-line caveat live at the bottom.</p>
       <div class="legend">
@@ -1337,12 +1338,12 @@
         <div class="avatar"></div>
         <div class="who" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="A. Placeholder-Surname Editor-at-large · Sister " data-slot-locked-layout="true">
           A. Placeholder-Surname
-          <small>Editor-at-large · Sister Publication</small>
+          <small data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Editor-at-large · Sister Publication" data-slot-locked-layout="true">Editor-at-large · Sister Publication</small>
         </div>
       </div>
     </div>
     <div class="r">
-      <div class="label" style="color: var(--butter);">Three short reads</div>
+      <div class="label" style="color: var(--butter);" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Three short reads" data-slot-locked-layout="true">Three short reads</div>
       <h3 data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Voices, lightly edited &amp;mdash; from the readersh" data-slot-locked-layout="true">Voices, lightly edited &mdash; from the readership.</h3>
       <div class="endorsements">
         <div class="row">
@@ -1397,27 +1398,27 @@
     <div class="grid">
       <div class="col">
         <h6>Editorial</h6>
-        <p>A. Placeholder</p>
-        <p>B. Placeholder</p>
-        <p>C. Placeholder</p>
+        <p data-edit-slot="s7-slot-8" data-slot-type="text" data-slot-label="A. Placeholder" data-slot-locked-layout="true">A. Placeholder</p>
+        <p data-edit-slot="s7-slot-9" data-slot-type="text" data-slot-label="B. Placeholder" data-slot-locked-layout="true">B. Placeholder</p>
+        <p data-edit-slot="s7-slot-10" data-slot-type="text" data-slot-label="C. Placeholder" data-slot-locked-layout="true">C. Placeholder</p>
       </div>
       <div class="col" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Type Bricolage Grotesque Instrument Serif JetBra" data-slot-locked-layout="true">
         <h6>Type</h6>
-        <p>Bricolage Grotesque</p>
-        <p>Instrument Serif</p>
-        <p>JetBrains Mono</p>
+        <p data-edit-slot="s7-slot-11" data-slot-type="text" data-slot-label="Bricolage Grotesque" data-slot-locked-layout="true">Bricolage Grotesque</p>
+        <p data-edit-slot="s7-slot-12" data-slot-type="text" data-slot-label="Instrument Serif" data-slot-locked-layout="true">Instrument Serif</p>
+        <p data-edit-slot="s7-slot-13" data-slot-type="text" data-slot-label="JetBrains Mono" data-slot-locked-layout="true">JetBrains Mono</p>
       </div>
       <div class="col" data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Printed by Placeholder Press City &amp;amp; State Re" data-slot-locked-layout="true">
         <h6>Printed by</h6>
-        <p>Placeholder Press</p>
-        <p>City &amp; State</p>
-        <p>Recycled stock, 120gsm</p>
+        <p data-edit-slot="s7-slot-14" data-slot-type="text" data-slot-label="Placeholder Press" data-slot-locked-layout="true">Placeholder Press</p>
+        <p data-edit-slot="s7-slot-15" data-slot-type="text" data-slot-label="City &amp;amp; State" data-slot-locked-layout="true">City &amp; State</p>
+        <p data-edit-slot="s7-slot-16" data-slot-type="text" data-slot-label="Recycled stock, 120gsm" data-slot-locked-layout="true">Recycled stock, 120gsm</p>
       </div>
       <div class="col" data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="Correspondence desk@placeholder.studio P.O. Box " data-slot-locked-layout="true">
         <h6>Correspondence</h6>
-        <p>desk@placeholder.studio</p>
-        <p>P.O. Box 0000</p>
-        <p>Routing No. 04 / 26</p>
+        <p data-edit-slot="s7-slot-17" data-slot-type="text" data-slot-label="desk@placeholder.studio" data-slot-locked-layout="true">desk@placeholder.studio</p>
+        <p data-edit-slot="s7-slot-18" data-slot-type="text" data-slot-label="P.O. Box 0000" data-slot-locked-layout="true">P.O. Box 0000</p>
+        <p data-edit-slot="s7-slot-19" data-slot-type="text" data-slot-label="Routing No. 04 / 26" data-slot-locked-layout="true">Routing No. 04 / 26</p>
       </div>
     </div>
 
@@ -1440,7 +1441,7 @@
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -2993,7 +2994,7 @@
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -3074,6 +3075,7 @@
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -3473,6 +3475,7 @@
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -3500,6 +3503,76 @@
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -3550,6 +3623,7 @@
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -3576,6 +3650,7 @@
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -3585,6 +3660,7 @@
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -3603,6 +3679,10 @@
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

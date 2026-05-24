@@ -33,6 +33,15 @@ For the 34 ported presets from `beautiful-html-templates`, prefer the upstream t
 
 Interaction baseline: ported decks must use the same Swiss/reference editor chrome and object editor as `examples/editable-deck-reference.html` / `swiss-modern.html`. Native template slots are locked-layout content slots; user-added objects are normal `[data-slide-object][data-oid]` objects.
 
+**Important interaction contract:** `data-edit-slot` is editable content, not a draggable component. In edit mode the user can click slot text/images to change their content with RTE/Undo/Redo/Save/Export, but the upstream template's layout grid, card geometry, decorative layers, and spacing stay locked. Only user-added objects in `.slide-edit-layer` become selectable, draggable, resizable components. Do not promise that every native template child will get object handles unless a separate componentization mode is explicitly requested and implemented.
+
+Template edit modes:
+
+- `data-template-edit-mode="slots"` is the default. It is template-safe: authored content is editable through slots, while layout and decoration remain locked.
+- `data-template-edit-mode="components"` is an optional generated mode for semantic blocks that can be represented as `[data-slide-object]`.
+- In delivered ported decks, **Unlock layout** componentizes the current slide on demand by creating movable copies of editable slots in `.slide-edit-layer`. The original native template DOM stays in place for fidelity, and the operation is undoable.
+- Never componentize every DOM node. Exclude backgrounds, grids, axes, ticks, decorative marks, texture/glitch layers, SVG paths, animation wrappers, and pure layout containers.
+
 When using or extending a ported preset:
 
 1. Treat the matching `beautiful-html-templates/templates/{source_slug}/template.html` as the visual system: preserve fonts, CSS variables, slide-level classes, layout grid, decorative DOM, and component grammar.

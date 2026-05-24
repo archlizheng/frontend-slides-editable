@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-editorial-forest" data-template-source="editorial-forest" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-editorial-forest" data-template-source="editorial-forest" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
 <meta charset="utf-8" />
@@ -1204,6 +1204,7 @@
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1286,7 +1287,7 @@
 <div id="deck" class="slides-offset stage" data-ported-template="editorial-forest">
 <section class="cover slide" data-screen-label="01 Cover" id="slide-0" data-template-slide-index="1">
     <div class="topbar">
-      <span class="label">A Presentation Template</span>
+      <span class="label" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="A Presentation Template" data-slot-locked-layout="true">A Presentation Template</span>
       <div class="mark">01</div>
     </div>
     <h1 data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Quarterly Review 2026" data-slot-locked-layout="true">Quarterly<br/>Review<br/>2026</h1>
@@ -1301,7 +1302,7 @@
 <section class="agenda slide" data-screen-label="02 Agenda" id="slide-1" data-template-slide-index="2">
     <div class="head">
       <h2 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Agenda." data-slot-locked-layout="true">Agenda.</h2>
-      <span class="label">Five topics &middot; ninety minutes</span>
+      <span class="label" data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Five topics &amp;middot; ninety minutes" data-slot-locked-layout="true">Five topics &middot; ninety minutes</span>
     </div>
     <div class="agenda-grid">
       <div class="topic t-green">
@@ -1346,8 +1347,8 @@
 
 <section class="statement slide" data-screen-label="03 Statement" id="slide-2" data-template-slide-index="3">
     <div data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="The shift The next twelve months are about doing" data-slot-locked-layout="true">
-      <span class="label">The shift</span>
-      <blockquote>The next twelve months are about doing fewer things, and doing them with more conviction.</blockquote>
+      <span class="label" data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="The shift" data-slot-locked-layout="true">The shift</span>
+      <blockquote data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="The next twelve months are about doing fewer thi" data-slot-locked-layout="true">The next twelve months are about doing fewer things, and doing them with more conviction.</blockquote>
     </div>
     <div class="attrib">
       <div>
@@ -1386,7 +1387,7 @@
 <section class="data slide" data-screen-label="05 Data" id="slide-4" data-template-slide-index="5">
     <div class="head">
       <div>
-        <div class="label">By the numbers</div>
+        <div class="label" data-edit-slot="s4-slot-9" data-slot-type="text" data-slot-label="By the numbers" data-slot-locked-layout="true">By the numbers</div>
         <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Revenue by quarter, year over year." data-slot-locked-layout="true">Revenue by quarter,<br/>year over year.</h2>
       </div>
       <div class="legend" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="This year Last year" data-slot-locked-layout="true">
@@ -1441,8 +1442,8 @@
 
 <section class="framework slide" data-screen-label="06 Framework" id="slide-5" data-template-slide-index="6">
     <div class="head" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="How we&amp;rsquo;ll get there Four steps" data-slot-locked-layout="true">
-      <span class="label">How we&rsquo;ll get there</span>
-      <span class="label">Four steps</span>
+      <span class="label" data-edit-slot="s5-slot-10" data-slot-type="text" data-slot-label="How we&amp;rsquo;ll get there" data-slot-locked-layout="true">How we&rsquo;ll get there</span>
+      <span class="label" data-edit-slot="s5-slot-11" data-slot-type="text" data-slot-label="Four steps" data-slot-locked-layout="true">Four steps</span>
     </div>
     <h2 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="A simple plan, in four moves." data-slot-locked-layout="true">A simple plan,<br/>in four moves.</h2>
 
@@ -1478,8 +1479,8 @@
 
 <section class="stats slide" data-screen-label="07 Stats" id="slide-6" data-template-slide-index="7">
     <div class="head" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="What it adds up to Year to date" data-slot-locked-layout="true">
-      <span class="label">What it adds up to</span>
-      <span class="label">Year to date</span>
+      <span class="label" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="What it adds up to" data-slot-locked-layout="true">What it adds up to</span>
+      <span class="label" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="Year to date" data-slot-locked-layout="true">Year to date</span>
     </div>
     <h2 data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Three numbers that tell the story." data-slot-locked-layout="true">Three numbers that<br/>tell the story.</h2>
 
@@ -1487,17 +1488,17 @@
       <div class="kpi">
         <span class="tag">Growth</span>
         <span class="big">+42<span class="unit">%</span></span>
-        <p class="desc">Year over year increase in active accounts, ahead of the plan we set in January.</p>
+        <p class="desc" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Year over year increase in active accounts, ahea" data-slot-locked-layout="true">Year over year increase in active accounts, ahead of the plan we set in January.</p>
       </div>
       <div class="kpi" data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Retention 94% Net retention across the top custo" data-slot-locked-layout="true">
         <span class="tag">Retention</span>
         <span class="big">94<span class="unit">%</span></span>
-        <p class="desc">Net retention across the top customer cohort, a four&#8209;point lift from last year.</p>
+        <p class="desc" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Net retention across the top customer cohort, a " data-slot-locked-layout="true">Net retention across the top customer cohort, a four&#8209;point lift from last year.</p>
       </div>
       <div class="kpi" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="Reach 3.1M People served this quarter, across th" data-slot-locked-layout="true">
         <span class="tag">Reach</span>
         <span class="big">3.1<span class="unit">M</span></span>
-        <p class="desc">People served this quarter, across the markets we entered in the spring.</p>
+        <p class="desc" data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="People served this quarter, across the markets w" data-slot-locked-layout="true">People served this quarter, across the markets we entered in the spring.</p>
       </div>
     </div>
 
@@ -1506,22 +1507,22 @@
 
 <section class="summary slide" data-screen-label="08 Summary" id="slide-7" data-template-slide-index="8">
     <div class="topbar" data-edit-slot="s7-slot-1" data-slot-type="text" data-slot-label="In summary Thank you" data-slot-locked-layout="true">
-      <span class="label">In summary</span>
-      <span class="label">Thank you</span>
+      <span class="label" data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="In summary" data-slot-locked-layout="true">In summary</span>
+      <span class="label" data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Thank you" data-slot-locked-layout="true">Thank you</span>
     </div>
     <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Three things to take." data-slot-locked-layout="true">Three<br/>things to take.</h2>
     <div class="grid-cols">
       <div>
         <h4 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="One" data-slot-locked-layout="true">One</h4>
-        <p>The strategy holds. We are doing fewer things, and the right things.</p>
+        <p data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="The strategy holds. We are doing fewer things, a" data-slot-locked-layout="true">The strategy holds. We are doing fewer things, and the right things.</p>
       </div>
       <div>
         <h4 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Two" data-slot-locked-layout="true">Two</h4>
-        <p>The numbers back the bets. Growth, retention, and reach are all ahead of plan.</p>
+        <p data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="The numbers back the bets. Growth, retention, an" data-slot-locked-layout="true">The numbers back the bets. Growth, retention, and reach are all ahead of plan.</p>
       </div>
       <div>
         <h4 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Three" data-slot-locked-layout="true">Three</h4>
-        <p>Next quarter, we keep the pace and add focus where the data points us.</p>
+        <p data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Next quarter, we keep the pace and add focus whe" data-slot-locked-layout="true">Next quarter, we keep the pace and add focus where the data points us.</p>
       </div>
     </div>
 
@@ -1544,7 +1545,7 @@
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -3097,7 +3098,7 @@
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -3178,6 +3179,7 @@
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -3577,6 +3579,7 @@
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -3604,6 +3607,76 @@
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -3654,6 +3727,7 @@
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -3680,6 +3754,7 @@
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -3689,6 +3764,7 @@
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -3707,6 +3783,10 @@
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

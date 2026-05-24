@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PRESETS_DIR = ROOT / "examples" / "generated" / "presets"
 REFERENCE = ROOT / "examples" / "editable-deck-reference.html"
 EXPECTED_PRESET_COUNT = 46
+TEMPLATE_EDIT_MODES = {"slots", "components"}
 
 
 def display_path(path: Path) -> str:
@@ -49,6 +50,7 @@ class AttrParser(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.slide_ids: list[str] = []
         self.object_ids: list[str] = []
+        self.slot_ids: list[str] = []
         self.slide_count = 0
         self.edit_slot_count = 0
         self.slide_object_count = 0
@@ -72,6 +74,7 @@ class AttrParser(HTMLParser):
             self.slide_object_count += 1
         if has_slot:
             self.edit_slot_count += 1
+            self.slot_ids.append(attrs.get("data-edit-slot") or "")
         if attrs.get("data-object-type") in {"graphic", "image", "video"} or attrs.get("data-slot-type") == "image":
             if has_slot or has_object:
                 self.graphic_editable_count += 1
@@ -136,6 +139,11 @@ def title_like_issues(source: str) -> list[str]:
     return parser.issues
 
 
+def template_edit_mode(source: str) -> str | None:
+    match = re.search(r'\bdata-template-edit-mode=["\']([^"\']+)["\']', source, flags=re.I)
+    return match.group(1) if match else None
+
+
 def fail(errors: list[str], rel: str, message: str) -> None:
     errors.append(f"{rel}: {message}")
 
@@ -151,6 +159,8 @@ def validate_source(path: Path, source: str, errors: list[str], *, generated: bo
         fail(errors, rel, "slide ids are not unique")
     if parsed.object_ids and len(parsed.object_ids) != len(set(parsed.object_ids)):
         fail(errors, rel, "data-oid values are not unique")
+    if parsed.slot_ids and len(parsed.slot_ids) != len(set(parsed.slot_ids)):
+        fail(errors, rel, "data-edit-slot values are not unique")
     if "querySelectorAll('section.slide')" in source or 'querySelectorAll("section.slide")' in source:
         fail(errors, rel, "uses global section.slide query")
     if ":scope > section.slide" not in source:
@@ -179,9 +189,13 @@ def validate_source(path: Path, source: str, errors: list[str], *, generated: bo
     if "localStorage.setItem" not in source:
         fail(errors, rel, "missing localStorage save path")
     if generated:
+        if "data-ported-template=" in source and template_edit_mode(source) not in TEMPLATE_EDIT_MODES:
+            fail(errors, rel, "missing or invalid data-template-edit-mode")
         if parsed.slide_object_count == 0 and parsed.edit_slot_count == 0:
             fail(errors, rel, "deck has no editable objects or slots")
         if parsed.edit_slot_count > 0:
+            if "class SlotEditor" not in source or "swiss-slot-edit-runtime-js" not in source:
+                fail(errors, rel, "editable slots require the injected SlotEditor runtime")
             deck_match = re.search(r'<div\b[^>]*\bid=["\']deck["\'][^>]*>(.*?)(?:</div>\s*<script|<script)', source, flags=re.I | re.S)
             deck_source = deck_match.group(1) if deck_match else source
             issues = title_like_issues(deck_source)

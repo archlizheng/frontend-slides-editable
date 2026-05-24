@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-mat" data-template-source="mat" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-mat" data-template-source="mat" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
     <meta charset="UTF-8" />
@@ -1479,6 +1479,7 @@
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1569,11 +1570,11 @@
           <h1 class="display" style="color: var(--c-fg)" data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Craft Matters" data-slot-locked-layout="true">Craft<br />Matters</h1>
         </div>
         <div class="cover-copy" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Designed for the hands that build things. [A one" data-slot-locked-layout="true">
-          <p class="lead" style="color: var(--c-fg-2); max-width: 90%">
+          <p class="lead" style="color: var(--c-fg-2); max-width: 90%" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="Designed for the hands that build things. [A one" data-slot-locked-layout="true">
             Designed for the hands that build things. [A one-line description of
             what this product does.]
           </p>
-          <p class="caption" style="color: var(--c-fg-3)">
+          <p class="caption" style="color: var(--c-fg-3)" data-edit-slot="s0-slot-5" data-slot-type="text" data-slot-label="[Tagline goes here]" data-slot-locked-layout="true">
             [Tagline goes here]
           </p>
         </div>
@@ -1605,16 +1606,16 @@
             </h2>
           </div>
           <div class="stmt-copy">
-            <p class="lead muted">
+            <p class="lead muted" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="The studio environment shapes the work that happ" data-slot-locked-layout="true">
               The studio environment shapes the work that happens inside it.
               Materials that perform quietly let the maker stay in flow.
             </p>
             <ul class="bullet-list">
-              <li>
+              <li data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Surface texture calibrated for blade resistance " data-slot-locked-layout="true">
                 Surface texture calibrated for blade resistance without drag
               </li>
-              <li>Grip underside prevents slip on any workbench material</li>
-              <li>
+              <li data-edit-slot="s1-slot-7" data-slot-type="text" data-slot-label="Grip underside prevents slip on any workbench ma" data-slot-locked-layout="true">Grip underside prevents slip on any workbench material</li>
+              <li data-edit-slot="s1-slot-8" data-slot-type="text" data-slot-label="Grid lines printed in low-contrast ink — visible" data-slot-locked-layout="true">
                 Grid lines printed in low-contrast ink — visible without
                 competing
               </li>
@@ -1640,7 +1641,7 @@
             <h2 class="h2" style="color: var(--c-fg)" data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="[A one-line description of what this product doe" data-slot-locked-layout="true">
               [A one-line description of what this product does.]
             </h2>
-            <p class="lead muted">
+            <p class="lead muted" data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="A two-layer construction built for the way real " data-slot-locked-layout="true">
               A two-layer construction built for the way real studio work
               actually happens.
             </p>
@@ -1651,9 +1652,9 @@
           </div>
           <div class="split-right">
             <ul class="bullet-list">
-              <li>4mm recycled rubber base — weighted to stay flat</li>
-              <li>Natural composite surface — self-healing up to 3000 uses</li>
-              <li>Three colorways: Forest, Sand, Charcoal</li>
+              <li data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="4mm recycled rubber base — weighted to stay flat" data-slot-locked-layout="true">4mm recycled rubber base — weighted to stay flat</li>
+              <li data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Natural composite surface — self-healing up to 3" data-slot-locked-layout="true">Natural composite surface — self-healing up to 3000 uses</li>
+              <li data-edit-slot="s2-slot-8" data-slot-type="text" data-slot-label="Three colorways: Forest, Sand, Charcoal" data-slot-locked-layout="true">Three colorways: Forest, Sand, Charcoal</li>
             </ul>
           </div>
         </div>
@@ -1718,8 +1719,8 @@
           Good design is as little design as possible.
         </div>
         <div class="quote-attr" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="Dieter Rams Designer" data-slot-locked-layout="true">
-          <span class="label accent">Dieter Rams</span>
-          <span class="label muted">Designer</span>
+          <span class="label accent" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Dieter Rams" data-slot-locked-layout="true">Dieter Rams</span>
+          <span class="label muted" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="Designer" data-slot-locked-layout="true">Designer</span>
         </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1730,7 +1731,7 @@
           <span class="label" style="color: var(--c-fg-light-3)"
              data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Why It Matters 06" data-slot-locked-layout="true">Why It Matters</span
           >
-          <span class="label" style="color: var(--c-fg-light-3)">06</span>
+          <span class="label" style="color: var(--c-fg-light-3)" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="06" data-slot-locked-layout="true">06</span>
         </header>
         <div class="slide-body">
           <div class="list-head">
@@ -1738,23 +1739,23 @@
             <h2 class="h2" style="color: var(--c-fg-light)" data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="What a studio tool should do for the maker." data-slot-locked-layout="true">
               What a studio tool should do for the maker.
             </h2>
-            <p class="lead" style="color: var(--c-fg-light-2)">
+            <p class="lead" style="color: var(--c-fg-light-2)" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Four principles that informed every material and" data-slot-locked-layout="true">
               Four principles that informed every material and dimension
               decision in the [product category]'s design.
             </p>
           </div>
           <div class="list-items">
             <ul class="bullet-list">
-              <li>Disappear when in use so the work takes all the attention</li>
-              <li>
+              <li data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Disappear when in use so the work takes all the " data-slot-locked-layout="true">Disappear when in use so the work takes all the attention</li>
+              <li data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Improve output quality through surface calibrati" data-slot-locked-layout="true">
                 Improve output quality through surface calibration, not just
                 feel
               </li>
-              <li>
+              <li data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Last long enough to become a trusted part of the" data-slot-locked-layout="true">
                 Last long enough to become a trusted part of the studio
                 environment
               </li>
-              <li>
+              <li data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Be honest about what it is — no branding that co" data-slot-locked-layout="true">
                 Be honest about what it is — no branding that competes with the
                 work
               </li>
@@ -1763,11 +1764,9 @@
         </div>
         <footer class="slide-foot">
           <span class="label" style="color: var(--c-fg-light-3)"
-            >[Studio Name] · Product Brief</span
-          >
+             data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="[Studio Name] · Product Brief" data-slot-locked-layout="true">[Studio Name] · Product Brief</span>
           <span class="label" style="color: var(--c-fg-light-3)"
-            >Design Studio</span
-          >
+             data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="Design Studio" data-slot-locked-layout="true">Design Studio</span>
         </footer>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1832,7 +1831,7 @@
             <h2 class="h2" style="color: var(--c-fg)" data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Lifespan by material category." data-slot-locked-layout="true">
               Lifespan by material category.
             </h2>
-            <span class="label muted">Units: months of daily studio use</span>
+            <span class="label muted" data-edit-slot="s7-slot-11" data-slot-type="text" data-slot-label="Units: months of daily studio use" data-slot-locked-layout="true">Units: months of daily studio use</span>
           </div>
           <div class="chart-wrapper">
             <div class="bar-track">
@@ -1891,7 +1890,7 @@
           <h2 class="h1" style="color: var(--c-fg)" data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Start with the right surface." data-slot-locked-layout="true">
             Start with the right surface.
           </h2>
-          <p class="lead muted" style="max-width: 85%">
+          <p class="lead muted" style="max-width: 85%" data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Order the [Product Name] at [studio-website.com]" data-slot-locked-layout="true">
             Order the [Product Name] at [studio-website.com] or find it at
             select independent supply stores worldwide.
           </p>
@@ -1907,8 +1906,8 @@
           </div>
         </div>
         <div class="end-foot" data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="[Studio Name] · 2026 [studio-website.com]" data-slot-locked-layout="true">
-          <span class="label muted">[Studio Name] · 2026</span>
-          <span class="label muted">[studio-website.com]</span>
+          <span class="label muted" data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="[Studio Name] · 2026" data-slot-locked-layout="true">[Studio Name] · 2026</span>
+          <span class="label muted" data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="[studio-website.com]" data-slot-locked-layout="true">[studio-website.com]</span>
         </div>
 
     <div class="slide-edit-layer" aria-hidden="true"></div>
@@ -1930,7 +1929,7 @@
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -3483,7 +3482,7 @@
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -3564,6 +3563,7 @@
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -3963,6 +3963,7 @@
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -3990,6 +3991,76 @@
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -4040,6 +4111,7 @@
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -4066,6 +4138,7 @@
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -4075,6 +4148,7 @@
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -4093,6 +4167,10 @@
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

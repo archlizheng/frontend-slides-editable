@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-retro-zine" data-template-source="retro-zine" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-retro-zine" data-template-source="retro-zine" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
   <meta charset="UTF-8">
@@ -1362,6 +1362,7 @@
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1535,7 +1536,7 @@
       </div>
       <div class="visual-overlay stamp">
         <h2 data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Q3 Target" data-slot-locked-layout="true">Q3<br>Target</h2>
-        <p>$18M ARR by December</p>
+        <p data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="$18M ARR by December" data-slot-locked-layout="true">$18M ARR by December</p>
       </div>
       <div class="visual-caption" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="Fiscal year ending March 2027" data-slot-locked-layout="true">Fiscal year ending March 2027</div>
 
@@ -1607,19 +1608,19 @@
 
         <div class="collage-piece piece-1">
           <h3 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Strategy" data-slot-locked-layout="true">Strategy</h3>
-          <p>Market analysis, competitive positioning, and roadmaps that bridge ambition with execution.</p>
+          <p data-edit-slot="s7-slot-2" data-slot-type="text" data-slot-label="Market analysis, competitive positioning, and ro" data-slot-locked-layout="true">Market analysis, competitive positioning, and roadmaps that bridge ambition with execution.</p>
         </div>
         <div class="collage-piece piece-2">
           <h3 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Design" data-slot-locked-layout="true">Design</h3>
-          <p>Product design, brand systems, and user experiences that make complexity feel effortless.</p>
+          <p data-edit-slot="s7-slot-3" data-slot-type="text" data-slot-label="Product design, brand systems, and user experien" data-slot-locked-layout="true">Product design, brand systems, and user experiences that make complexity feel effortless.</p>
         </div>
         <div class="collage-piece piece-3">
           <h3 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Engineering" data-slot-locked-layout="true">Engineering</h3>
-          <p>Scalable architecture, robust APIs, and infrastructure that grows with your demand.</p>
+          <p data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Scalable architecture, robust APIs, and infrastr" data-slot-locked-layout="true">Scalable architecture, robust APIs, and infrastructure that grows with your demand.</p>
         </div>
         <div class="collage-piece piece-4">
           <h3 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Growth" data-slot-locked-layout="true">Growth</h3>
-          <p>Go-to-market planning, partner programs, and revenue operations that accelerate traction.</p>
+          <p data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="Go-to-market planning, partner programs, and rev" data-slot-locked-layout="true">Go-to-market planning, partner programs, and revenue operations that accelerate traction.</p>
         </div>
       </div>
 
@@ -1684,7 +1685,7 @@
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -3237,7 +3238,7 @@
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -3318,6 +3319,7 @@
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -3717,6 +3719,7 @@
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -3744,6 +3747,76 @@
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -3794,6 +3867,7 @@
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -3820,6 +3894,7 @@
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -3829,6 +3904,7 @@
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -3847,6 +3923,10 @@
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

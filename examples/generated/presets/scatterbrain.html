@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-scatterbrain" data-template-source="scatterbrain" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-scatterbrain" data-template-source="scatterbrain" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
     <meta charset="UTF-8">
@@ -1479,6 +1479,7 @@
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1564,7 +1565,7 @@
                 <div class="title-cluster">
                     <div class="post-it post-it-yellow main-title-postit pin">
                         <h1 data-edit-slot="s0-title-1" data-slot-type="text" data-slot-label="Scatterbrain" data-slot-locked-layout="true">Scatterbrain</h1>
-                        <p class="handwritten" style="margin-top: 0.5rem; color: var(--ink-light);">A Post-it Inspired Template</p>
+                        <p class="handwritten" style="margin-top: 0.5rem; color: var(--ink-light);" data-edit-slot="s0-slot-4" data-slot-type="text" data-slot-label="A Post-it Inspired Template" data-slot-locked-layout="true">A Post-it Inspired Template</p>
                     </div>
                     <div class="post-it post-it-blue title-accent-1 pin-blue" data-edit-slot="s0-slot-1" data-slot-type="text" data-slot-label="Remember this!" data-slot-locked-layout="true">Remember this!</div>
                     <div class="post-it post-it-pink title-accent-2 pin" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="Notes &amp; Ideas" data-slot-locked-layout="true">Notes & Ideas</div>
@@ -1587,12 +1588,12 @@
                 <div class="statement-layout">
                     <div class="post-it post-it-yellow statement-postit pin tape">
                         <h2 data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="&quot;The best ideas start as scattered thoughts on s" data-slot-locked-layout="true">"The best ideas start as scattered thoughts on sticky corners."</h2>
-                        <p style="margin-top: 1.5rem; font-style: italic;">Every great project begins with a single note, a fleeting thought, a moment of inspiration captured before it drifts away.</p>
-                        <p class="handwritten" style="margin-top: 1rem; text-align: right;">— The Creative Process</p>
+                        <p style="margin-top: 1.5rem; font-style: italic;" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="Every great project begins with a single note, a" data-slot-locked-layout="true">Every great project begins with a single note, a fleeting thought, a moment of inspiration captured before it drifts away.</p>
+                        <p class="handwritten" style="margin-top: 1rem; text-align: right;" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="— The Creative Process" data-slot-locked-layout="true">— The Creative Process</p>
                     </div>
                 </div>
                 <div class="post-it post-it-blue side-note pin-blue" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Jot it down before you forget!" data-slot-locked-layout="true">
-                    <p class="handwritten">Jot it down before you forget!</p>
+                    <p class="handwritten" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="Jot it down before you forget!" data-slot-locked-layout="true">Jot it down before you forget!</p>
                 </div>
             </div>
             <svg class="doodle" style="top: 20%; left: 8%; width: 80px; height: 80px;" viewBox="0 0 80 80">
@@ -1606,25 +1607,25 @@
             <div class="slide-content">
                 <div class="two-col-layout">
                     <div class="post-it post-it-blue col-postit pin-blue" style="transform: rotate(-2deg);">
-                        <span class="label">01 / Discovery</span>
+                        <span class="label" data-edit-slot="s2-slot-11" data-slot-type="text" data-slot-label="01 / Discovery" data-slot-locked-layout="true">01 / Discovery</span>
                         <h3 style="margin-top: 1rem;" data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Finding the Problem" data-slot-locked-layout="true">Finding the Problem</h3>
-                        <p>Every solution starts with understanding. We dive deep into research, interviews, and observation to uncover what truly matters.</p>
+                        <p data-edit-slot="s2-slot-1" data-slot-type="text" data-slot-label="Every solution starts with understanding. We div" data-slot-locked-layout="true">Every solution starts with understanding. We dive deep into research, interviews, and observation to uncover what truly matters.</p>
                         <ul style="margin-top: 1rem;">
-                            <li>User research sessions</li>
-                            <li>Market analysis</li>
-                            <li>Stakeholder interviews</li>
-                            <li>Competitive landscape</li>
+                            <li data-edit-slot="s2-slot-2" data-slot-type="text" data-slot-label="User research sessions" data-slot-locked-layout="true">User research sessions</li>
+                            <li data-edit-slot="s2-slot-3" data-slot-type="text" data-slot-label="Market analysis" data-slot-locked-layout="true">Market analysis</li>
+                            <li data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Stakeholder interviews" data-slot-locked-layout="true">Stakeholder interviews</li>
+                            <li data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Competitive landscape" data-slot-locked-layout="true">Competitive landscape</li>
                         </ul>
                     </div>
                     <div class="post-it post-it-yellow col-postit pin-gold" style="transform: rotate(1deg); margin-top: 3rem;">
-                        <span class="label">02 / Solution</span>
+                        <span class="label" data-edit-slot="s2-slot-12" data-slot-type="text" data-slot-label="02 / Solution" data-slot-locked-layout="true">02 / Solution</span>
                         <h3 style="margin-top: 1rem;" data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Crafting the Answer" data-slot-locked-layout="true">Crafting the Answer</h3>
-                        <p>With clarity comes creativity. We synthesize findings into actionable strategies and tangible designs.</p>
+                        <p data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="With clarity comes creativity. We synthesize fin" data-slot-locked-layout="true">With clarity comes creativity. We synthesize findings into actionable strategies and tangible designs.</p>
                         <ul style="margin-top: 1rem;">
-                            <li>Ideation workshops</li>
-                            <li>Prototype development</li>
-                            <li>Iterative testing</li>
-                            <li>Final delivery</li>
+                            <li data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Ideation workshops" data-slot-locked-layout="true">Ideation workshops</li>
+                            <li data-edit-slot="s2-slot-8" data-slot-type="text" data-slot-label="Prototype development" data-slot-locked-layout="true">Prototype development</li>
+                            <li data-edit-slot="s2-slot-9" data-slot-type="text" data-slot-label="Iterative testing" data-slot-locked-layout="true">Iterative testing</li>
+                            <li data-edit-slot="s2-slot-10" data-slot-type="text" data-slot-label="Final delivery" data-slot-locked-layout="true">Final delivery</li>
                         </ul>
                     </div>
                 </div>
@@ -1735,7 +1736,7 @@
                     <div class="timeline-row">
                         <div class="post-it post-it-yellow timeline-node pin">
                             <h3 data-edit-slot="s5-title-1" data-slot-type="text" data-slot-label="Phase One" data-slot-locked-layout="true">Phase One</h3>
-                            <p class="phase-label">Foundation</p>
+                            <p class="phase-label" data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Foundation" data-slot-locked-layout="true">Foundation</p>
                         </div>
                         <div class="timeline-connector">
                             <svg viewBox="0 0 200 60" preserveAspectRatio="none">
@@ -1744,13 +1745,13 @@
                             </svg>
                         </div>
                         <div class="post-it post-it-white timeline-content" style="border: 2px solid var(--ink);" data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Establish core principles, gather requirements, " data-slot-locked-layout="true">
-                            <p>Establish core principles, gather requirements, and build the foundational architecture that everything else will stand upon.</p>
+                            <p data-edit-slot="s5-slot-5" data-slot-type="text" data-slot-label="Establish core principles, gather requirements, " data-slot-locked-layout="true">Establish core principles, gather requirements, and build the foundational architecture that everything else will stand upon.</p>
                         </div>
                     </div>
                     <div class="timeline-row">
                         <div class="post-it post-it-blue timeline-node pin-blue">
                             <h3 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Phase Two" data-slot-locked-layout="true">Phase Two</h3>
-                            <p class="phase-label">Creation</p>
+                            <p class="phase-label" data-edit-slot="s5-slot-6" data-slot-type="text" data-slot-label="Creation" data-slot-locked-layout="true">Creation</p>
                         </div>
                         <div class="timeline-connector">
                             <svg viewBox="0 0 200 60" preserveAspectRatio="none">
@@ -1759,13 +1760,13 @@
                             </svg>
                         </div>
                         <div class="post-it post-it-white timeline-content" style="border: 2px solid var(--ink);" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Design prototypes, iterate through feedback cycl" data-slot-locked-layout="true">
-                            <p>Design prototypes, iterate through feedback cycles, and refine the product until every detail feels intentional.</p>
+                            <p data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="Design prototypes, iterate through feedback cycl" data-slot-locked-layout="true">Design prototypes, iterate through feedback cycles, and refine the product until every detail feels intentional.</p>
                         </div>
                     </div>
                     <div class="timeline-row">
                         <div class="post-it post-it-green timeline-node pin-green">
                             <h3 data-edit-slot="s5-title-3" data-slot-type="text" data-slot-label="Phase Three" data-slot-locked-layout="true">Phase Three</h3>
-                            <p class="phase-label">Delivery</p>
+                            <p class="phase-label" data-edit-slot="s5-slot-8" data-slot-type="text" data-slot-label="Delivery" data-slot-locked-layout="true">Delivery</p>
                         </div>
                         <div class="timeline-connector">
                             <svg viewBox="0 0 200 60" preserveAspectRatio="none">
@@ -1774,7 +1775,7 @@
                             </svg>
                         </div>
                         <div class="post-it post-it-white timeline-content" style="border: 2px solid var(--ink);" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Launch to the world, measure impact, gather insi" data-slot-locked-layout="true">
-                            <p>Launch to the world, measure impact, gather insights, and prepare for the next cycle of innovation.</p>
+                            <p data-edit-slot="s5-slot-9" data-slot-type="text" data-slot-label="Launch to the world, measure impact, gather insi" data-slot-locked-layout="true">Launch to the world, measure impact, gather insights, and prepare for the next cycle of innovation.</p>
                         </div>
                     </div>
                 </div>
@@ -1793,13 +1794,13 @@
                     </div>
                     <div class="text-cluster">
                         <div class="post-it post-it-pink main-text-postit pin">
-                            <span class="label">Spotlight</span>
+                            <span class="label" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Spotlight" data-slot-locked-layout="true">Spotlight</span>
                             <h3 style="margin-top: 1rem;" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Capturing the Moment" data-slot-locked-layout="true">Capturing the Moment</h3>
-                            <p>Visual storytelling transforms abstract concepts into tangible understanding. A single image can communicate what paragraphs struggle to explain.</p>
-                            <p style="margin-top: 1rem;">We believe in the power of imagery to bridge gaps, evoke emotion, and create lasting impressions that words alone cannot achieve.</p>
+                            <p data-edit-slot="s6-slot-2" data-slot-type="text" data-slot-label="Visual storytelling transforms abstract concepts" data-slot-locked-layout="true">Visual storytelling transforms abstract concepts into tangible understanding. A single image can communicate what paragraphs struggle to explain.</p>
+                            <p style="margin-top: 1rem;" data-edit-slot="s6-slot-3" data-slot-type="text" data-slot-label="We believe in the power of imagery to bridge gap" data-slot-locked-layout="true">We believe in the power of imagery to bridge gaps, evoke emotion, and create lasting impressions that words alone cannot achieve.</p>
                         </div>
                         <div class="post-it post-it-yellow mini-note pin-gold" data-edit-slot="s6-slot-1" data-slot-type="text" data-slot-label="Visuals first, text second." data-slot-locked-layout="true">
-                            <p class="handwritten">Visuals first, text second.</p>
+                            <p class="handwritten" data-edit-slot="s6-slot-4" data-slot-type="text" data-slot-label="Visuals first, text second." data-slot-locked-layout="true">Visuals first, text second.</p>
                         </div>
                     </div>
                 </div>
@@ -1848,19 +1849,19 @@
                     <div class="diagram-note post-it post-it-yellow pin">
                         <h3 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Key Statistics" data-slot-locked-layout="true">Key Statistics</h3>
                         <div class="stat-row">
-                            <span class="stat-label">Total Reach</span>
+                            <span class="stat-label" data-edit-slot="s7-slot-5" data-slot-type="metric" data-slot-label="Total Reach" data-slot-locked-layout="true">Total Reach</span>
                             <span class="stat-value">128K</span>
                         </div>
                         <div class="stat-row" data-edit-slot="s7-slot-1" data-slot-type="metric" data-slot-label="Engagement 84%" data-slot-locked-layout="true">
-                            <span class="stat-label">Engagement</span>
+                            <span class="stat-label" data-edit-slot="s7-slot-6" data-slot-type="metric" data-slot-label="Engagement" data-slot-locked-layout="true">Engagement</span>
                             <span class="stat-value">84%</span>
                         </div>
                         <div class="stat-row" data-edit-slot="s7-slot-2" data-slot-type="metric" data-slot-label="Retention 62%" data-slot-locked-layout="true">
-                            <span class="stat-label">Retention</span>
+                            <span class="stat-label" data-edit-slot="s7-slot-7" data-slot-type="metric" data-slot-label="Retention" data-slot-locked-layout="true">Retention</span>
                             <span class="stat-value">62%</span>
                         </div>
                         <div class="stat-row" data-edit-slot="s7-slot-3" data-slot-type="metric" data-slot-label="Satisfaction 4.8" data-slot-locked-layout="true">
-                            <span class="stat-label">Satisfaction</span>
+                            <span class="stat-label" data-edit-slot="s7-slot-8" data-slot-type="metric" data-slot-label="Satisfaction" data-slot-locked-layout="true">Satisfaction</span>
                             <span class="stat-value">4.8</span>
                         </div>
                         <p class="handwritten" style="margin-top: 1.5rem;" data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Numbers tell the story we need to hear." data-slot-locked-layout="true">Numbers tell the story we need to hear.</p>
@@ -1880,22 +1881,22 @@
                     <div class="post-it post-it-blue compare-postit left pin-blue">
                         <h3 data-edit-slot="s8-title-1" data-slot-type="text" data-slot-label="Before" data-slot-locked-layout="true">Before</h3>
                         <ul class="compare-list">
-                            <li>Scattered documentation</li>
-                            <li>Unclear ownership</li>
-                            <li>Inconsistent processes</li>
-                            <li>Reactive problem solving</li>
-                            <li>Silos between teams</li>
+                            <li data-edit-slot="s8-slot-2" data-slot-type="text" data-slot-label="Scattered documentation" data-slot-locked-layout="true">Scattered documentation</li>
+                            <li data-edit-slot="s8-slot-3" data-slot-type="text" data-slot-label="Unclear ownership" data-slot-locked-layout="true">Unclear ownership</li>
+                            <li data-edit-slot="s8-slot-4" data-slot-type="text" data-slot-label="Inconsistent processes" data-slot-locked-layout="true">Inconsistent processes</li>
+                            <li data-edit-slot="s8-slot-5" data-slot-type="text" data-slot-label="Reactive problem solving" data-slot-locked-layout="true">Reactive problem solving</li>
+                            <li data-edit-slot="s8-slot-6" data-slot-type="text" data-slot-label="Silos between teams" data-slot-locked-layout="true">Silos between teams</li>
                         </ul>
                     </div>
                     <div class="compare-vs" data-edit-slot="s8-slot-1" data-slot-type="text" data-slot-label="vs" data-slot-locked-layout="true">vs</div>
                     <div class="post-it post-it-yellow compare-postit right pin-gold">
                         <h3 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="After" data-slot-locked-layout="true">After</h3>
                         <ul class="compare-list">
-                            <li>Centralized knowledge base</li>
-                            <li>Defined responsibilities</li>
-                            <li>Streamlined workflows</li>
-                            <li>Proactive planning</li>
-                            <li>Cross-functional alignment</li>
+                            <li data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Centralized knowledge base" data-slot-locked-layout="true">Centralized knowledge base</li>
+                            <li data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Defined responsibilities" data-slot-locked-layout="true">Defined responsibilities</li>
+                            <li data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Streamlined workflows" data-slot-locked-layout="true">Streamlined workflows</li>
+                            <li data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="Proactive planning" data-slot-locked-layout="true">Proactive planning</li>
+                            <li data-edit-slot="s8-slot-11" data-slot-type="text" data-slot-label="Cross-functional alignment" data-slot-locked-layout="true">Cross-functional alignment</li>
                         </ul>
                     </div>
                 </div>
@@ -1912,16 +1913,16 @@
                 <div class="closing-cluster">
                     <div class="post-it post-it-yellow closing-main pin">
                         <h2 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Thanks for Sticking Around" data-slot-locked-layout="true">Thanks for Sticking Around</h2>
-                        <p class="handwritten" style="margin-top: 1rem;">Every great idea starts with a little note.</p>
+                        <p class="handwritten" style="margin-top: 1rem;" data-edit-slot="s9-slot-5" data-slot-type="text" data-slot-label="Every great idea starts with a little note." data-slot-locked-layout="true">Every great idea starts with a little note.</p>
                     </div>
                     <div class="post-it post-it-blue closing-accent-1 pin-blue" data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Keep the ideas flowing!" data-slot-locked-layout="true">
-                        <p class="handwritten">Keep the ideas flowing!</p>
+                        <p class="handwritten" data-edit-slot="s9-slot-6" data-slot-type="text" data-slot-label="Keep the ideas flowing!" data-slot-locked-layout="true">Keep the ideas flowing!</p>
                     </div>
                     <div class="post-it post-it-pink closing-accent-2 pin" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="Pin this somewhere safe." data-slot-locked-layout="true">
-                        <p class="handwritten">Pin this somewhere safe.</p>
+                        <p class="handwritten" data-edit-slot="s9-slot-7" data-slot-type="text" data-slot-label="Pin this somewhere safe." data-slot-locked-layout="true">Pin this somewhere safe.</p>
                     </div>
                     <div class="post-it post-it-green closing-accent-3 pin-green" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="OK" data-slot-locked-layout="true">
-                        <p class="handwritten">OK</p>
+                        <p class="handwritten" data-edit-slot="s9-slot-8" data-slot-type="text" data-slot-label="OK" data-slot-locked-layout="true">OK</p>
                     </div>
                     <div class="post-it post-it-orange closing-accent-4 pin-gold">
                         <p class="handwritten">:)</p>
@@ -1955,7 +1956,7 @@
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -3508,7 +3509,7 @@
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -3589,6 +3590,7 @@
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -3988,6 +3990,7 @@
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -4015,6 +4018,76 @@
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -4065,6 +4138,7 @@
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -4091,6 +4165,7 @@
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -4100,6 +4175,7 @@
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -4118,6 +4194,10 @@
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

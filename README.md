@@ -42,6 +42,12 @@ This release bumps the editable runtime and authoring workflow to **2.0**: stron
 - **真实模板移植（Template ports）**：当前 ported 覆盖本地 `beautiful-html-templates` 索引中的 **34** 套模板。输出 slug 默认沿用上游 slug，早期 7 套保留兼容别名（如 `signal-gold.html`、`studio-volt.html`、`monochrome-ledger.html`）。这些文件复制并改造本地 `beautiful-html-templates/templates/{source_slug}/template.html`；`data-edit-slot` 内容槽位使用 Swiss 的 RTE/Undo/Redo/Save/Export 体验，网格、纹理、hairlines、glitch、纸张质感等设计骨架锁定，用户新增对象仍可自由拖拽缩放。
   **Template ports**: ported coverage now includes all **34** templates in the local `beautiful-html-templates` index. Output slugs default to upstream slugs, while the original seven keep compatibility aliases such as `signal-gold.html`, `studio-volt.html`, and `monochrome-ledger.html`. These files adapt local `beautiful-html-templates/templates/{source_slug}/template.html`; `data-edit-slot` content uses the Swiss RTE/Undo/Redo/Save/Export experience, while grids, textures, hairlines, glitch treatments, and paper systems remain locked. User-added objects remain freely draggable/resizable.
 
+- **槽位与对象的区别（Slots vs objects）**：真实模板的原生标题、正文、指标、图片等通过 `data-edit-slot` 原地编辑，保持原模板布局不被拖散；只有通过 Add element 新增到 `.slide-edit-layer` 的内容会成为带手柄的 `data-slide-object`，可拖拽、缩放、删除和多选。
+  **Slots vs objects**: native template titles, body copy, metrics, and images are edited in place through `data-edit-slot` while the original layout stays locked. Only content added through **Add element** into `.slide-edit-layer` becomes a handled `data-slide-object` that can be dragged, resized, deleted, and multi-selected.
+
+- **解锁布局（Unlock layout）**：ported decks 默认使用 `data-template-edit-mode="slots"`。如果需要自由移动原生模板内容，可在编辑模式点击 **Unlock layout**，当前页的可编辑槽位会复制成可拖拽/缩放的 `data-slide-object`，且支持 Undo；背景、网格、轴线、纹理、glitch、SVG 细节和纯布局容器仍保持锁定。
+  **Unlock layout**: ported decks default to `data-template-edit-mode="slots"`. When users need free placement, click **Unlock layout** in edit mode; editable slots on the current slide are copied into draggable/resizable `data-slide-object` components with Undo support. Backgrounds, grids, axes, textures, glitch layers, SVG internals, and pure layout wrappers remain locked.
+
 参考实现仍以单文件 **`examples/editable-deck-reference.html`** 为契约；生成新 deck 时请继续遵循本仓库 `SKILL.md` 与 `editor-runtime.md`。
 The reference contract remains the single file **`examples/editable-deck-reference.html`**; follow `SKILL.md` and `editor-runtime.md` when generating new decks.
 

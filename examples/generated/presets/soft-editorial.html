@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-soft-editorial" data-template-source="soft-editorial" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-soft-editorial" data-template-source="soft-editorial" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
 <meta charset="utf-8" />
@@ -1400,6 +1400,7 @@
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1504,12 +1505,12 @@
     <div class="eyebrow" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Foreword" data-slot-locked-layout="true">Foreword</div>
     <div class="pagedot" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="ii" data-slot-locked-layout="true">ii</div>
     <div class="col-l" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="We spent eight weeks listening, and what we hear" data-slot-locked-layout="true">
-      <p class="opener">We spent eight weeks listening, and what we heard surprised us in the kindest way.</p>
+      <p class="opener" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="We spent eight weeks listening, and what we hear" data-slot-locked-layout="true">We spent eight weeks listening, and what we heard surprised us in the kindest way.</p>
     </div>
     <div class="col-r">
-      <p>The team ran twenty-eight long-form interviews, shadowed nine teams during their busiest week of the year, and sat with the support inbox for ten unbroken days.</p>
-      <p>The themes that emerged were not the ones we set out to find. The brief asked about onboarding; the answers we got were about trust. So we followed the thread.</p>
-      <p>This deck is the short version. Each insight is a door — open the ones that matter to your team this quarter, and let the others wait.</p>
+      <p data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="The team ran twenty-eight long-form interviews, " data-slot-locked-layout="true">The team ran twenty-eight long-form interviews, shadowed nine teams during their busiest week of the year, and sat with the support inbox for ten unbroken days.</p>
+      <p data-edit-slot="s1-slot-7" data-slot-type="text" data-slot-label="The themes that emerged were not the ones we set" data-slot-locked-layout="true">The themes that emerged were not the ones we set out to find. The brief asked about onboarding; the answers we got were about trust. So we followed the thread.</p>
+      <p data-edit-slot="s1-slot-8" data-slot-type="text" data-slot-label="This deck is the short version. Each insight is " data-slot-locked-layout="true">This deck is the short version. Each insight is a door — open the ones that matter to your team this quarter, and let the others wait.</p>
       <div class="signoff">— The research desk</div>
     </div>
     <div class="footer" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
@@ -1528,28 +1529,28 @@
         <div class="n">i.</div>
         <div>
           <h3 data-edit-slot="s2-title-1" data-slot-type="text" data-slot-label="Listen" data-slot-locked-layout="true">Listen</h3>
-          <p>Twenty-eight long-form conversations with customers across four segments and three regions.</p>
+          <p data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Twenty-eight long-form conversations with custom" data-slot-locked-layout="true">Twenty-eight long-form conversations with customers across four segments and three regions.</p>
         </div>
       </div>
       <div class="step lemon">
         <div class="n">ii.</div>
         <div>
           <h3 data-edit-slot="s2-title-2" data-slot-type="text" data-slot-label="Watch" data-slot-locked-layout="true">Watch</h3>
-          <p>Nine on-site shadowing sessions during peak workflows. We took notes, not video.</p>
+          <p data-edit-slot="s2-slot-5" data-slot-type="text" data-slot-label="Nine on-site shadowing sessions during peak work" data-slot-locked-layout="true">Nine on-site shadowing sessions during peak workflows. We took notes, not video.</p>
         </div>
       </div>
       <div class="step blush">
         <div class="n">iii.</div>
         <div>
           <h3 data-edit-slot="s2-title-3" data-slot-type="text" data-slot-label="Read" data-slot-locked-layout="true">Read</h3>
-          <p>Ten days inside the support inbox, tagging every message by intent and emotional tone.</p>
+          <p data-edit-slot="s2-slot-6" data-slot-type="text" data-slot-label="Ten days inside the support inbox, tagging every" data-slot-locked-layout="true">Ten days inside the support inbox, tagging every message by intent and emotional tone.</p>
         </div>
       </div>
       <div class="step sage">
         <div class="n">iv.</div>
         <div>
           <h3 data-edit-slot="s2-title-4" data-slot-type="text" data-slot-label="Distill" data-slot-locked-layout="true">Distill</h3>
-          <p>Three rounds of thematic clustering with the design and policy teams, ending in eight themes.</p>
+          <p data-edit-slot="s2-slot-7" data-slot-type="text" data-slot-label="Three rounds of thematic clustering with the des" data-slot-locked-layout="true">Three rounds of thematic clustering with the design and policy teams, ending in eight themes.</p>
         </div>
       </div>
     </div>
@@ -1616,7 +1617,7 @@
     <div class="pagedot" data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="vi" data-slot-locked-layout="true">vi</div>
     <div class="grid">
       <div class="stat a">
-        <div class="lab serif-it" style="font-size:30px">of new accounts open the third email,<br/>up from 41% last quarter.</div>
+        <div class="lab serif-it" style="font-size:30px" data-edit-slot="s5-slot-7" data-slot-type="text" data-slot-label="of new accounts open the third email, up from 41" data-slot-locked-layout="true">of new accounts open the third email,<br/>up from 41% last quarter.</div>
         <div class="v" data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="68%" data-slot-locked-layout="true">68<em>%</em></div>
       </div>
       <div class="stat b">
@@ -1661,28 +1662,28 @@
     <div class="grid">
       <div class="panel l">
         <h2 data-edit-slot="s7-title-1" data-slot-type="text" data-slot-label="Three small moves, before the next debrief." data-slot-locked-layout="true">Three small <em>moves,</em><br/>before the next debrief.</h2>
-        <p>Each one is small enough to ship inside a sprint, and structured so we can tell, six weeks from now, whether it moved the dial.</p>
+        <p data-edit-slot="s7-slot-4" data-slot-type="text" data-slot-label="Each one is small enough to ship inside a sprint" data-slot-locked-layout="true">Each one is small enough to ship inside a sprint, and structured so we can tell, six weeks from now, whether it moved the dial.</p>
       </div>
       <div class="panel r">
         <div class="item pink">
           <div class="n">i.</div>
           <div>
             <h3 data-edit-slot="s7-title-2" data-slot-type="text" data-slot-label="Rewrite the first three emails" data-slot-locked-layout="true">Rewrite the first three emails</h3>
-            <p>From templated to written. Owner: lifecycle. By: May 17.</p>
+            <p data-edit-slot="s7-slot-5" data-slot-type="text" data-slot-label="From templated to written. Owner: lifecycle. By:" data-slot-locked-layout="true">From templated to written. Owner: lifecycle. By: May 17.</p>
           </div>
         </div>
         <div class="item lemon">
           <div class="n">ii.</div>
           <div>
             <h3 data-edit-slot="s7-title-3" data-slot-type="text" data-slot-label="Quiet upgrades by default" data-slot-locked-layout="true">Quiet upgrades by default</h3>
-            <p>Opt-in for power users; soft rollout for everyone else. Owner: product. By: June 1.</p>
+            <p data-edit-slot="s7-slot-6" data-slot-type="text" data-slot-label="Opt-in for power users; soft rollout for everyon" data-slot-locked-layout="true">Opt-in for power users; soft rollout for everyone else. Owner: product. By: June 1.</p>
           </div>
         </div>
         <div class="item blush">
           <div class="n">iii.</div>
           <div>
             <h3 data-edit-slot="s7-title-4" data-slot-type="text" data-slot-label="Make the inbox a search bar" data-slot-locked-layout="true">Make the inbox a search bar</h3>
-            <p>Surface in-product help when a request matches a feature. Owner: support × product. By: June 14.</p>
+            <p data-edit-slot="s7-slot-7" data-slot-type="text" data-slot-label="Surface in-product help when a request matches a" data-slot-locked-layout="true">Surface in-product help when a request matches a feature. Owner: support × product. By: June 14.</p>
           </div>
         </div>
       </div>
@@ -1705,11 +1706,11 @@
     <div class="body">
       <div class="col">
         <h3 data-edit-slot="s8-title-2" data-slot-type="text" data-slot-label="What we found" data-slot-locked-layout="true">What we found</h3>
-        <p><strong style="color:var(--ink); font-weight:500">Three behavioral signals</strong> in the first 72 hours predict 18-month retention better than any feature-usage metric we tracked.</p>
+        <p data-edit-slot="s8-slot-7" data-slot-type="text" data-slot-label="Three behavioral signals in the first 72 hours p" data-slot-locked-layout="true"><strong style="color:var(--ink); font-weight:500">Three behavioral signals</strong> in the first 72 hours predict 18-month retention better than any feature-usage metric we tracked.</p>
         <ul>
-          <li><strong>Email open #2</strong> — opening the second lifecycle email lifts D90 retention by 19 points.</li>
-          <li><strong>Personal salutation</strong> — accounts that received a written, non-templated welcome retained 2.4× the cohort.</li>
-          <li><strong>Reply received</strong> — a single human reply within 24 hours of signup is the single largest lever we measured.</li>
+          <li data-edit-slot="s8-slot-8" data-slot-type="text" data-slot-label="Email open #2 — opening the second lifecycle ema" data-slot-locked-layout="true"><strong>Email open #2</strong> — opening the second lifecycle email lifts D90 retention by 19 points.</li>
+          <li data-edit-slot="s8-slot-9" data-slot-type="text" data-slot-label="Personal salutation — accounts that received a w" data-slot-locked-layout="true"><strong>Personal salutation</strong> — accounts that received a written, non-templated welcome retained 2.4× the cohort.</li>
+          <li data-edit-slot="s8-slot-10" data-slot-type="text" data-slot-label="Reply received — a single human reply within 24 " data-slot-locked-layout="true"><strong>Reply received</strong> — a single human reply within 24 hours of signup is the single largest lever we measured.</li>
         </ul>
         <div class="source">Source: 14,200 cohorted accounts, Jan–Mar 2026.</div>
       </div>
@@ -1723,9 +1724,9 @@
       <div class="col">
         <h3 data-edit-slot="s8-title-4" data-slot-type="text" data-slot-label="What to do" data-slot-locked-layout="true">What to do</h3>
         <ul>
-          <li><strong>Rewrite emails 1–3</strong> in human voice; ship behind a 50/50 holdout. Owner: lifecycle. By: May 17.</li>
-          <li><strong>Route every signup</strong> to a named human for one personal reply within 24h, capped at the top 200 accounts/day. Owner: success. By: May 24.</li>
-          <li><strong>Instrument the 72-hour window</strong> as a first-class metric in the weekly review. Owner: analytics. By: June 1.</li>
+          <li data-edit-slot="s8-slot-11" data-slot-type="text" data-slot-label="Rewrite emails 1–3 in human voice; ship behind a" data-slot-locked-layout="true"><strong>Rewrite emails 1–3</strong> in human voice; ship behind a 50/50 holdout. Owner: lifecycle. By: May 17.</li>
+          <li data-edit-slot="s8-slot-12" data-slot-type="text" data-slot-label="Route every signup to a named human for one pers" data-slot-locked-layout="true"><strong>Route every signup</strong> to a named human for one personal reply within 24h, capped at the top 200 accounts/day. Owner: success. By: May 24.</li>
+          <li data-edit-slot="s8-slot-13" data-slot-type="text" data-slot-label="Instrument the 72-hour window as a first-class m" data-slot-locked-layout="true"><strong>Instrument the 72-hour window</strong> as a first-class metric in the weekly review. Owner: analytics. By: June 1.</li>
         </ul>
         <div class="source">Pilot scope: top-decile signups by ICP score.</div>
       </div>
@@ -1743,7 +1744,7 @@
     <div class="pagedot" data-edit-slot="s9-slot-2" data-slot-type="text" data-slot-label="x" data-slot-locked-layout="true">x</div>
     <div class="left">
       <h2 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="The curve bends around day three." data-slot-locked-layout="true">The curve <em>bends</em><br/>around day three.</h2>
-      <p>Cohorts that received a written welcome and a human reply within 24 hours retain at roughly 2× the rate of the templated cohort, and the gap holds steady for the first ninety days.</p>
+      <p data-edit-slot="s9-slot-6" data-slot-type="text" data-slot-label="Cohorts that received a written welcome and a hu" data-slot-locked-layout="true">Cohorts that received a written welcome and a human reply within 24 hours retain at roughly 2× the rate of the templated cohort, and the gap holds steady for the first ninety days.</p>
       <div class="legend">
         <div class="li"><i style="background:var(--pink)"></i> Templated welcome (control)</div>
         <div class="li" data-edit-slot="s9-slot-3" data-slot-type="text" data-slot-label="Written welcome" data-slot-locked-layout="true"><i style="background:var(--lemon)"></i> Written welcome</div>
@@ -1861,7 +1862,7 @@
       <div class="cell row-label last" data-edit-slot="s11-slot-18" data-slot-type="text" data-slot-label="Risk to power users" data-slot-locked-layout="true">Risk to power users</div>
       <div class="cell last" data-edit-slot="s11-slot-19" data-slot-type="text" data-slot-label="None" data-slot-locked-layout="true"><span class="pill yes">None</span></div>
       <div class="cell last" data-edit-slot="s11-slot-20" data-slot-type="text" data-slot-label="Material" data-slot-locked-layout="true"><span class="pill no">Material</span></div>
-      <div class="cell last" data-edit-slot="s11-slot-21" data-slot-type="text" data-slot-label="Soft, reversible" data-slot-locked-layout="true"><span class="pill note">Soft, reversible</span></div>
+      <div class="cell last" data-edit-slot="s11-slot-21" data-slot-type="text" data-slot-label="Soft, reversible" data-slot-locked-layout="true"><span class="pill note" data-edit-slot="s11-slot-23" data-slot-type="text" data-slot-label="Soft, reversible" data-slot-locked-layout="true">Soft, reversible</span></div>
     </div>
     <div class="footer" data-edit-slot="s11-slot-22" data-slot-type="text" data-slot-label="April 29, 2026 Field Notes · Vol. III" data-slot-locked-layout="true">
       <span>April 29, 2026</span>
@@ -1887,7 +1888,7 @@
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -3440,7 +3441,7 @@
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -3521,6 +3522,7 @@
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -3920,6 +3922,7 @@
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -3947,6 +3950,76 @@
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -3997,6 +4070,7 @@
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -4023,6 +4097,7 @@
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -4032,6 +4107,7 @@
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -4050,6 +4126,10 @@
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

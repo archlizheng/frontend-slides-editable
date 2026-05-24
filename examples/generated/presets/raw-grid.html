@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-raw-grid" data-template-source="raw-grid" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-raw-grid" data-template-source="raw-grid" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
 <meta charset="UTF-8">
@@ -1318,6 +1318,7 @@ html, body {
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1409,7 +1410,7 @@ html, body {
         <div class="t-display">Cities.<br>Startups.</div>
       </div>
       <div class="s1-cta" data-edit-slot="s0-slot-2" data-slot-type="text" data-slot-label="Discover All Startups" data-slot-locked-layout="true">
-        <span class="label arrow">Discover All Startups</span>
+        <span class="label arrow" data-edit-slot="s0-slot-9" data-slot-type="text" data-slot-label="Discover All Startups" data-slot-locked-layout="true">Discover All Startups</span>
       </div>
     </div>
     <div class="s1-right">
@@ -1440,12 +1441,12 @@ html, body {
       <div class="s2-block">
         <span class="t-number">250+</span>
         <span class="t-subtitle" style="margin-top: 8px;">Active Startups</span>
-        <p class="t-body" style="margin-top: 12px; opacity: 0.7;">Ventures currently enrolled and scaling through our network.</p>
+        <p class="t-body" style="margin-top: 12px; opacity: 0.7;" data-edit-slot="s1-slot-5" data-slot-type="text" data-slot-label="Ventures currently enrolled and scaling through " data-slot-locked-layout="true">Ventures currently enrolled and scaling through our network.</p>
       </div>
       <div class="s2-block bg-green" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="14 Cities Covered Metropolitan tech hubs across " data-slot-locked-layout="true">
         <span class="t-number">14</span>
         <span class="t-subtitle" style="margin-top: 8px;">Cities Covered</span>
-        <p class="t-body" style="margin-top: 12px; opacity: 0.7;">Metropolitan tech hubs across North America and Europe.</p>
+        <p class="t-body" style="margin-top: 12px; opacity: 0.7;" data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Metropolitan tech hubs across North America and " data-slot-locked-layout="true">Metropolitan tech hubs across North America and Europe.</p>
       </div>
     </div>
   </div>
@@ -1457,7 +1458,7 @@ html, body {
   <div class="slide-content">
     <div class="s3-header">
       <span class="t-title">Quarterly Growth Metrics</span>
-      <span class="label">Fiscal Year 2026</span>
+      <span class="label" data-edit-slot="s2-slot-4" data-slot-type="text" data-slot-label="Fiscal Year 2026" data-slot-locked-layout="true">Fiscal Year 2026</span>
     </div>
     <div class="s3-body">
       <div class="s3-chart-area">
@@ -1558,7 +1559,7 @@ html, body {
       <div class="s5-image-placeholder">[ Image Placeholder ]</div>
     </div>
     <div class="s5-text-area">
-      <div class="label s5-badge">Featured</div>
+      <div class="label s5-badge" data-edit-slot="s4-slot-4" data-slot-type="text" data-slot-label="Featured" data-slot-locked-layout="true">Featured</div>
       <div class="t-headline" style="margin-bottom: 20px;" data-edit-slot="s4-slot-1" data-slot-type="text" data-slot-label="The Founders Lab" data-slot-locked-layout="true">The Founders Lab</div>
       <p class="t-body" style="margin-bottom: 20px;" data-edit-slot="s4-slot-2" data-slot-type="text" data-slot-label="An intensive twelve-week program designed to tak" data-slot-locked-layout="true">An intensive twelve-week program designed to take early-stage concepts and transform them into market-ready products with validated traction.</p>
       <p class="t-body" style="opacity: 0.7; margin-bottom: 32px;" data-edit-slot="s4-slot-3" data-slot-type="text" data-slot-label="Cohots launch every quarter with dedicated works" data-slot-locked-layout="true">Cohots launch every quarter with dedicated workspace, engineering support, and direct pipeline to investor demo days.</p>
@@ -1696,54 +1697,54 @@ html, body {
   <div class="slide-content">
     <div class="s9-header">
       <span class="t-title">Plan Comparison</span>
-      <span class="label">Pricing Tiers</span>
+      <span class="label" data-edit-slot="s8-slot-29" data-slot-type="text" data-slot-label="Pricing Tiers" data-slot-locked-layout="true">Pricing Tiers</span>
     </div>
     <div class="s9-table-wrap">
       <table class="s9-table">
         <thead>
           <tr>
-            <th>Feature</th>
-            <th>Starter</th>
-            <th>Professional</th>
-            <th>Enterprise</th>
+            <th data-edit-slot="s8-slot-1" data-slot-type="table-cell" data-slot-label="Feature" data-slot-locked-layout="true">Feature</th>
+            <th data-edit-slot="s8-slot-2" data-slot-type="table-cell" data-slot-label="Starter" data-slot-locked-layout="true">Starter</th>
+            <th data-edit-slot="s8-slot-3" data-slot-type="table-cell" data-slot-label="Professional" data-slot-locked-layout="true">Professional</th>
+            <th data-edit-slot="s8-slot-4" data-slot-type="table-cell" data-slot-label="Enterprise" data-slot-locked-layout="true">Enterprise</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Workspace Access</td>
-            <td>Shared Desk</td>
-            <td>Dedicated Desk</td>
-            <td>Private Office</td>
+            <td data-edit-slot="s8-slot-5" data-slot-type="table-cell" data-slot-label="Workspace Access" data-slot-locked-layout="true">Workspace Access</td>
+            <td data-edit-slot="s8-slot-6" data-slot-type="table-cell" data-slot-label="Shared Desk" data-slot-locked-layout="true">Shared Desk</td>
+            <td data-edit-slot="s8-slot-7" data-slot-type="table-cell" data-slot-label="Dedicated Desk" data-slot-locked-layout="true">Dedicated Desk</td>
+            <td data-edit-slot="s8-slot-8" data-slot-type="table-cell" data-slot-label="Private Office" data-slot-locked-layout="true">Private Office</td>
           </tr>
           <tr>
-            <td>Mentor Hours</td>
-            <td>2 / Month</td>
-            <td>8 / Month</td>
-            <td>Unlimited</td>
+            <td data-edit-slot="s8-slot-9" data-slot-type="table-cell" data-slot-label="Mentor Hours" data-slot-locked-layout="true">Mentor Hours</td>
+            <td data-edit-slot="s8-slot-10" data-slot-type="table-cell" data-slot-label="2 / Month" data-slot-locked-layout="true">2 / Month</td>
+            <td data-edit-slot="s8-slot-11" data-slot-type="table-cell" data-slot-label="8 / Month" data-slot-locked-layout="true">8 / Month</td>
+            <td data-edit-slot="s8-slot-12" data-slot-type="table-cell" data-slot-label="Unlimited" data-slot-locked-layout="true">Unlimited</td>
           </tr>
           <tr>
-            <td>Investor Introductions</td>
-            <td>Quarterly</td>
-            <td>Monthly</td>
-            <td>Weekly</td>
+            <td data-edit-slot="s8-slot-13" data-slot-type="table-cell" data-slot-label="Investor Introductions" data-slot-locked-layout="true">Investor Introductions</td>
+            <td data-edit-slot="s8-slot-14" data-slot-type="table-cell" data-slot-label="Quarterly" data-slot-locked-layout="true">Quarterly</td>
+            <td data-edit-slot="s8-slot-15" data-slot-type="table-cell" data-slot-label="Monthly" data-slot-locked-layout="true">Monthly</td>
+            <td data-edit-slot="s8-slot-16" data-slot-type="table-cell" data-slot-label="Weekly" data-slot-locked-layout="true">Weekly</td>
           </tr>
           <tr>
-            <td>Legal &amp; Accounting</td>
-            <td>Basic Templates</td>
-            <td>Guided Support</td>
-            <td>Full Service</td>
+            <td data-edit-slot="s8-slot-17" data-slot-type="table-cell" data-slot-label="Legal &amp;amp; Accounting" data-slot-locked-layout="true">Legal &amp; Accounting</td>
+            <td data-edit-slot="s8-slot-18" data-slot-type="table-cell" data-slot-label="Basic Templates" data-slot-locked-layout="true">Basic Templates</td>
+            <td data-edit-slot="s8-slot-19" data-slot-type="table-cell" data-slot-label="Guided Support" data-slot-locked-layout="true">Guided Support</td>
+            <td data-edit-slot="s8-slot-20" data-slot-type="table-cell" data-slot-label="Full Service" data-slot-locked-layout="true">Full Service</td>
           </tr>
           <tr>
-            <td>Event Access</td>
-            <td>Online Only</td>
-            <td>In-Person</td>
-            <td>VIP &amp; Speaker</td>
+            <td data-edit-slot="s8-slot-21" data-slot-type="table-cell" data-slot-label="Event Access" data-slot-locked-layout="true">Event Access</td>
+            <td data-edit-slot="s8-slot-22" data-slot-type="table-cell" data-slot-label="Online Only" data-slot-locked-layout="true">Online Only</td>
+            <td data-edit-slot="s8-slot-23" data-slot-type="table-cell" data-slot-label="In-Person" data-slot-locked-layout="true">In-Person</td>
+            <td data-edit-slot="s8-slot-24" data-slot-type="table-cell" data-slot-label="VIP &amp;amp; Speaker" data-slot-locked-layout="true">VIP &amp; Speaker</td>
           </tr>
           <tr>
-            <td>Support Response</td>
-            <td>48 Hours</td>
-            <td>24 Hours</td>
-            <td>4 Hours</td>
+            <td data-edit-slot="s8-slot-25" data-slot-type="table-cell" data-slot-label="Support Response" data-slot-locked-layout="true">Support Response</td>
+            <td data-edit-slot="s8-slot-26" data-slot-type="table-cell" data-slot-label="48 Hours" data-slot-locked-layout="true">48 Hours</td>
+            <td data-edit-slot="s8-slot-27" data-slot-type="table-cell" data-slot-label="24 Hours" data-slot-locked-layout="true">24 Hours</td>
+            <td data-edit-slot="s8-slot-28" data-slot-type="table-cell" data-slot-label="4 Hours" data-slot-locked-layout="true">4 Hours</td>
           </tr>
         </tbody>
       </table>
@@ -1794,7 +1795,7 @@ html, body {
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -3347,7 +3348,7 @@ html, body {
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -3428,6 +3429,7 @@ html, body {
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -3827,6 +3829,7 @@ html, body {
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -3854,6 +3857,76 @@ html, body {
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -3904,6 +3977,7 @@ html, body {
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -3930,6 +4004,7 @@ html, body {
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -3939,6 +4014,7 @@ html, body {
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -3957,6 +4033,10 @@ html, body {
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

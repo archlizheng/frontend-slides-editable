@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-creative-mode" data-template-source="creative-mode" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-creative-mode" data-template-source="creative-mode" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
 <meta charset="utf-8" />
@@ -935,6 +935,7 @@
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1057,9 +1058,9 @@
     <h1 class="h display" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="FLIP THE SWITCH." data-slot-locked-layout="true">FLIP THE<br/>SWITCH.</h1>
 
     <div class="body-col body" data-edit-slot="s1-slot-3" data-slot-type="text" data-slot-label="Placeholder paragraph for an opening statement. " data-slot-locked-layout="true">
-      <p>Placeholder paragraph for an opening statement. Use this column to set up the chapter, introduce the speaker, or frame the question the deck is going to answer over the next several slides.</p>
-      <p>A second paragraph balances the page with a quieter beat — context, a thesis, or a small definition. Keep the rhythm short, declarative, and visual.</p>
-      <p>End with a third line that points forward to the rest of the deck. Generic placeholder text only — no real copy lives here yet.</p>
+      <p data-edit-slot="s1-slot-6" data-slot-type="text" data-slot-label="Placeholder paragraph for an opening statement. " data-slot-locked-layout="true">Placeholder paragraph for an opening statement. Use this column to set up the chapter, introduce the speaker, or frame the question the deck is going to answer over the next several slides.</p>
+      <p data-edit-slot="s1-slot-7" data-slot-type="text" data-slot-label="A second paragraph balances the page with a quie" data-slot-locked-layout="true">A second paragraph balances the page with a quieter beat — context, a thesis, or a small definition. Keep the rhythm short, declarative, and visual.</p>
+      <p data-edit-slot="s1-slot-8" data-slot-type="text" data-slot-label="End with a third line that points forward to the" data-slot-locked-layout="true">End with a third line that points forward to the rest of the deck. Generic placeholder text only — no real copy lives here yet.</p>
     </div>
 
     <div class="marker display" data-edit-slot="s1-slot-4" data-slot-type="text" data-slot-label="PRESS &amp;nbsp; PLAY" data-slot-locked-layout="true">PRESS &nbsp; PLAY</div>
@@ -1261,25 +1262,25 @@ ONE STORY.</h1>
         <div data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Option C" data-slot-locked-layout="true">Option C</div>
       </div>
       <div class="row">
-        <div class="label">Speed</div>
+        <div class="label" data-edit-slot="s6-slot-19" data-slot-type="text" data-slot-label="Speed" data-slot-locked-layout="true">Speed</div>
         <div class="col-pink" data-edit-slot="s6-slot-6" data-slot-type="text" data-slot-label="Fast" data-slot-locked-layout="true">Fast</div>
         <div class="col-green" data-edit-slot="s6-slot-7" data-slot-type="text" data-slot-label="Faster" data-slot-locked-layout="true">Faster</div>
         <div class="col-orange" data-edit-slot="s6-slot-8" data-slot-type="text" data-slot-label="Fastest" data-slot-locked-layout="true">Fastest</div>
       </div>
       <div class="row">
-        <div class="label">Footprint</div>
+        <div class="label" data-edit-slot="s6-slot-20" data-slot-type="text" data-slot-label="Footprint" data-slot-locked-layout="true">Footprint</div>
         <div class="col-pink" data-edit-slot="s6-slot-9" data-slot-type="text" data-slot-label="Light" data-slot-locked-layout="true">Light</div>
         <div class="col-green" data-edit-slot="s6-slot-10" data-slot-type="text" data-slot-label="Medium" data-slot-locked-layout="true">Medium</div>
         <div class="col-orange" data-edit-slot="s6-slot-11" data-slot-type="text" data-slot-label="Heavy" data-slot-locked-layout="true">Heavy</div>
       </div>
       <div class="row">
-        <div class="label">Effort</div>
+        <div class="label" data-edit-slot="s6-slot-21" data-slot-type="text" data-slot-label="Effort" data-slot-locked-layout="true">Effort</div>
         <div class="col-pink" data-edit-slot="s6-slot-12" data-slot-type="text" data-slot-label="Low" data-slot-locked-layout="true">Low</div>
         <div class="col-green" data-edit-slot="s6-slot-13" data-slot-type="text" data-slot-label="Mid" data-slot-locked-layout="true">Mid</div>
         <div class="col-orange" data-edit-slot="s6-slot-14" data-slot-type="text" data-slot-label="High" data-slot-locked-layout="true">High</div>
       </div>
       <div class="row">
-        <div class="label">Outcome</div>
+        <div class="label" data-edit-slot="s6-slot-22" data-slot-type="text" data-slot-label="Outcome" data-slot-locked-layout="true">Outcome</div>
         <div class="col-pink" data-edit-slot="s6-slot-15" data-slot-type="text" data-slot-label="Sample" data-slot-locked-layout="true">Sample</div>
         <div class="col-green" data-edit-slot="s6-slot-16" data-slot-type="text" data-slot-label="Sample" data-slot-locked-layout="true">Sample</div>
         <div class="col-orange" data-edit-slot="s6-slot-17" data-slot-type="text" data-slot-label="Sample" data-slot-locked-layout="true">Sample</div>
@@ -1337,7 +1338,7 @@ ONE STORY.</h1>
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -2890,7 +2891,7 @@ ONE STORY.</h1>
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -2971,6 +2972,7 @@ ONE STORY.</h1>
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -3370,6 +3372,7 @@ ONE STORY.</h1>
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -3397,6 +3400,76 @@ ONE STORY.</h1>
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -3447,6 +3520,7 @@ ONE STORY.</h1>
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -3473,6 +3547,7 @@ ONE STORY.</h1>
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -3482,6 +3557,7 @@ ONE STORY.</h1>
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -3500,6 +3576,10 @@ ONE STORY.</h1>
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

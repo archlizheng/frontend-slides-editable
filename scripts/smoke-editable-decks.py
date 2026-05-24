@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Run a small Chrome-headless smoke test for editable deck interactions.
+"""Run Chrome-headless smoke tests for editable deck interactions.
 
-The test is intentionally sampled, not a full preset matrix. It verifies the
-canonical runtime behavior that static validation cannot prove: opening Pages,
-copying a slide, creating a new page, undoing, and checking mobile viewports for
-horizontal overflow.
+The default test is intentionally sampled, not a full preset matrix. It verifies
+the runtime behavior that static validation cannot prove: edit mode activation,
+slot editing for ported templates, Pages copy/new-page workflows, persistence,
+export cleanup, and viewport overflow. Set SMOKE_PRESET_MATRIX=ported to run the
+lightweight interaction checks against every ported template.
 """
 
 from __future__ import annotations
@@ -13,6 +14,7 @@ import json
 import os
 import platform
 import html
+import importlib.util
 import re
 import shutil
 import subprocess
@@ -28,6 +30,7 @@ SAMPLES = [
     ROOT / "examples" / "generated" / "presets" / "soft-editorial.html",
     ROOT / "examples" / "generated" / "presets" / "monochrome-ledger.html",
 ]
+PORTED_SAMPLE_NAMES = {"soft-editorial.html", "monochrome-ledger.html"}
 VIEWPORTS = [
     ("desktop", 1280, 720),
     ("mobile-portrait", 390, 844),
@@ -52,6 +55,33 @@ def find_chrome() -> str | None:
         if found:
             return found
     return None
+
+
+def load_builder_ports():
+    builder_path = ROOT / "scripts" / "build-template-port-decks.py"
+    spec = importlib.util.spec_from_file_location("build_template_port_decks", builder_path)
+    if spec is None or spec.loader is None:
+        raise SystemExit(f"Unable to load {builder_path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module.PORTS
+
+
+def sample_paths() -> list[Path]:
+    matrix = os.environ.get("SMOKE_PRESET_MATRIX", "").strip().lower()
+    if not matrix:
+        return SAMPLES
+    if matrix == "ported":
+        return [ROOT / "examples" / "generated" / "presets" / f"{port.out_slug}.html" for port in load_builder_ports()]
+    if matrix == "components":
+        return [
+            ROOT / "examples" / "generated" / "presets" / "soft-editorial.html",
+            ROOT / "examples" / "generated" / "presets" / "monochrome-ledger.html",
+        ]
+    if matrix == "all":
+        return sorted((ROOT / "examples" / "generated" / "presets").glob("*.html"))
+    raise SystemExit("SMOKE_PRESET_MATRIX must be empty, 'ported', 'components', or 'all'")
 
 
 def chrome_eval(chrome: str, html_path: Path, width: int, height: int, script: str) -> dict:
@@ -109,7 +139,33 @@ setTimeout(() => finish({ok:false,error:'timeout'}), __TIMEOUT_MS__);
         return json.loads(html.unescape(raw))
 
 
-INTERACTION_SCRIPT = r"""
+EDIT_MODE_SCRIPT = r"""
+const edit = document.getElementById('editToggle');
+const pages = document.getElementById('pagesToggle');
+const hover = document.getElementById('deckLeftHover');
+if (!edit) throw new Error('missing Edit button');
+if (!pages) throw new Error('missing Pages button');
+if (!hover) throw new Error('missing deckLeftHover');
+document.body.classList.remove('deck-edit-mode', 'slide-anim-paused');
+edit.classList.remove('active', 'show');
+pages.classList.remove('active', 'show');
+edit.click();
+await new Promise((resolve) => setTimeout(resolve, 40));
+const clickActivated = document.body.classList.contains('deck-edit-mode') && edit.classList.contains('active');
+document.dispatchEvent(new KeyboardEvent('keydown', {key: 'E', bubbles: true, cancelable: true}));
+await new Promise((resolve) => setTimeout(resolve, 40));
+const keyExited = !document.body.classList.contains('deck-edit-mode');
+document.dispatchEvent(new KeyboardEvent('keydown', {key: 'e', bubbles: true, cancelable: true}));
+await new Promise((resolve) => setTimeout(resolve, 40));
+const keyActivated = document.body.classList.contains('deck-edit-mode') && edit.classList.contains('active');
+hover.dispatchEvent(new MouseEvent('mouseenter', {bubbles: true}));
+await new Promise((resolve) => setTimeout(resolve, 40));
+const hoverShowsControls = edit.classList.contains('show') && pages.classList.contains('show');
+return {ok: clickActivated && keyExited && keyActivated && hoverShowsControls, clickActivated, keyExited, keyActivated, hoverShowsControls};
+"""
+
+
+PAGES_SCRIPT = r"""
 const sidebar = document.getElementById('slideSidebar');
 const pages = document.getElementById('pagesToggle');
 if (!pages || !sidebar) throw new Error('missing Pages sidebar');
@@ -177,6 +233,123 @@ return {
 };
 """
 
+
+SLOT_EDIT_SCRIPT = r"""
+const root = document.querySelector('.slides-offset');
+if (!root) throw new Error('missing slides root');
+const slot = root.querySelector('[data-edit-slot][data-slot-type="text"], [data-edit-slot][data-slot-type="metric"], [data-edit-slot][data-slot-type="table-cell"]');
+if (!slot) return {ok: true, skipped: true, reason: 'no editable slot'};
+const edit = document.getElementById('editToggle');
+if (!edit) throw new Error('missing Edit button');
+const storageKey = 'editable-deck:' + (document.documentElement.getAttribute('data-deck-id') || 'default');
+localStorage.removeItem(storageKey);
+if (!document.body.classList.contains('deck-edit-mode')) {
+  edit.click();
+  await new Promise((resolve) => setTimeout(resolve, 40));
+}
+if (!document.body.classList.contains('deck-edit-mode')) throw new Error('edit mode did not activate before slot edit');
+const before = slot.innerHTML;
+const marker = 'Smoke edited slot text';
+slot.click();
+await new Promise((resolve) => setTimeout(resolve, 40));
+const becameEditable = slot.getAttribute('contenteditable') === 'true' || slot.isContentEditable;
+slot.textContent = marker;
+slot.dispatchEvent(new InputEvent('input', {bubbles: true, inputType: 'insertText', data: marker}));
+const focusSink = document.createElement('button');
+focusSink.type = 'button';
+focusSink.textContent = 'focus sink';
+focusSink.style.cssText = 'position:fixed;left:-9999px;top:-9999px;';
+document.body.appendChild(focusSink);
+focusSink.focus();
+slot.blur();
+slot.dispatchEvent(new FocusEvent('focusout', {bubbles: true, relatedTarget: focusSink}));
+await new Promise((resolve) => setTimeout(resolve, 80));
+focusSink.remove();
+const committed = slot.getAttribute('contenteditable') !== 'true' && slot.textContent === marker;
+const undo = document.getElementById('btnUndo');
+const redo = document.getElementById('btnRedo');
+if (!undo || !redo) throw new Error('missing undo/redo buttons');
+const undoEnabled = !undo.disabled;
+undo.click();
+await new Promise((resolve) => setTimeout(resolve, 40));
+const undoRestored = slot.innerHTML === before;
+redo.click();
+await new Promise((resolve) => setTimeout(resolve, 40));
+const redoApplied = slot.textContent === marker;
+const save = document.getElementById('btnSave');
+if (!save) throw new Error('missing Save button');
+save.click();
+const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+const savedHasEdit = typeof saved.deckHtml === 'string' && saved.deckHtml.includes(marker);
+let exportedHtml = '';
+const originalCreateObjectURL = URL.createObjectURL;
+URL.createObjectURL = (blob) => {
+  if (blob && typeof blob.text === 'function') {
+    blob.text().then((text) => { exportedHtml = text; });
+  }
+  return 'blob:editable-slot-smoke';
+};
+URL.revokeObjectURL = () => {};
+const originalClick = HTMLAnchorElement.prototype.click;
+HTMLAnchorElement.prototype.click = function () {};
+const exportButton = document.getElementById('btnExport');
+if (!exportButton) throw new Error('missing Export button');
+exportButton.click();
+for (let i = 0; i < 20 && !exportedHtml; i++) {
+  await new Promise((resolve) => setTimeout(resolve, 50));
+}
+URL.createObjectURL = originalCreateObjectURL;
+HTMLAnchorElement.prototype.click = originalClick;
+const exportedDoc = new DOMParser().parseFromString(exportedHtml, 'text/html');
+const exportChecks = {
+  noEditableSlot: !exportedDoc.querySelector('[data-edit-slot][contenteditable="true"]'),
+  noDeckHtmlBefore: !exportedDoc.querySelector('[data-_deck-html-before]'),
+  hasMarker: exportedHtml.includes(marker)
+};
+const exportClean = Object.values(exportChecks).every(Boolean);
+return {ok: becameEditable && committed && undoEnabled && undoRestored && redoApplied && savedHasEdit && exportClean,
+  becameEditable, committed, undoEnabled, undoRestored, redoApplied, savedHasEdit, exportClean, exportChecks};
+"""
+
+
+COMPONENT_UNLOCK_SCRIPT = r"""
+window.confirm = () => true;
+const root = document.querySelector('.slides-offset');
+if (!root) throw new Error('missing slides root');
+const edit = document.getElementById('editToggle');
+const unlock = document.getElementById('btnUnlockLayout');
+if (!edit) throw new Error('missing Edit button');
+if (!unlock) throw new Error('missing Unlock layout button');
+if (!document.body.classList.contains('deck-edit-mode')) {
+  edit.click();
+  await new Promise((resolve) => setTimeout(resolve, 40));
+}
+const slide = root.querySelector(':scope > section.slide');
+if (!slide) throw new Error('missing slide');
+const beforeObjects = slide.querySelectorAll('[data-slide-object]').length;
+unlock.click();
+await new Promise((resolve) => setTimeout(resolve, 80));
+const afterObjects = slide.querySelectorAll('[data-slide-object]').length;
+const hasComponentObjects = afterObjects > beforeObjects && !!slide.querySelector('[data-component-source-slot]');
+const oids = Array.from(slide.querySelectorAll('[data-oid]')).map((o) => o.getAttribute('data-oid'));
+const uniqueOids = new Set(oids).size === oids.length;
+const firstObject = slide.querySelector('[data-component-source-slot]');
+const selectedOrPresent = !!firstObject;
+const undo = document.getElementById('btnUndo');
+if (!undo) throw new Error('missing undo button');
+const undoEnabled = !undo.disabled;
+undo.click();
+await new Promise((resolve) => setTimeout(resolve, 60));
+const undoDisabledAfter = undo.disabled;
+const undoAriaAfter = undo.getAttribute('aria-disabled');
+const restoredSlide = root.querySelector(':scope > section.slide');
+const restoredObjects = restoredSlide.querySelectorAll('[data-slide-object]').length;
+const restoredComponentized = restoredSlide.dataset.componentized === 'true';
+const restored = restoredObjects === beforeObjects && !restoredComponentized;
+return {ok: hasComponentObjects && uniqueOids && selectedOrPresent && undoEnabled && restored,
+  beforeObjects, afterObjects, restoredObjects, restoredComponentized, undoDisabledAfter, undoAriaAfter, hasComponentObjects, uniqueOids, selectedOrPresent, undoEnabled, restored};
+"""
+
 OVERFLOW_SCRIPT = r"""
 const root = document.querySelector('.slides-offset');
 const doc = document.documentElement;
@@ -196,23 +369,40 @@ def main() -> int:
         print("No Chrome/Chromium found. Set CHROME_PATH or install Chrome.", file=sys.stderr)
         return 1
     errors: list[str] = []
-    for sample in SAMPLES:
+    samples = sample_paths()
+    for sample in samples:
         if not sample.is_file():
             errors.append(f"missing sample {sample.relative_to(ROOT)}")
             continue
-        result = chrome_eval(chrome, sample, 1280, 720, INTERACTION_SCRIPT)
+        result = chrome_eval(chrome, sample, 1280, 720, EDIT_MODE_SCRIPT)
         if not result.get("ok"):
-            errors.append(f"{sample.relative_to(ROOT)} interaction failed: {result}")
-        for label, width, height in VIEWPORTS:
-            result = chrome_eval(chrome, sample, width, height, OVERFLOW_SCRIPT)
+            errors.append(f"{sample.relative_to(ROOT)} edit mode failed: {result}")
+        matrix_mode = bool(os.environ.get("SMOKE_PRESET_MATRIX"))
+        if not matrix_mode:
+            result = chrome_eval(chrome, sample, 1280, 720, PAGES_SCRIPT)
             if not result.get("ok"):
-                errors.append(f"{sample.relative_to(ROOT)} {label} overflow: {result}")
+                errors.append(f"{sample.relative_to(ROOT)} pages/export interaction failed: {result}")
+        source = sample.read_text(encoding="utf-8")
+        if "data-edit-slot=" in source or sample.name in PORTED_SAMPLE_NAMES or matrix_mode:
+            result = chrome_eval(chrome, sample, 1280, 720, SLOT_EDIT_SCRIPT)
+            if not result.get("ok"):
+                errors.append(f"{sample.relative_to(ROOT)} slot edit failed: {result}")
+        if os.environ.get("SMOKE_PRESET_MATRIX", "").strip().lower() == "components":
+            result = chrome_eval(chrome, sample, 1280, 720, COMPONENT_UNLOCK_SCRIPT)
+            if not result.get("ok"):
+                errors.append(f"{sample.relative_to(ROOT)} component unlock failed: {result}")
+        if not matrix_mode:
+            for label, width, height in VIEWPORTS:
+                result = chrome_eval(chrome, sample, width, height, OVERFLOW_SCRIPT)
+                if not result.get("ok"):
+                    errors.append(f"{sample.relative_to(ROOT)} {label} overflow: {result}")
     if errors:
         print("Editable deck smoke failed:")
         for error in errors:
             print(f"- {error}")
         return 2
-    print(f"Smoke-tested {len(SAMPLES)} decks across {len(VIEWPORTS)} viewports using {chrome}.")
+    matrix = os.environ.get("SMOKE_PRESET_MATRIX", "sample") or "sample"
+    print(f"Smoke-tested {len(samples)} decks in {matrix} mode using {chrome}.")
     return 0
 
 

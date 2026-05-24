@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-8-bit-orbit" data-template-source="8-bit-orbit" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-8-bit-orbit" data-template-source="8-bit-orbit" data-mobile-adaptation="desktop-default" data-template-edit-mode="slots">
 <head>
 
   <meta charset="UTF-8">
@@ -1709,6 +1709,7 @@
     <button type="button" class="sidebar-pages-toggle" id="pagesToggle" title="Pages sidebar">Pages</button>
     <button type="button" class="deck-btn-save" id="btnSave" title="Save layout to browser (Ctrl+S)">Save</button>
     <button type="button" class="deck-btn-add" id="btnAddElement" title="Add text, image, or video to current slide">Add element</button>
+    <button type="button" class="deck-btn-add" id="btnUnlockLayout" title="Convert this slide&#x27;s editable content into movable components">Unlock layout</button>
   </div>
   <div class="deck-edit-chrome deck-left-row deck-left-row--tools" id="deckEditChrome" data-deck-chrome-surface="" role="toolbar" aria-label="Editing">
     <button type="button" id="btnUndo" aria-label="Undo" title="Undo (Ctrl+Z)">
@@ -1819,10 +1820,10 @@
           <div style="max-width: 460px;">
             <span class="pixel-label">Mission Brief</span>
             <h2 style="color: var(--deep-navy); margin-bottom: 1.2rem; font-size: clamp(1.6rem, 3vw, 2.4rem);" data-edit-slot="s1-title-1" data-slot-type="text" data-slot-label="Rewiring How We Share Ideas" data-slot-locked-layout="true">Rewiring How We Share Ideas</h2>
-            <p style="color: rgba(15,27,61,0.75); margin-bottom: 1rem;">
+            <p style="color: rgba(15,27,61,0.75); margin-bottom: 1rem;" data-edit-slot="s1-slot-1" data-slot-type="text" data-slot-label="Every presentation is an opportunity to transpor" data-slot-locked-layout="true">
               Every presentation is an opportunity to transport your audience. This template fuses the tactile nostalgia of 16-bit aesthetics with modern typographic discipline.
             </p>
-            <p style="color: rgba(15,27,61,0.75);">
+            <p style="color: rgba(15,27,61,0.75);" data-edit-slot="s1-slot-2" data-slot-type="text" data-slot-label="No canvas limits. No cookie-cutter layouts. Just" data-slot-locked-layout="true">
               No canvas limits. No cookie-cutter layouts. Just pure CSS architecture delivering cinematic slide transitions and atmospheric depth through scanlines, grain, and glowing grids.
             </p>
           </div>
@@ -1872,7 +1873,7 @@
           <div class="pixel-chart-title">
             <span class="pixel-label">Analytics Core</span>
             <h2 data-edit-slot="s3-title-1" data-slot-type="text" data-slot-label="Quarterly Growth Metrics" data-slot-locked-layout="true">Quarterly Growth Metrics</h2>
-            <p class="subtitle">Fiscal performance across four sectors &mdash; normalized index</p>
+            <p class="subtitle" data-edit-slot="s3-slot-6" data-slot-type="text" data-slot-label="Fiscal performance across four sectors &amp;mdash; n" data-slot-locked-layout="true">Fiscal performance across four sectors &mdash; normalized index</p>
           </div>
           <div class="pixel-bar-chart" id="barChart">
             <div class="chart-bar-group">
@@ -1913,7 +1914,7 @@
           <div class="pixel-chart-title" style="margin-bottom: 2.5rem;">
             <span class="pixel-label" style="background: var(--deep-navy); color: var(--neon-yellow);">System Load</span>
             <h2 style="color: var(--deep-navy);" data-edit-slot="s4-title-1" data-slot-type="text" data-slot-label="Resource Allocation" data-slot-locked-layout="true">Resource Allocation</h2>
-            <p class="subtitle" style="color: rgba(15,27,61,0.6);">Percentage distribution across operational units</p>
+            <p class="subtitle" style="color: rgba(15,27,61,0.6);" data-edit-slot="s4-slot-6" data-slot-type="text" data-slot-label="Percentage distribution across operational units" data-slot-locked-layout="true">Percentage distribution across operational units</p>
           </div>
           <div class="pixel-hbar-chart" id="hbarChart">
             <div class="hbar-row">
@@ -1971,7 +1972,7 @@
               <div class="timeline-text">
                 <span class="date">Q1 2026</span>
                 <h4 data-edit-slot="s5-title-2" data-slot-type="text" data-slot-label="Concept &amp; Architecture" data-slot-locked-layout="true">Concept & Architecture</h4>
-                <p>Wireframes, palette selection, and core grid system established.</p>
+                <p data-edit-slot="s5-slot-1" data-slot-type="text" data-slot-label="Wireframes, palette selection, and core grid sys" data-slot-locked-layout="true">Wireframes, palette selection, and core grid system established.</p>
               </div>
               <div class="timeline-spacer">
                 <div class="timeline-node active"></div>
@@ -1986,14 +1987,14 @@
               <div class="timeline-text">
                 <span class="date">Q2 2026</span>
                 <h4 data-edit-slot="s5-title-3" data-slot-type="text" data-slot-label="Asset Generation" data-slot-locked-layout="true">Asset Generation</h4>
-                <p>Pixel components, iconography, and atmospheric effects coded.</p>
+                <p data-edit-slot="s5-slot-2" data-slot-type="text" data-slot-label="Pixel components, iconography, and atmospheric e" data-slot-locked-layout="true">Pixel components, iconography, and atmospheric effects coded.</p>
               </div>
             </div>
             <div class="timeline-event">
               <div class="timeline-text">
                 <span class="date">Q3 2026</span>
                 <h4 data-edit-slot="s5-title-4" data-slot-type="text" data-slot-label="Data Integration" data-slot-locked-layout="true">Data Integration</h4>
-                <p>Charting engine, animated counters, and dynamic state binding.</p>
+                <p data-edit-slot="s5-slot-3" data-slot-type="text" data-slot-label="Charting engine, animated counters, and dynamic " data-slot-locked-layout="true">Charting engine, animated counters, and dynamic state binding.</p>
               </div>
               <div class="timeline-spacer">
                 <div class="timeline-node"></div>
@@ -2008,7 +2009,7 @@
               <div class="timeline-text">
                 <span class="date">Q4 2026</span>
                 <h4 data-edit-slot="s5-title-5" data-slot-type="text" data-slot-label="Global Launch" data-slot-locked-layout="true">Global Launch</h4>
-                <p>Public release with full documentation and community support.</p>
+                <p data-edit-slot="s5-slot-4" data-slot-type="text" data-slot-label="Public release with full documentation and commu" data-slot-locked-layout="true">Public release with full documentation and community support.</p>
               </div>
             </div>
           </div>
@@ -2024,7 +2025,7 @@
         <div style="text-align: center; margin-bottom: 2.5rem;">
           <span class="pixel-label">Live Telemetry</span>
           <h2 style="color: var(--neon-cyan);" data-edit-slot="s6-title-1" data-slot-type="text" data-slot-label="Platform Vitals" data-slot-locked-layout="true">Platform Vitals</h2>
-          <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 0.5rem;">Real-time aggregate figures from active deployments</p>
+          <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 0.5rem;" data-edit-slot="s6-slot-5" data-slot-type="text" data-slot-label="Real-time aggregate figures from active deployme" data-slot-locked-layout="true">Real-time aggregate figures from active deployments</p>
         </div>
         <div class="stats-grid" id="statsGrid">
           <div class="stat-block">
@@ -2121,7 +2122,7 @@
       <div class="slide-content" style="z-index:10;">
         <div class="cta-content">
           <h2 data-edit-slot="s9-title-1" data-slot-type="text" data-slot-label="Ready Player One?" data-slot-locked-layout="true">Ready Player<br>One?</h2>
-          <p>Deploy your first 8-BIT ORBIT deck in under sixty seconds. No dependencies. No friction. Just pure presentation power.</p>
+          <p data-edit-slot="s9-slot-1" data-slot-type="text" data-slot-label="Deploy your first 8-BIT ORBIT deck in under sixt" data-slot-locked-layout="true">Deploy your first 8-BIT ORBIT deck in under sixty seconds. No dependencies. No friction. Just pure presentation power.</p>
           <div class="cta-buttons">
             <button class="pixel-btn">Initialize Deck</button>
             <button class="pixel-btn pink-btn">View Documentation</button>
@@ -2148,7 +2149,7 @@
   function isDeckChromeNode(node) {
     if (!node || !node.closest) return false;
     return !!(node.closest('#deckEditChrome') || node.closest('#rteToolbar') || node.closest('#slideSidebar') ||
-      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') ||
+      node.closest('#deckAddElementMenu') || node.closest('#btnAddElement') || node.closest('#btnUnlockLayout') ||
       node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));
   }
 
@@ -3701,7 +3702,7 @@
     docEl.querySelectorAll('.slide-object-graphic').forEach((g) => {
       if (!g.querySelector('img, video')) g.classList.remove('slide-object-graphic--empty');
     });
-    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
+    ['#editToggle', '#pagesToggle', '#btnSave', '#btnAddElement', '#btnUnlockLayout', '#deckEditChrome', '#rteToolbar'].forEach((selector) => {
       const el = docEl.querySelector(selector);
       if (!el) return;
       el.classList.remove('show', 'active', 'visible');
@@ -3782,6 +3783,7 @@
   const pagesToggle = document.getElementById('pagesToggle');
   const btnSave = document.getElementById('btnSave');
   const btnAddElement = document.getElementById('btnAddElement');
+  const btnUnlockLayout = document.getElementById('btnUnlockLayout');
   const deckAddElementMenu = document.getElementById('deckAddElementMenu');
 
   function closeAddElementMenu() {
@@ -4181,6 +4183,7 @@
     if (!deckAddElementMenu || !deckAddElementMenu.classList.contains('open')) return;
     if (deckAddElementMenu.contains(e.target)) return;
     if (btnAddElement && btnAddElement.contains(e.target)) return;
+    if (btnUnlockLayout && btnUnlockLayout.contains(e.target)) return;
     closeAddElementMenu();
   }, true);
 
@@ -4208,6 +4211,76 @@
       });
     });
   }
+
+  function componentizeCurrentSlide() {
+    const slide = deck.slides[deck.current] || document.querySelector('.slides-offset > section.slide');
+    if (!slide || slide.dataset.componentized === 'true') return;
+    if (!window.confirm('Unlock this slide layout? This creates movable copies of editable content while keeping the original template layout intact.')) return;
+    const layer = slide.querySelector('.slide-edit-layer');
+    if (!layer) return;
+    const inserted = [];
+    const slots = Array.from(slide.querySelectorAll('[data-edit-slot]')).filter((slot) => !slot.closest('[data-slide-object]'));
+    slots.slice(0, 12).forEach((slot, index) => {
+      const obj = document.createElement('div');
+      obj.className = 'slide-object template-component-object';
+      obj.setAttribute('data-slide-object', '');
+      obj.setAttribute('data-object-type', slot.dataset.slotType === 'image' ? 'image' : 'text');
+      obj.setAttribute('data-component-source-slot', slot.dataset.editSlot || '');
+      obj.style.cssText = 'left:' + (8 + (index % 3) * 28) + '%;top:' + (12 + Math.floor(index / 3) * 16) + '%;width:24%;min-height:3rem;';
+      const move = document.createElement('button');
+      move.type = 'button';
+      move.className = 'slide-object-move';
+      move.setAttribute('aria-label', 'Move object');
+      move.textContent = '\u283f';
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'slide-object-delete';
+      del.setAttribute('aria-label', 'Delete object');
+      del.textContent = '\u00d7';
+      const body = document.createElement('div');
+      if (slot.dataset.slotType === 'image') {
+        body.className = 'slide-object-graphic';
+        body.innerHTML = slot.tagName === 'IMG' ? slot.outerHTML : slot.innerHTML;
+      } else {
+        body.className = 'slide-object-text';
+        body.setAttribute('contenteditable', 'false');
+        body.innerHTML = slot.innerHTML;
+      }
+      obj.appendChild(move);
+      obj.appendChild(del);
+      obj.appendChild(body);
+      layer.appendChild(obj);
+      inserted.push(obj);
+    });
+    slide.dataset.componentized = 'true';
+    ensureObjectControls(slide);
+    renumberDeckObjects(slide);
+    history.push({
+      undo: () => {
+        inserted.forEach((obj) => {
+          if (obj && obj.parentNode) obj.parentNode.removeChild(obj);
+        });
+        delete slide.dataset.componentized;
+        deck.refreshSlides();
+        editor.clearSelection();
+        ensureObjectControls(document);
+      },
+      redo: () => {
+        inserted.forEach((obj) => {
+          if (obj && !obj.parentNode) layer.appendChild(obj);
+        });
+        slide.dataset.componentized = 'true';
+        deck.refreshSlides();
+        ensureObjectControls(document);
+      }
+    });
+    updateUndoRedoChrome();
+  }
+
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('click', componentizeCurrentSlide);
+  }
+
 
   document.addEventListener('focusout', (e) => {
     const t = e.target;
@@ -4258,6 +4331,7 @@
     if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     if (btnSave) btnSave.classList.remove('show');
     if (btnAddElement) btnAddElement.classList.remove('show');
+    if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
     updateUndoRedoChrome();
   }
 
@@ -4284,6 +4358,7 @@
     if (document.body.classList.contains('deck-edit-mode')) {
       if (btnSave) btnSave.classList.add('show');
       if (btnAddElement) btnAddElement.classList.add('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.add('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.add('show');
     }
   }
@@ -4293,6 +4368,7 @@
       pagesToggle.classList.remove('show');
       if (btnSave) btnSave.classList.remove('show');
       if (btnAddElement) btnAddElement.classList.remove('show');
+      if (btnUnlockLayout) btnUnlockLayout.classList.remove('show');
       if (deckEditChromeEl) deckEditChromeEl.classList.remove('show');
     }, 400);
   }
@@ -4311,6 +4387,10 @@
   if (btnSave) {
     btnSave.addEventListener('mouseenter', () => clearTimeout(hideT));
     btnSave.addEventListener('mouseleave', scheduleHide);
+  }
+  if (btnUnlockLayout) {
+    btnUnlockLayout.addEventListener('mouseenter', () => clearTimeout(hideT));
+    btnUnlockLayout.addEventListener('mouseleave', scheduleHide);
   }
 
   editToggle.addEventListener('click', () => {

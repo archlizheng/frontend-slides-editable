@@ -10,6 +10,7 @@ from __future__ import annotations
 import importlib.util
 import re
 import sys
+from types import SimpleNamespace
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -31,6 +32,30 @@ TITLE_LIKE_CLASSES = {
     "h3",
     "h4",
 }
+BODY_LIKE_CLASSES = {
+    "desc",
+    "description",
+    "lead",
+    "text",
+    "note",
+    "label",
+    "lab",
+    "lab2",
+    "card-title",
+    "card-copy",
+    "card-text",
+    "flow-title",
+    "flow-desc",
+    "stat-label",
+    "stat-note",
+}
+IMAGE_PLACEHOLDER_CLASSES = {
+    "img-placeholder",
+    "image-placeholder",
+    "ph",
+}
+MEANINGFUL_TEXT_RE = re.compile(r"[A-Za-z0-9\u4e00-\u9fff\[\]]")
+TEMPLATE_EDIT_MODES = {"slots", "components"}
 
 
 def load_builder_ports():
@@ -44,6 +69,13 @@ def load_builder_ports():
     return module.PORTS
 
 
+def display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def find_slide_ids(source: str) -> list[str]:
     ids: list[str] = []
     for match in re.finditer(r"<section\b(?=[^>]*\bclass=[\"'][^\"']*\bslide\b)[^>]*>", source, flags=re.I):
@@ -52,12 +84,25 @@ def find_slide_ids(source: str) -> list[str]:
     return ids
 
 
+def find_slot_ids(source: str) -> list[str]:
+    return re.findall(r'\bdata-edit-slot=["\']([^"\']+)["\']', source, flags=re.I)
+
+
+def template_edit_mode(source: str) -> str | None:
+    match = re.search(r'\bdata-template-edit-mode=["\']([^"\']+)["\']', source, flags=re.I)
+    return match.group(1) if match else None
+
+
 def deck_markup_only(source: str) -> str:
     deck_match = re.search(r'<div\b[^>]*\bid=["\']deck["\'][^>]*>', source, flags=re.I)
     if not deck_match:
         return source
     script_pos = source.find("<script", deck_match.end())
     return source[deck_match.start() :] if script_pos < 0 else source[deck_match.start() : script_pos]
+
+
+def has_meaningful_text(text: str) -> bool:
+    return bool(MEANINGFUL_TEXT_RE.search(text))
 
 
 def class_tokens_from_value(value: str | None) -> set[str]:
@@ -129,7 +174,7 @@ class TitleSlotAuditParser(HTMLParser):
             if frame["title_like"]:
                 text = re.sub(r"\s+", " ", " ".join(frame["text"])).strip()
                 if (
-                    text
+                    has_meaningful_text(text)
                     and not frame["aria_hidden"]
                     and not frame["slot_context"]
                     and not frame["has_slot_descendant"]
@@ -146,19 +191,131 @@ def find_uneditable_title_like_nodes(source: str) -> list[str]:
     return parser.issues
 
 
+class BodySlotAuditParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.stack: list[dict] = []
+        self.in_deck = False
+        self.issues: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs_list) -> None:
+        tag = tag.lower()
+        attrs = {name.lower(): value for name, value in attrs_list}
+        if tag == "div" and attrs.get("id") == "deck":
+            self.in_deck = True
+
+        parent_slot_context = any(frame["slot_context"] for frame in self.stack)
+        has_slot = "data-edit-slot" in attrs
+        if has_slot:
+            for frame in self.stack:
+                frame["has_slot_descendant"] = True
+
+        classes = class_tokens_from_value(attrs.get("class"))
+        frame = {
+            "tag": tag,
+            "classes": classes,
+            "aria_hidden": "aria-hidden" in attrs,
+            "slot_context": parent_slot_context or has_slot,
+            "has_slot_descendant": False,
+            "body_like": self.in_deck and tag in {"p", "li", "figcaption", "blockquote", "cite", "small", "td", "th"} or (
+                self.in_deck and tag in {"div", "span"} and bool(classes & BODY_LIKE_CLASSES)
+            ),
+            "text": [],
+            "deck_root": self.in_deck and tag == "div" and attrs.get("id") == "deck",
+        }
+        self.stack.append(frame)
+
+    def handle_data(self, data: str) -> None:
+        if not self.in_deck:
+            return
+        for frame in self.stack:
+            if frame["body_like"]:
+                frame["text"].append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if not self.stack:
+            return
+        index = None
+        for i in range(len(self.stack) - 1, -1, -1):
+            if self.stack[i]["tag"] == tag:
+                index = i
+                break
+        if index is None:
+            return
+        closing = self.stack[index:]
+        self.stack = self.stack[:index]
+        for frame in reversed(closing):
+            if frame["body_like"]:
+                text = re.sub(r"\s+", " ", " ".join(frame["text"])).strip()
+                if (
+                    has_meaningful_text(text)
+                    and not frame["aria_hidden"]
+                    and not frame["slot_context"]
+                    and not frame["has_slot_descendant"]
+                ):
+                    cls = " ".join(sorted(frame["classes"])) or "-"
+                    self.issues.append(f"<{frame['tag']} class=\"{cls}\"> {text[:64]}")
+            if frame["deck_root"]:
+                self.in_deck = False
+
+
+class ImageSlotAuditParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.deck_depth = 0
+        self.issues: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs_list) -> None:
+        tag = tag.lower()
+        attrs = {name.lower(): value for name, value in attrs_list}
+        classes = class_tokens_from_value(attrs.get("class"))
+        if self.deck_depth > 0:
+            self.deck_depth += 1
+        elif tag == "div" and attrs.get("id") == "deck":
+            self.deck_depth = 1
+        if self.deck_depth <= 0 or "aria-hidden" in attrs:
+            return
+        has_image_slot = "data-edit-slot" in attrs and attrs.get("data-slot-type") == "image"
+        if tag == "img" and not has_image_slot:
+            self.issues.append("<img>")
+        if tag == "div" and classes & IMAGE_PLACEHOLDER_CLASSES and not has_image_slot:
+            cls = " ".join(sorted(classes))
+            self.issues.append(f"<div class=\"{cls}\">")
+
+    def handle_endtag(self, tag: str) -> None:
+        if self.deck_depth > 0:
+            self.deck_depth -= 1
+
+
+def find_uneditable_body_like_nodes(source: str) -> list[str]:
+    parser = BodySlotAuditParser()
+    parser.feed(deck_markup_only(source))
+    return parser.issues
+
+
+def find_uneditable_image_nodes(source: str) -> list[str]:
+    parser = ImageSlotAuditParser()
+    parser.feed(deck_markup_only(source))
+    return parser.issues
+
+
 def fail(errors: list[str], rel: str, message: str) -> None:
     errors.append(f"{rel}: {message}")
 
 
 def validate_common(path: Path, source: str, errors: list[str]) -> None:
-    rel = str(path.relative_to(ROOT))
+    rel = display_path(path)
     slide_ids = find_slide_ids(source)
+    slot_ids = find_slot_ids(source)
     if not slide_ids:
         fail(errors, rel, "no <section class=\"slide\"> nodes found")
     if any(not slide_id for slide_id in slide_ids):
         fail(errors, rel, "one or more slides are missing stable id attributes")
     if len(slide_ids) != len(set(slide_ids)):
         fail(errors, rel, "slide ids are not unique")
+    if slot_ids and len(slot_ids) != len(set(slot_ids)):
+        fail(errors, rel, "data-edit-slot values are not unique")
     if "querySelectorAll('section.slide')" in source or 'querySelectorAll("section.slide")' in source:
         fail(errors, rel, "uses global querySelectorAll('section.slide')")
     if ":scope > section.slide" not in source:
@@ -172,20 +329,33 @@ def validate_common(path: Path, source: str, errors: list[str]) -> None:
 
 
 def validate_port(path: Path, source: str, port, errors: list[str]) -> None:
-    rel = str(path.relative_to(ROOT))
+    rel = display_path(path)
     deck_only = deck_markup_only(source)
     slide_ids = find_slide_ids(source)
     if "data-template-source=" not in source or "data-ported-template=" not in source:
         fail(errors, rel, "missing ported-template source metadata")
+    edit_mode = template_edit_mode(source)
+    if edit_mode not in TEMPLATE_EDIT_MODES:
+        fail(errors, rel, "missing or invalid data-template-edit-mode")
     slot_count = source.count("data-edit-slot=")
     if slot_count <= 0:
         fail(errors, rel, "ported template has no editable slots")
+    if "class SlotEditor" not in source or "swiss-slot-edit-runtime-js" not in source:
+        fail(errors, rel, "ported editable slots require the injected SlotEditor runtime")
     if ".filmstrip-thumb-host .slide" not in source:
         fail(errors, rel, "missing filmstrip thumbnail slide visibility override")
     uneditable_titles = find_uneditable_title_like_nodes(source)
     if uneditable_titles:
         sample = "; ".join(uneditable_titles[:4])
         fail(errors, rel, f"title-like authored text is not slot-editable: {sample}")
+    uneditable_body = find_uneditable_body_like_nodes(source)
+    if uneditable_body:
+        sample = "; ".join(uneditable_body[:4])
+        fail(errors, rel, f"body/card authored text is not slot-editable: {sample}")
+    uneditable_images = find_uneditable_image_nodes(source)
+    if uneditable_images:
+        sample = "; ".join(uneditable_images[:4])
+        fail(errors, rel, f"image content is not slot-editable: {sample}")
     if re.search(r'<button\b(?=[^>]*\bclass=["\'][^"\']*\bslide-object-resize\b)(?![^>]*\bdata-resize-handle\b)[^>]*>', deck_only, flags=re.I | re.S):
         fail(errors, rel, "contains bare .slide-object-resize markup; resize handles must be generated by runtime with data-resize-handle")
     if re.search(r"<script\b[^>]*\bsrc=", source, flags=re.I):
@@ -206,6 +376,26 @@ def validate_port(path: Path, source: str, port, errors: list[str]) -> None:
 
 
 def main() -> int:
+    if len(sys.argv) == 3 and sys.argv[1] == "--file":
+        path = Path(sys.argv[2])
+        if not path.is_file():
+            print(f"missing {path}", file=sys.stderr)
+            return 1
+        source = path.read_text(encoding="utf-8")
+        errors: list[str] = []
+        validate_common(path, source, errors)
+        validate_port(path, source, SimpleNamespace(preview_indices=()), errors)
+        if errors:
+            print("Preset validation failed:")
+            for error in errors:
+                print(f"- {error}")
+            return 2
+        print(f"Validated ported preset contract for {display_path(path)}.")
+        return 0
+    if len(sys.argv) != 1:
+        print("Usage: validate-template-ports.py [--file path/to/deck.html]", file=sys.stderr)
+        return 1
+
     if not PRESETS_DIR.is_dir():
         print(f"Missing presets dir: {PRESETS_DIR}", file=sys.stderr)
         return 1

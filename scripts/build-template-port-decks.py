@@ -81,7 +81,8 @@ PORT_MANIFEST = [
 ]
 
 
-SLOT_TAGS = r"(h1|h2|h3|h4|p|li|td|th|figcaption|blockquote|cite|small|span|div)"
+SLOT_TEXT_TAGS = r"(p|li|td|th|figcaption|blockquote|cite|small)"
+SLOT_CONTAINER_TAGS = r"(span|div)"
 BLOCK_TAG_RE = re.compile(r"</?(section|article|main|div|ul|ol|table|tbody|thead|tr|svg|canvas|deck-stage)\b", re.I)
 TEXT_RE = re.compile(r"[A-Za-z0-9\u4e00-\u9fff\[\]]")
 TITLE_LIKE_CLASSES = {
@@ -98,6 +99,56 @@ TITLE_LIKE_CLASSES = {
     "h3",
     "h4",
 }
+BODY_LIKE_CLASSES = {
+    "desc",
+    "description",
+    "lead",
+    "text",
+    "note",
+    "label",
+    "lab",
+    "lab2",
+    "card-title",
+    "card-copy",
+    "card-text",
+    "flow-title",
+    "flow-desc",
+    "stat-label",
+    "stat-note",
+}
+COMPONENT_LIKE_CLASSES = {
+    "card",
+    "tier-card",
+    "stat",
+    "stat-block",
+    "stat-card",
+    "quote-container",
+    "quote-card",
+    "image-block",
+    "figure",
+    "hero",
+    "feature",
+    "flow-step",
+}
+LOCKED_DECOR_CLASSES = {
+    "axis",
+    "bar-fill",
+    "bg",
+    "decor",
+    "decoration",
+    "glitch",
+    "grain",
+    "grid",
+    "gridline",
+    "hairline",
+    "noise",
+    "scanlines",
+    "texture",
+    "tick",
+    "xaxis",
+    "yaxis",
+}
+TEMPLATE_EDIT_MODES = {"slots", "components"}
 
 
 def load_ports() -> list[TemplatePort]:
@@ -308,6 +359,32 @@ def class_tokens_from_attrs(attrs: str) -> set[str]:
     return set(cls_match.group(1).split()) if cls_match else set()
 
 
+def classify_template_node(tag: str, attrs: str, inner: str) -> str:
+    """Classify native template nodes for edit conversion.
+
+    Returns one of: slot, component, locked. The rules are deliberately
+    conservative: content gets edited, semantic blocks may be componentized, and
+    visual scaffolding stays locked.
+    """
+    tag = tag.lower()
+    classes = {token.lower() for token in class_tokens_from_attrs(attrs)}
+    class_text = " ".join(classes)
+    if "aria-hidden" in attrs:
+        return "locked"
+    if classes & LOCKED_DECOR_CLASSES or any(token in class_text for token in ("gridline", "xaxis", "yaxis")):
+        return "locked"
+    if tag in {"svg", "canvas", "script", "style"}:
+        return "locked"
+    if tag == "img" or "img-placeholder" in classes or "image-placeholder" in classes:
+        return "slot"
+    if is_title_like_slot_candidate(tag, attrs) or is_body_like_slot_candidate(tag, attrs):
+        return "slot"
+    text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", inner)).strip()
+    if classes & COMPONENT_LIKE_CLASSES and TEXT_RE.search(text):
+        return "component"
+    return "locked"
+
+
 def is_title_like_slot_candidate(tag: str, attrs: str) -> bool:
     tag = tag.lower()
     if tag in {"h1", "h2", "h3", "h4"}:
@@ -315,10 +392,23 @@ def is_title_like_slot_candidate(tag: str, attrs: str) -> bool:
     return bool(class_tokens_from_attrs(attrs) & TITLE_LIKE_CLASSES)
 
 
+def is_body_like_slot_candidate(tag: str, attrs: str) -> bool:
+    tag = tag.lower()
+    if tag in {"p", "li", "td", "th", "figcaption", "blockquote", "cite", "small"}:
+        return True
+    return bool(class_tokens_from_attrs(attrs) & BODY_LIKE_CLASSES)
+
+
 def slot_label_from_inner(inner: str, fallback: str) -> str:
     text = re.sub(r"<br\s*/?>", " ", inner, flags=re.I)
     label = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", text)).strip()[:48]
     return label or fallback
+
+
+def next_slot_index(section: str, slide_index: int, kind: str) -> int:
+    pattern = re.compile(rf'\bdata-edit-slot=["\']s{slide_index}-{re.escape(kind)}-(\d+)["\']')
+    values = [int(match.group(1)) for match in pattern.finditer(section)]
+    return max(values, default=0) + 1
 
 
 def should_mark_text_node(tag: str, attrs: str, inner: str) -> bool:
@@ -336,7 +426,7 @@ def should_mark_text_node(tag: str, attrs: str, inner: str) -> bool:
 
 def mark_priority_text_slots(section: str, slide_index: int) -> str:
     """Mark title-like inline nodes before generic slotting sees outer layout divs."""
-    slot_count = 0
+    slot_count = next_slot_index(section, slide_index, "title") - 1
 
     def repl(match: re.Match[str]) -> str:
         nonlocal slot_count
@@ -359,19 +449,56 @@ def mark_priority_text_slots(section: str, slide_index: int) -> str:
             f"{inner}</{tag}>"
         )
 
-    heading_pattern = re.compile(r"<(h1|h2|h3|h4)\b([^>]*)>(.*?)</\1>", flags=re.S | re.I)
+    heading_pattern = re.compile(r"<(h1|h2|h3|h4)\b([^>]*)>(.*?)</\1\s*>", flags=re.S | re.I)
     out = heading_pattern.sub(repl, section)
     class_tokens = "|".join(re.escape(token) for token in sorted(TITLE_LIKE_CLASSES, key=len, reverse=True))
     class_lookahead = (
         rf'(?=[^>]*\bclass=["\']'
         rf'(?:(?:{class_tokens})(?=\s|["\'])|[^"\']*\s(?:{class_tokens})(?=\s|["\'])))'
     )
-    class_pattern = re.compile(rf"<(p|div|span)\b{class_lookahead}([^>]*)>(.*?)</\1>", flags=re.S | re.I)
+    class_pattern = re.compile(rf"<(p|div|span)\b{class_lookahead}([^>]*)>(.*?)</\1\s*>", flags=re.S | re.I)
+    return class_pattern.sub(repl, out)
+
+
+def mark_priority_body_slots(section: str, slide_index: int) -> str:
+    """Mark body-like copy nodes before generic container slotting."""
+    slot_count = next_slot_index(section, slide_index, "slot") - 1
+
+    def repl(match: re.Match[str]) -> str:
+        nonlocal slot_count
+        full = match.group(0)
+        tag = match.group(1).lower()
+        attrs = match.group(2) or ""
+        inner = match.group(3)
+        if not is_body_like_slot_candidate(tag, attrs):
+            return full
+        if not should_mark_text_node(tag, attrs, inner):
+            return full
+        slot_count += 1
+        slot_id = f"s{slide_index}-slot-{slot_count}"
+        label = slot_label_from_inner(inner, slot_id)
+        return (
+            f'<{tag}{attrs} data-edit-slot="{slot_id}" '
+            f'data-slot-type="{slot_type_for(tag, attrs)}" '
+            f'data-slot-label="{html.escape(label, quote=True)}" '
+            'data-slot-locked-layout="true">'
+            f"{inner}</{tag}>"
+        )
+
+    out = section
+    simple_pattern = re.compile(r"<(p|li|td|th|figcaption|blockquote|cite|small)\b([^>]*)>(.*?)</\1\s*>", flags=re.S | re.I)
+    out = simple_pattern.sub(repl, out)
+    class_tokens = "|".join(re.escape(token) for token in sorted(BODY_LIKE_CLASSES, key=len, reverse=True))
+    class_lookahead = (
+        rf'(?=[^>]*\bclass=["\']'
+        rf'(?:(?:{class_tokens})(?=\s|["\'])|[^"\']*\s(?:{class_tokens})(?=\s|["\'])))'
+    )
+    class_pattern = re.compile(rf"<(div|span)\b{class_lookahead}([^>]*)>(.*?)</\1\s*>", flags=re.S | re.I)
     return class_pattern.sub(repl, out)
 
 
 def mark_text_slots(section: str, slide_index: int) -> str:
-    slot_count = 0
+    slot_count = next_slot_index(section, slide_index, "slot") - 1
 
     def repl(match: re.Match[str]) -> str:
         nonlocal slot_count
@@ -393,19 +520,26 @@ def mark_text_slots(section: str, slide_index: int) -> str:
             f"{inner}</{tag}>"
         )
 
-    pattern = re.compile(rf"<{SLOT_TAGS}\b([^>]*)>(.*?)</\1>", flags=re.S | re.I)
-    prev = None
-    out = section
-    for _ in range(3):
-        if out == prev:
-            break
-        prev = out
-        out = pattern.sub(repl, out)
+    def apply_pattern(source: str, tags: str) -> str:
+        pattern = re.compile(rf"<{tags}\b([^>]*)>(.*?)</\1\s*>", flags=re.S | re.I)
+        prev = None
+        out = source
+        for _ in range(3):
+            if out == prev:
+                break
+            prev = out
+            out = pattern.sub(repl, out)
+        return out
+
+    # Mark leaf copy before layout containers. Otherwise an outer <div> can
+    # consume the regex match and keep inner paragraphs from ever being visited.
+    out = apply_pattern(section, SLOT_TEXT_TAGS)
+    out = apply_pattern(out, SLOT_CONTAINER_TAGS)
     return out
 
 
 def mark_image_slots(section: str, slide_index: int) -> str:
-    count = 0
+    count = next_slot_index(section, slide_index, "image") - 1
 
     def img_repl(match: re.Match[str]) -> str:
         nonlocal count
@@ -454,7 +588,75 @@ def prepare_sections(sections: list[str]) -> str:
         section = replace_canvas_charts(section, i)
         section = mark_image_slots(section, i)
         section = mark_priority_text_slots(section, i)
+        section = mark_priority_body_slots(section, i)
         section = mark_text_slots(section, i)
+        rendered.append(section)
+    return "\n\n".join(rendered)
+
+
+def make_slide_object(slot_id: str, object_type: str, inner: str, index: int) -> str:
+    safe_id = re.sub(r"[^a-zA-Z0-9_-]+", "-", slot_id).strip("-") or f"slot-{index}"
+    oid = f"component-{safe_id}"
+    if object_type == "image":
+        graphic = inner if "<img" in inner.lower() else html.escape(slot_label_from_inner(inner, "Image"))
+        body = f'<div class="slide-object-graphic">{graphic}</div>'
+    else:
+        body = f'<div class="slide-object-text" contenteditable="false">{inner}</div>'
+    return (
+        f'<div class="slide-object template-component-object" data-slide-object data-oid="{oid}" '
+        f'data-object-type="{object_type}" data-component-source-slot="{html.escape(slot_id, quote=True)}" '
+        'style="left:10%;top:12%;width:72%;min-height:3rem;">'
+        '<button type="button" class="slide-object-move" aria-label="Move object">⠿</button>'
+        '<button type="button" class="slide-object-delete" aria-label="Delete object">×</button>'
+        '<button type="button" class="slide-object-resize" aria-label="Resize"></button>'
+        f"{body}</div>"
+    )
+
+
+def mark_component_blocks(section: str, slide_index: int) -> list[str]:
+    objects: list[str] = []
+    pattern = re.compile(r"<(div|article|figure)\b([^>]*)>(.*?)</\1\s*>", re.S | re.I)
+    for idx, match in enumerate(pattern.finditer(section)):
+        tag = match.group(1)
+        attrs = match.group(2) or ""
+        inner = match.group(3)
+        if classify_template_node(tag, attrs, inner) != "component":
+            continue
+        label = slot_label_from_inner(inner, f"component-{idx}")
+        slot_id = f"s{slide_index}-component-{idx + 1}"
+        objects.append(make_slide_object(slot_id, "text", html.escape(label), idx))
+    return objects
+
+
+def prepare_componentized_sections(sections: list[str]) -> str:
+    """Generate a conservative component-mode variant from slot markup.
+
+    Native template slots remain in place for visual fidelity, while component
+    objects are added to the freeform edit layer and linked to their source slot.
+    Runtime Unlock layout can produce the same shape for current-slide edits.
+    """
+    rendered = []
+    slot_re = re.compile(r'<([a-z0-9]+)\b([^>]*\bdata-edit-slot=["\']([^"\']+)["\'][^>]*)>(.*?)</\1\s*>', re.S | re.I)
+    for i, section in enumerate(sections):
+        section = ensure_slide_contract(section, i)
+        section = replace_canvas_charts(section, i)
+        section = mark_image_slots(section, i)
+        section = mark_priority_text_slots(section, i)
+        section = mark_priority_body_slots(section, i)
+        section = mark_text_slots(section, i)
+        objects: list[str] = mark_component_blocks(section, i)
+        for idx, match in enumerate(slot_re.finditer(section)):
+            attrs = match.group(2) or ""
+            slot_id = match.group(3)
+            inner = match.group(4)
+            kind = attr_value("<x " + attrs + ">", "data-slot-type") or slot_type_for(match.group(1), attrs)
+            classification = classify_template_node(match.group(1), attrs, inner)
+            if classification == "locked":
+                continue
+            object_type = "image" if kind == "image" else "text"
+            objects.append(make_slide_object(slot_id, object_type, inner, idx))
+        if objects:
+            section = section.replace('<div class="slide-edit-layer" aria-hidden="true"></div>', '<div class="slide-edit-layer" aria-hidden="true">\n      ' + "\n      ".join(objects) + "\n    </div>", 1)
         rendered.append(section)
     return "\n\n".join(rendered)
 
@@ -737,6 +939,10 @@ def patch_reference_runtime_js(js: str) -> str:
         "node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'))",
     )
     js = js.replace(
+        "node.closest('.deck-edit-chrome') || node.closest('[data-deck-chrome-surface]'));",
+        "node.closest('.deck-edit-chrome') || node.closest('#slotImageInput') || node.closest('[data-deck-chrome-surface]'));",
+    )
+    js = js.replace(
         "if (best !== this.current) {\n        this.current = best;\n        this.onSlideChange && this.onSlideChange(best);\n      }\n      this._updateChrome();",
         "if (best !== this.current) {\n        this.current = best;\n        this.onSlideChange && this.onSlideChange(best);\n      }\n      this.slides.forEach((s, i) => s.classList.toggle('is-active', i === best));\n      this._updateChrome();",
     )
@@ -763,10 +969,12 @@ def patch_reference_runtime_js(js: str) -> str:
     return js.replace("<script>", '<script id="swiss-slot-edit-runtime-js">', 1)
 
 
-def render(port: TemplatePort, head: str, sections_html: str) -> str:
+def render(port: TemplatePort, head: str, sections_html: str, *, edit_mode: str = "slots") -> str:
+    if edit_mode not in TEMPLATE_EDIT_MODES:
+        raise ValueError(f"unsupported template edit mode: {edit_mode}")
     runtime_css, runtime_chrome, runtime_js = extract_reference_editor_parts()
     return f"""<!doctype html>
-<html lang="zh-Hans" data-deck-id="ported-{port.out_slug}" data-template-source="{port.source_slug}" data-mobile-adaptation="desktop-default">
+<html lang="zh-Hans" data-deck-id="ported-{port.out_slug}" data-template-source="{port.source_slug}" data-template-edit-mode="{edit_mode}" data-mobile-adaptation="desktop-default">
 <head>
 {head}
 <title>{html.escape(port.title)} · Slot Editable Template Port</title>
@@ -795,7 +1003,7 @@ def main() -> int:
         source = template_path.read_text(encoding="utf-8")
         head, sections = extract_head_and_sections(source, template_path.parent)
         sections_html = prepare_sections(sections)
-        out = normalize_generated_html(render(port, head, sections_html))
+        out = normalize_generated_html(render(port, head, sections_html, edit_mode="slots"))
         out_path = OUT_DIR / f"{port.out_slug}.html"
         out_path.write_text(out, encoding="utf-8")
         slot_count = sections_html.count("data-edit-slot=")
