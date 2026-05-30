@@ -2371,6 +2371,29 @@
   }
 
   /* ---------- persistence ---------- */
+  function showToast(msg, isError) {
+    const el = document.createElement('div');
+    el.textContent = msg;
+    el.style.cssText = [
+      'position:fixed', 'bottom:clamp(1rem,3vh,2rem)', 'left:50%',
+      'transform:translateX(-50%)',
+      'background:' + (isError ? 'rgba(185,28,28,0.94)' : 'var(--deck-chrome-bg, rgba(15,23,42,0.94))'),
+      'color:' + (isError ? '#fff' : 'var(--deck-chrome-text, #e2e8f0)'),
+      'border:1px solid ' + (isError ? 'rgba(239,68,68,0.5)' : 'var(--deck-chrome-border, rgba(255,255,255,0.14))'),
+      'padding:0.45rem 1.1rem', 'border-radius:6px',
+      'font-size:0.8rem', 'font-family:inherit', 'line-height:1.4',
+      'box-shadow:var(--deck-chrome-shadow, 0 8px 24px rgba(0,0,0,0.4))',
+      'z-index:99999', 'pointer-events:none', 'white-space:nowrap',
+      'transition:opacity 0.3s ease'
+    ].join(';');
+    document.body.appendChild(el);
+    const hide = () => {
+      el.style.opacity = '0';
+      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 320);
+    };
+    setTimeout(hide, isError ? 4000 : 2000);
+  }
+
   function saveState() {
     const root = document.querySelector('.slides-offset') || document.body;
     const data = {
@@ -2379,7 +2402,10 @@
     };
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch (e) { console.warn(e); }
+    } catch (e) {
+      console.warn(e);
+      showToast('Save failed — storage full', true);
+    }
   }
 
   function loadState() {
