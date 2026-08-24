@@ -957,11 +957,11 @@ Then try:
 
 If you like this project, consider starring it on GitHub so more people can discover editable HTML decks.
 
-<a href="https://www.star-history.com/#archlizheng/frontend-slides-editable&amp;Date">
+<a href="https://star-history.dera.page/#archlizheng/frontend-slides-editable&amp;type=date">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=archlizheng/frontend-slides-editable&amp;type=Date&amp;theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=archlizheng/frontend-slides-editable&amp;type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=archlizheng/frontend-slides-editable&amp;type=Date" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=archlizheng/frontend-slides-editable&amp;type=Date&amp;theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=archlizheng/frontend-slides-editable&amp;type=Date" />
+    <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=archlizheng/frontend-slides-editable&amp;type=Date" />
   </picture>
 </a>
 
